@@ -1,7 +1,7 @@
-export default function Register (){
-return(
+export default function Register() {
+  return (
     <>
-    <h2>Testing.</h2>
+      <h2>Testing.</h2>
     </>
-)
+  )
 }
