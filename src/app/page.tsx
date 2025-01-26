@@ -22,7 +22,7 @@ export default function Login() {
         </div>
         <div className="text-center">
             <span className='font-semibold' >
-                Are you a new user? <Link href='/register'>Register now!</Link>
+                Are you a new user? <Link href='/registerPage'>Register now!</Link>
             </span>
         </div>
         </div>
