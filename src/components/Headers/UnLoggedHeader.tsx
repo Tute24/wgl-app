@@ -1,6 +1,8 @@
+
+
 import Link from 'next/link'
 
-export default async function UnLoggedHeader() {
+export default function UnLoggedHeader() {
   return (
     <>
       <div className="py-4">

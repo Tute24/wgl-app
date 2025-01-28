@@ -1,9 +1,9 @@
-import UnLoggedHeader from '@/components/UnLoggedHeader'
+import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
 import Link from 'next/link'
 export default function Login() {
   return (
     <>
-    <UnLoggedHeader/>
+      <UnLoggedHeader />
       <div className="flex flex-col justify-center items-center min-h-screen ">
         <div className="font-sans p-10 text-center bg-black text-white font-semibold rounded-2xl">
           <div className="flex justify-between items-center -mt-5 mb-3"></div>
