@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import RegisterForm from '@/components/Forms/RegistrationForm'
 import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
@@ -14,7 +14,7 @@ export default function Register() {
   })
 
   function UsersInputHandler(event: ChangeEvent<HTMLInputElement>) {
-    setUsersData( {
+    setUsersData({
       ...usersData,
       [event.target.name]: event.target.value,
     })

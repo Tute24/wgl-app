@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent } from 'react'
 
 interface RegisterFormsProps {
   usersData: {
