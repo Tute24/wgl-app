@@ -28,7 +28,7 @@ export default async function UnLoggedHeader() {
               </button>
             </Link>
             <Link href="/">
-              <button className="px-5 py-2 bg-orange1 text-white font-bold rounded-3xl hover:bg-darkerOrange">
+              <button className="px-5 py-2 bg-black text-white font-bold rounded-3xl hover:bg-black">
                 Log In
               </button>
             </Link>
