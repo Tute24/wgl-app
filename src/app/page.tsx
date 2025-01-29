@@ -2,6 +2,7 @@
 
 import LoginForm from '@/components/Forms/LoginForm'
 import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function Login() {
@@ -9,6 +10,8 @@ export default function Login() {
     email: '',
     password: '',
   })
+
+  const router = useRouter()
 
   function loginInputHandler(event: ChangeEvent<HTMLInputElement>) {
     setUsersSign({
@@ -20,6 +23,7 @@ export default function Login() {
   function loginSubmitHandler(event: FormEvent) {
     event.preventDefault()
     console.log(usersSign)
+    router.push('/dashboard')
   }
 
   return (
