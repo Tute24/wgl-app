@@ -1,3 +1,4 @@
+import { useContextWrap } from '@/contextAPI/context'
 import { ChangeEvent, FormEvent } from 'react'
 
 interface RegisterFormsProps {
@@ -17,6 +18,9 @@ export default function RegisterForm({
   onChange,
   onSubmit,
 }: RegisterFormsProps) {
+
+    const {statusMessage,setStatusMessage} = useContextWrap()
+
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen bg-emerald-50">
@@ -96,7 +100,9 @@ export default function RegisterForm({
                 Sign Up!
               </button>
             </div>
+            <span className='text-white'>{statusMessage}</span>
           </form>
+
         </div>
       </div>
     </>

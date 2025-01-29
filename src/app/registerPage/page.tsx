@@ -2,9 +2,12 @@
 
 import RegisterForm from '@/components/Forms/RegistrationForm'
 import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
+import { useContextWrap } from '@/contextAPI/context'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function Register() {
+  const { statusMessage, setStatusMessage } = useContextWrap()
+
   const [usersData, setUsersData] = useState({
     firstName: '',
     lastName: '',
@@ -22,12 +25,16 @@ export default function Register() {
 
   function registrationSubmitHandler(event: FormEvent) {
     event.preventDefault()
-    console.log(usersData)
+    if (usersData.password !== usersData.confirmPassword) {
+      setStatusMessage('Passwords must be the same!')
+    } else {
+      console.log(usersData)
+    }
   }
 
   return (
     <>
-      <UnLoggedHeader />
+      <UnLoggedHeader/>
       <RegisterForm
         usersData={usersData}
         onChange={UsersInputHandler}
