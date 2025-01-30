@@ -7,6 +7,7 @@ interface ContextProps {
   setStatusMessage: (value: string) => void
   currentIndex: number
   setCurrentIndex: (value:number) => void
+  
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -14,6 +15,7 @@ const contextWrap = createContext<ContextProps | undefined>(undefined)
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [statusMessage, setStatusMessage] = useState<string>('')
   const [currentIndex, setCurrentIndex] = useState(0)
+ 
   return (
     <contextWrap.Provider value={{ statusMessage, setStatusMessage, currentIndex, setCurrentIndex }}>
       {children}
