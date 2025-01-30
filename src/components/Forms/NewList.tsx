@@ -10,11 +10,11 @@ interface newListFormProps {
         productName: string
         productLink: string
         quantity: number
-      }[]
-    
+      }[]  
   }
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSubmit: (event: FormEvent) => void
+  giftsChange: (event:ChangeEvent<HTMLInputElement>, index: number) => void
   newProductInputs: (event: any) => void
 }
 
@@ -22,28 +22,29 @@ export default function GiftListForm({
   listData,
   onChange,
   onSubmit,
+  giftsChange,
   newProductInputs,
 }: newListFormProps) {
   const { statusMessage, setStatusMessage } = useContextWrap()
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-emerald-50">
+      <div className="flex flex-col justify-center items-center min-h-screen ">
         <div className="font-sans p-10 text-center bg-black text-white font-semibold rounded-2xl">
           <div className="flex justify-center items-center -mt-5 mb-3">
             <h2>Create a new wedding gift list</h2>
           </div>
           <form onSubmit={onSubmit} className="flex flex-col ">
             <div className="p-2">
-              <label htmlFor="listName">List Title</label>
+              <label htmlFor="listTitle">List Title</label>
               <input
                 className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
-                id="listName"
+                id="listTitle"
                 value={listData.listTitle}
                 onChange={onChange}
-                name="listName"
+                name="listTitle"
                 placeholder="This name will identify your gift list to the guests"
                 required
               />
@@ -70,10 +71,10 @@ export default function GiftListForm({
                 text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                   type="string"
                   id="productName-0"
-                  name="productName"
+                  name= "productName"
                   value={listData.gifts[0].productName}
                   placeholder="This product will appear as a gift on your gift list"
-                  onChange={onChange}
+                  onChange={(event) => giftsChange(event,0)}
                   required
                 />
               </div>
@@ -85,7 +86,7 @@ export default function GiftListForm({
                   name="productLink"
                   type="string"
                   value={listData.gifts[0].productLink}
-                  onChange={onChange}
+                  onChange={(event) => giftsChange(event,0)}
                   placeholder="Insert the link for your guests to buy the product, if needed."
                 />
               </div>
@@ -97,14 +98,14 @@ export default function GiftListForm({
                   name="quantity"
                   type="number"
                   value={listData.gifts[0].quantity}
-                  onChange={onChange}
+                  onChange={(event) => giftsChange(event,0)}
                   required
                 />
               </div>
               <div className="p-5">
                 <button
                   className="bg-amber-50 text-xs rounded-full py-0.5 px-4 text-black font-bold border-amber-100 border-solid border-2 w-2/4 mt-2.5 hover:bg-amber-200 focus:outline-none ring-2 ring-amber-200"
-                  type="submit"
+                  type="button"
                   id="registerButton"
                   onClick={newProductInputs}
                 >

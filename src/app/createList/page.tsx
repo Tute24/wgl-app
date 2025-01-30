@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function newList() {
   const [listData, setlistData] = useState({
-    listTitle: '',
+    listTitle:'',
     weddingDate: '',
     gifts: [
       {
@@ -22,6 +22,15 @@ export default function newList() {
       ...listData,
       [event.target.name]: event.target.value,
     })
+  }
+
+  function listGiftInputHandler(event: ChangeEvent<HTMLInputElement>, index: number) {
+    setlistData((prevState) => ({
+        ...prevState,
+        gifts: prevState.gifts.map((gift, i) =>
+          i === index ? { ...gift, [event.target.name]: event.target.value } : gift
+        ),
+      }))
   }
 
   function listSubmitHandler(event: FormEvent) {
@@ -42,6 +51,7 @@ export default function newList() {
     onChange={listInputHandler}
     onSubmit={listSubmitHandler}
     newProductInputs={newProductSet}
+    giftsChange={listGiftInputHandler}
     />
     </>
   )
