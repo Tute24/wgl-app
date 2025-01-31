@@ -26,6 +26,13 @@ export default function LoggedHeader() {
               </button>
             </Link>
           </div>
+          <div className="font-semibold">
+            <Link href="/createList">
+              <button type="button" className="p-2 hover:text-orange1">
+                New wedding gift list
+              </button>
+            </Link>
+          </div>
           <div className="">
             <Link href="/">
               <button className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
