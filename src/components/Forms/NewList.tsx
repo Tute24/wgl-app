@@ -1,5 +1,5 @@
 import { useContextWrap } from '@/contextAPI/context'
-import { ChangeEvent, FormEvent, SetStateAction, useState } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 
 interface newListFormProps {
   listDataType: {
@@ -34,8 +34,7 @@ export default function GiftListForm({
   giftsChange,
   setListData,
 }: newListFormProps) {
-  const { statusMessage, setStatusMessage, currentIndex, setCurrentIndex } =
-    useContextWrap()
+  const { statusMessage } = useContextWrap()
 
   return (
     <>
