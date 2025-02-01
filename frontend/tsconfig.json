@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "frontend",
+    "baseUrl": "./",
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -23,6 +23,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["fronted/next-env.d.ts", "frontend/**/*.ts", "**/*.tsx", "frontend/.next/types/**/*.ts"],
-  "exclude": ["frontend/node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
