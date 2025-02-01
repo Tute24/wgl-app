@@ -1,8 +1,8 @@
 'use client'
 
-import RegisterForm from '@/components/Forms/RegistrationForm'
-import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
-import { useContextWrap } from '@/contextAPI/context'
+import RegisterForm from '../../components/Forms/RegistrationForm'
+import UnLoggedHeader from '../../components/Headers/UnLoggedHeader'
+import { useContextWrap } from '../../contextAPI/context'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 

@@ -1,8 +1,8 @@
 'use client'
 
-import GiftListForm from '@/components/Forms/NewList'
-import LoggedHeader from '@/components/Headers/LoggedHeader'
-import { useContextWrap } from '@/contextAPI/context'
+import GiftListForm from '../../components/Forms/NewList'
+import LoggedHeader from '../../components/Headers/LoggedHeader'
+import { useContextWrap } from '../../contextAPI/context'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function newList() {
