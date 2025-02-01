@@ -1,4 +1,4 @@
-import { useContextWrap } from '@/contextAPI/context'
+import { useContextWrap } from '../../contextAPI/context'
 import { ChangeEvent, FormEvent } from 'react'
 
 interface RegisterFormsProps {
