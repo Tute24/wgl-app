@@ -3,10 +3,12 @@ const app = express()
 import { PrismaClient } from '@prisma/client'
 require('dotenv').config()
 const cors = require ('cors')
+import userCreate from './routes/createUser'
 
 app.use(express.json())
 app.use(cors())
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
+app.use(userCreate)
 
 const port = process.env.PORT || 3000
 
