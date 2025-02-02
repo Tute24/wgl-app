@@ -7,12 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id String @id @default(uuid())
   email String @unique
   firstName String @map("first_name")
   lastName String @map("last_name")
   password String 
+  weddingsOwn Weddings[]
+  productsGifted Gifts[]
+  weddingsGuest Guests[]
 
-  @@map("user")
+  @@map("users")
 }
+
+model Weddings {
+  id Int @id @default(autoincrement()) 
+  weddingTitle String @map("wedding_title")
+  weddingDate String @map("wedding_date")
+  user Users @relation(fields: [createdBy],references: [id])
+  createdBy String
+  gifts Gifts[]
+  guests Guests[]
+
+  @@map("weddings")
+}
+
+model Gifts {
+  id Int @id @default(autoincrement())
+  quantity Int
+  productName String @map("product_name")
+  productLink String @map("product_link")
+  wedding Weddings @relation(fields: [fromWedding],references: [id])
+  fromWedding Int @map("from_wedding")
+  user Users @relation(fields: [giftedBy],references: [id])
+  giftedBy String @map("gifted_by")
+}
+
+model Guests {
+  id Int @id @default(autoincrement())
+  user Users @relation(fields: [guestId],references: [id])
+  guestId String @map("guest_id")
+  wedding Weddings @relation(fields: [referencedWedding],references: [id])
+  referencedWedding Int @map("referenced_wedding")
+}
+
