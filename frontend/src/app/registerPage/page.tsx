@@ -36,9 +36,10 @@ export default function Register() {
         'http://localhost:3000/createUser',
         usersData
       )
-      if (response) {
-        router.push('/dashboard')
+      if (response.status == 409) {
+        setStatusMessage("An user with this email already exists on our database!")
       }
+      router.push('/dashboard')
     }
   }
 

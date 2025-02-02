@@ -10,6 +10,19 @@ userCreate.post(
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
+    const emailCheck = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (emailCheck) {
+      res
+        .status(409)
+        .json({ message: 'An user with the submitted email already exists!' })
+      return
+    }
+
     try {
       const newUser = await prisma.user.create({
         data: {
