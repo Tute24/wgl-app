@@ -5,6 +5,7 @@ import UnLoggedHeader from '../../components/Headers/UnLoggedHeader'
 import { useContextWrap } from '../../contextAPI/context'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import axios from 'axios'
 
 export default function Register() {
   const { statusMessage, setStatusMessage } = useContextWrap()
@@ -26,19 +27,24 @@ export default function Register() {
     })
   }
 
-  function registrationSubmitHandler(event: FormEvent) {
+  async function registrationSubmitHandler(event: FormEvent) {
     event.preventDefault()
     if (usersData.password !== usersData.confirmPassword) {
       setStatusMessage('Passwords must be the same!')
     } else {
-      console.log(usersData)
-      router.push('/dashboard')
+      const response = await axios.post(
+        'http://localhost:3000/createUser',
+        usersData
+      )
+      if (response) {
+        router.push('/dashboard')
+      }
     }
   }
 
   return (
     <>
-      <UnLoggedHeader/>
+      <UnLoggedHeader />
       <RegisterForm
         usersData={usersData}
         onChange={UsersInputHandler}
