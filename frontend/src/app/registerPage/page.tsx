@@ -6,6 +6,8 @@ import { useContextWrap } from '../../contextAPI/context'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
+import Error from 'next/error'
+import { error } from 'console'
 
 export default function Register() {
   const { statusMessage, setStatusMessage } = useContextWrap()
@@ -31,23 +33,30 @@ export default function Register() {
     event.preventDefault()
     if (usersData.password !== usersData.confirmPassword) {
       setStatusMessage('Passwords must be the same!')
-    } else {
+    } else{
+
+    try{
       const response = await axios.post(
         'http://localhost:3000/createUser',
         usersData
       )
-      if (response.status === 409) {
-        setStatusMessage(
-          'An user with this email already exists on our database!'
-        )
-      }
-      if (response.status === 500) {
-        setStatusMessage('Server Error. Try again in a few seconds.')
-      }
+    
       if (response.status === 200) {
         router.push('/dashboard')
       }
+    }catch(error:unknown){
+      if(axios.isAxiosError(error)){
+        if(error.response?.status === 409){
+          setStatusMessage('There is already an existent user with this email!')
+        }
+        if(error.response?.status === 500){
+          setStatusMessage('Something went wrong within the server. Try again sonn.')
+        }
+        console.log(error)
+      }
+      console.log(error)
     }
+  }
   }
 
   return (
@@ -57,6 +66,7 @@ export default function Register() {
         usersData={usersData}
         onChange={UsersInputHandler}
         onSubmit={registrationSubmitHandler}
+        statusMessage={statusMessage}
       />
     </>
   )
