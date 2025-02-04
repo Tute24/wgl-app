@@ -21,7 +21,7 @@ export default async function isAuthenticated(req:CustomRequest,res: Response, n
         const decodedToken = jwt.verify(token,process.env.SECRET_KEY) as tokenBody
 
     if(!decodedToken.id){
-        res.status(403).json({message:"User not authenticated."})
+        res.status(401).json({message:"User not authenticated."})
         return
     }
 
