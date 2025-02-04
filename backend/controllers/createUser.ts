@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from 'express'
 const userCreate: Router = express.Router()
 import { prisma } from '../app'
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 userCreate.post(
   '/createUser',
@@ -10,7 +11,7 @@ userCreate.post(
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const emailCheck = await prisma.user.findUnique({
+    const emailCheck = await prisma.users.findUnique({
       where: {
         email,
       },
@@ -24,7 +25,7 @@ userCreate.post(
     }
 
     try {
-      const newUser = await prisma.user.create({
+      const newUser = await prisma.users.create({
         data: {
           email,
           password: hashedPassword,
@@ -32,7 +33,9 @@ userCreate.post(
           firstName,
         },
       })
-      res.status(200).json({ message: 'Success!', user: newUser })
+
+      const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY)
+      res.status(200).json({ message: 'Success!', user: newUser, token: token })
       return
     } catch (error) {
       return res.status(500).json({ message: 'Server error' })
