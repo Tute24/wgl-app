@@ -11,15 +11,15 @@ interface RegisterFormsProps {
   }
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSubmit: (event: FormEvent) => void
+  statusMessage: string
 }
 
 export default function RegisterForm({
   usersData,
   onChange,
   onSubmit,
+  statusMessage
 }: RegisterFormsProps) {
-
-    const {statusMessage,setStatusMessage} = useContextWrap()
 
   return (
     <>
@@ -91,7 +91,7 @@ export default function RegisterForm({
                 required
               />
             </div>
-            <div className="p-5">
+            <div className="p-5 flex flex-col justify-center">
               <button
                 className="bg-amber-50 rounded-full py-0.5 px-4 text-black font-bold border-amber-100 border-solid border-2 w-full mt-2.5 hover:bg-amber-200 focus:outline-none ring-2 ring-amber-200"
                 type="submit"
@@ -99,8 +99,9 @@ export default function RegisterForm({
               >
                 Sign Up!
               </button>
+              <span className='text-red-500 font-bold'>{statusMessage}</span>
             </div>
-            <span className='text-white'>{statusMessage}</span>
+            
           </form>
 
         </div>
