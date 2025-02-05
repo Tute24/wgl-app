@@ -13,7 +13,7 @@ export default async function isAuthenticated(
   req: CustomRequest,
   res: Response,
   next: NextFunction
-) {
+): Promise<any> {
   const token = req.headers['authorization']?.split(' ')[1]
 
   if (!token) {
