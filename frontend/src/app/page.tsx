@@ -1,15 +1,19 @@
 'use client'
 
+import axios from 'axios'
 import LoginForm from '../components/Forms/LoginForm'
 import UnLoggedHeader from '../components/Headers/UnLoggedHeader'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { useContextWrap } from '@/contextAPI/context'
 
 export default function Login() {
   const [usersSign, setUsersSign] = useState({
     email: '',
     password: '',
   })
+
+  const { setStatusMessage } = useContextWrap()
 
   const router = useRouter()
 
@@ -20,10 +24,28 @@ export default function Login() {
     })
   }
 
-  function loginSubmitHandler(event: FormEvent) {
+  async function loginSubmitHandler(event: FormEvent) {
     event.preventDefault()
-    console.log(usersSign)
-    router.push('/dashboard')
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/logIn',
+        usersSign
+      )
+      if (response.status === 200) {
+        router.push('/dashboard')
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          setStatusMessage('The authentication credentias are not valid!')
+        }
+        if (error.response?.status === 500) {
+          setStatusMessage('Something went wrong. Try again!')
+        }
+      }
+      console.log(error)
+    }
   }
 
   return (
