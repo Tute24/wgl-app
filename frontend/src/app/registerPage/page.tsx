@@ -42,6 +42,8 @@ export default function Register() {
       )
     
       if (response.status === 200) {
+        const userToken = response.data.token
+        localStorage.setItem('userToken',JSON.stringify(userToken))
         router.push('/dashboard')
       }
     }catch(error:unknown){
