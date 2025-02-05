@@ -9,15 +9,16 @@ export interface CustomRequest extends Request {
   authUser?: tokenBody
 }
 
-export default async function isAuthenticated(
+export default function isAuthenticated(
   req: CustomRequest,
   res: Response,
   next: NextFunction
-): Promise<any> {
+):void {
   const token = req.headers['authorization']?.split(' ')[1]
 
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' })
+    res.status(401).json({ message: 'Unauthorized' })
+    return
   }
 
   try {
@@ -31,6 +32,7 @@ export default async function isAuthenticated(
     req.authUser = decodedToken
     next()
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid or expired token.' })
+     res.status(401).json({ message: 'Invalid or expired token.' })
+     return
   }
 }
