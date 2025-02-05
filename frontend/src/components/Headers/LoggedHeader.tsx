@@ -1,6 +1,12 @@
 import Link from 'next/link'
 
-export default function LoggedHeader() {
+interface LoggedHeaderProps{
+  onClick: (event:React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export default function LoggedHeader({
+  onClick
+}:LoggedHeaderProps) {
   return (
     <>
       <div className="py-4">
@@ -35,7 +41,7 @@ export default function LoggedHeader() {
           </div>
           <div className="">
             <Link href="/">
-              <button className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
+              <button onClick={onClick} className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
                 Logout
               </button>
             </Link>
