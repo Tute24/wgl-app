@@ -23,6 +23,7 @@ logInRoute.post('/logIn',async(req:Request,res:Response):Promise<any> =>{
     try{
         if(!(await bcrypt.compare(password,logInUser.password))){
             res.status(403).json({message:"Incorrect password."})
+            return
         }
 
         const token = jwt.sign({id: logInUser.id},process.env.SECRET_KEY)
@@ -31,5 +32,8 @@ logInRoute.post('/logIn',async(req:Request,res:Response):Promise<any> =>{
     }catch(error){
         console.log(error)
         res.status(500).json({message:"Server error."})
+        return
     }
 })
+
+export default logInRoute
