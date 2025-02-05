@@ -18,10 +18,10 @@ logInRoute.post('/logIn',async(req:Request,res:Response):Promise<any> =>{
         return
     }
 
-    const passwordHash = await bcrypt.hash(password,10)
+    
 
     try{
-        if(logInUser?.password !== passwordHash){
+        if(!(await bcrypt.compare(password,logInUser.password))){
             res.status(403).json({message:"Incorrect password."})
         }
 
