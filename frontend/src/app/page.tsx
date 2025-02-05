@@ -38,7 +38,10 @@ export default function Login() {
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          setStatusMessage('The authentication credentias are not valid!')
+          setStatusMessage(`This email doesn't belong to an existent user`)
+        }
+        if (error.response?.status === 403){
+          setStatusMessage('Incorrect password.')
         }
         if (error.response?.status === 500) {
           setStatusMessage('Something went wrong. Try again!')
