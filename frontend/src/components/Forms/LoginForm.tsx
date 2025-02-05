@@ -7,12 +7,14 @@ interface LoginFormProps {
   }
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSubmit: (event: FormEvent) => void
+  statusMessage: string
 }
 
 export default function LoginForm({
   usersSign,
   onChange,
   onSubmit,
+  statusMessage
 }: LoginFormProps) {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen ">
@@ -51,6 +53,7 @@ export default function LoginForm({
             >
               Log In
             </button>
+            <span className='text-red-500 font-bold'>{statusMessage}</span>
           </div>
         </form>
       </div>

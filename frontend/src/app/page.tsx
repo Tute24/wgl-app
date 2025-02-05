@@ -13,7 +13,7 @@ export default function Login() {
     password: '',
   })
 
-  const { setStatusMessage } = useContextWrap()
+  const { statusMessage, setStatusMessage } = useContextWrap()
 
   const router = useRouter()
 
@@ -55,6 +55,7 @@ export default function Login() {
         usersSign={usersSign}
         onChange={loginInputHandler}
         onSubmit={loginSubmitHandler}
+        statusMessage={statusMessage}
       />
     </>
   )
