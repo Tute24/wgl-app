@@ -8,17 +8,16 @@ logOutRoute.get(
   '/logOut',
   isAuthenticated,
   async (req: CustomRequest, res: Response): Promise<any> => {
-    const id = req.authUser?.id
 
     const user = await prisma.users.findUnique({
       where: {
-        id: id,
+        id: req.authUser?.id,
       },
     })
 
     if (!user) {
       res
-        .status(401)
+        .status(404)
         .json({ message: 'Unauthorized/User Not found or logged in.' })
       return
     }
