@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'axios'
 import GiftListForm from '../../components/Forms/NewList'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 import { useContextWrap } from '../../contextAPI/context'
@@ -41,15 +42,35 @@ export default function newList() {
     }))
   }
 
-  function listSubmitHandler(event: FormEvent) {
+  async function listSubmitHandler(event: FormEvent) {
     event.preventDefault()
+    const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
 
-    console.log(listData)
+    if (userToken) {
+      console.log(listData)
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/createList',
+          listData,
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+
+        if(response.status === 200){
+          setStatusMessage('List successfully created!')
+        }
+      } catch (error) {}
+    }
   }
+
+  async function LogOut() {}
 
   return (
     <>
-      <LoggedHeader />
+      <LoggedHeader onClick={LogOut} />
       <GiftListForm
         listDataType={listData}
         onChange={listInputHandler}
