@@ -39,8 +39,8 @@ model Gifts {
   productLink String @map("product_link")
   wedding Weddings @relation(fields: [fromWedding],references: [id])
   fromWedding Int @map("from_wedding")
-  user Users @relation(fields: [giftedBy],references: [id])
-  giftedBy String @map("gifted_by")
+  user Users? @relation(fields: [giftedBy],references: [id])
+  giftedBy String? @map("gifted_by") 
 }
 
 model Guests {

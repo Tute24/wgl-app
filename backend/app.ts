@@ -6,6 +6,7 @@ const cors = require ('cors')
 import userCreate from './controllers/createUser'
 import logInRoute from './controllers/logIn'
 import logOutRoute from './controllers/logOut'
+import createListRoute from './controllers/createList'
 
 app.use(express.json())
 app.use(cors())
@@ -13,6 +14,7 @@ export const prisma = new PrismaClient()
 app.use(userCreate)
 app.use(logInRoute)
 app.use(logOutRoute)
+app.use(createListRoute)
 
 const port = process.env.PORT || 3000
 
