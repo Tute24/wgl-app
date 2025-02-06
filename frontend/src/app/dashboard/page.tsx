@@ -1,6 +1,7 @@
+'use client'
+
 import axios from 'axios'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
-import { headers } from 'next/headers'
 import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {
