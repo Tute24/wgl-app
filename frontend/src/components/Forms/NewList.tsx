@@ -25,6 +25,7 @@ interface newListFormProps {
       }[]
     }>
   >
+  statusMessage: string
 }
 
 export default function GiftListForm({
@@ -33,9 +34,8 @@ export default function GiftListForm({
   onSubmit,
   giftsChange,
   setListData,
+  statusMessage
 }: newListFormProps) {
-  const { statusMessage } = useContextWrap()
-
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen ">
@@ -141,8 +141,10 @@ export default function GiftListForm({
               >
                 Create List
               </button>
+              <span className={`font-bold flex justify-center ${
+                statusMessage === 'Wedding created successfully!' ? 'text-green-500' : 'text-red-500'
+              }`}>{statusMessage}</span>
             </div>
-            <span className="text-white">{statusMessage}</span>
           </form>
         </div>
       </div>
