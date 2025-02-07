@@ -39,8 +39,8 @@ createListRoute.post(
 
         console.log('Wedding successfully created!')
 
-        await Promise.all( giftsArray.map(async (giftInfo: giftProps) => {
-           prisma.gifts.create({
+        const newGifts = ( giftsArray.map(async (giftInfo: giftProps) => {
+           await prisma.gifts.create({
             data: {
               quantity: Number(giftInfo.quantity),
               productName: giftInfo.productName,
