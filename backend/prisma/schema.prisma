@@ -16,6 +16,7 @@ model Users {
   weddingsOwn Weddings[]
   productsGifted Gifts[]
   weddingsGuest Guests[]
+  requests Requests[]
 
   @@map("users")
 }
@@ -24,10 +25,12 @@ model Weddings {
   id Int @id @default(autoincrement()) 
   weddingTitle String @map("wedding_title")
   weddingDate String @map("wedding_date")
+  shippingAddress String @map("shipping_address") @default("null")
   user Users @relation(fields: [createdBy],references: [id])
   createdBy String
   gifts Gifts[]
   guests Guests[]
+  request Requests[]
 
   @@map("weddings")
 }
@@ -51,3 +54,10 @@ model Guests {
   referencedWedding Int @map("referenced_wedding")
 }
 
+model Requests {
+  id Int @id @default(autoincrement())
+  user Users @relation(fields: [requestBy], references: [id])
+  requestBy String @map("request_by")
+  wedding Weddings @relation(fields: [relatedWedding],references: [id])
+  relatedWedding Int @map("related_wedding")
+}
