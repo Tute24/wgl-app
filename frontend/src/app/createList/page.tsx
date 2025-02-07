@@ -7,11 +7,12 @@ import { useContextWrap } from '../../contextAPI/context'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function newList() {
-  const { setStatusMessage } = useContextWrap()
+  const { statusMessage, setStatusMessage } = useContextWrap()
 
   const [listData, setListData] = useState({
     listTitle: '',
     weddingDate: '',
+    shippingAddress: '',
     gifts: [
       {
         productName: '',
@@ -60,9 +61,38 @@ export default function newList() {
         )
 
         if(response.status === 200){
-          setStatusMessage('List successfully created!')
+          setStatusMessage('Wedding created successfully!')
         }
-      } catch (error) {}
+        setListData(
+          {
+            listTitle: '',
+            weddingDate: '',
+            shippingAddress:'',
+            gifts: [
+              {
+                productName: '',
+                productLink: '',
+                quantity: 0,
+              },
+            ],
+          }
+        )
+      } catch (error) {
+        if(axios.isAxiosError(error)){
+          if(error.response?.status === 401){
+            setStatusMessage(`User doesn't have permission.`)
+          }
+          if(error.response?.status === 403){
+            setStatusMessage(`Invalid credentials.`)
+          }
+          if(error.response?.status === 404){
+            setStatusMessage(`Not found.`)
+          }
+          if(error.response?.status === 500){
+            setStatusMessage(`Something went wrong. Try again.`)
+          }
+        }
+      }
     }
   }
 
@@ -77,6 +107,7 @@ export default function newList() {
         onSubmit={listSubmitHandler}
         giftsChange={listGiftInputHandler}
         setListData={setListData}
+        statusMessage={statusMessage}
       />
     </>
   )

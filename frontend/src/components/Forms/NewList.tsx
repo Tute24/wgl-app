@@ -5,6 +5,7 @@ interface newListFormProps {
   listDataType: {
     listTitle: string
     weddingDate: string
+    shippingAddress: string
     gifts: {
       productName: string
       productLink: string
@@ -18,6 +19,7 @@ interface newListFormProps {
     React.SetStateAction<{
       listTitle: string
       weddingDate: string
+      shippingAddress: string
       gifts: {
         productName: string
         productLink: string
@@ -25,6 +27,7 @@ interface newListFormProps {
       }[]
     }>
   >
+  statusMessage: string
 }
 
 export default function GiftListForm({
@@ -33,9 +36,8 @@ export default function GiftListForm({
   onSubmit,
   giftsChange,
   setListData,
+  statusMessage
 }: newListFormProps) {
-  const { statusMessage } = useContextWrap()
-
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen ">
@@ -68,6 +70,20 @@ export default function GiftListForm({
                 name="weddingDate"
                 value={listDataType.weddingDate}
                 onChange={onChange}
+                required
+              />
+            </div>
+            <div className="p-2">
+              <label htmlFor="weddingDate">Shipping Address</label>
+              <input
+                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center
+                 text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
+                type="string"
+                id="shippingAddress"
+                name="shippingAddress"
+                value={listDataType.shippingAddress}
+                onChange={onChange}
+                placeholder='The address where the gifts will be delivered at.'
                 required
               />
             </div>
@@ -141,8 +157,10 @@ export default function GiftListForm({
               >
                 Create List
               </button>
+              <span className={`font-bold flex justify-center ${
+                statusMessage === 'Wedding created successfully!' ? 'text-green-500' : 'text-red-500'
+              }`}>{statusMessage}</span>
             </div>
-            <span className="text-white">{statusMessage}</span>
           </form>
         </div>
       </div>

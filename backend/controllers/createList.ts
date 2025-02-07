@@ -39,17 +39,16 @@ createListRoute.post(
 
         console.log('Wedding successfully created!')
 
-        const newGifts = giftsArray.map(async (giftInfo: giftProps) => {
-          await prisma.gifts.create({
+        const newGifts = ( giftsArray.map(async (giftInfo: giftProps) => {
+           await prisma.gifts.create({
             data: {
               quantity: Number(giftInfo.quantity),
               productName: giftInfo.productName,
               productLink: giftInfo.productLink,
-              fromWedding: newWedding.id,
-              giftedBy: userID,
+              fromWedding: newWedding.id
             },
           })
-        })
+        }))
 
         res.status(200).json({
           message: 'Information successfully submitted to the database',
