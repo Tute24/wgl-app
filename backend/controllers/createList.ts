@@ -45,8 +45,7 @@ createListRoute.post(
               quantity: Number(giftInfo.quantity),
               productName: giftInfo.productName,
               productLink: giftInfo.productLink,
-              fromWedding: newWedding.id,
-              giftedBy: userID,
+              fromWedding: newWedding.id
             },
           })
         })
