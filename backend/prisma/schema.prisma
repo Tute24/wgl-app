@@ -60,4 +60,6 @@ model Requests {
   requestBy String @map("request_by")
   wedding Weddings @relation(fields: [relatedWedding],references: [id])
   relatedWedding Int @map("related_wedding")
+  pending Boolean @default(true)
+  accepted Boolean @default(false)
 }
