@@ -12,6 +12,7 @@ export default function newList() {
   const [listData, setListData] = useState({
     listTitle: '',
     weddingDate: '',
+    shippingAddress: '',
     gifts: [
       {
         productName: '',
@@ -66,6 +67,7 @@ export default function newList() {
           {
             listTitle: '',
             weddingDate: '',
+            shippingAddress:'',
             gifts: [
               {
                 productName: '',
