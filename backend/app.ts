@@ -7,6 +7,7 @@ import userCreate from './controllers/createUser'
 import logInRoute from './controllers/logIn'
 import logOutRoute from './controllers/logOut'
 import createListRoute from './controllers/createList'
+import getWeddings from './controllers/getWeddings'
 
 app.use(express.json())
 app.use(cors())
@@ -15,6 +16,7 @@ app.use(userCreate)
 app.use(logInRoute)
 app.use(logOutRoute)
 app.use(createListRoute)
+app.use(getWeddings)
 
 const port = process.env.PORT || 3000
 

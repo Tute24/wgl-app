@@ -27,6 +27,7 @@ logInRoute.post('/logIn',async(req:Request,res:Response):Promise<any> =>{
         }
 
         const token = jwt.sign({id: logInUser.id},process.env.SECRET_KEY)
+        console.log(token)
         res.status(200).json({message:"Successfull login.",token:token})
         return
     }catch(error){

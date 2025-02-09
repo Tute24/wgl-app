@@ -13,7 +13,7 @@ createListRoute.post(
   '/createList',
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
-    const { listTitle, weddingDate } = req.body
+    const { listTitle, weddingDate, shippingAddress } = req.body
     const giftsArray = req.body.gifts
     const userID = req.authUser?.id
 
@@ -34,6 +34,7 @@ createListRoute.post(
             weddingTitle: listTitle,
             weddingDate: weddingDate,
             createdBy: userID,
+            shippingAddress: shippingAddress
           },
         })
 
