@@ -3,12 +3,26 @@
 import axios from 'axios'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useContextWrap } from '@/contextAPI/context'
 
 export default function Dashboard() {
   const route = useRouter()
+  const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
+  const {validToken,setValidToken} = useContextWrap()
+
+  useEffect(()=>{
+    function checkAuth(){
+      if(userToken === null){
+        route.push('/')
+        return
+      }
+      setValidToken(true)
+    }
+    checkAuth()
+  },[])
 
   async function LogOut() {
-    const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
 
     if (userToken) {
       try {
@@ -42,7 +56,9 @@ export default function Dashboard() {
   }
   return (
     <>
-      <LoggedHeader onClick={LogOut} />
+    <div>
+      {validToken && (<LoggedHeader onClick={LogOut} />)}
+    </div>
     </>
   )
 }
