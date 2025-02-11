@@ -4,7 +4,7 @@ import { prisma } from '../app'
 const getListRoute: Router = express.Router()
 
 getListRoute.get(
-  'getList',
+  '/getList',
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
     const userID = req.authUser?.id
@@ -41,12 +41,20 @@ getListRoute.get(
         )
 
         if (checkCreatorArray?.length !== 0) {
-          checkAdmin.isCreator === true
+          checkAdmin.isCreator= true
+          const ownWedding = await prisma.weddings.findUnique({
+            where: {
+              id: weddingID,
+            },
+            include: {
+                gifts: true
+            }
+          })
           res
             .status(200)
             .json({
               message: 'Success (owner)!',
-              wedding: checkCreatorArray,
+              wedding: ownWedding,
               checkAdmin: checkAdmin,
             })
           return
@@ -61,6 +69,9 @@ getListRoute.get(
             where: {
               id: weddingID,
             },
+            include: {
+                gifts: true
+            }
           })
           res
             .status(200)
