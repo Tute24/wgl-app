@@ -16,13 +16,24 @@ getListRoute.get(
     const user = await prisma.users.findUnique({
       where: {
         id: userID,
-      },
+      }
+    })
+
+    const checkWedding = await prisma.weddings.findUnique({
+        where:{
+            id: weddingID
+        }
     })
 
     if (!user) {
       res.status(404).json({ message: 'User not found.' })
       return
     }
+
+    if(!checkWedding){
+        res.status(404).json({ message: `Couldn't find this wedding's list.` })
+        return
+      }
 
     if (userID) {
       try {
