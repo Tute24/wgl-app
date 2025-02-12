@@ -56,9 +56,11 @@ getReqRoute.get(
             return
         }
 
+        const effectiveAvailableRequests = availableRequests.filter((reqs)=> reqs.length != 0 )
+
         res
           .status(200)
-          .json({ message: 'Fetch successfull.', requests: availableRequests })
+          .json({ message: 'Fetch successfull.', requests: effectiveAvailableRequests })
         return
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
