@@ -38,6 +38,8 @@ makeRequestRoute.post(
           data: {
             requestBy: userID,
             relatedWedding: weddingID,
+            weddingTitle: checkWedding.weddingTitle,
+            requestByName: `${user.firstName} ${user.lastName}`
           },
         })
 
