@@ -49,7 +49,7 @@ getReqRoute.get(
           })
         )
 
-        const existentRequests = availableRequests.every((reqs) => reqs == null)
+        const existentRequests = availableRequests.every((reqs) => reqs.length === 0)
 
         if(existentRequests){
             res.status(404).json({message:"There are no requests from guests at the time."})
