@@ -10,6 +10,7 @@ import createListRoute from './controllers/createList'
 import getWeddings from './controllers/getWeddings'
 import getListRoute from './controllers/getList'
 import makeRequestRoute from './controllers/makeRequest'
+import getReqRoute from './controllers/getRequests'
 
 app.use(express.json())
 app.use(cors())
@@ -21,6 +22,7 @@ app.use(createListRoute)
 app.use(getWeddings)
 app.use(getListRoute)
 app.use(makeRequestRoute)
+app.use(getReqRoute)
 
 const port = process.env.PORT || 3000
 
