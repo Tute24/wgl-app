@@ -11,6 +11,8 @@ import getWeddings from './controllers/getWeddings'
 import getListRoute from './controllers/getList'
 import makeRequestRoute from './controllers/makeRequest'
 import getReqRoute from './controllers/getRequests'
+import acceptRequestRoute from './controllers/acceptRequest'
+import denyRequestRoute from './controllers/denyRequest'
 
 app.use(express.json())
 app.use(cors())
@@ -23,6 +25,8 @@ app.use(getWeddings)
 app.use(getListRoute)
 app.use(makeRequestRoute)
 app.use(getReqRoute)
+app.use(acceptRequestRoute)
+app.use(denyRequestRoute)
 
 const port = process.env.PORT || 3000
 
