@@ -91,45 +91,46 @@ export default function giftsList() {
 
   return (
     <>
-      {validToken && (
+      {validToken && notGuest &&
+      <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
-        ) &&
-        notGuest && (
+        
           <div className="flex flex-col items-center justify-center">
             <h2>
               Not a guest of this wedding, make a request or go back to the
               initial page
             </h2>
           </div>
-        )}
-      {validToken && (
+    </>
+    }
+      {validToken && isCreator && <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
-        ) &&
-        isCreator && (
+
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's owner</h1>
             <div>
               <Gifts giftsArray={giftsArray} />
             </div>
           </div>
-        )}
-      {validToken && (
+          </>
+        }
+      {validToken && !notGuest && !isCreator && <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
-        ) &&
-        !isCreator && (
+
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's guest</h1>
             <div>
               <Gifts giftsArray={giftsArray} />
             </div>
           </div>
-        )}
+          </>
+        }
     </>
   )
 }
