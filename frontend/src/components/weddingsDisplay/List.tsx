@@ -1,16 +1,5 @@
 import Link from 'next/link'
-
-interface weddingProps {
-  id: string
-  weddingTitle: string
-  weddingDate: string
-  shippingAddress?: string
-  createdBy: string
-}
-
-interface weddingListProps {
-  weddingsArray: weddingProps[]
-}
+import weddingListProps from '@/types/weddingListProps'
 
 export default function Weddings({ weddingsArray }: weddingListProps) {
   return (
