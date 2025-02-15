@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import giftsListProps from '@/types/giftsListProps'
+import Link from 'next/link'
 
 export default function Gifts({ giftsArray }: giftsListProps) {
   return (
@@ -21,12 +21,13 @@ export default function Gifts({ giftsArray }: giftsListProps) {
                 Quantity: {gift.quantity}
               </p>
               <div className="flex flex-row items-center gap-3">
-                <Link
-                  href={gift.productLink}
+               <Link 
+                  href= {gift.productLink.startsWith('http') ? gift.productLink : `https://${gift.productLink}`}
+                  target='_blank'
                   className=" text-xs  text-orangeText hover:underline sm:text-base"
                 >
                   Check the product's page
-                </Link>
+              </Link>
               </div>
             </div>
           </li>
