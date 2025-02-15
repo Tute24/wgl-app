@@ -1,15 +1,22 @@
 'use client'
 
+import { useParams } from "next/navigation";
 import LoggedHeader from "../../../components/Headers/LoggedHeader";
+import checkAuth from "@/functions/checkAuthFunction";
+import useLogOut from "@/functions/logOutFunction";
 
 export default function giftsList(){
 
-    function logOutfunction(){
-        console.log('logout')
-    }
+    const {weddingID} = useParams()
+
+    checkAuth()
+    const logOut = useLogOut()
+
     return (
+        <>
         <LoggedHeader
-        onClick={logOutfunction}
+        onClick={logOut}
         />
+        </>
     )
 }
