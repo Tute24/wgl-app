@@ -1,17 +1,5 @@
 import Link from 'next/link'
-
-interface giftsProps {
-    id: number,
-    quantity: number,
-    productName: string,
-    productLink: string,
-    fromWedding: number,
-    giftedBy?: string
-}
-
-interface giftsListProps {
-    giftsArray: giftsProps[]
-}
+import giftsListProps from '@/types/giftsListProps'
 
 export default function Weddings({ giftsArray }: giftsListProps) {
   return (
