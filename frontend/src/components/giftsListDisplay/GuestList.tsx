@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import giftsListProps from '@/types/giftsListProps'
 
-export default function Weddings({ giftsArray }: giftsListProps) {
+export default function Gifts({ giftsArray }: giftsListProps) {
   return (
     <ul className="flex flex-col text-center items-center">
       {giftsArray.map((gift) => (
