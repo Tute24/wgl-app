@@ -49,14 +49,14 @@ getReqRoute.get(
           })
         )
 
-        const existentRequests = availableRequests.every((reqs) => reqs.length === 0)
+        const existentRequests = availableRequests.every((reqs) => reqs.length === 0 || reqs[0].pending === false)
 
         if(existentRequests){
-            res.status(404).json({message:"There are no requests from guests at the time."})
+            res.status(404).json({message:"There are no pending requests from guests at the time."})
             return
         }
 
-        const effectiveAvailableRequests = availableRequests.filter((reqs)=> reqs.length != 0 )
+        const effectiveAvailableRequests = availableRequests.filter((reqs)=> reqs.length != 0 && reqs[0].pending === true )
 
         res
           .status(200)
