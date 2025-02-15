@@ -8,7 +8,7 @@ getListRoute.get(
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
     const userID = req.authUser?.id
-    const { weddingID } = req.body
+    const weddingID = Number(req.query.id)
     const checkAdmin = {
       isCreator: false,
     }
