@@ -12,7 +12,8 @@ import Gifts from '../../../components/giftsListDisplay/GuestList'
 
 export default function giftsList() {
   const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
-  const { weddingID } = useParams()
+  const { id } = useParams()
+  const weddingID = Number(id)
   const { validToken } = useContextWrap()
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
