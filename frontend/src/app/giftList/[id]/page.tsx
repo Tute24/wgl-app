@@ -12,10 +12,9 @@ import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 
 export default function giftsList() {
-  const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
   const { id } = useParams()
   const weddingID = Number(id)
-  const { validToken } = useContextWrap()
+  const { validToken,userToken } = useContextWrap()
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
@@ -61,7 +60,7 @@ export default function giftsList() {
 
   useEffect(() => {
     async function getData() {
-      if (validToken) {
+      if (userToken) {
         try {
           const response = await axios.get('http://localhost:3000/getList', {
             headers: {
@@ -98,7 +97,7 @@ export default function giftsList() {
     }
 
     getData()
-  }, [validToken])
+  }, [userToken])
 
   useEffect(()=>{
         console.log(sendGiftObj)
@@ -106,7 +105,7 @@ export default function giftsList() {
 
   return (
     <>
-      {validToken && notGuest && (
+      {userToken && notGuest && (
         <>
           <div>
             <LoggedHeader onClick={logOut} />
@@ -120,7 +119,7 @@ export default function giftsList() {
           </div>
         </>
       )}
-      {validToken && isCreator && (
+      {userToken && isCreator && (
         <>
           <div>
             <LoggedHeader onClick={logOut} />
@@ -134,7 +133,7 @@ export default function giftsList() {
           </div>
         </>
       )}
-      {validToken && !notGuest && !isCreator && (
+      {userToken && !notGuest && !isCreator && (
         <>
           <div>
             <LoggedHeader onClick={logOut} />
