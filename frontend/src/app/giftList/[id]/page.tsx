@@ -8,7 +8,8 @@ import { useContextWrap } from '@/contextAPI/context'
 import { useEffect, useState } from 'react'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
-import Gifts from '../../../components/giftsListDisplay/GuestList'
+import GuestList from '../../../components/giftsListDisplay/GuestList'
+import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 
 export default function giftsList() {
   const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
@@ -44,6 +45,16 @@ export default function giftsList() {
       },
     ],
   })
+  const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
+  const [sendGiftObj, setSendGiftObj] = useState({
+    giftID: 0,
+    quantity: 0,
+  })
+  const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
+  }
 
   checkAuth()
   const logOut = useLogOut()
@@ -89,23 +100,28 @@ export default function giftsList() {
     getData()
   }, [validToken])
 
+  useEffect(()=>{
+        console.log(sendGiftObj)
+  },[isGiftSent])
+
   return (
     <>
-      {validToken && notGuest &&
-      <>
+      {validToken && notGuest && (
+        <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
-        
+
           <div className="flex flex-col items-center justify-center">
             <h2>
               Not a guest of this wedding, make a request or go back to the
               initial page
             </h2>
           </div>
-    </>
-    }
-      {validToken && isCreator && <>
+        </>
+      )}
+      {validToken && isCreator && (
+        <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
@@ -113,12 +129,13 @@ export default function giftsList() {
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's owner</h1>
             <div>
-              <Gifts giftsArray={giftsArray} />
+              <OwnerList giftsArray={giftsArray} />
             </div>
           </div>
-          </>
-        }
-      {validToken && !notGuest && !isCreator && <>
+        </>
+      )}
+      {validToken && !notGuest && !isCreator && (
+        <>
           <div>
             <LoggedHeader onClick={logOut} />
           </div>
@@ -126,11 +143,20 @@ export default function giftsList() {
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's guest</h1>
             <div>
-              <Gifts giftsArray={giftsArray} />
+              <GuestList
+                giftsArray={giftsArray}
+                isGiftingSetup={isGiftingSetup}
+                setIsGiftingSetup={setIsGiftingSetup}
+                isGiftSent={isGiftSent}
+                setIsGiftSent={setIsGiftSent}
+                sendGiftObj={sendGiftObj}
+                setSendGiftObj={setSendGiftObj}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
-          </>
-        }
+        </>
+      )}
     </>
   )
 }

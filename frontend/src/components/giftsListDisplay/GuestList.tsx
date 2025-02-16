@@ -1,7 +1,9 @@
 import giftsListProps from '@/types/giftsListProps'
+import giftsProps from '@/types/giftsProps'
 import Link from 'next/link'
 
 interface HandleGiftingProps {
+  giftsArray: giftsProps[]
   isGiftingSetup: boolean
   setIsGiftingSetup: React.Dispatch<React.SetStateAction<boolean>>
   sendGiftObj: {
@@ -17,8 +19,9 @@ interface HandleGiftingProps {
   setIsGiftSent: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function GuestList({ giftsArray }: giftsListProps,{
+export default function GuestList({
   isGiftingSetup,
+  giftsArray,
   setIsGiftSent,
   sendGiftObj,
   onChange,
