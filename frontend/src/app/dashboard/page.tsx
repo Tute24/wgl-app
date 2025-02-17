@@ -12,7 +12,7 @@ import checkAuth from '@/functions/checkAuthFunction'
 export default function Dashboard() {
 
 
-  const { validToken, userToken } = useContextWrap()
+  const { userToken } = useContextWrap()
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
     {
       id: '',
@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function getWeddings() {
-      if (validToken)
+      if (userToken)
         try {
           const response = await axios.get(
             'http://localhost:3000/getWeddings',
@@ -59,14 +59,14 @@ export default function Dashboard() {
     }
 
     getWeddings()
-  }, [validToken])
+  }, [userToken])
 
   const logOut = useLogOut()
 
   return (
     <>
       <div>
-        {validToken && (
+        {userToken && (
           <>
             <LoggedHeader onClick={logOut} />
             <div>
