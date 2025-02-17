@@ -11,8 +11,8 @@ import checkAuth from '@/functions/checkAuthFunction'
 
 export default function Dashboard() {
 
-  const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
-  const { validToken } = useContextWrap()
+
+  const { validToken, userToken } = useContextWrap()
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
     {
       id: '',

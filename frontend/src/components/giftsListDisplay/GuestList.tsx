@@ -1,7 +1,34 @@
 import giftsListProps from '@/types/giftsListProps'
+import giftsProps from '@/types/giftsProps'
 import Link from 'next/link'
 
-export default function Gifts({ giftsArray }: giftsListProps) {
+interface HandleGiftingProps {
+  giftsArray: giftsProps[]
+  isGiftingSetup: boolean
+  setIsGiftingSetup: React.Dispatch<React.SetStateAction<boolean>>
+  sendGiftObj: {
+    giftID: number
+    quantity: number
+  }
+  setSendGiftObj: React.Dispatch<React.SetStateAction<{
+    giftID: number
+    quantity: number
+  }>>
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  isGiftSent: boolean
+  setIsGiftSent: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function GuestList({
+  isGiftingSetup,
+  giftsArray,
+  setIsGiftSent,
+  sendGiftObj,
+  onChange,
+  isGiftSent,
+  setIsGiftingSetup,
+  setSendGiftObj
+}:HandleGiftingProps) {
   return (
     <ul className="flex flex-col text-center items-center">
       {giftsArray.map((gift) => (
@@ -29,6 +56,34 @@ export default function Gifts({ giftsArray }: giftsListProps) {
                   Check the product's page
               </Link>
               </div>
+            </div>
+            <div className='flex flex-row'>
+              {!isGiftingSetup && (<button onClick={()=>{
+                setIsGiftingSetup(true)
+              }} className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
+                    Mark this item as gifted
+              </button>
+            )}
+            {isGiftingSetup && (<><button onClick={()=>{
+                setIsGiftingSetup(false)
+              }} className="font-semibold border-solid border-red-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-300">
+                    Cancel
+              </button>
+              <label htmlFor={`quantityGifted-${gift.id}`}>How many of this product you'll be gifting?</label>
+              <input type="number" max={gift.quantity} min="0" id = {`quantityGifted-${gift.id}`} onChange={onChange} name='quantity' value={sendGiftObj.quantity} />
+              <button onClick={()=>{
+                setSendGiftObj((prev)=>({
+                  ...prev,
+                  giftID: gift.id
+                }))
+                setIsGiftSent(true);
+                
+              }} className="font-semibold border-solid border-green-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-green-300">
+                Confirm
+              </button>
+              </>
+            )}
+              
             </div>
           </li>
         </div>
