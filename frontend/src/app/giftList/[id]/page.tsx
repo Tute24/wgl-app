@@ -151,6 +151,7 @@ export default function giftsList() {
                 sendGiftObj={sendGiftObj}
                 setSendGiftObj={setSendGiftObj}
                 onChange={handleInputChange}
+                setGiftsArray={setGiftsArray}
               />
             </div>
           </div>

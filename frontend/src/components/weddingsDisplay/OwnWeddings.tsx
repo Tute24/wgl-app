@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import weddingListProps from '@/types/weddingListProps'
 
-export default function Weddings({ weddingsArray }: weddingListProps) {
+export default function WeddingsOwn({ weddingsArray }: weddingListProps) {
   return (
     <ul className="flex flex-col text-center items-center">
       {weddingsArray.map((wedding) => (
