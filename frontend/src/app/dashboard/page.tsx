@@ -4,7 +4,8 @@ import axios from 'axios'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 import { useEffect, useState } from 'react'
 import { useContextWrap } from '@/contextAPI/context'
-import List from '../../components/weddingsDisplay/OwnWeddings'
+import WeddingsOwn from '../../components/weddingsDisplay/OwnWeddings'
+import WeddingsGuest from '../../components/weddingsDisplay/GuestWeddings'
 import weddingProps from '@/types/weddingProps'
 import useLogOut from '../../functions/logOutFunction'
 import checkAuth from '@/functions/checkAuthFunction'
@@ -20,7 +21,16 @@ export default function Dashboard() {
       weddingDate: '',
       shippingAddress: '',
       createdBy: '',
-    },
+    }
+  ])
+  const [guestWeddingsArray,setGuestWeddingsArray] = useState<weddingProps[]>([
+    {
+      id: '',
+      weddingTitle: '',
+      weddingDate: '',
+      shippingAddress: '',
+      createdBy: '',
+    }
   ])
 
   checkAuth()
@@ -39,6 +49,7 @@ export default function Dashboard() {
           )
           if (response.status === 200) {
             setOwnWeddingsArray(response.data.own)
+            setGuestWeddingsArray(response.data.invited)
           }
         } catch (error) {
           if (axios.isAxiosError(error)) {
@@ -69,8 +80,13 @@ export default function Dashboard() {
         {userToken && (
           <>
             <LoggedHeader onClick={logOut} />
-            <div>
-              <List weddingsArray={ownWeddingsArray} />
+            <div className='flex flex-row justify-center'>
+              <div className='w-1/2'>
+                <WeddingsOwn weddingsArray={ownWeddingsArray} />
+              </div>
+              <div className='w-1/2git'>
+                <WeddingsGuest weddingsArray={guestWeddingsArray}/>
+              </div>
             </div>
           </>
         )}
