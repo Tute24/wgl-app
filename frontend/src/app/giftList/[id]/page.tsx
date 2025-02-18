@@ -14,7 +14,7 @@ import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 export default function giftsList() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { validToken,userToken } = useContextWrap()
+  const { userToken } = useContextWrap()
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
@@ -151,6 +151,7 @@ export default function giftsList() {
                 sendGiftObj={sendGiftObj}
                 setSendGiftObj={setSendGiftObj}
                 onChange={handleInputChange}
+                setGiftsArray={setGiftsArray}
               />
             </div>
           </div>

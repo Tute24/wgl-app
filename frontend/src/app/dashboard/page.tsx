@@ -4,7 +4,8 @@ import axios from 'axios'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 import { useEffect, useState } from 'react'
 import { useContextWrap } from '@/contextAPI/context'
-import List from '../../components/weddingsDisplay/List'
+import WeddingsOwn from '../../components/weddingsDisplay/OwnWeddings'
+import WeddingsGuest from '../../components/weddingsDisplay/GuestWeddings'
 import weddingProps from '@/types/weddingProps'
 import useLogOut from '../../functions/logOutFunction'
 import checkAuth from '@/functions/checkAuthFunction'
@@ -12,7 +13,7 @@ import checkAuth from '@/functions/checkAuthFunction'
 export default function Dashboard() {
 
 
-  const { validToken, userToken } = useContextWrap()
+  const { userToken } = useContextWrap()
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
     {
       id: '',
@@ -20,14 +21,23 @@ export default function Dashboard() {
       weddingDate: '',
       shippingAddress: '',
       createdBy: '',
-    },
+    }
+  ])
+  const [guestWeddingsArray,setGuestWeddingsArray] = useState<weddingProps[]>([
+    {
+      id: '',
+      weddingTitle: '',
+      weddingDate: '',
+      shippingAddress: '',
+      createdBy: '',
+    }
   ])
 
   checkAuth()
 
   useEffect(() => {
     async function getWeddings() {
-      if (validToken)
+      if (userToken)
         try {
           const response = await axios.get(
             'http://localhost:3000/getWeddings',
@@ -39,6 +49,7 @@ export default function Dashboard() {
           )
           if (response.status === 200) {
             setOwnWeddingsArray(response.data.own)
+            setGuestWeddingsArray(response.data.invited)
           }
         } catch (error) {
           if (axios.isAxiosError(error)) {
@@ -59,18 +70,23 @@ export default function Dashboard() {
     }
 
     getWeddings()
-  }, [validToken])
+  }, [userToken])
 
   const logOut = useLogOut()
 
   return (
     <>
       <div>
-        {validToken && (
+        {userToken && (
           <>
             <LoggedHeader onClick={logOut} />
-            <div>
-              <List weddingsArray={ownWeddingsArray} />
+            <div className='flex flex-row justify-center'>
+              <div className='w-1/2'>
+                <WeddingsOwn weddingsArray={ownWeddingsArray} />
+              </div>
+              <div className='w-1/2git'>
+                <WeddingsGuest weddingsArray={guestWeddingsArray}/>
+              </div>
             </div>
           </>
         )}
