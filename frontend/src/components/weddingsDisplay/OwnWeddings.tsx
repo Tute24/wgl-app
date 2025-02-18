@@ -8,7 +8,7 @@ export default function WeddingsOwn({ weddingsArray }: weddingListProps) {
         <div
           id={wedding.id}
           key={wedding.id}
-          className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5"
+          className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5 flex flex-row"
         >
           <li
             onClick={() => {}}
@@ -30,6 +30,9 @@ export default function WeddingsOwn({ weddingsArray }: weddingListProps) {
               </div>
             </div>
           </li>
+          <button className="font-semibold text-xs border-solid border-red-200 border-2 rounded-3xl px-2 py-1 mr-2 hover:bg-red-300">
+            Delete this wedding
+          </button>
         </div>
       ))}
     </ul>
