@@ -25,6 +25,12 @@ interface ContextProps {
   setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
   weddingData: weddingDataProps
   setWeddingData: React.Dispatch<SetStateAction<weddingDataProps>>
+  isCreator: boolean
+  setIsCreator: React.Dispatch<SetStateAction<boolean>>
+  notGuest: boolean
+  setNotGuest: React.Dispatch<SetStateAction<boolean>>
+  weddingID: number
+  setWeddingID: React.Dispatch<SetStateAction<number>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -33,6 +39,9 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [statusMessage, setStatusMessage] = useState<string>('')
   const [userToken, setUserToken] = useState<string | null>(null)
   const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
+  const [isCreator, setIsCreator] = useState<boolean>(false)
+  const [notGuest, setNotGuest] = useState<boolean>(false)
+  const [weddingID, setWeddingID] = useState<number>(0)
   const [sendGiftObj, setSendGiftObj] = useState({
     giftID: 0,
     quantity: 0,
@@ -80,6 +89,12 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setGiftsArray,
         weddingData,
         setWeddingData,
+        isCreator,
+        setIsCreator,
+        notGuest,
+        setNotGuest,
+        weddingID,
+        setWeddingID
       }}
     >
       {children}

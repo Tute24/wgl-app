@@ -1,20 +1,18 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import LoggedHeader from '../../../components/Headers/LoggedHeader'
 import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import { useContextWrap } from '@/contextAPI/context'
-import { useEffect, useState } from 'react'
-import giftsProps from '@/types/giftsProps'
-import axios from 'axios'
+import { useState } from 'react'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 import useGiftPresent from '@/functions/giftPresentFunction'
+import useGetData from '@/functions/getWeddingDataFunction'
+
 
 export default function giftsList() {
-  const { id } = useParams()
-  const weddingID = Number(id)
+
   const {
     userToken,
     isGiftSent,
@@ -23,59 +21,20 @@ export default function giftsList() {
     setGiftsArray,
     sendGiftObj,
     setSendGiftObj,
-    setWeddingData,
+    isCreator,
+    notGuest
   } = useContextWrap()
-  const [isCreator, setIsCreator] = useState<boolean>(false)
-  const [notGuest, setNotGuest] = useState<boolean>(false)
+
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
   }
-
   checkAuth()
+
+  useGetData()
+
   const logOut = useLogOut()
-
-  useEffect(() => {
-    async function getData() {
-      if (userToken) {
-        try {
-          const response = await axios.get('http://localhost:3000/getList', {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-            params: {
-              id: weddingID,
-            },
-          })
-
-          setWeddingData(response.data.wedding)
-          setGiftsArray(response.data.wedding.gifts)
-          if (response.data.checkAdmin.isCreator === true) {
-            setIsCreator(true)
-          }
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            if (error.response?.status === 401) {
-              console.log('User not authenticated.')
-            }
-            if (error.response?.status === 403) {
-              console.log('Invalid/Expired token.')
-              setNotGuest(true)
-            }
-            if (error.response?.status === 404) {
-              console.log('User not found.')
-            }
-            if (error.response?.status === 500) {
-              console.log('Server error.')
-            }
-          }
-        }
-      }
-    }
-
-    getData()
-  }, [userToken])
 
   useGiftPresent()
 

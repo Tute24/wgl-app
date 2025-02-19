@@ -31,7 +31,6 @@ export default function GuestList({
   isGiftSent,
   setIsGiftingSetup,
   setSendGiftObj,
-  setGiftsArray,
 }: HandleGiftingProps) {
   return (
     <ul className="flex flex-col text-center items-center">
