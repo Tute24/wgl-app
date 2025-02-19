@@ -1,3 +1,4 @@
+import useGiftPresent from '@/functions/giftPresentFunction'
 import giftsProps from '@/types/giftsProps'
 import Link from 'next/link'
 

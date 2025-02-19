@@ -9,15 +9,15 @@ interface ContextProps {
   userToken: string|null
   setUserToken: (value:string) => void
   isGiftSent: boolean
-  setIsGiftSent: (value:boolean)=> void
+  setIsGiftSent: React.Dispatch<SetStateAction<boolean>>
   sendGiftObj: {
     giftID: number
     quantity: number
   }
-  setSendGiftObj: (value: {
+  setSendGiftObj: React.Dispatch<SetStateAction<{
     giftID: number
     quantity: number
-  }) => void
+  }>>
   giftsArray: giftsProps[]
   setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
 }

@@ -10,23 +10,14 @@ import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
+import useGiftPresent from '@/functions/giftPresentFunction'
 
 export default function giftsList() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { userToken } = useContextWrap()
+  const { userToken, isGiftSent,setIsGiftSent, giftsArray, setGiftsArray, sendGiftObj, setSendGiftObj } = useContextWrap()
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
-  const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
-    {
-      id: 0,
-      quantity: 0,
-      productName: '',
-      productLink: '',
-      fromWedding: 0,
-      giftedBy: '',
-    },
-  ])
   const [weddingData, setWeddingData] = useState({
     id: '',
     weddingTitle: '',
@@ -45,11 +36,6 @@ export default function giftsList() {
     ],
   })
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
-  const [sendGiftObj, setSendGiftObj] = useState({
-    giftID: 0,
-    quantity: 0,
-  })
-  const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
@@ -99,49 +85,7 @@ export default function giftsList() {
     getData()
   }, [userToken])
 
-  useEffect(()=>{
-    
-    async function giftPresent (){
-      if(isGiftSent){
-        try{
-          const response = await axios.post('http://localhost:3000/giftPresent',sendGiftObj,{headers:{
-            Authorization: `Bearer ${userToken}`
-          }})
-
-          if(response.status === 200){
-            setGiftsArray((prevGifts) =>
-              prevGifts.map((item) =>
-                item.id === sendGiftObj.giftID
-                  ? {
-                      ...item,
-                      quantity: item.quantity - Number(sendGiftObj.quantity)
-                    }
-                  : item
-              )
-            )
-          }
-        }catch(error){
-          if(axios.isAxiosError(error)){
-            if (error.response?.status === 401) {
-              console.log('User not authenticated.')
-            }
-            if (error.response?.status === 403) {
-              console.log('Invalid/Expired token.')
-            }
-            if (error.response?.status === 404) {
-              console.log('User/Gift not found.')
-            }
-            if (error.response?.status === 500) {
-              console.log('Server error.')
-            }
-          }
-
-          console.log(error)
-        }
-      }
-    }
-    
-  },[isGiftSent])
+  useGiftPresent()
 
   return (
     <>
