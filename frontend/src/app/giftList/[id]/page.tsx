@@ -15,26 +15,18 @@ import useGiftPresent from '@/functions/giftPresentFunction'
 export default function giftsList() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { userToken, isGiftSent,setIsGiftSent, giftsArray, setGiftsArray, sendGiftObj, setSendGiftObj } = useContextWrap()
+  const {
+    userToken,
+    isGiftSent,
+    setIsGiftSent,
+    giftsArray,
+    setGiftsArray,
+    sendGiftObj,
+    setSendGiftObj,
+    setWeddingData,
+  } = useContextWrap()
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
-  const [weddingData, setWeddingData] = useState({
-    id: '',
-    weddingTitle: '',
-    weddingDate: '',
-    shippingAddress: '',
-    createdBy: '',
-    gifts: [
-      {
-        id: 0,
-        quantity: 0,
-        productName: '',
-        productLink: '',
-        fromWedding: 0,
-        giftedBy: '',
-      },
-    ],
-  })
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {

@@ -1,38 +1,59 @@
 'use client'
 
 import giftsProps from '@/types/giftsProps'
+import weddingDataProps from '@/types/weddingDataProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
   statusMessage: string
   setStatusMessage: (value: string) => void
-  userToken: string|null
-  setUserToken: (value:string) => void
+  userToken: string | null
+  setUserToken: (value: string) => void
   isGiftSent: boolean
   setIsGiftSent: React.Dispatch<SetStateAction<boolean>>
   sendGiftObj: {
     giftID: number
     quantity: number
   }
-  setSendGiftObj: React.Dispatch<SetStateAction<{
-    giftID: number
-    quantity: number
-  }>>
+  setSendGiftObj: React.Dispatch<
+    SetStateAction<{
+      giftID: number
+      quantity: number
+    }>
+  >
   giftsArray: giftsProps[]
   setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
+  weddingData: weddingDataProps
+  setWeddingData: React.Dispatch<SetStateAction<weddingDataProps>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [statusMessage, setStatusMessage] = useState<string>('')
-  const [userToken,setUserToken] = useState<string|null>(null)
+  const [userToken, setUserToken] = useState<string | null>(null)
   const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
   const [sendGiftObj, setSendGiftObj] = useState({
     giftID: 0,
     quantity: 0,
   })
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
+    {
+      id: 0,
+      quantity: 0,
+      productName: '',
+      productLink: '',
+      fromWedding: 0,
+      giftedBy: '',
+    },
+  ])
+  const [weddingData, setWeddingData] = useState<weddingDataProps>({
+    id: '',
+    weddingTitle: '',
+    weddingDate: '',
+    shippingAddress: '',
+    createdBy: '',
+    gifts: [
       {
         id: 0,
         quantity: 0,
@@ -41,10 +62,26 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         fromWedding: 0,
         giftedBy: '',
       },
-    ])
+    ],
+  })
 
   return (
-    <contextWrap.Provider value={{ statusMessage, setStatusMessage, userToken, setUserToken, isGiftSent, setIsGiftSent, sendGiftObj, setSendGiftObj, giftsArray, setGiftsArray }}>
+    <contextWrap.Provider
+      value={{
+        statusMessage,
+        setStatusMessage,
+        userToken,
+        setUserToken,
+        isGiftSent,
+        setIsGiftSent,
+        sendGiftObj,
+        setSendGiftObj,
+        giftsArray,
+        setGiftsArray,
+        weddingData,
+        setWeddingData,
+      }}
+    >
       {children}
     </contextWrap.Provider>
   )
