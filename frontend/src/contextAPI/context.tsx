@@ -1,7 +1,7 @@
 'use client'
 
 import giftsProps from '@/types/giftsProps'
-import { createContext, useContext, useState } from 'react'
+import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
   statusMessage: string
@@ -19,7 +19,7 @@ interface ContextProps {
     quantity: number
   }) => void
   giftsArray: giftsProps[]
-  setGiftsArray: (value: giftsProps[]) => void
+  setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
