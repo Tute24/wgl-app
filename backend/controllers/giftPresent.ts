@@ -42,6 +42,7 @@ giftPresentRouter.post(
       })
 
       if (updateGiftedBy) {
+        console.log('yes')
         res.status(200).json({ message: 'Presente gifted successfully.' })
         return
       }

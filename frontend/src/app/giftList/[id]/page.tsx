@@ -1,107 +1,68 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import LoggedHeader from '../../../components/Headers/LoggedHeader'
 import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import { useContextWrap } from '@/contextAPI/context'
-import { useEffect, useState } from 'react'
-import giftsProps from '@/types/giftsProps'
-import axios from 'axios'
+import { ChangeEvent, useState } from 'react'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
+import useGiftPresent from '@/functions/giftPresentFunction'
+import useGetData from '@/functions/getWeddingDataFunction'
+import giftsProps from '@/types/giftsProps'
 
 export default function giftsList() {
-  const { id } = useParams()
-  const weddingID = Number(id)
-  const { userToken } = useContextWrap()
-  const [isCreator, setIsCreator] = useState<boolean>(false)
-  const [notGuest, setNotGuest] = useState<boolean>(false)
-  const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
-    {
-      id: 0,
-      quantity: 0,
-      productName: '',
-      productLink: '',
-      fromWedding: 0,
-      giftedBy: '',
-    },
-  ])
-  const [weddingData, setWeddingData] = useState({
-    id: '',
-    weddingTitle: '',
-    weddingDate: '',
-    shippingAddress: '',
-    createdBy: '',
-    gifts: [
-      {
-        id: 0,
-        quantity: 0,
-        productName: '',
-        productLink: '',
-        fromWedding: 0,
-        giftedBy: '',
-      },
-    ],
-  })
+  const {
+    userToken,
+    isGiftSent,
+    setIsGiftSent,
+    giftsArray,
+    setGiftsArray,
+    sendGiftObj,
+    setSendGiftObj,
+    isCreator,
+    notGuest,
+  } = useContextWrap()
+
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
-  const [sendGiftObj, setSendGiftObj] = useState({
+  const [toUpdate, setToUpdate] = useState<boolean>(false)
+  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
+  const [updateProps, setUpdateProps] = useState({
     giftID: 0,
+    productName: '',
     quantity: 0,
+    productLink: '',
   })
-  const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
   }
 
+  function handleUpdateInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setUpdateProps({
+      ...updateProps,
+      [e.target.name]: e.target.value,
+      giftID: selectedGiftID,
+    })
+  }
+
+  function submitUpdate (){
+    console.log(updateProps)
+    setGiftsArray((prev:giftsProps[])=>(prev.map((gift)=>(updateProps.giftID===gift.id ? {...gift,
+      productLink: updateProps.productLink,
+      productName: updateProps.productName,
+      quantity: updateProps.quantity
+    } : gift))))
+    setToUpdate(false)
+    }
+  
   checkAuth()
+
+  useGetData()
+
   const logOut = useLogOut()
 
-  useEffect(() => {
-    async function getData() {
-      if (userToken) {
-        try {
-          const response = await axios.get('http://localhost:3000/getList', {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-            params: {
-              id: weddingID,
-            },
-          })
-
-          setWeddingData(response.data.wedding)
-          setGiftsArray(response.data.wedding.gifts)
-          if (response.data.checkAdmin.isCreator === true) {
-            setIsCreator(true)
-          }
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            if (error.response?.status === 401) {
-              console.log('User not authenticated.')
-            }
-            if (error.response?.status === 403) {
-              console.log('Invalid/Expired token.')
-              setNotGuest(true)
-            }
-            if (error.response?.status === 404) {
-              console.log('User not found.')
-            }
-            if (error.response?.status === 500) {
-              console.log('Server error.')
-            }
-          }
-        }
-      }
-    }
-
-    getData()
-  }, [userToken])
-
-  useEffect(()=>{
-        console.log(sendGiftObj)
-  },[isGiftSent])
+  useGiftPresent()
 
   return (
     <>
@@ -128,7 +89,17 @@ export default function giftsList() {
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's owner</h1>
             <div>
-              <OwnerList giftsArray={giftsArray} />
+              <OwnerList
+                giftsArray={giftsArray}
+                selectedGiftID={selectedGiftID}
+                setSelectedGiftID={setSelectedGiftID}
+                onChange={handleUpdateInputChange}
+                updateProps={updateProps}
+                setUpdateProps={setUpdateProps}
+                submitChange={submitUpdate}
+                setToUpdate={setToUpdate}
+                toUpdate={toUpdate}
+              />
             </div>
           </div>
         </>

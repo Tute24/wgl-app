@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 export default function checkAuth() {
   const route = useRouter()
-  const { userToken, setUserToken } = useContextWrap()
+  const { setUserToken } = useContextWrap()
 
   useEffect(() => {
     function checkAuth() {
@@ -19,7 +19,6 @@ export default function checkAuth() {
         route.push('/')
         return
       }
-      
     }
     checkAuth()
   }, [])
