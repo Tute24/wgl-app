@@ -26,6 +26,7 @@ export default function useGiftPresent() {
                 item.id === sendGiftObj.giftID
                   ? {
                       ...item,
+                      
                       quantity: item.quantity - Number(sendGiftObj.quantity),
                     }
                   : item

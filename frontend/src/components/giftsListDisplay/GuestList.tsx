@@ -1,6 +1,7 @@
-import useGiftPresent from '@/functions/giftPresentFunction'
+
 import giftsProps from '@/types/giftsProps'
 import Link from 'next/link'
+
 
 interface HandleGiftingProps {
   giftsArray: giftsProps[]
@@ -32,6 +33,7 @@ export default function GuestList({
   setIsGiftingSetup,
   setSendGiftObj,
 }: HandleGiftingProps) {
+
   return (
     <ul className="flex flex-col text-center items-center">
       {giftsArray.map((gift) => (

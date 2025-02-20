@@ -4,15 +4,14 @@ import LoggedHeader from '../../../components/Headers/LoggedHeader'
 import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import { useContextWrap } from '@/contextAPI/context'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 import useGiftPresent from '@/functions/giftPresentFunction'
 import useGetData from '@/functions/getWeddingDataFunction'
-
+import giftsProps from '@/types/giftsProps'
 
 export default function giftsList() {
-
   const {
     userToken,
     isGiftSent,
@@ -22,14 +21,41 @@ export default function giftsList() {
     sendGiftObj,
     setSendGiftObj,
     isCreator,
-    notGuest
+    notGuest,
   } = useContextWrap()
 
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
+  const [toUpdate, setToUpdate] = useState<boolean>(false)
+  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
+  const [updateProps, setUpdateProps] = useState({
+    giftID: 0,
+    productName: '',
+    quantity: 0,
+    productLink: '',
+  })
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
   }
+
+  function handleUpdateInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setUpdateProps({
+      ...updateProps,
+      [e.target.name]: e.target.value,
+      giftID: selectedGiftID,
+    })
+  }
+
+  function submitUpdate (){
+    console.log(updateProps)
+    setGiftsArray((prev:giftsProps[])=>(prev.map((gift)=>(updateProps.giftID===gift.id ? {...gift,
+      productLink: updateProps.productLink,
+      productName: updateProps.productName,
+      quantity: updateProps.quantity
+    } : gift))))
+    setToUpdate(false)
+    }
+  
   checkAuth()
 
   useGetData()
@@ -63,7 +89,17 @@ export default function giftsList() {
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's owner</h1>
             <div>
-              <OwnerList giftsArray={giftsArray} />
+              <OwnerList
+                giftsArray={giftsArray}
+                selectedGiftID={selectedGiftID}
+                setSelectedGiftID={setSelectedGiftID}
+                onChange={handleUpdateInputChange}
+                updateProps={updateProps}
+                setUpdateProps={setUpdateProps}
+                submitChange={submitUpdate}
+                setToUpdate={setToUpdate}
+                toUpdate={toUpdate}
+              />
             </div>
           </div>
         </>
