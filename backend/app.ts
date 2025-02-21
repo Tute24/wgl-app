@@ -14,6 +14,8 @@ import getReqRoute from './controllers/getRequests'
 import acceptRequestRoute from './controllers/acceptRequest'
 import denyRequestRoute from './controllers/denyRequest'
 import giftPresentRouter from './controllers/giftPresent'
+import updateGiftRouter from './controllers/updateGift'
+import deleteGiftRouter from './controllers/deleteGift'
 
 app.use(express.json())
 app.use(cors())
@@ -29,6 +31,8 @@ app.use(getReqRoute)
 app.use(acceptRequestRoute)
 app.use(denyRequestRoute)
 app.use(giftPresentRouter)
+app.use(updateGiftRouter)
+app.use(deleteGiftRouter)
 
 const port = process.env.PORT || 3000
 
