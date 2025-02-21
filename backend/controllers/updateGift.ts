@@ -7,6 +7,7 @@ updateGiftRouter.post('/updateGift',isAuthenticated,async(req:CustomRequest,res:
 
     const userID = req.authUser?.id
     const {giftID, productName, productLink, quantity} = req.body
+    const quantityNum = Number(quantity)
 
     const user = await prisma.users.findUnique({
           where: {
@@ -43,7 +44,7 @@ updateGiftRouter.post('/updateGift',isAuthenticated,async(req:CustomRequest,res:
                         data: {
                             productLink: productLink,
                             productName: productName,
-                            quantity: quantity
+                            quantity: quantityNum
                         }
                     })
 
