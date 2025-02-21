@@ -11,6 +11,7 @@ import useGiftPresent from '@/functions/giftPresentFunction'
 import useGetData from '@/functions/getWeddingDataFunction'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
+import useDeleteGift from '@/functions/useDeleteGift'
 
 export default function giftsList() {
   const {
@@ -103,6 +104,8 @@ export default function giftsList() {
 
   useGiftPresent()
 
+  const deleteGift = useDeleteGift()
+
   return (
     <>
       {userToken && notGuest && (
@@ -138,6 +141,7 @@ export default function giftsList() {
                 submitChange={submitUpdate}
                 setToUpdate={setToUpdate}
                 toUpdate={toUpdate}
+                deleteGift={deleteGift}
               />
             </div>
           </div>

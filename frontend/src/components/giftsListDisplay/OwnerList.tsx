@@ -27,6 +27,7 @@ interface HandleGiftingProps {
   setToUpdate: React.Dispatch<
   SetStateAction<boolean>
 >
+  deleteGift:(value:number) => void
 }
 
 export default function OwnerList({
@@ -38,7 +39,8 @@ export default function OwnerList({
   setSelectedGiftID,
   submitChange,
   toUpdate,
-  setToUpdate
+  setToUpdate,
+  deleteGift
 }: HandleGiftingProps) {
   
 
@@ -98,7 +100,9 @@ export default function OwnerList({
                   >
                     Update Item
                   </button>
-                  <button className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400">
+                  <button onClick={()=>{
+                    deleteGift(gift.id)
+                  }} className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400">
                     Remove Item
                   </button>
                 </div>
