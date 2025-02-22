@@ -1,13 +1,17 @@
 import Link from 'next/link'
+import { SetStateAction } from 'react'
 interface GuestRequestProps {
   submitRequest: React.MouseEventHandler<HTMLButtonElement>
+  setNotGuest: React.Dispatch<SetStateAction<boolean>>
 }
 
-export default function GuestRequest({ submitRequest }: GuestRequestProps) {
+export default function GuestRequest({ submitRequest, setNotGuest }: GuestRequestProps) {
   return (
     <div className="py-3 flex flex-row justify-center gap-2">
       <Link href="/dashboard">
-        <button className="font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
+        <button onClick={()=>{
+            setNotGuest(false)
+        }} className="font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
           <span className="text-xs">Go back to the dashboard</span>
         </button>
       </Link>

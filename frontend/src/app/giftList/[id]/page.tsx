@@ -26,6 +26,7 @@ export default function giftsList() {
     setSendGiftObj,
     isCreator,
     notGuest,
+    setNotGuest,
     toUpdate,
     setToUpdate,
     updateProps,
@@ -63,7 +64,7 @@ export default function giftsList() {
       {userToken && notGuest && !isCreator && (
         <>
           <div>
-            <LoggedHeader onClick={logOut} />
+            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest}/>
           </div>
 
           <div className="flex flex-col items-center justify-center">
@@ -71,14 +72,14 @@ export default function giftsList() {
               Not a guest of this wedding, make a request or go back to the
               initial page
             </h2>
-            <GuestRequest submitRequest={makeRequest} />
+            <GuestRequest submitRequest={makeRequest} setNotGuest={setNotGuest} />
           </div>
         </>
       )}
       {userToken && isCreator && (
         <>
           <div>
-            <LoggedHeader onClick={logOut} />
+            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
           </div>
 
           <div className="flex flex-col items-center justify-center">
@@ -103,7 +104,7 @@ export default function giftsList() {
       {userToken && !notGuest && !isCreator && (
         <>
           <div>
-            <LoggedHeader onClick={logOut} />
+            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
           </div>
 
           <div className="flex flex-col items-center justify-center">
