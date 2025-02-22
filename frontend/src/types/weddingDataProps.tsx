@@ -1,7 +1,7 @@
 import giftsProps from "./giftsProps"
 
 export default interface weddingDataProps {
-    id: string
+    id: number
     weddingTitle: string
     weddingDate: string
     shippingAddress?: string

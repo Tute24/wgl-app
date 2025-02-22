@@ -7,7 +7,7 @@ import { useContextWrap } from '../../contextAPI/context'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 export default function newList() {
-  const { statusMessage, setStatusMessage } = useContextWrap()
+  const { statusMessage, setStatusMessage, setNotGuest } = useContextWrap()
 
   const [listData, setListData] = useState({
     listTitle: '',
@@ -60,35 +60,33 @@ export default function newList() {
           }
         )
 
-        if(response.status === 200){
+        if (response.status === 200) {
           setStatusMessage('Wedding created successfully!')
         }
-        setListData(
-          {
-            listTitle: '',
-            weddingDate: '',
-            shippingAddress:'',
-            gifts: [
-              {
-                productName: '',
-                productLink: '',
-                quantity: 0,
-              },
-            ],
-          }
-        )
+        setListData({
+          listTitle: '',
+          weddingDate: '',
+          shippingAddress: '',
+          gifts: [
+            {
+              productName: '',
+              productLink: '',
+              quantity: 0,
+            },
+          ],
+        })
       } catch (error) {
-        if(axios.isAxiosError(error)){
-          if(error.response?.status === 401){
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
             setStatusMessage(`User doesn't have permission.`)
           }
-          if(error.response?.status === 403){
+          if (error.response?.status === 403) {
             setStatusMessage(`Invalid credentials.`)
           }
-          if(error.response?.status === 404){
+          if (error.response?.status === 404) {
             setStatusMessage(`Not found.`)
           }
-          if(error.response?.status === 500){
+          if (error.response?.status === 500) {
             setStatusMessage(`Something went wrong. Try again.`)
           }
         }
@@ -100,7 +98,7 @@ export default function newList() {
 
   return (
     <>
-      <LoggedHeader onClick={LogOut} />
+      <LoggedHeader onClick={LogOut} setNotGuest={setNotGuest} />
       <GiftListForm
         listDataType={listData}
         onChange={listInputHandler}

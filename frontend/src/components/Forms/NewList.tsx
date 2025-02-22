@@ -1,4 +1,4 @@
-import { useContextWrap } from '../../contextAPI/context'
+import giftCreateProps from '@/types/giftCreateProps'
 import { ChangeEvent, FormEvent } from 'react'
 
 interface newListFormProps {
@@ -6,11 +6,7 @@ interface newListFormProps {
     listTitle: string
     weddingDate: string
     shippingAddress: string
-    gifts: {
-      productName: string
-      productLink: string
-      quantity: number
-    }[]
+    gifts: giftCreateProps[]
   }
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   onSubmit: (event: FormEvent) => void
@@ -20,11 +16,7 @@ interface newListFormProps {
       listTitle: string
       weddingDate: string
       shippingAddress: string
-      gifts: {
-        productName: string
-        productLink: string
-        quantity: number
-      }[]
+      gifts: giftCreateProps[]
     }>
   >
   statusMessage: string
