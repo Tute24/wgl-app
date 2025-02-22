@@ -60,7 +60,7 @@ export default function giftsList() {
 
   return (
     <>
-      {userToken && notGuest && (
+      {userToken && notGuest && !isCreator && (
         <>
           <div>
             <LoggedHeader onClick={logOut} />
