@@ -1,11 +1,14 @@
 import Link from 'next/link'
+import { SetStateAction } from 'react'
 
 interface LoggedHeaderProps{
   onClick: (event:React.MouseEvent<HTMLButtonElement>) => void
+  setNotGuest: React.Dispatch<SetStateAction<boolean>>
 }
 
 export default function LoggedHeader({
-  onClick
+  onClick,
+  setNotGuest
 }:LoggedHeaderProps) {
   return (
     <>
@@ -27,7 +30,9 @@ export default function LoggedHeader({
           </div>
           <div className="font-semibold">
             <Link href="/dashboard">
-              <button type="button" className="p-2 hover:text-orange1">
+              <button onClick={()=>{
+                setNotGuest(false)
+              }} type="button" className="p-2 hover:text-orange1">
                 My lists
               </button>
             </Link>
