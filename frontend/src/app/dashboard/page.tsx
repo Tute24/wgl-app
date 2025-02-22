@@ -13,7 +13,7 @@ import checkAuth from '@/functions/checkAuthFunction'
 export default function Dashboard() {
 
 
-  const { userToken } = useContextWrap()
+  const { userToken, setNotGuest } = useContextWrap()
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
     {
       id: '',
@@ -79,7 +79,7 @@ export default function Dashboard() {
       <div>
         {userToken && (
           <>
-            <LoggedHeader onClick={logOut} />
+            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
             <div className='flex flex-row justify-center'>
               <div className='w-1/2'>
                 <WeddingsOwn weddingsArray={ownWeddingsArray} />
