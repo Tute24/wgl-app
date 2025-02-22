@@ -1,18 +1,10 @@
 import { useContextWrap } from "@/contextAPI/context"
 import giftsProps from "@/types/giftsProps"
 import axios from "axios"
-import { useState } from "react"
 
 export default function useSubmitUpdate(){
 
-    const {userToken, setGiftsArray} = useContextWrap()
-    const [updateProps, setUpdateProps] = useState({
-        giftID: 0,
-        productName: '',
-        quantity: 0,
-        productLink: '',
-      })
-    const [toUpdate, setToUpdate] = useState<boolean>(false)
+    const {userToken, setGiftsArray, updateProps, setToUpdate} = useContextWrap()
 
     async function submitUpdate() {
         try {
@@ -61,5 +53,7 @@ export default function useSubmitUpdate(){
           console.log(error)
         }
       }
+
+      return submitUpdate
 
 }
