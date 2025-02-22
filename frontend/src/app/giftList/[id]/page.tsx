@@ -11,6 +11,9 @@ import useGiftPresent from '@/functions/giftPresentFunction'
 import useGetData from '@/functions/getWeddingDataFunction'
 import useDeleteGift from '@/functions/useDeleteGift'
 import useSubmitUpdate from '@/functions/useSubmitUpdate'
+import { useParams } from 'next/navigation'
+import useMakeRequest from '@/functions/useMakeRequest'
+import GuestRequest from '@/components/giftsListDisplay/GuestRequest'
 
 export default function giftsList() {
   const {
@@ -29,6 +32,8 @@ export default function giftsList() {
     setUpdateProps,
   } = useContextWrap()
 
+  const { id } = useParams()
+  const weddingID = Number(id)
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
 
@@ -44,17 +49,14 @@ export default function giftsList() {
     })
   }
 
-  const submitUpdate = useSubmitUpdate()
-
   checkAuth()
-
   useGetData()
-
-  const logOut = useLogOut()
-
   useGiftPresent()
 
   const deleteGift = useDeleteGift()
+  const logOut = useLogOut()
+  const makeRequest = useMakeRequest(weddingID)
+  const submitUpdate = useSubmitUpdate()
 
   return (
     <>
@@ -69,6 +71,7 @@ export default function giftsList() {
               Not a guest of this wedding, make a request or go back to the
               initial page
             </h2>
+            <GuestRequest submitRequest={makeRequest} />
           </div>
         </>
       )}
