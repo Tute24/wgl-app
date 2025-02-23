@@ -9,6 +9,7 @@ deleteWeddingRouter.post(
   async (req: CustomRequest, res: Response) => {
     const userID = req.authUser?.id
     const { id } = req.body
+    console.log(userID)
 
     const user = await prisma.users.findUnique({
       where: {
@@ -27,36 +28,47 @@ deleteWeddingRouter.post(
       return
     }
 
+    if (userID !== checkWedding.createdBy) {
+      res
+        .status(403)
+        .json({ message: `The user is not the wedding's creator.` })
+      return
+    }
+
+    console.log('aight', user, checkWedding)
+
     if (userID) {
       try {
-        const deleteWedding = await prisma.weddings.delete({
-          where: {
-            id: id,
-          },
-        })
-
-        const deleteWeddingGuests = await prisma.guests.deleteMany({
+        await prisma.guests.deleteMany({
           where: {
             referencedWedding: id,
           },
         })
 
-        const deleteWeddingGifts = await prisma.gifts.deleteMany({
+        await prisma.gifts.deleteMany({
           where: {
             fromWedding: id,
           },
         })
 
-        const deletePendingWeddingRequests = await prisma.requests.deleteMany({
+        await prisma.requests.deleteMany({
           where: {
             relatedWedding: id,
             pending: true,
           },
         })
 
+        await prisma.weddings.delete({
+          where: {
+            id: id,
+          },
+        })
+
         res.status(200).json({ message: 'Wedding deleted successfully.' })
+        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
+        return
       }
     }
   }
