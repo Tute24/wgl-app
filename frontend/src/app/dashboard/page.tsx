@@ -13,16 +13,8 @@ import checkAuth from '@/functions/checkAuthFunction'
 export default function Dashboard() {
 
 
-  const { userToken, setNotGuest } = useContextWrap()
-  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
-    {
-      id: '',
-      weddingTitle: '',
-      weddingDate: '',
-      shippingAddress: '',
-      createdBy: '',
-    }
-  ])
+  const { userToken, setNotGuest, ownWeddingsArray, setOwnWeddingsArray } = useContextWrap()
+  
   const [guestWeddingsArray,setGuestWeddingsArray] = useState<weddingProps[]>([
     {
       id: '',
