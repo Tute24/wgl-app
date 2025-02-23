@@ -16,6 +16,7 @@ import useMakeRequest from '@/functions/useMakeRequest'
 import GuestRequest from '@/components/giftsListDisplay/GuestRequest'
 import giftCreateProps from '@/types/giftCreateProps'
 import axios from 'axios'
+import useSubmitNewGift from '@/functions/useSubmitNewGifts'
 
 export default function giftsList() {
   const {
@@ -34,13 +35,14 @@ export default function giftsList() {
     updateProps,
     setUpdateProps,
     statusMessage,
+    createNewGift,
+    setCreateNewGift
   } = useContextWrap()
 
   const { id } = useParams()
   const weddingID = Number(id)
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
-  const [createNewGift,setCreateNewGift] = useState<giftCreateProps[]>([])
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
@@ -62,44 +64,8 @@ export default function giftsList() {
       prev.map((gift,i)=> i===index ? {...gift,[event.target.name]:event.target.value} : gift)
     )}
 
-  async function submitNewGifts(e:FormEvent){
-    e.preventDefault()
-    
-    try{
-      if(userToken){
-        console.log(createNewGift)
-        const response = await axios.post('http://localhost:3000/createNewGift',createNewGift,{headers:{
-          Authorization: `Bearer ${userToken}`
-        }, params:{
-          id: weddingID
-        }})
-        
-        if(response.status===200){
-          setGiftsArray(response.data.newGifts)
-        }
-        
-      }
-    }catch(error){
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          console.log('User not authenticated.')
-        }
-        if (error.response?.status === 403) {
-          console.log(
-            `Invalid/Expired token - User is not this wedding's creator`
-          )
-        }
-        if (error.response?.status === 404) {
-          console.log('User/Gift not found.')
-        }
-        if (error.response?.status === 500) {
-          console.log('Server error.')
-        }
-      }
-      console.log(error)
-    }
-    }
   
+  const submitNewGifts = useSubmitNewGift()
   checkAuth()
   useGetData()
   useGiftPresent()
