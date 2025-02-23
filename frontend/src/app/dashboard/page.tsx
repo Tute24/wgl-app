@@ -9,6 +9,7 @@ import WeddingsGuest from '../../components/weddingsDisplay/GuestWeddings'
 import weddingProps from '@/types/weddingProps'
 import useLogOut from '../../functions/logOutFunction'
 import checkAuth from '@/functions/checkAuthFunction'
+import useDeleteWedding from '@/functions/useDeleteWedding'
 
 export default function Dashboard() {
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
   
   const [guestWeddingsArray,setGuestWeddingsArray] = useState<weddingProps[]>([
     {
-      id: '',
+      id: 0,
       weddingTitle: '',
       weddingDate: '',
       shippingAddress: '',
@@ -65,6 +66,7 @@ export default function Dashboard() {
   }, [userToken])
 
   const logOut = useLogOut()
+  const deleteWedding = useDeleteWedding()
 
   return (
     <>
@@ -74,7 +76,7 @@ export default function Dashboard() {
             <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
             <div className='flex flex-row justify-center'>
               <div className='w-1/2'>
-                <WeddingsOwn weddingsArray={ownWeddingsArray} />
+                <WeddingsOwn weddingsArray={ownWeddingsArray} deleteWedding={deleteWedding} />
               </div>
               <div className='w-1/2git'>
                 <WeddingsGuest weddingsArray={guestWeddingsArray}/>
