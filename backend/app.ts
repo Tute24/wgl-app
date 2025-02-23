@@ -17,6 +17,7 @@ import giftPresentRouter from './controllers/giftPresent'
 import updateGiftRouter from './controllers/updateGift'
 import deleteGiftRouter from './controllers/deleteGift'
 import createNewGiftRouter from './controllers/createNewGift'
+import deleteWeddingRouter from './controllers/deleteWedding'
 
 app.use(express.json())
 app.use(cors())
@@ -35,6 +36,7 @@ app.use(giftPresentRouter)
 app.use(updateGiftRouter)
 app.use(deleteGiftRouter)
 app.use(createNewGiftRouter)
+app.use(deleteWeddingRouter)
 
 const port = process.env.PORT || 3000
 
