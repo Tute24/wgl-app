@@ -2,12 +2,9 @@ import express, { Router, Response } from 'express'
 const createListRoute: Router = express.Router()
 import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
 import { prisma } from '../app'
+import giftProps from '../types/giftProps'
 
-interface giftProps {
-  productName: string
-  productLink: string
-  quantity: number
-}
+
 
 createListRoute.post(
   '/createList',
