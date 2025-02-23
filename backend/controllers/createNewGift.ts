@@ -9,9 +9,9 @@ createNewGiftRouter.post(
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
     const userID = req.authUser?.id
-    const weddingID = Number(req.query.weddingID)
-    const { createNewGift } = req.body
-    const newGiftsArray: giftProps[] = createNewGift
+    const weddingID = Number(req.query.id)
+    const newGiftsArray: giftProps[] = req.body
+    // const newGiftsArray: giftProps[] = body
 
     const user = await prisma.users.findUnique({
       where: {
@@ -25,7 +25,7 @@ createNewGiftRouter.post(
       },
     })
 
-    if (!user) {
+    if (!user|| !checkWedding) {
       res.status(404).json({ message: 'User not found.' })
       return
     }
@@ -36,7 +36,7 @@ createNewGiftRouter.post(
           newGiftsArray.map(async (giftInfo: giftProps) => {
             await prisma.gifts.create({
               data: {
-                quantity: giftInfo.quantity,
+                quantity: Number(giftInfo.quantity),
                 productName: giftInfo.productName,
                 productLink: giftInfo.productLink,
                 fromWedding: weddingID,
@@ -44,10 +44,7 @@ createNewGiftRouter.post(
             })
           })
         )
-
-        console.log('all good')
         
-
         const newGifts = await prisma.gifts.findMany({
           where: {
             fromWedding: weddingID,
