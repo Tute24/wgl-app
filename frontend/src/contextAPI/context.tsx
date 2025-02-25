@@ -2,6 +2,7 @@
 
 import giftCreateProps from '@/types/giftCreateProps'
 import giftsProps from '@/types/giftsProps'
+import newWeddingProps from '@/types/newWeddingProps'
 import weddingDataProps from '@/types/weddingDataProps'
 import weddingProps from '@/types/weddingProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
@@ -24,17 +25,17 @@ interface ContextProps {
     }>
   >
   updateProps: {
-    giftID: number,
-    productName: string,
-    quantity: number,
+    giftID: number
+    productName: string
+    quantity: number
     productLink: string
   }
   setUpdateProps: React.Dispatch<
     SetStateAction<{
-    giftID: number,
-    productName: string,
-    quantity: number,
-    productLink: string
+      giftID: number
+      productName: string
+      quantity: number
+      productLink: string
     }>
   >
   giftsArray: giftsProps[]
@@ -53,6 +54,8 @@ interface ContextProps {
   setCreateNewGift: React.Dispatch<SetStateAction<giftCreateProps[]>>
   ownWeddingsArray: weddingProps[]
   setOwnWeddingsArray: React.Dispatch<SetStateAction<weddingProps[]>>
+  listData: newWeddingProps
+  setListData: React.Dispatch<SetStateAction<newWeddingProps>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -102,16 +105,28 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     quantity: 0,
     productLink: '',
   })
-  const [createNewGift,setCreateNewGift] = useState<giftCreateProps[]>([])
+  const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
+    {
+      id: 0,
+      weddingTitle: '',
+      weddingDate: '',
+      shippingAddress: '',
+      createdBy: '',
+    },
+  ])
+  const [listData, setListData] = useState<newWeddingProps>({
+    listTitle: '',
+    weddingDate: '',
+    shippingAddress: '',
+    gifts: [
       {
-        id: 0,
-        weddingTitle: '',
-        weddingDate: '',
-        shippingAddress: '',
-        createdBy: '',
-      }
-    ])
+        productName: '',
+        productLink: '',
+        quantity: 0,
+      },
+    ],
+  })
 
   return (
     <contextWrap.Provider
@@ -141,7 +156,9 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         createNewGift,
         setCreateNewGift,
         ownWeddingsArray,
-        setOwnWeddingsArray
+        setOwnWeddingsArray,
+        listData,
+        setListData,
       }}
     >
       {children}

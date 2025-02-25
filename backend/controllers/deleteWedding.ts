@@ -58,6 +58,12 @@ deleteWeddingRouter.post(
           },
         })
 
+        await prisma.giftedBy.deleteMany({
+          where:{
+            relatedWedding: id,
+          }
+        })
+
         await prisma.weddings.delete({
           where: {
             id: id,
