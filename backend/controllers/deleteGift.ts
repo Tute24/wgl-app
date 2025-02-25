@@ -36,13 +36,20 @@ deleteGiftRouter.post(
         })
 
         if (wedding?.createdBy === userID) {
+
+          const deleteGiftedByReferences = await prisma.giftedBy.deleteMany({
+            where:{
+              gift_reference: giftID
+            }
+          })
+
           const deletedGift = await prisma.gifts.delete({
             where: {
               id: giftID,
             },
           })
 
-          if (deletedGift) {
+          if (deletedGift && deleteGiftedByReferences) {
             res.status(200).json({ message: 'Gift deleted successfully.' })
             return
           }
