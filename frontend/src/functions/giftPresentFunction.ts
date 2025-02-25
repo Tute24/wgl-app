@@ -1,10 +1,12 @@
 import { useContextWrap } from '@/contextAPI/context'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
+import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function useGiftPresent() {
   const { isGiftSent, userToken, sendGiftObj, setGiftsArray } = useContextWrap()
+  const {id} = useParams()
 
   useEffect(() => {
     async function giftPresent() {
@@ -17,6 +19,9 @@ export default function useGiftPresent() {
               headers: {
                 Authorization: `Bearer ${userToken}`,
               },
+              params:{
+                id: Number(id)
+              }
             }
           )
 
