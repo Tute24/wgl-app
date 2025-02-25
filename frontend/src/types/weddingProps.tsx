@@ -1,5 +1,5 @@
 export default interface weddingProps {
-    id: string
+    id: number
     weddingTitle: string
     weddingDate: string
     shippingAddress?: string

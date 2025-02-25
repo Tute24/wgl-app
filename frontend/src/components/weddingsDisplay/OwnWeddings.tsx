@@ -1,12 +1,18 @@
 import Link from 'next/link'
 import weddingListProps from '@/types/weddingListProps'
+import weddingProps from '@/types/weddingProps'
 
-export default function WeddingsOwn({ weddingsArray }: weddingListProps) {
+interface OwnWeddingsProps {
+  weddingsArray: weddingProps[]
+  deleteWedding: (value:number) => void
+}
+
+export default function WeddingsOwn({ weddingsArray, deleteWedding }: OwnWeddingsProps) {
   return (
     <ul className="flex flex-col text-center items-center">
       {weddingsArray.map((wedding) => (
         <div
-          id={wedding.id}
+          id={`${wedding.id}`}
           key={wedding.id}
           className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5 flex flex-row"
         >
@@ -30,7 +36,7 @@ export default function WeddingsOwn({ weddingsArray }: weddingListProps) {
               </div>
             </div>
           </li>
-          <button className="font-semibold text-xs border-solid border-red-200 border-2 rounded-3xl px-2 py-1 mr-2 hover:bg-red-300">
+          <button onClick={() => deleteWedding(wedding.id)} className="font-semibold text-xs border-solid border-red-200 border-2 rounded-3xl px-2 py-1 mr-2 hover:bg-red-300">
             Delete this wedding
           </button>
         </div>

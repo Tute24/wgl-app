@@ -3,6 +3,7 @@
 import giftCreateProps from '@/types/giftCreateProps'
 import giftsProps from '@/types/giftsProps'
 import weddingDataProps from '@/types/weddingDataProps'
+import weddingProps from '@/types/weddingProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
@@ -50,6 +51,8 @@ interface ContextProps {
   setToUpdate: React.Dispatch<SetStateAction<boolean>>
   createNewGift: giftCreateProps[]
   setCreateNewGift: React.Dispatch<SetStateAction<giftCreateProps[]>>
+  ownWeddingsArray: weddingProps[]
+  setOwnWeddingsArray: React.Dispatch<SetStateAction<weddingProps[]>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -100,6 +103,15 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     productLink: '',
   })
   const [createNewGift,setCreateNewGift] = useState<giftCreateProps[]>([])
+  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
+      {
+        id: 0,
+        weddingTitle: '',
+        weddingDate: '',
+        shippingAddress: '',
+        createdBy: '',
+      }
+    ])
 
   return (
     <contextWrap.Provider
@@ -127,7 +139,9 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         updateProps,
         setUpdateProps,
         createNewGift,
-        setCreateNewGift
+        setCreateNewGift,
+        ownWeddingsArray,
+        setOwnWeddingsArray
       }}
     >
       {children}
