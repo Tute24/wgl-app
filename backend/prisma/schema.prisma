@@ -14,7 +14,7 @@ model Users {
   lastName String @map("last_name")
   password String 
   weddingsOwn Weddings[]
-  productsGifted Gifts[]
+  productsGifted GiftedBy[]
   weddingsGuest Guests[]
   requests Requests[]
 
@@ -31,6 +31,7 @@ model Weddings {
   gifts Gifts[]
   guests Guests[]
   request Requests[]
+  gifters GiftedBy[]
 
   @@map("weddings")
 }
@@ -42,8 +43,7 @@ model Gifts {
   productLink String @map("product_link")
   wedding Weddings @relation(fields: [fromWedding],references: [id])
   fromWedding Int @map("from_wedding")
-  user Users? @relation(fields: [giftedBy],references: [id])
-  giftedBy String? @map("gifted_by") 
+  giftPresenters GiftedBy []
 }
 
 model Guests {
@@ -64,4 +64,15 @@ model Requests {
   weddingTitle String @map("wedding_title")
   pending Boolean @default(true)
   accepted Boolean @default(false)
+}
+
+model GiftedBy {
+  id Int @id @default(autoincrement())
+  presenter String
+  relatedWedding Int @map("related_wedding")
+  user Users @relation(fields: [presenter],references: [id])
+  wedding Weddings @relation(fields: [relatedWedding],references: [id])
+  quantity Int
+  gift_reference Int @map("gift_reference")
+  gift Gifts @relation(fields: [gift_reference],references: [id])  
 }
