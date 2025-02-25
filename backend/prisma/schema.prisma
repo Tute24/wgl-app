@@ -13,6 +13,7 @@ model Users {
   firstName String @map("first_name")
   lastName String @map("last_name")
   password String 
+  createdAt DateTime? @default(now())
   weddingsOwn Weddings[]
   productsGifted GiftedBy[]
   weddingsGuest Guests[]
@@ -28,6 +29,7 @@ model Weddings {
   shippingAddress String @map("shipping_address") @default("null")
   user Users @relation(fields: [createdBy],references: [id])
   createdBy String
+  createdAt DateTime? @default(now())
   gifts Gifts[]
   guests Guests[]
   request Requests[]
@@ -43,7 +45,10 @@ model Gifts {
   productLink String @map("product_link")
   wedding Weddings @relation(fields: [fromWedding],references: [id])
   fromWedding Int @map("from_wedding")
+  createdAt DateTime? @default(now())
   giftPresenters GiftedBy []
+
+  @@map("gifts")
 }
 
 model Guests {
@@ -52,6 +57,9 @@ model Guests {
   guestId String @map("guest_id")
   wedding Weddings @relation(fields: [referencedWedding],references: [id])
   referencedWedding Int @map("referenced_wedding")
+  addedOn DateTime? @default(now())
+
+  @@map("guests")
 }
 
 model Requests {
@@ -64,6 +72,9 @@ model Requests {
   weddingTitle String @map("wedding_title")
   pending Boolean @default(true)
   accepted Boolean @default(false)
+  madeOn DateTime? @default(now())
+
+  @@map("requests")
 }
 
 model GiftedBy {
@@ -74,5 +85,8 @@ model GiftedBy {
   wedding Weddings @relation(fields: [relatedWedding],references: [id])
   quantity Int
   gift_reference Int @map("gift_reference")
-  gift Gifts @relation(fields: [gift_reference],references: [id])  
+  gift Gifts @relation(fields: [gift_reference],references: [id])
+  giftedAt DateTime? @default(now())  
+
+  @@map("gifted_by")
 }
