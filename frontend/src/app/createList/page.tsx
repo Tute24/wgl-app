@@ -1,26 +1,15 @@
 'use client'
 
-import axios from 'axios'
 import GiftListForm from '../../components/Forms/NewList'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 import { useContextWrap } from '../../contextAPI/context'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
+import checkAuth from '@/functions/checkAuthFunction'
+import useLogOut from '@/functions/logOutFunction'
+import useSubmitList from '@/functions/useSubmitList'
 
 export default function newList() {
-  const { statusMessage, setStatusMessage, setNotGuest } = useContextWrap()
-
-  const [listData, setListData] = useState({
-    listTitle: '',
-    weddingDate: '',
-    shippingAddress: '',
-    gifts: [
-      {
-        productName: '',
-        productLink: '',
-        quantity: 0,
-      },
-    ],
-  })
+  const { statusMessage, setNotGuest, listData, setListData } = useContextWrap()
 
   function listInputHandler(event: ChangeEvent<HTMLInputElement>) {
     setListData({
@@ -43,66 +32,19 @@ export default function newList() {
     }))
   }
 
-  async function listSubmitHandler(event: FormEvent) {
-    event.preventDefault()
-    const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
+  checkAuth()
 
-    if (userToken) {
-      console.log(listData)
-      try {
-        const response = await axios.post(
-          'http://localhost:3000/createList',
-          listData,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+  const submitList = useSubmitList()
 
-        if (response.status === 200) {
-          setStatusMessage('Wedding created successfully!')
-        }
-        setListData({
-          listTitle: '',
-          weddingDate: '',
-          shippingAddress: '',
-          gifts: [
-            {
-              productName: '',
-              productLink: '',
-              quantity: 0,
-            },
-          ],
-        })
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            setStatusMessage(`User doesn't have permission.`)
-          }
-          if (error.response?.status === 403) {
-            setStatusMessage(`Invalid credentials.`)
-          }
-          if (error.response?.status === 404) {
-            setStatusMessage(`Not found.`)
-          }
-          if (error.response?.status === 500) {
-            setStatusMessage(`Something went wrong. Try again.`)
-          }
-        }
-      }
-    }
-  }
-
-  async function LogOut() {}
+  const logOut = useLogOut()
 
   return (
     <>
-      <LoggedHeader onClick={LogOut} setNotGuest={setNotGuest} />
+      <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
       <GiftListForm
         listDataType={listData}
         onChange={listInputHandler}
-        onSubmit={listSubmitHandler}
+        onSubmit={submitList}
         giftsChange={listGiftInputHandler}
         setListData={setListData}
         statusMessage={statusMessage}
