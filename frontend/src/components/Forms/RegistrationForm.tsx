@@ -1,69 +1,21 @@
+import useSubmitRegister from '@/functions/useSubmitRegister'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
-
 
 type usersData = z.infer<typeof usersDataSchema>
 
 interface RegisterFormsProps {
-  // usersData: {
-  //   firstName: string
-  //   lastName: string
-  //   email: string
-  //   password: string
-  //   confirmPassword: string
-  // }
-  // onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  // onSubmit: (event: FormEvent) => void
-  statusMessage: string,
-  setStatusMessage: React.Dispatch<SetStateAction<string>>
+  statusMessage: string
 }
 
-export default function RegisterForm({
-  statusMessage,
-  setStatusMessage
-}: RegisterFormsProps) {
-
-  const router = useRouter()
-  const {register, handleSubmit} = useForm<usersData>({
-    resolver: zodResolver(usersDataSchema)
+export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
+  const { register, handleSubmit } = useForm<usersData>({
+    resolver: zodResolver(usersDataSchema),
   })
-
-  const onSubmit: SubmitHandler<usersData> = async (data) => {
-    
-    if (data.password !== data.confirmPassword) {
-      setStatusMessage('Passwords must be the same!')
-    } else{
-
-    try{
-      const response = await axios.post(
-        'http://localhost:3000/createUser',
-        data
-      )
-    
-      if (response.status === 200) {
-        const userToken = response.data.token
-        localStorage.setItem('userToken',JSON.stringify(userToken))
-        router.push('/dashboard')
-      }
-    }catch(error:unknown){
-      if(axios.isAxiosError(error)){
-        if(error.response?.status === 409){
-          setStatusMessage('There is already an existent user with this email!')
-        }
-        if(error.response?.status === 500){
-          setStatusMessage('Something went wrong within the server. Try again sonn.')
-        }
-        console.log(error)
-      }
-      console.log(error)
-    }
-  }
-  }
+  const submitRegister = useSubmitRegister()
+  const onSubmit: SubmitHandler<usersData> = submitRegister
 
   return (
     <>
@@ -80,8 +32,6 @@ export default function RegisterForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
                 id="firstName"
-                // value={usersData.firstName}
-                // onChange={onChange}
                 {...register('firstName')}
                 required
               />
@@ -93,8 +43,6 @@ export default function RegisterForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
                 id="lastName"
-                // value={usersData.lastName}
-                // onChange={onChange}
                 {...register('lastName')}
                 required
               />
@@ -106,9 +54,6 @@ export default function RegisterForm({
                 text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="email"
                 id="email"
-                // name="email"
-                // value={usersData.email}
-                // onChange={onChange}
                 {...register('email')}
                 required
               />
@@ -118,10 +63,7 @@ export default function RegisterForm({
               <input
                 className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 id="password"
-                // name="password"
                 type="password"
-                // value={usersData.password}
-                // onChange={onChange}
                 {...register('password')}
                 required
               />
@@ -131,9 +73,6 @@ export default function RegisterForm({
               <input
                 className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="password"
-                // name="confirmPassword"
-                // value={usersData.confirmPassword}
-                // onChange={onChange}
                 {...register('confirmPassword')}
                 required
               />
@@ -146,11 +85,9 @@ export default function RegisterForm({
               >
                 Sign Up!
               </button>
-              <span className='text-red-500 font-bold'>{statusMessage}</span>
+              <span className="text-red-500 font-bold">{statusMessage}</span>
             </div>
-            
           </form>
-
         </div>
       </div>
     </>
