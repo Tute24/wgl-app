@@ -1,3 +1,4 @@
+import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -5,13 +6,6 @@ import { ChangeEvent, FormEvent, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const usersDataSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string().email(),
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8)
-})
 
 type usersData = z.infer<typeof usersDataSchema>
 
