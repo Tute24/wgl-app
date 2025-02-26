@@ -1,25 +1,21 @@
-import { useContextWrap } from '../../contextAPI/context'
-import { ChangeEvent, FormEvent } from 'react'
+import useSubmitRegister from '@/functions/useSubmitRegister'
+import usersDataSchema from '@/zodSchemas/usersDataSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+type usersData = z.infer<typeof usersDataSchema>
 
 interface RegisterFormsProps {
-  usersData: {
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-    confirmPassword: string
-  }
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  onSubmit: (event: FormEvent) => void
   statusMessage: string
 }
 
-export default function RegisterForm({
-  usersData,
-  onChange,
-  onSubmit,
-  statusMessage
-}: RegisterFormsProps) {
+export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
+  const { register, handleSubmit } = useForm<usersData>({
+    resolver: zodResolver(usersDataSchema),
+  })
+  const submitRegister = useSubmitRegister()
+  const onSubmit: SubmitHandler<usersData> = submitRegister
 
   return (
     <>
@@ -28,7 +24,7 @@ export default function RegisterForm({
           <div className="flex justify-center items-center -mt-5 mb-3">
             <h2>Register yourself</h2>
           </div>
-          <form onSubmit={onSubmit} className="flex flex-col ">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
             <div className="p-2">
               <label htmlFor="firstName">Your first name:</label>
               <input
@@ -36,9 +32,7 @@ export default function RegisterForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
                 id="firstName"
-                value={usersData.firstName}
-                onChange={onChange}
-                name="firstName"
+                {...register('firstName')}
                 required
               />
             </div>
@@ -49,9 +43,7 @@ export default function RegisterForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
                 id="lastName"
-                name="lastName"
-                value={usersData.lastName}
-                onChange={onChange}
+                {...register('lastName')}
                 required
               />
             </div>
@@ -62,9 +54,7 @@ export default function RegisterForm({
                 text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="email"
                 id="email"
-                name="email"
-                value={usersData.email}
-                onChange={onChange}
+                {...register('email')}
                 required
               />
             </div>
@@ -73,10 +63,8 @@ export default function RegisterForm({
               <input
                 className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 id="password"
-                name="password"
                 type="password"
-                value={usersData.password}
-                onChange={onChange}
+                {...register('password')}
                 required
               />
             </div>
@@ -85,9 +73,7 @@ export default function RegisterForm({
               <input
                 className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="password"
-                name="confirmPassword"
-                value={usersData.confirmPassword}
-                onChange={onChange}
+                {...register('confirmPassword')}
                 required
               />
             </div>
@@ -99,11 +85,9 @@ export default function RegisterForm({
               >
                 Sign Up!
               </button>
-              <span className='text-red-500 font-bold'>{statusMessage}</span>
+              <span className="text-red-500 font-bold">{statusMessage}</span>
             </div>
-            
           </form>
-
         </div>
       </div>
     </>

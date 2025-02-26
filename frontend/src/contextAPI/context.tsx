@@ -9,7 +9,7 @@ import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
   statusMessage: string
-  setStatusMessage: (value: string) => void
+  setStatusMessage: React.Dispatch<SetStateAction<string>>
   userToken: string | null
   setUserToken: (value: string) => void
   isGiftSent: boolean
