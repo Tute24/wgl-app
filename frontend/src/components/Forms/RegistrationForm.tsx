@@ -11,7 +11,7 @@ interface RegisterFormsProps {
 }
 
 export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
-  const { register, handleSubmit } = useForm<usersData>({
+  const { register, handleSubmit, formState:{errors} } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
   const submitRegister = useSubmitRegister()
@@ -36,6 +36,7 @@ export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
                 required
               />
             </div>
+          
             <div className="p-2">
               <label htmlFor="lastName">Your Last Name</label>
               <input
@@ -57,7 +58,9 @@ export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
                 {...register('email')}
                 required
               />
+              {errors.email && <span className='text-red-500 font-bold'>{errors.email.message}</span>}
             </div>
+            
             <div className="p-2">
               <label htmlFor="newPassword">Type your password:</label>
               <input
@@ -67,6 +70,7 @@ export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
                 {...register('password')}
                 required
               />
+              {errors.password && <span className='text-red-500 font-bold'>{errors.password.message}</span>}
             </div>
             <div className="p-2">
               <label htmlFor="newPasswordauth">Confirm your password:</label>
@@ -86,6 +90,7 @@ export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
                 Sign Up!
               </button>
               <span className="text-red-500 font-bold">{statusMessage}</span>
+              
             </div>
           </form>
         </div>
