@@ -1,35 +1,33 @@
-import giftCreateProps from '@/types/giftCreateProps'
-import { ChangeEvent, FormEvent } from 'react'
+'use client'
 
+import useSubmitList from '@/functions/useSubmitList'
+import giftsSchema from '@/zodSchemas/giftsSchema'
+import newListSchema from '@/zodSchemas/newListSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+type listData = z.infer<typeof newListSchema>
+type giftsData = z.infer<typeof giftsSchema>
 interface newListFormProps {
-  listDataType: {
-    listTitle: string
-    weddingDate: string
-    shippingAddress: string
-    gifts: giftCreateProps[]
-  }
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  onSubmit: (event: FormEvent) => void
-  giftsChange: (event: ChangeEvent<HTMLInputElement>, index: number) => void
-  setListData: React.Dispatch<
-    React.SetStateAction<{
-      listTitle: string
-      weddingDate: string
-      shippingAddress: string
-      gifts: giftCreateProps[]
-    }>
-  >
   statusMessage: string
 }
 
-export default function GiftListForm({
-  listDataType,
-  onChange,
-  onSubmit,
-  giftsChange,
-  setListData,
-  statusMessage
-}: newListFormProps) {
+export default function GiftListForm({statusMessage}: newListFormProps) {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<listData>({
+    resolver: zodResolver(newListSchema)
+  })
+  const { fields, append } = useFieldArray<listData>({
+    control,
+    name: 'gifts',
+  })
+  const submitList = useSubmitList()
+  const onSubmit: SubmitHandler<listData> = submitList
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen ">
@@ -37,7 +35,7 @@ export default function GiftListForm({
           <div className="flex justify-center items-center -mt-5 mb-3">
             <h2>Create a new wedding gift list</h2>
           </div>
-          <form onSubmit={onSubmit} className="flex flex-col ">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
             <div className="p-2">
               <label htmlFor="listTitle">List Title</label>
               <input
@@ -45,12 +43,11 @@ export default function GiftListForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="text"
                 id="listTitle"
-                value={listDataType.listTitle}
-                onChange={onChange}
-                name="listTitle"
+                {...register('listTitle')}
                 placeholder="This name will identify your gift list to the guests"
                 required
               />
+              {errors.listTitle && <span className='text-red-500 font-bold'>{errors.listTitle.message}</span>}
             </div>
             <div className="p-2">
               <label htmlFor="weddingDate">Wedding Date</label>
@@ -59,11 +56,10 @@ export default function GiftListForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="date"
                 id="weddingDate"
-                name="weddingDate"
-                value={listDataType.weddingDate}
-                onChange={onChange}
+                {...register('weddingDate')}
                 required
               />
+              {errors.weddingDate && <span className='text-red-500 font-bold'>{errors.weddingDate.message}</span>}
             </div>
             <div className="p-2">
               <label htmlFor="weddingDate">Shipping Address</label>
@@ -72,53 +68,49 @@ export default function GiftListForm({
                  text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
                 type="string"
                 id="shippingAddress"
-                name="shippingAddress"
-                value={listDataType.shippingAddress}
-                onChange={onChange}
-                placeholder='The address where the gifts will be delivered at.'
+                {...register('shippingAddress')}
+                placeholder="The address where the gifts will be delivered at."
                 required
               />
+              {errors.shippingAddress && <span className='text-red-500 font-bold'>{errors.shippingAddress.message}</span>}
             </div>
             <div>
               <h2>Products</h2>
-              {listDataType.gifts.map((gift, index) => (
-                <div key={index}>
+              {fields.map((item, index) => (
+                <div key={item.id}>
                   <div className="p-2">
                     <label htmlFor={`productName-${index}`}>Product Name</label>
                     <input
                       className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
                       type="string"
                       id={`productName-${index}`}
-                      name="productName"
-                      value={gift.productName}
+                      {...register(`gifts.${index}.productName`)}
                       placeholder="This product will appear as a gift on your gift list"
-                      onChange={(event) => giftsChange(event, index)}
                       required
                     />
+                    {errors.gifts && <span className='text-red-500 font-bold'>{errors.gifts.message}</span>}
                   </div>
                   <div className="p-2">
                     <label htmlFor={`productLink-${index}`}>Product Link</label>
                     <input
                       className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                      id={`productLink-${index}`}
-                      name="productLink"
                       type="string"
-                      value={gift.productLink}
-                      onChange={(event) => giftsChange(event, index)}
+                      id={`productLink-${index}`}
+                      {...register(`gifts.${index}.productLink`)}
                       placeholder="Insert the link for your guests to buy the product, if needed."
                     />
+                    {errors.gifts && <span className='text-red-500 font-bold'>{errors.gifts.message}</span>}
                   </div>
                   <div className="p-2">
                     <label htmlFor={`quantity-${index}`}>Quantity</label>
                     <input
                       className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                      id={`quantity-${index}`}
-                      name="quantity"
                       type="number"
-                      value={gift.quantity}
-                      onChange={(event) => giftsChange(event, index)}
+                      id={`quantity-${index}`}
+                      {...register(`gifts.${index}.quantity`)}
                       required
                     />
+                    {errors.gifts && <span className='text-red-500 font-bold'>{errors.gifts.message}</span>}
                   </div>
                 </div>
               ))}
@@ -127,15 +119,9 @@ export default function GiftListForm({
                   className="bg-amber-50 text-xs rounded-full py-0.5 px-4 text-black font-bold border-amber-100 border-solid border-2 w-2/4 mt-2.5 hover:bg-amber-200 focus:outline-none ring-2 ring-amber-200"
                   type="button"
                   id="newInputSet"
-                  onClick={() => {
-                    setListData((prev) => ({
-                      ...prev,
-                      gifts: [
-                        ...prev.gifts,
-                        { productName: '', productLink: '', quantity: 0 },
-                      ],
-                    }))
-                  }}
+                  onClick={() =>
+                    append({ productLink: '', productName: '', quantity: '' })
+                  }
                 >
                   Insert new product
                 </button>
@@ -149,9 +135,15 @@ export default function GiftListForm({
               >
                 Create List
               </button>
-              <span className={`font-bold flex justify-center ${
-                statusMessage === 'Wedding created successfully!' ? 'text-green-500' : 'text-red-500'
-              }`}>{statusMessage}</span>
+              <span
+                className={`font-bold flex justify-center ${
+                  statusMessage === 'Wedding created successfully!'
+                    ? 'text-green-500'
+                    : 'text-red-500'
+                }`}
+              >
+                {statusMessage}
+              </span>
             </div>
           </form>
         </div>

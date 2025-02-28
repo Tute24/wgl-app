@@ -1,20 +1,20 @@
 import { useContextWrap } from '@/contextAPI/context'
+import newListSchema from '@/zodSchemas/newListSchema'
 import axios from 'axios'
 import { FormEvent } from 'react'
+import { z } from 'zod'
 
 export default function useSubmitList() {
-  const { userToken, listData, setListData, setStatusMessage } =
-    useContextWrap()
+  type listData = z.infer<typeof newListSchema>
+  const { userToken, setStatusMessage } = useContextWrap()
 
-  async function submitList(event: FormEvent) {
-    event.preventDefault()
-
+  async function submitList(data: listData) {
     if (userToken) {
-      console.log(listData)
+      console.log(data)
       try {
         const response = await axios.post(
           'http://localhost:3000/createList',
-          listData,
+          data,
           {
             headers: {
               Authorization: `Bearer ${userToken}`,
@@ -25,18 +25,18 @@ export default function useSubmitList() {
         if (response.status === 200) {
           setStatusMessage('Wedding created successfully!')
         }
-        setListData({
-          listTitle: '',
-          weddingDate: '',
-          shippingAddress: '',
-          gifts: [
-            {
-              productName: '',
-              productLink: '',
-              quantity: 0,
-            },
-          ],
-        })
+        // setListData({
+        //   listTitle: '',
+        //   weddingDate: '',
+        //   shippingAddress: '',
+        //   gifts: [
+        //     {
+        //       productName: '',
+        //       productLink: '',
+        //       quantity: 0,
+        //     },
+        //   ],
+        // })
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
@@ -57,5 +57,4 @@ export default function useSubmitList() {
   }
 
   return submitList
-  
 }
