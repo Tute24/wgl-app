@@ -1,23 +1,71 @@
+'use client'
+
 import Link from 'next/link'
-import weddingListProps from '@/types/weddingListProps'
+import useDeleteWedding from '@/functions/useDeleteWedding'
+import { useEffect, useState } from 'react'
 import weddingProps from '@/types/weddingProps'
+import { useContextWrap } from '@/contextAPI/context'
+import axios from 'axios'
 
-interface OwnWeddingsProps {
-  weddingsArray: weddingProps[]
-  deleteWedding: (value:number) => void
-}
+export default function WeddingsOwn() {
+  const deleteWedding = useDeleteWedding()
+  const {userToken} = useContextWrap()
+  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
+      {
+        id: 0,
+        weddingTitle: '',
+        weddingDate: '',
+        shippingAddress: '',
+        createdBy: '',
+      },
+    ])
 
-export default function WeddingsOwn({ weddingsArray, deleteWedding }: OwnWeddingsProps) {
+   useEffect(()=>{
+    async function getWeddings() {
+      if (userToken)
+        try {
+          const response = await axios.get(
+            'http://localhost:3000/getWeddings',
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          )
+          if (response.status === 200) {
+            setOwnWeddingsArray(response.data.own)
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+              console.log('User not authenticated.')
+            }
+            if (error.response?.status === 403) {
+              console.log('Invalid/Expired token.')
+            }
+            if (error.response?.status === 404) {
+              console.log('User not found.')
+            }
+            if (error.response?.status === 500) {
+              console.log('Server error.')
+            }
+          }
+        }
+    }
+
+    getWeddings()
+},[userToken])
+
+
   return (
     <ul className="flex flex-col text-center items-center">
-      {weddingsArray.map((wedding) => (
+      {ownWeddingsArray.map((wedding) => (
         <div
           id={`${wedding.id}`}
           key={wedding.id}
           className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5 flex flex-row"
         >
           <li
-            onClick={() => {}}
             key={wedding.id}
             className="flex flex-col justify-center cursor-pointer border-solid border-2 shadow-md rounded-lg hover:shadow-lg hover:bg-gray-100"
           >

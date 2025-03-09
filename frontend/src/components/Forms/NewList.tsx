@@ -1,19 +1,16 @@
 'use client'
 
+import { useContextWrap } from '@/contextAPI/context'
+import checkAuth from '@/functions/checkAuthFunction'
 import useSubmitList from '@/functions/useSubmitList'
-import giftsSchema from '@/zodSchemas/giftsSchema'
 import newListSchema from '@/zodSchemas/newListSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 type listData = z.infer<typeof newListSchema>
-type giftsData = z.infer<typeof giftsSchema>
-interface newListFormProps {
-  statusMessage: string
-}
 
-export default function GiftListForm({statusMessage}: newListFormProps) {
+export default function GiftListForm() {
   const {
     control,
     register,
@@ -26,8 +23,10 @@ export default function GiftListForm({statusMessage}: newListFormProps) {
     control,
     name: 'gifts',
   })
+  checkAuth()
   const submitList = useSubmitList()
   const onSubmit: SubmitHandler<listData> = submitList
+  const {statusMessage} = useContextWrap()
   return (
     <>
       <div className="flex flex-col justify-center items-center min-h-screen ">
