@@ -2,9 +2,8 @@
 
 import LoggedHeader from '../../../components/Headers/LoggedHeader'
 import checkAuth from '@/functions/checkAuthFunction'
-import useLogOut from '@/functions/logOutFunction'
 import { useContextWrap } from '@/contextAPI/context'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 import useGiftPresent from '@/functions/giftPresentFunction'
@@ -14,8 +13,6 @@ import useSubmitUpdate from '@/functions/useSubmitUpdate'
 import { useParams } from 'next/navigation'
 import useMakeRequest from '@/functions/useMakeRequest'
 import GuestRequest from '@/components/giftsListDisplay/GuestRequest'
-import giftCreateProps from '@/types/giftCreateProps'
-import axios from 'axios'
 import useSubmitNewGift from '@/functions/useSubmitNewGifts'
 
 export default function giftsList() {
@@ -36,7 +33,7 @@ export default function giftsList() {
     setUpdateProps,
     statusMessage,
     createNewGift,
-    setCreateNewGift
+    setCreateNewGift,
   } = useContextWrap()
 
   const { id } = useParams()
@@ -60,29 +57,31 @@ export default function giftsList() {
     event: ChangeEvent<HTMLInputElement>,
     index: number
   ) {
-    setCreateNewGift((prev) => 
-      prev.map((gift,i)=> i===index ? {...gift,[event.target.name]:event.target.value} : gift)
-    )}
+    setCreateNewGift((prev) =>
+      prev.map((gift, i) =>
+        i === index
+          ? { ...gift, [event.target.name]: event.target.value }
+          : gift
+      )
+    )
+  }
 
-  
   const submitNewGifts = useSubmitNewGift()
   checkAuth()
   useGetData()
   useGiftPresent()
 
   const deleteGift = useDeleteGift()
-  const logOut = useLogOut()
   const makeRequest = useMakeRequest(weddingID)
   const submitUpdate = useSubmitUpdate()
 
   return (
     <>
-      {userToken && notGuest && !isCreator && (
+      <div>
+        <LoggedHeader />
+      </div>
+      {notGuest && !isCreator && (
         <>
-          <div>
-            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
-          </div>
-
           <div className="flex flex-col items-center justify-center">
             <h2>
               Not a guest of this wedding, make a request or go back to the
@@ -96,12 +95,8 @@ export default function giftsList() {
           </div>
         </>
       )}
-      {userToken && isCreator && (
+      {isCreator && (
         <>
-          <div>
-            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
-          </div>
-
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's owner</h1>
             <div>
@@ -125,12 +120,8 @@ export default function giftsList() {
           </div>
         </>
       )}
-      {userToken && !notGuest && !isCreator && (
+      {!notGuest && !isCreator && (
         <>
-          <div>
-            <LoggedHeader onClick={logOut} setNotGuest={setNotGuest} />
-          </div>
-
           <div className="flex flex-col items-center justify-center">
             <h1>You're this wedding's guest</h1>
             <div>

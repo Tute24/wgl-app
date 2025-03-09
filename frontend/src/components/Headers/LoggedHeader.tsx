@@ -5,10 +5,6 @@ import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import Link from 'next/link'
 
-// interface LoggedHeaderProps{
-//   onClick: (event:React.MouseEvent<HTMLButtonElement>) => void
-// }
-
 export default function LoggedHeader() {
   checkAuth()
   const {setNotGuest} = useContextWrap()
