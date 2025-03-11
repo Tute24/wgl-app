@@ -10,40 +10,25 @@ import useGiftPresent from '@/functions/giftPresentFunction'
 import useGetData from '@/functions/getWeddingDataFunction'
 import useDeleteGift from '@/functions/useDeleteGift'
 import useSubmitUpdate from '@/functions/useSubmitUpdate'
-import { useParams } from 'next/navigation'
-import useMakeRequest from '@/functions/useMakeRequest'
 import GuestRequest from '@/components/giftsListDisplay/GuestRequest'
 import useSubmitNewGift from '@/functions/useSubmitNewGifts'
 
 export default function giftsList() {
   const {
-    userToken,
     isGiftSent,
     setIsGiftSent,
     giftsArray,
-    setGiftsArray,
-    sendGiftObj,
-    setSendGiftObj,
     isCreator,
     notGuest,
-    setNotGuest,
     toUpdate,
     setToUpdate,
     updateProps,
     setUpdateProps,
-    statusMessage,
     createNewGift,
     setCreateNewGift,
   } = useContextWrap()
 
-  const { id } = useParams()
-  const weddingID = Number(id)
-  const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
-  }
 
   function handleUpdateInputChange(e: ChangeEvent<HTMLInputElement>) {
     setUpdateProps({
@@ -72,7 +57,6 @@ export default function giftsList() {
   useGiftPresent()
 
   const deleteGift = useDeleteGift()
-  const makeRequest = useMakeRequest(weddingID)
   const submitUpdate = useSubmitUpdate()
 
   return (
@@ -88,9 +72,6 @@ export default function giftsList() {
               initial page
             </h2>
             <GuestRequest
-              submitRequest={makeRequest}
-              setNotGuest={setNotGuest}
-              statusMessage={statusMessage}
             />
           </div>
         </>
@@ -126,15 +107,8 @@ export default function giftsList() {
             <h1>You're this wedding's guest</h1>
             <div>
               <GuestList
-                giftsArray={giftsArray}
-                isGiftingSetup={isGiftingSetup}
-                setIsGiftingSetup={setIsGiftingSetup}
                 isGiftSent={isGiftSent}
                 setIsGiftSent={setIsGiftSent}
-                sendGiftObj={sendGiftObj}
-                setSendGiftObj={setSendGiftObj}
-                onChange={handleInputChange}
-                setGiftsArray={setGiftsArray}
               />
             </div>
           </div>

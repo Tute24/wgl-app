@@ -1,38 +1,31 @@
+'use client'
 
-import giftsProps from '@/types/giftsProps'
+import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
+import { useState } from 'react'
 
 
 interface HandleGiftingProps {
-  giftsArray: giftsProps[]
-  setGiftsArray: React.Dispatch<React.SetStateAction<giftsProps[]>>
-  isGiftingSetup: boolean
-  setIsGiftingSetup: React.Dispatch<React.SetStateAction<boolean>>
-  sendGiftObj: {
-    giftID: number
-    quantity: number
-  }
-  setSendGiftObj: React.Dispatch<
-    React.SetStateAction<{
-      giftID: number
-      quantity: number
-    }>
-  >
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   isGiftSent: boolean
   setIsGiftSent: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function GuestList({
-  isGiftingSetup,
-  giftsArray,
   setIsGiftSent,
-  sendGiftObj,
-  onChange,
-  isGiftSent,
-  setIsGiftingSetup,
-  setSendGiftObj,
 }: HandleGiftingProps) {
+
+  const {giftsArray} = useContextWrap()
+
+  const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
+
+  const [sendGiftObj, setSendGiftObj] = useState({
+      giftID: 0,
+      quantity: 0,
+    })
+
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
+    }
 
   return (
     <ul className="flex flex-col text-center items-center">
@@ -43,7 +36,6 @@ export default function GuestList({
           className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5"
         >
           <li
-            onClick={() => {}}
             key={gift.id}
             className="flex flex-col justify-center cursor-pointer border-solid border-2 shadow-md rounded-lg hover:shadow-lg hover:bg-gray-100"
           >
@@ -93,7 +85,7 @@ export default function GuestList({
                     max={gift.quantity}
                     min="0"
                     id={`quantityGifted-${gift.id}`}
-                    onChange={onChange}
+                    onChange={handleInputChange}
                     name="quantity"
                     value={sendGiftObj.quantity}
                   />

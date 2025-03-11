@@ -14,16 +14,6 @@ interface ContextProps {
   setUserToken: (value: string) => void
   isGiftSent: boolean
   setIsGiftSent: React.Dispatch<SetStateAction<boolean>>
-  sendGiftObj: {
-    giftID: number
-    quantity: number
-  }
-  setSendGiftObj: React.Dispatch<
-    SetStateAction<{
-      giftID: number
-      quantity: number
-    }>
-  >
   updateProps: {
     giftID: number
     productName: string
@@ -52,10 +42,6 @@ interface ContextProps {
   setToUpdate: React.Dispatch<SetStateAction<boolean>>
   createNewGift: giftCreateProps[]
   setCreateNewGift: React.Dispatch<SetStateAction<giftCreateProps[]>>
-  ownWeddingsArray: weddingProps[]
-  setOwnWeddingsArray: React.Dispatch<SetStateAction<weddingProps[]>>
-  listData: newWeddingProps
-  setListData: React.Dispatch<SetStateAction<newWeddingProps>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -68,10 +54,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [notGuest, setNotGuest] = useState<boolean>(false)
   const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
-  const [sendGiftObj, setSendGiftObj] = useState({
-    giftID: 0,
-    quantity: 0,
-  })
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
     {
       id: 0,
@@ -106,27 +88,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     productLink: '',
   })
   const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
-  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
-    {
-      id: 0,
-      weddingTitle: '',
-      weddingDate: '',
-      shippingAddress: '',
-      createdBy: '',
-    },
-  ])
-  const [listData, setListData] = useState<newWeddingProps>({
-    listTitle: '',
-    weddingDate: '',
-    shippingAddress: '',
-    gifts: [
-      {
-        productName: '',
-        productLink: '',
-        quantity: 0,
-      },
-    ],
-  })
 
   return (
     <contextWrap.Provider
@@ -137,8 +98,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setUserToken,
         isGiftSent,
         setIsGiftSent,
-        sendGiftObj,
-        setSendGiftObj,
         giftsArray,
         setGiftsArray,
         weddingData,
@@ -155,10 +114,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setUpdateProps,
         createNewGift,
         setCreateNewGift,
-        ownWeddingsArray,
-        setOwnWeddingsArray,
-        listData,
-        setListData,
       }}
     >
       {children}
