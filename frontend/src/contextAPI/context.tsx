@@ -1,10 +1,7 @@
 'use client'
 
-import giftCreateProps from '@/types/giftCreateProps'
 import giftsProps from '@/types/giftsProps'
-import newWeddingProps from '@/types/newWeddingProps'
 import weddingDataProps from '@/types/weddingDataProps'
-import weddingProps from '@/types/weddingProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
@@ -12,22 +9,6 @@ interface ContextProps {
   setStatusMessage: React.Dispatch<SetStateAction<string>>
   userToken: string | null
   setUserToken: (value: string) => void
-  isGiftSent: boolean
-  setIsGiftSent: React.Dispatch<SetStateAction<boolean>>
-  updateProps: {
-    giftID: number
-    productName: string
-    quantity: number
-    productLink: string
-  }
-  setUpdateProps: React.Dispatch<
-    SetStateAction<{
-      giftID: number
-      productName: string
-      quantity: number
-      productLink: string
-    }>
-  >
   giftsArray: giftsProps[]
   setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
   weddingData: weddingDataProps
@@ -40,8 +21,6 @@ interface ContextProps {
   setWeddingID: React.Dispatch<SetStateAction<number>>
   toUpdate: boolean
   setToUpdate: React.Dispatch<SetStateAction<boolean>>
-  createNewGift: giftCreateProps[]
-  setCreateNewGift: React.Dispatch<SetStateAction<giftCreateProps[]>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -49,7 +28,6 @@ const contextWrap = createContext<ContextProps | undefined>(undefined)
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [statusMessage, setStatusMessage] = useState<string>('')
   const [userToken, setUserToken] = useState<string | null>(null)
-  const [isGiftSent, setIsGiftSent] = useState<boolean>(false)
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
   const [toUpdate, setToUpdate] = useState<boolean>(false)
@@ -81,13 +59,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       },
     ],
   })
-  const [updateProps, setUpdateProps] = useState({
-    giftID: 0,
-    productName: '',
-    quantity: 0,
-    productLink: '',
-  })
-  const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
 
   return (
     <contextWrap.Provider
@@ -96,8 +67,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setStatusMessage,
         userToken,
         setUserToken,
-        isGiftSent,
-        setIsGiftSent,
         giftsArray,
         setGiftsArray,
         weddingData,
@@ -110,10 +79,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setWeddingID,
         toUpdate,
         setToUpdate,
-        updateProps,
-        setUpdateProps,
-        createNewGift,
-        setCreateNewGift,
       }}
     >
       {children}

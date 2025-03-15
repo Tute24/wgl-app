@@ -1,10 +1,17 @@
+import { objValuesType } from "@/components/giftsListDisplay/OwnerList"
 import { useContextWrap } from "@/contextAPI/context"
 import giftsProps from "@/types/giftsProps"
 import axios from "axios"
 
-export default function useSubmitUpdate(){
+export default function useSubmitUpdate(objValues:objValuesType, giftID:number){
 
-    const {userToken, setGiftsArray, updateProps, setToUpdate} = useContextWrap()
+    const {userToken, setGiftsArray, setToUpdate} = useContextWrap()
+    const updateProps = {
+      productLink: objValues.productLink,
+      productName: objValues.productName,
+      quantity: objValues.quantity,
+      giftID: giftID
+    }
 
     async function submitUpdate() {
         try {

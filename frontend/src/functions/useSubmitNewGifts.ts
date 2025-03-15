@@ -1,13 +1,14 @@
 import { useContextWrap } from "@/contextAPI/context"
+import giftCreateProps from "@/types/giftCreateProps"
 import axios from "axios"
 import { useParams } from "next/navigation"
 import { FormEvent } from "react"
 
-export default function useSubmitNewGift (){
+export default function useSubmitNewGift (createNewGift:giftCreateProps[]){
 
     const { id } = useParams()
     const weddingID = Number(id)
-    const {userToken,setGiftsArray, createNewGift}= useContextWrap()
+    const {userToken,setGiftsArray}= useContextWrap()
 
     async function submitNewGifts(e:FormEvent){
         e.preventDefault()
