@@ -1,31 +1,16 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
+import useGiftPresent from '@/functions/giftPresentFunction'
 import Link from 'next/link'
 import { useState } from 'react'
 
-
-interface HandleGiftingProps {
-  isGiftSent: boolean
-  setIsGiftSent: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export default function GuestList({
-  setIsGiftSent,
-}: HandleGiftingProps) {
-
-  const {giftsArray} = useContextWrap()
+export default function GuestList() {
+  const { giftsArray } = useContextWrap()
 
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
 
-  const [sendGiftObj, setSendGiftObj] = useState({
-      giftID: 0,
-      quantity: 0,
-    })
-
-    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-      setSendGiftObj({ ...sendGiftObj, [e.target.name]: e.target.value })
-    }
+  const [quantity, setQuantity] = useState<string>('')
 
   return (
     <ul className="flex flex-col text-center items-center">
@@ -85,18 +70,12 @@ export default function GuestList({
                     max={gift.quantity}
                     min="0"
                     id={`quantityGifted-${gift.id}`}
-                    onChange={handleInputChange}
+                    onChange={(e) => setQuantity(e.target.value)}
                     name="quantity"
-                    value={sendGiftObj.quantity}
+                    value={quantity}
                   />
                   <button
-                    onClick={() => {
-                      setSendGiftObj((prev) => ({
-                        ...prev,
-                        giftID: gift.id,
-                      }))
-                      setIsGiftSent(true)
-                    }}
+                    onClick={useGiftPresent(gift.id, quantity)}
                     className="font-semibold border-solid border-green-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-green-300"
                   >
                     Confirm
