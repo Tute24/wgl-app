@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import useMakeRequest from '@/functions/useMakeRequest'
+import useMakeRequest from '@/app/giftList/[id]/(hooks)/useMakeRequest'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 

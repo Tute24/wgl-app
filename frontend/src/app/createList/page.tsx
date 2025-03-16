@@ -1,4 +1,4 @@
-import GiftListForm from '../../components/Forms/NewList'
+import GiftListForm from './(components)/NewListForm/NewList'
 import LoggedHeader from '../../components/Headers/LoggedHeader'
 
 export default function newList() {

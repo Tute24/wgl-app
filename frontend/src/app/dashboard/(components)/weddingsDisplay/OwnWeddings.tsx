@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import useDeleteWedding from '@/functions/useDeleteWedding'
+import useDeleteWedding from '@/app/dashboard/(hooks)/useDeleteWedding'
 import { useEffect, useState } from 'react'
 import weddingProps from '@/types/weddingProps'
 import { useContextWrap } from '@/contextAPI/context'

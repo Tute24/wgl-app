@@ -1,4 +1,4 @@
-import useSubmitNewGift from '@/functions/useSubmitNewGifts'
+import useSubmitNewGift from '@/app/giftList/[id]/(hooks)/useSubmitNewGifts'
 import giftCreateProps from '@/types/giftCreateProps'
 import { ChangeEvent, useState } from 'react'
 

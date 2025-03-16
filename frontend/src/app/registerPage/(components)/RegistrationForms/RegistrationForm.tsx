@@ -1,4 +1,4 @@
-import useSubmitRegister from '@/functions/useSubmitRegister'
+import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'

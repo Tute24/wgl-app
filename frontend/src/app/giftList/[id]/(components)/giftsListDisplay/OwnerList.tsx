@@ -1,11 +1,11 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import useDeleteGift from '@/functions/useDeleteGift'
-import useSubmitUpdate from '@/functions/useSubmitUpdate'
+import useDeleteGift from '@/app/giftList/[id]/(hooks)/useDeleteGift'
+import useSubmitUpdate from '@/app/giftList/[id]/(hooks)/useSubmitUpdate'
 import Link from 'next/link'
 import { ChangeEvent, useState } from 'react'
-import NewGiftForm from '../Forms/newGift'
+import NewGiftForm from '../newGiftForm/newGift'
 
 export type objValuesType = {
   productLink: string

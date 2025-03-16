@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import useGiftPresent from '@/functions/giftPresentFunction'
+import useGiftPresent from '@/app/giftList/[id]/(hooks)/giftPresentFunction'
 import Link from 'next/link'
 import { useState } from 'react'
 
