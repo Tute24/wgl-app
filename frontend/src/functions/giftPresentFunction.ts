@@ -1,3 +1,4 @@
+'use client'
 import { useContextWrap } from '@/contextAPI/context'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
