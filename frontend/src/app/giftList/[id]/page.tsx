@@ -8,7 +8,7 @@ export default function giftsList() {
       <div>
         <LoggedHeader />
       </div>
-      <ConditionalRenderingListPage/>
+      <ConditionalRenderingListPage />
     </>
   )
 }

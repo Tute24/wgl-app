@@ -1,5 +1,3 @@
-'use client'
-
 import RegisterForm from './(components)/RegistrationForms/RegistrationForm'
 import UnLoggedHeader from '../../components/Headers/UnLoggedHeader'
 import { useContextWrap } from '../../contextAPI/context'
@@ -10,7 +8,7 @@ export default function Register() {
   return (
     <>
       <UnLoggedHeader />
-      <RegisterForm statusMessage={statusMessage} />
+      <RegisterForm />
     </>
   )
 }
