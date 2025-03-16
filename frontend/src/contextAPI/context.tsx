@@ -2,6 +2,7 @@
 
 import giftsProps from '@/types/giftsProps'
 import weddingDataProps from '@/types/weddingDataProps'
+import weddingProps from '@/types/weddingProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
@@ -12,6 +13,10 @@ interface ContextProps {
   giftsArray: giftsProps[]
   setGiftsArray: React.Dispatch<SetStateAction<giftsProps[]>>
   weddingData: weddingDataProps
+  ownWeddingsArray: weddingProps[]
+  setOwnWeddingsArray: React.Dispatch<SetStateAction<weddingProps[]>>
+  guestWeddingsArray: weddingProps[]
+  setGuestWeddingsArray: React.Dispatch<SetStateAction<weddingProps[]>>
   setWeddingData: React.Dispatch<SetStateAction<weddingDataProps>>
   isCreator: boolean
   setIsCreator: React.Dispatch<SetStateAction<boolean>>
@@ -32,16 +37,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [notGuest, setNotGuest] = useState<boolean>(false)
   const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
-  const [giftsArray, setGiftsArray] = useState<giftsProps[]>([
-    {
-      id: 0,
-      quantity: 0,
-      productName: '',
-      productLink: '',
-      fromWedding: 0,
-      giftedBy: '',
-    },
-  ])
+  const [giftsArray, setGiftsArray] = useState<giftsProps[]>([])
+  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([])
+  const [guestWeddingsArray, setGuestWeddingsArray] = useState<weddingProps[]>(
+    []
+  )
   const [weddingData, setWeddingData] = useState<weddingDataProps>({
     id: 0,
     weddingTitle: '',
@@ -79,6 +79,10 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setWeddingID,
         toUpdate,
         setToUpdate,
+        ownWeddingsArray,
+        setOwnWeddingsArray,
+        guestWeddingsArray,
+        setGuestWeddingsArray,
       }}
     >
       {children}

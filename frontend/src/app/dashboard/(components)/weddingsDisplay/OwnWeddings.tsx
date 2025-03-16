@@ -2,60 +2,11 @@
 
 import Link from 'next/link'
 import useDeleteWedding from '@/app/dashboard/(hooks)/useDeleteWedding'
-import { useEffect, useState } from 'react'
-import weddingProps from '@/types/weddingProps'
 import { useContextWrap } from '@/contextAPI/context'
-import axios from 'axios'
 
 export default function WeddingsOwn() {
   const deleteWedding = useDeleteWedding()
-  const {userToken} = useContextWrap()
-  const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([
-      {
-        id: 0,
-        weddingTitle: '',
-        weddingDate: '',
-        shippingAddress: '',
-        createdBy: '',
-      },
-    ])
-
-   useEffect(()=>{
-    async function getWeddings() {
-      if (userToken)
-        try {
-          const response = await axios.get(
-            'http://localhost:3000/getWeddings',
-            {
-              headers: {
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          )
-          if (response.status === 200) {
-            setOwnWeddingsArray(response.data.own)
-          }
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            if (error.response?.status === 401) {
-              console.log('User not authenticated.')
-            }
-            if (error.response?.status === 403) {
-              console.log('Invalid/Expired token.')
-            }
-            if (error.response?.status === 404) {
-              console.log('User not found.')
-            }
-            if (error.response?.status === 500) {
-              console.log('Server error.')
-            }
-          }
-        }
-    }
-
-    getWeddings()
-},[userToken])
-
+  const { ownWeddingsArray } = useContextWrap()
 
   return (
     <ul className="flex flex-col text-center items-center">
@@ -84,7 +35,10 @@ export default function WeddingsOwn() {
               </div>
             </div>
           </li>
-          <button onClick={() => deleteWedding(wedding.id)} className="font-semibold text-xs border-solid border-red-200 border-2 rounded-3xl px-2 py-1 mr-2 hover:bg-red-300">
+          <button
+            onClick={() => deleteWedding(wedding.id)}
+            className="font-semibold text-xs border-solid border-red-200 border-2 rounded-3xl px-2 py-1 mr-2 hover:bg-red-300"
+          >
             Delete this wedding
           </button>
         </div>
