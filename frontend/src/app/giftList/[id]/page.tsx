@@ -3,13 +3,11 @@
 import LoggedHeader from '../../../components/Headers/LoggedHeader'
 import checkAuth from '@/functions/checkAuthFunction'
 import { useContextWrap } from '@/contextAPI/context'
-import { ChangeEvent } from 'react'
 import GuestList from '../../../components/giftsListDisplay/GuestList'
 import OwnerList from '../../../components/giftsListDisplay/OwnerList'
 import useGetData from '@/functions/getWeddingDataFunction'
-import useDeleteGift from '@/functions/useDeleteGift'
+
 import GuestRequest from '@/components/giftsListDisplay/GuestRequest'
-import useSubmitNewGift from '@/functions/useSubmitNewGifts'
 
 export default function giftsList() {
   const {
