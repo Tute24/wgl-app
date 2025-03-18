@@ -22,7 +22,7 @@ export default function useDeleteWedding() {
 
         if (response.status === 200) {
           setOwnWeddingsArray((prev) =>
-            prev.filter((wedding) => wedding.id !== id)
+            prev.filter((item) => item.id !== id)
           )
         }
       } catch (error) {

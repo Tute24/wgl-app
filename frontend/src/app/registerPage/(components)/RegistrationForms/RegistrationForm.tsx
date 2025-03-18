@@ -1,4 +1,7 @@
-import useSubmitRegister from '@/functions/useSubmitRegister'
+'use client'
+
+import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
+import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -6,11 +9,8 @@ import { z } from 'zod'
 
 type usersData = z.infer<typeof usersDataSchema>
 
-interface RegisterFormsProps {
-  statusMessage: string
-}
-
-export default function RegisterForm({ statusMessage }: RegisterFormsProps) {
+export default function RegisterForm() {
+  const {statusMessage} = useContextWrap()
   const { register, handleSubmit, formState:{errors} } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
