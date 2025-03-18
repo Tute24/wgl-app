@@ -1,10 +1,10 @@
 import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
 
-export default function useDeleteGift() {
+export default function useDeleteGift(giftID: number) {
   const { userToken, setGiftsArray, giftsArray } = useContextWrap()
 
-  async function deleteGift(giftID: number) {
+  async function deleteGift() {
     const identifier = {
       giftID: giftID,
     }

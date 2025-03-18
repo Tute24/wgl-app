@@ -1,53 +1,32 @@
-import giftCreateProps from '@/types/giftCreateProps'
-import giftsProps from '@/types/giftsProps'
-import Link from 'next/link'
-import { ChangeEvent, FormEvent, SetStateAction } from 'react'
+'use client'
 
-interface HandleGiftingProps {
-  giftsArray: giftsProps[]
-  updateProps: {
-    giftID: number
-    productName: string
-    quantity: number
-    productLink: string
-  }
-  selectedGiftID: number
-  setSelectedGiftID: (value: number) => void
-  setUpdateProps: React.Dispatch<
-    SetStateAction<{
-      giftID: number
-      productName: string
-      quantity: number
-      productLink: string
-    }>
-  >
-  onSubmit: (e:FormEvent) => void
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-  submitChange: React.MouseEventHandler<HTMLButtonElement>
-  toUpdate: boolean
-  setToUpdate: React.Dispatch<SetStateAction<boolean>>
-  deleteGift: (value: number) => void
-  createNewGift: giftCreateProps[]
-  setCreateNewGift: React.Dispatch<SetStateAction<giftCreateProps[]>>
-  newInputChange: (event:ChangeEvent<HTMLInputElement>,index: number) => void
+import { useContextWrap } from '@/contextAPI/context'
+import useDeleteGift from '@/app/giftList/[id]/(hooks)/useDeleteGift'
+import useSubmitUpdate from '@/app/giftList/[id]/(hooks)/useSubmitUpdate'
+import Link from 'next/link'
+import { ChangeEvent, useState } from 'react'
+import NewGiftForm from '../newGiftForm/newGift'
+
+export type objValuesType = {
+  productLink: string
+  productName: string
+  quantity: number
 }
 
-export default function OwnerList({
-  giftsArray,
-  updateProps,
-  setUpdateProps,
-  onChange,
-  selectedGiftID,
-  setSelectedGiftID,
-  submitChange,
-  toUpdate,
-  setToUpdate,
-  deleteGift,
-  setCreateNewGift,
-  createNewGift,
-  newInputChange,
-  onSubmit
-}: HandleGiftingProps) {
+export default function OwnerList() {
+  const { giftsArray, toUpdate, setToUpdate } = useContextWrap()
+  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
+  const [updateProps, setUpdateProps] = useState({
+    productName: '',
+    quantity: 0,
+    productLink: '',
+  })
+  function handleUpdateInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setUpdateProps({
+      ...updateProps,
+      [e.target.name]: e.target.value,
+    })
+  }
   return (
     <>
       <ul className="flex flex-col text-center items-center">
@@ -86,7 +65,6 @@ export default function OwnerList({
                     <button
                       onClick={() => {
                         setUpdateProps({
-                          giftID: gift.id,
                           productName: gift.productName,
                           quantity: gift.quantity,
                           productLink: gift.productLink,
@@ -99,9 +77,7 @@ export default function OwnerList({
                       Update Item
                     </button>
                     <button
-                      onClick={() => {
-                        deleteGift(gift.id)
-                      }}
+                      onClick={useDeleteGift(gift.id)}
                       className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400"
                     >
                       Remove Item
@@ -145,7 +121,10 @@ export default function OwnerList({
                     >
                       Update Item
                     </button>
-                    <button className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400">
+                    <button
+                      onClick={useDeleteGift(gift.id)}
+                      className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400"
+                    >
                       Remove Item
                     </button>
                   </div>
@@ -159,7 +138,7 @@ export default function OwnerList({
                     id="productName"
                     name="productName"
                     value={updateProps.productName}
-                    onChange={onChange}
+                    onChange={handleUpdateInputChange}
                   />
                   <div className="flex flex-col sm:flex-row justify-between gap-4 items-center sm:ml-5 sm:mr-5 ">
                     <label htmlFor="quantity">Update the quantity:</label>
@@ -168,7 +147,7 @@ export default function OwnerList({
                       id="quantity"
                       name="quantity"
                       value={updateProps.quantity}
-                      onChange={onChange}
+                      onChange={handleUpdateInputChange}
                     />
                     <div className="flex flex-row items-center gap-3">
                       <label htmlFor="productLink">
@@ -179,13 +158,13 @@ export default function OwnerList({
                         id="productLink"
                         name="productLink"
                         value={updateProps.productLink}
-                        onChange={onChange}
+                        onChange={handleUpdateInputChange}
                       />
                     </div>
                   </div>
                   <div className="flex flex-row">
                     <button
-                      onClick={submitChange}
+                      onClick={useSubmitUpdate(updateProps, selectedGiftID)}
                       className="font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200"
                     >
                       Confirm Update
@@ -206,68 +185,7 @@ export default function OwnerList({
         ))}
       </ul>
       <div className="flex flex-col">
-        <form onSubmit={onSubmit} >
-        <div>
-          <ul>
-            {createNewGift.map((gift, index) => (
-              <li key={index}>
-                
-                <div className="p-2">
-                  <label htmlFor={`productName-${index}`}>Product Name</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    type="string"
-                    id={`productName-${index}`}
-                    name="productName"
-                    value={gift.productName}
-                    onChange={(event)=> newInputChange(event,index)}
-                    placeholder="This product will appear as a gift on your gift list"
-                    required
-                  />
-                </div>
-                <div className="p-2">
-                  <label htmlFor={`productLink-${index}`}>Product Link</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    id={`productLink-${index}`}
-                    name="productLink"
-                    type="string"
-                    value={gift.productLink}
-                    onChange={(event)=> newInputChange(event,index)}
-                    placeholder="Insert the link for your guests to buy the product, if needed."
-                  />
-                </div>
-                <div className="p-2">
-                  <label htmlFor={`quantity-${index}`}>Quantity</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    id={`quantity-${index}`}
-                    name="quantity"
-                    type="number"
-                    value={gift.quantity}
-                    onChange={(event)=> newInputChange(event,index)}
-                    required
-                  />
-                </div>
-                
-              </li>
-            ))}
-          </ul>
-          <div className='flex flex-col'>
-          <button onClick={()=>{
-          setCreateNewGift((prev)=> [
-            ...prev,
-            {productName:'', productLink: '', quantity: 0}
-          ])
-        }} className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400">
-          Add new gift
-        </button>
-        <button className='font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 mt-2 py-2 mr-5 hover:bg-gray-200'>
-          Submit
-        </button>
-        </div>
-        </div>
-      </form>
+        <NewGiftForm />
       </div>
     </>
   )

@@ -1,14 +1,20 @@
+'use client'
 import { useContextWrap } from '@/contextAPI/context'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useParams } from 'next/navigation'
 
-export default function useGiftPresent() {
-  const { isGiftSent, userToken, sendGiftObj, setGiftsArray } = useContextWrap()
+export default function useGiftPresent(giftID: number,quantity:string,) {
+  const { userToken, setGiftsArray } = useContextWrap()
+  const { id } = useParams()
 
-  useEffect(() => {
+  const sendGiftObj = {
+    giftID: giftID,
+    quantity: quantity,
+  }
+
     async function giftPresent() {
-      if (isGiftSent) {
+      if (sendGiftObj) {
         try {
           const response = await axios.post(
             'http://localhost:3000/giftPresent',
@@ -16,6 +22,9 @@ export default function useGiftPresent() {
             {
               headers: {
                 Authorization: `Bearer ${userToken}`,
+              },
+              params: {
+                id: Number(id),
               },
             }
           )
@@ -26,7 +35,7 @@ export default function useGiftPresent() {
                 item.id === sendGiftObj.giftID
                   ? {
                       ...item,
-                      
+
                       quantity: item.quantity - Number(sendGiftObj.quantity),
                     }
                   : item
@@ -54,6 +63,5 @@ export default function useGiftPresent() {
       }
     }
 
-    giftPresent()
-  }, [isGiftSent])
-}
+    return giftPresent
+  }
