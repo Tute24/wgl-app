@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react'
 import Link from 'next/link'
 import InputContainer from '../Common/input-container/input-container'
+import SubmitButton from '../Common/submit-button/submit-button'
 interface LoginFormProps {
   usersSign: {
     email: string
@@ -15,46 +16,43 @@ export default function LoginForm({
   usersSign,
   onChange,
   onSubmit,
-  statusMessage
+  statusMessage,
 }: LoginFormProps) {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="font-sans p-10 text-center  text-black font-semibold rounded-sm">
-        <div className="flex justify-between items-center -mt-5 mb-3"></div>
+    <div className="flex flex-col justify-center items-center w-full">
+      <div className="flex justify-center items-center">
+        <div className="flex items-center w-full"></div>
         <form onSubmit={onSubmit}>
           <InputContainer
-          id='email'
-          type='email'
-          label='E-mail'
-          name='email'
-          value={usersSign.email}
-          onChange={onChange}
-          placeholder='Log in with your e-mail'
+            id="email"
+            type="email"
+            label="E-mail"
+            name="email"
+            value={usersSign.email}
+            onChange={onChange}
+            placeholder="Sign in with your e-mail"
           />
           <InputContainer
-          id='password'
-          type='password'
-          label='Password'
-          name='password'
-          value={usersSign.password}
-          onChange={onChange}
-          placeholder='Type your password'
+            id="password"
+            type="password"
+            label="Password"
+            name="password"
+            value={usersSign.password}
+            onChange={onChange}
+            placeholder="Type your password"
           />
-          <div className="p-5 ">
-            <button
-              className="bg-amber-50 rounded-full py-0.5 px-4 text-black font-bold border-amber-100 border-solid border-2 w-full mt-2.5 hover:bg-amber-200 focus:outline-none ring-2 ring-amber-200"
-              type="submit"
-              id="loginButton"
-            >
-              Log In
-            </button>
-            <span className='text-red-500 font-bold'>{statusMessage}</span>
+          <div className="py-4">
+            <SubmitButton id="submitButton" title="Sign in" />
+            <span className="text-red-500 font-bold">{statusMessage}</span>
           </div>
         </form>
       </div>
       <div className="text-center">
-        <span className="font-semibold">
-          Are you a new user? <Link href="/registerPage">Register now!</Link>
+        <span className="font-semibold text-mutedTaupe">
+          Are you a new user?{' '}
+          <Link href="/registerPage">
+            <span className="text-amber-800 underline">Sign up now!</span>
+          </Link>
         </span>
       </div>
     </div>
