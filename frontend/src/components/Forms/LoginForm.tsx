@@ -17,14 +17,14 @@ export default function LoginForm({
   statusMessage
 }: LoginFormProps) {
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen ">
-      <div className="font-sans p-10 text-center bg-black text-white font-semibold rounded-2xl">
+    <div className="flex flex-col justify-center items-center">
+      <div className="font-sans p-10 text-center  text-black font-semibold rounded-sm">
         <div className="flex justify-between items-center -mt-5 mb-3"></div>
         <form onSubmit={onSubmit}>
           <div className="p-2">
             <label htmlFor="email">Your E-mail: </label>
             <input
-              className="border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
+              className="border-solid border-2 rounded-sm text-center text-sm w-full "
               type="email"
               id="email"
               name="email"

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: 'hind';
+    src: url('/wglapp/frontend/public/fonts/hind-regular.ttf') format('truetype');
+}
