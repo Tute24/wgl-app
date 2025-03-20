@@ -49,7 +49,7 @@ export default function LoginForm({
       </div>
       <div className="text-center">
         <span className="font-semibold text-mutedTaupe">
-          Are you a new user?{' '}
+          Are you a new user?
           <Link href="/registerPage">
             <span className="text-amber-800 underline">Sign up now!</span>
           </Link>

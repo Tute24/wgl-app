@@ -3,11 +3,11 @@ import { ChangeEvent } from 'react'
 interface InputContainerProps {
   type: string
   id: string
-  value: string
-  name: string
-  placeholder: string
+  value?: string
+  name?: string
+  placeholder?: string
   label: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function InputContainer({
