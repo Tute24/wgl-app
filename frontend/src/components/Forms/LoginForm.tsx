@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react'
 import Link from 'next/link'
 import InputContainer from '../Common/input-container/input-container'
-import SubmitButton from '../Common/submit-button/submit-button'
+import SubmitButton from '../Common/buttons/submit-button/submit-button'
 interface LoginFormProps {
   usersSign: {
     email: string

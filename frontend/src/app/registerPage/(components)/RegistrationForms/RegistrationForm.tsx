@@ -2,7 +2,7 @@
 
 import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
 import InputContainer from '@/components/Common/input-container/input-container'
-import SubmitButton from '@/components/Common/submit-button/submit-button'
+import SubmitButton from '@/components/Common/buttons/submit-button/submit-button'
 import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
