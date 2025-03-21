@@ -10,6 +10,7 @@ import { z } from 'zod'
 import InputContainer from '@/components/Common/input-container/input-container'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 import SubmitButton from '@/components/Common/buttons/submit-button/submit-button'
+import Image from 'next/image'
 
 type listData = z.infer<typeof newListSchema>
 
@@ -22,7 +23,7 @@ export default function GiftListForm() {
   } = useForm<listData>({
     resolver: zodResolver(newListSchema),
   })
-  const { fields, append } = useFieldArray<listData>({
+  const { fields, append, remove } = useFieldArray<listData>({
     control,
     name: 'gifts',
   })
@@ -30,6 +31,9 @@ export default function GiftListForm() {
   const submitList = useSubmitList()
   const onSubmit: SubmitHandler<listData> = submitList
   const { statusMessage } = useContextWrap()
+  const removeIcon = (
+    <Image src="/x-circle-icon.png" alt="remove-gift" width={28} height={28} />
+  )
   return (
     <>
       <div className="flex flex-col items-center ">
@@ -85,7 +89,7 @@ export default function GiftListForm() {
               </h2>
               {fields.map((item, index) => (
                 <div key={item.id}>
-                  <div className="gap-2">
+                  <div className="gap-0 flex justify-center  ">
                     <InputContainer
                       label="Product name"
                       id={`productName-${index}`}
@@ -98,6 +102,15 @@ export default function GiftListForm() {
                         {errors.gifts.message}
                       </span>
                     )}
+                    <div>
+                      <button
+                        id={`remove-gift-${index}`}
+                        onClick={() => remove(index)}
+                        className="-ml-8 mt-1.5 flex justify-start items-start"
+                      >
+                        {removeIcon}
+                      </button>
+                    </div>
                   </div>
                   <div className="gap-2">
                     <InputContainer
