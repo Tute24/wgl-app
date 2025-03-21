@@ -131,7 +131,7 @@ export default function GiftListForm() {
               <div className="mt-3">
                 <UserButton
                   id="newInputSet"
-                  title="Add a new gift"
+                  content="Add a new gift"
                   onClick={() =>
                     append({ productLink: '', productName: '', quantity: '' })
                   }

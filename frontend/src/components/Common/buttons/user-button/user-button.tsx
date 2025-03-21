@@ -1,10 +1,10 @@
 interface UserButtonProps {
     id: string
-    title: string
+    content: React.ReactNode
     onClick: (e:React.MouseEvent<HTMLButtonElement>) => void
   }
   
-  export default function UserButton({ id, title, onClick }: UserButtonProps) {
+  export default function UserButton({ id, content, onClick }: UserButtonProps) {
     return (
       <div>
         <button
@@ -13,7 +13,7 @@ interface UserButtonProps {
           id={id}
           onClick={onClick}
         >
-          {title}
+          {content}
         </button>
       </div>
     )
