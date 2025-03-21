@@ -1,35 +1,44 @@
-import { ChangeEvent, FormEvent } from 'react'
+'use client'
+
+import { ChangeEvent, useState } from 'react'
 import Link from 'next/link'
 import InputContainer from '../Common/input-container/input-container'
 import SubmitButton from '../Common/buttons/submit-button/submit-button'
-interface LoginFormProps {
-  usersSign: {
-    email: string
-    password: string
-  }
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  onSubmit: (event: FormEvent) => void
-  statusMessage: string
+import { useContextWrap } from '@/contextAPI/context'
+import useSignIn from '@/functions/signInFunction'
+
+export type usersSignType = {
+  email: string
+  password: string
 }
 
-export default function LoginForm({
-  usersSign,
-  onChange,
-  onSubmit,
-  statusMessage,
-}: LoginFormProps) {
+export default function LoginForm() {
+  const { statusMessage } = useContextWrap()
+  const [usersSign, setUsersSign] = useState<usersSignType>({
+    email: '',
+    password: '',
+  })
+  const signIn = useSignIn(usersSign)
+
+  function loginInputHandler(event: ChangeEvent<HTMLInputElement>) {
+    setUsersSign({
+      ...usersSign,
+      [event.target.name]: event.target.value,
+    })
+  }
+
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="flex justify-center items-center">
         <div className="flex items-center w-full"></div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={signIn}>
           <InputContainer
             id="email"
             type="email"
             label="E-mail"
             name="email"
             value={usersSign.email}
-            onChange={onChange}
+            onChange={loginInputHandler}
             placeholder="Sign in with your e-mail"
           />
           <InputContainer
@@ -38,7 +47,7 @@ export default function LoginForm({
             label="Password"
             name="password"
             value={usersSign.password}
-            onChange={onChange}
+            onChange={loginInputHandler}
             placeholder="Type your password"
           />
           <div className="py-4">

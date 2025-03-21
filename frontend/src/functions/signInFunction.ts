@@ -1,14 +1,16 @@
+'use client'
+
+import { usersSignType } from '@/components/Forms/LoginForm'
 import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
 
-export default function useSignIn() {
+export default function useSignIn(usersSign:usersSignType) {
   const { setStatusMessage } = useContextWrap()
   const router = useRouter()
   async function loginSubmitHandler(event: FormEvent) {
     event.preventDefault()
-
     try {
       const response = await axios.post(
         'http://localhost:3000/logIn',
