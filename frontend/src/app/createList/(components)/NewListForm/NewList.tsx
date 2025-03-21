@@ -32,8 +32,8 @@ export default function GiftListForm() {
   const { statusMessage } = useContextWrap()
   return (
     <>
-      <div className="flex flex-col  items-center ">
-        <div className="font-sans flex justify-center flex-col p-10">
+      <div className="flex flex-col items-center ">
+        <div className="font-sans border-solid border-2 border-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose flex justify-center flex-col p-7">
           <div className="flex justify-center items-center font-bold text-amber-800">
             <h2>Create a new wedding gift list</h2>
           </div>
