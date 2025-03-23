@@ -28,8 +28,8 @@ export default function GiftListForm() {
     name: 'gifts',
   })
   checkAuth()
-  const submitList = useSubmitList()
-  const onSubmit: SubmitHandler<listData> = submitList
+  const submitForm = useSubmitList()
+  const onSubmit: SubmitHandler<listData> = submitForm
   const { statusMessage } = useContextWrap()
   const removeIcon = (
     <Image src="/x-circle-icon.png" alt="remove-gift" width={28} height={28} />
@@ -41,7 +41,10 @@ export default function GiftListForm() {
           <div className="flex justify-center items-center font-bold text-amber-800">
             <h2>Create a new wedding gift list</h2>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col "
+          >
             <div className="gap-2">
               <InputContainer
                 label="Wedding name"
@@ -145,9 +148,10 @@ export default function GiftListForm() {
                 <UserButton
                   id="newInputSet"
                   content="Add a new gift"
-                  onClick={() =>
+                  onClick={(e) => {
+                    e.preventDefault()
                     append({ productLink: '', productName: '', quantity: '' })
-                  }
+                  }}
                 />
               </div>
             </div>

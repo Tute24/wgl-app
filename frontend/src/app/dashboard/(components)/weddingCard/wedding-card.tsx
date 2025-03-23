@@ -26,7 +26,9 @@ export default function WeddingCard({
         <div className="flex flex-col justify-between">
           {isOwn && (
             <div className="flex justify-end mt-1 -mb-1">
-              <button onClick={() => deleteWedding(id)}>{trashIcon}</button>
+              <button onClick={() => deleteWedding(id)}>
+                <span className="text-red-500">{trashIcon}</span>
+              </button>
             </div>
           )}
           <h2 className="font-bold p-2 text-amber-800">{title}</h2>
@@ -41,11 +43,10 @@ export default function WeddingCard({
               href={`/giftList/${id}`}
               className="text-orangeText  text-base"
             >
-              <span className="text-amber-800 font-bold">
-                See this wedding's gift list
+              <span className="text-amber-800 font-bold flex flex-row gap-2 items-center">
+                See this wedding's gift list {arrowIcon}
               </span>
             </Link>
-            <div>{arrowIcon}</div>
           </div>
         </div>
       </li>
