@@ -1,27 +1,43 @@
 import Link from 'next/link'
-
+import { IoTrashOutline } from 'react-icons/io5'
+import { IoArrowRedoSharp } from 'react-icons/io5'
+import useDeleteWedding from '../../(hooks)/useDeleteWedding'
 export interface WeddingCardProps {
   id: number
   title: string
   date: string
 }
 export default function WeddingCard({ id, title, date }: WeddingCardProps) {
+  const deleteWedding = useDeleteWedding()
+  const trashIcon = <IoTrashOutline />
+  const arrowIcon = <IoArrowRedoSharp />
   return (
     <>
       <li
         key={`${id}`}
-        className="flex flex-col px-2 justify-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
+        className="flex flex-col px-2 w-full justify-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
       >
-        <h2 className="font-bold p-2 text-amber-800">{title}</h2>
+        <div className="flex flex-col justify-between">
+          <div className="flex justify-end mt-1 -mb-1">
+            <button onClick={() => deleteWedding(id)}>{trashIcon}</button>
+          </div>
+          <h2 className="font-bold p-2 text-amber-800">{title}</h2>
+        </div>
         <div className="flex flex-col justify-between items-center">
-          <p className="text-base"><span className='text-amber-800 font-bold'>Wedding date:</span> <span className='text-mutedTaupe font-bold'>{date}</span></p>
-          <div className="flex flex-row items-center gap-3 p-2">
+          <p className="text-base">
+            <span className="text-amber-800 font-bold">Wedding date:</span>{' '}
+            <span className="text-mutedTaupe font-bold">{date}</span>
+          </p>
+          <div className="flex flex-row items-center gap-2 p-2 hover:underline">
             <Link
               href={`/giftList/${id}`}
-              className=" text-xs  text-orangeText hover:underline sm:text-base"
+              className="text-orangeText  text-base"
             >
-             <span className='text-amber-800 font-bold'>See this wedding's gift list</span>
+              <span className="text-amber-800 font-bold">
+                See this wedding's gift list
+              </span>
             </Link>
+            <div>{arrowIcon}</div>
           </div>
         </div>
       </li>
