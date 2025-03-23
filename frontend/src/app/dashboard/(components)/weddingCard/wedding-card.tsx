@@ -10,17 +10,17 @@ export default function WeddingCard({ id, title, date }: WeddingCardProps) {
     <>
       <li
         key={`${id}`}
-        className="flex flex-col justify-center cursor-pointer border-solid border-2 shadow-md rounded-lg hover:shadow-lg hover:bg-gray-100"
+        className="flex flex-col px-2 justify-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
       >
-        <h2 className="font-bold p-2">{title}</h2>
-        <div className="flex flex-col sm:flex-row justify-between gap-4 items-center sm:ml-5 sm:mr-5 ">
-          <p className="text-xs sm:text-sm">Wedding date: {date}</p>
-          <div className="flex flex-row items-center gap-3">
+        <h2 className="font-bold p-2 text-amber-800">{title}</h2>
+        <div className="flex flex-col justify-between items-center">
+          <p className="text-base"><span className='text-amber-800 font-bold'>Wedding date:</span> <span className='text-mutedTaupe font-bold'>{date}</span></p>
+          <div className="flex flex-row items-center gap-3 p-2">
             <Link
               href={`/giftList/${id}`}
               className=" text-xs  text-orangeText hover:underline sm:text-base"
             >
-              See this wedding's gift list
+             <span className='text-amber-800 font-bold'>See this wedding's gift list</span>
             </Link>
           </div>
         </div>

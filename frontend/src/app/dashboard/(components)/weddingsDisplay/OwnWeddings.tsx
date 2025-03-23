@@ -17,12 +17,12 @@ export default function WeddingsOwn() {
           <div
             id={`${wedding.id}`}
             key={wedding.id}
-            className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5 flex flex-row"
+            className="p-3 sm:p-5 border-gray-400 w-full flex flex-row"
           >
             <WeddingCard
               id={wedding.id}
               title={wedding.weddingTitle}
-              date={wedding.weddingDate}
+              date={wedding.weddingDate.replace(/-/g, "/")}
             />
             <button
               onClick={() => deleteWedding(wedding.id)}

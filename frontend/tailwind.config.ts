@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         softWhite: "#F8F6F2",
+        softBeige: "#F1E9DD",
         warmBeige: "#EADDC8",
         champagneGold: "#F4E3C1",
         paleGold: "#D9B68E",
