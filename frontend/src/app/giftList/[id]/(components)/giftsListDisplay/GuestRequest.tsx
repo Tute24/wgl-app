@@ -9,6 +9,7 @@ export default function GuestRequest() {
   const { id } = useParams()
   const weddingID = Number(id)
   const { statusMessage, setNotGuest, isCreator, notGuest } = useContextWrap()
+  const makeRequest = useMakeRequest(weddingID)
   if (notGuest && !isCreator) {
     return (
       <>
@@ -30,9 +31,7 @@ export default function GuestRequest() {
                 </button>
               </Link>
               <button
-                onClick={() => {
-                  useMakeRequest(weddingID)
-                }}
+                onClick={makeRequest}
                 className="px-5 py-2 bg-black text-white font-bold rounded-3xl hover:bg-black"
               >
                 <span className="text-xs">Request Access to the list</span>
