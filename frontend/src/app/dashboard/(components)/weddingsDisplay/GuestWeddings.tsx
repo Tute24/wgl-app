@@ -24,6 +24,7 @@ export default function WeddingsGuest() {
                 id={wedding.id}
                 title={wedding.weddingTitle}
                 date={wedding.weddingDate}
+                isOwn={false}
               />
             </div>
           ))}

@@ -20,6 +20,7 @@ export default function WeddingsOwn() {
               id={wedding.id}
               title={wedding.weddingTitle}
               date={wedding.weddingDate.replace(/-/g, '/')}
+              isOwn={true}
             />
           </div>
         ))}
