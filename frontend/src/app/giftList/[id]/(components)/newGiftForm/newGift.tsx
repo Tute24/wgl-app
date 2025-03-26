@@ -3,32 +3,24 @@ import InputContainer from '@/components/Common/input-container/input-container'
 import giftCreateProps from '@/types/giftCreateProps'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
+import { useContextWrap } from '@/contextAPI/context'
+import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
 export default function NewGiftForm() {
-  const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
-  // function newGiftInputHandler(
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   index: number
-  // ) {
-  //   setCreateNewGift((prev) =>
-  //     prev.map((gift, i) =>
-  //       i === index
-  //         ? { ...gift, [event.target.name]: event.target.value }
-  //         : gift
-  //     )
-  //   )
-  // }
+  // const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
+  const {setGiftsArray} = useContextWrap()
 
   const {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<newGiftsData>({
     resolver: zodResolver(newGiftsSchema),
@@ -38,10 +30,11 @@ export default function NewGiftForm() {
     control,
     name: 'gifts',
   })
-
+  const submitNewGifts = useSubmitNewGift()
   const onSubmit: SubmitHandler<newGiftsData> = (data) => {
-    console.log(errors)
-    console.log(data.gifts)
+    submitNewGifts(data)
+    reset()
+    remove()
   }
 
   const removeIcon = (
