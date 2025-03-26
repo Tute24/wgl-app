@@ -1,4 +1,5 @@
 import useSubmitNewGift from '@/app/giftList/[id]/(hooks)/useSubmitNewGifts'
+import InputContainer from '@/components/Common/input-container/input-container'
 import giftCreateProps from '@/types/giftCreateProps'
 import { ChangeEvent, useState } from 'react'
 
@@ -24,40 +25,35 @@ export default function NewGiftForm() {
             {createNewGift.map((gift, index) => (
               <li key={index}>
                 <div className="p-2">
-                  <label htmlFor={`productName-${index}`}>Product Name</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    type="string"
-                    id={`productName-${index}`}
-                    name="productName"
-                    value={gift.productName}
-                    onChange={(event) => newGiftInputHandler(event, index)}
-                    placeholder="This product will appear as a gift on your gift list"
-                    required
+                  <InputContainer
+                  label='Product name'
+                  type='text'
+                  id={`productName-${index}`}
+                  name='productName'
+                  value={gift.productName}
+                  onChange={(event) => newGiftInputHandler(event, index)}
+                  placeholder="This product will appear as a gift on your gift list"
                   />
                 </div>
                 <div className="p-2">
-                  <label htmlFor={`productLink-${index}`}>Product Link</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    id={`productLink-${index}`}
-                    name="productLink"
-                    type="string"
-                    value={gift.productLink}
-                    onChange={(event) => newGiftInputHandler(event, index)}
-                    placeholder="Insert the link for your guests to buy the product, if needed."
+                  <InputContainer
+                  label='Product link'
+                  type='text'
+                  id={`productName-${index}`}
+                  name='productLink'
+                  value={gift.productLink}
+                  onChange={(event) => newGiftInputHandler(event, index)}
+                  placeholder="Insert the link for your guests to buy the product, if needed"
                   />
                 </div>
                 <div className="p-2">
-                  <label htmlFor={`quantity-${index}`}>Quantity</label>
-                  <input
-                    className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200"
-                    id={`quantity-${index}`}
-                    name="quantity"
-                    type="number"
-                    value={gift.quantity}
-                    onChange={(event) => newGiftInputHandler(event, index)}
-                    required
+                  <InputContainer
+                  label='Quantity'
+                  type='number'
+                  id={`quantity-${index}`}
+                  name='quantity'
+                  value={gift.quantity}
+                  onChange={(event) => newGiftInputHandler(event, index)}
                   />
                 </div>
               </li>
