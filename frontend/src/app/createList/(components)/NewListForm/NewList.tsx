@@ -12,7 +12,7 @@ import UserButton from '@/components/Common/buttons/user-button/user-button'
 import SubmitButton from '@/components/Common/buttons/submit-button/submit-button'
 import Image from 'next/image'
 
-type listData = z.infer<typeof newListSchema>
+export type listData = z.infer<typeof newListSchema>
 
 export default function GiftListForm() {
   const {

@@ -1,21 +1,23 @@
 import { useContextWrap } from "@/contextAPI/context"
 import giftCreateProps from "@/types/giftCreateProps"
+import { newGiftsSchema } from "@/zodSchemas/giftsSchema"
 import axios from "axios"
 import { useParams } from "next/navigation"
 import { FormEvent } from "react"
+import { z } from "zod"
 
-export default function useSubmitNewGift (createNewGift:giftCreateProps[]){
+export default function useSubmitNewGift (){
 
     const { id } = useParams()
     const weddingID = Number(id)
     const {userToken,setGiftsArray}= useContextWrap()
+    type submitData = z.infer<typeof newGiftsSchema>
 
-    async function submitNewGifts(e:FormEvent){
-        e.preventDefault()
+    async function submitNewGifts(data:submitData){
         
         try{
           if(userToken){
-            const response = await axios.post('http://localhost:3000/createNewGift',createNewGift,{headers:{
+            const response = await axios.post('http://localhost:3000/createNewGift',data.gifts,{headers:{
               Authorization: `Bearer ${userToken}`
             }, params:{
               id: weddingID
