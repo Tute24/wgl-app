@@ -47,7 +47,7 @@ export default function LoggedHeader() {
           <div >
             <Link href="/">
               <UserButton
-              className='w-[100px] '
+              className='w-[125px]'
               content='Log Out'
               onClick={logOut}
               />

@@ -24,10 +24,10 @@ export default function UnLoggedHeader() {
           </div>
           <div className="flex flex-row gap-4">
             <Link href="/registerPage">
-            <UserButton className="w-[100px] " content="Sign Up" />
+            <UserButton className="w-[125px] " content="Sign Up" />
             </Link>
             <Link href="/">
-              <UserButton className="w-[100px] bg-paleGold hover:bg-warmBeige" content="Sign In" />
+              <UserButton className="w-[125px] bg-paleGold hover:bg-warmBeige" content="Sign In" />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>
