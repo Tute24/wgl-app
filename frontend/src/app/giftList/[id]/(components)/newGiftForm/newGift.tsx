@@ -45,7 +45,7 @@ export default function NewGiftForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className=''>
           <ul>
             {fields.map((gift, index) => (
               <li key={gift.id}>
@@ -102,9 +102,9 @@ export default function NewGiftForm() {
               </li>
             ))}
           </ul>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1.5">
             <UserButton
-            
+            className='min-w-[260px]'
             content = 'Add new gift'
             id='newGiftButton'
             onClick={(e) => {
@@ -114,12 +114,12 @@ export default function NewGiftForm() {
             />
             {fields.length > 0 && (
               <>
-                <button
-                  type="submit"
-                  className="font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 mt-2 py-2 mr-5 hover:bg-gray-200"
-                >
-                  Submit
-                </button>
+                <UserButton
+                className='bg-paleGold hover:bg-warmBeige'
+                type='submit'
+                content='Submit'
+                id='submitNewGiftButton'
+                />
               </>
             )}
           </div>

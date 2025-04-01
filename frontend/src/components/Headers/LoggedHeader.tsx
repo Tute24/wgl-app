@@ -4,6 +4,7 @@ import { useContextWrap } from '@/contextAPI/context'
 import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import Link from 'next/link'
+import UserButton from '../Common/buttons/user-button/user-button'
 
 export default function LoggedHeader() {
   checkAuth()
@@ -43,11 +44,13 @@ export default function LoggedHeader() {
               </button>
             </Link>
           </div>
-          <div className="">
+          <div >
             <Link href="/">
-              <button onClick={logOut} className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
-                Logout
-              </button>
+              <UserButton
+              className='w-[100px] '
+              content='Log Out'
+              onClick={logOut}
+              />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>

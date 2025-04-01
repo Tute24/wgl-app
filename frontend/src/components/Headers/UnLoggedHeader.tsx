@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import UserButton from '../Common/buttons/user-button/user-button'
 
 export default function UnLoggedHeader() {
   return (
     <>
       <div className="py-4">
-        <nav className=" flex flex-col justify-center items-center text-xs sm:justify-evenly sm:flex-row w-full sm:text-base">
+        <nav className=" flex items-center justify-evenly flex-row">
           <div className="flex items-center">
             <Link href="/">
               <button type="button" className="px-5">
@@ -21,16 +22,12 @@ export default function UnLoggedHeader() {
               About
             </button>
           </div>
-          <div className="">
+          <div className="flex flex-row gap-4">
             <Link href="/registerPage">
-              <button className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
-                Register
-              </button>
+            <UserButton className="w-[100px] " content="Sign Up" />
             </Link>
             <Link href="/">
-              <button className="px-5 py-2 bg-black text-white font-bold rounded-3xl hover:bg-black">
-                Log In
-              </button>
+              <UserButton className="w-[100px] bg-paleGold hover:bg-warmBeige" content="Sign In" />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>

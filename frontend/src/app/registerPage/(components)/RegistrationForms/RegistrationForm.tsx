@@ -2,13 +2,13 @@
 
 import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
 import InputContainer from '@/components/Common/input-container/input-container'
-import SubmitButton from '@/components/Common/buttons/submit-button/submit-button'
 import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import UserButton from '@/components/Common/buttons/user-button/user-button'
 
 type usersData = z.infer<typeof usersDataSchema>
 
@@ -90,7 +90,7 @@ export default function RegisterForm() {
                 )}
               </div>
               <div className="flex flex-col pt-2 flex-grow">
-                <SubmitButton id="registerButton" title="Sign Up!" />
+                <UserButton className='bg-paleGold hover:bg-warmBeige' id="registerButton" content="Sign Up!" type='submit' />
                 <span className="text-red-500 font-bold">{statusMessage}</span>
               </div>
               <div className="flex justify-center items-center mt-2">

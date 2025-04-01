@@ -9,7 +9,7 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import InputContainer from '@/components/Common/input-container/input-container'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
-import SubmitButton from '@/components/Common/buttons/submit-button/submit-button'
+
 import Image from 'next/image'
 
 export type listData = z.infer<typeof newListSchema>
@@ -41,10 +41,7 @@ export default function GiftListForm() {
           <div className="flex justify-center items-center font-bold text-amber-800">
             <h2>Create a new wedding gift list</h2>
           </div>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col "
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
             <div className="gap-2">
               <InputContainer
                 label="Wedding name"
@@ -156,7 +153,12 @@ export default function GiftListForm() {
               </div>
             </div>
             <div className="mt-3">
-              <SubmitButton id="createWeddingButton" title="Create wedding" />
+              <UserButton
+                className="bg-paleGold hover:bg-warmBeige"
+                id="createWeddingButton"
+                content="Create wedding"
+                type="submit"
+              />
               <span
                 className={`font-bold flex justify-center ${
                   statusMessage === 'Wedding created successfully!'

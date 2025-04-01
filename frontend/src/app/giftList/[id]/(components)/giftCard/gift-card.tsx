@@ -118,15 +118,13 @@ export default function GiftCard({
             </div>
             <div className="flex flex-row items-center justify-evenly w-full mb-2">
               <UserButton
-                bg={`green-400`}
-                bgHover={'bg-green-700'}
+              className='w-[100px] bg-green-500 hover:bg-green-400'
                 content="Confirm"
                 id="confirmButton"
                 onClick={useSubmitUpdate(updateProps, selectedGiftID)}
               />
               <UserButton
-                bg={'red-400'}
-                bgHover={'bg-red-700'}
+              className='w-[100px] bg-red-500 hover:bg-red-400'
                 content="Cancel"
                 id="cancelButton"
                 onClick={() => {

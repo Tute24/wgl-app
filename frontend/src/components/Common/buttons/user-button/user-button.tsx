@@ -1,12 +1,23 @@
-interface UserButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+interface UserButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   content: string
+  className?: string
 }
 
-export default function UserButton({ content }: UserButtonProps) {
+export default function UserButton({
+  content,
+  className,
+  onClick,
+  id,
+  type,
+}: UserButtonProps) {
   return (
     <div>
       <button
-        className={`text-black min-w-[100px] w-full font-bold border-solid border bg-mutedTaupe hover:bg-dustyRose h-10 rounded-md`}
+        type={type}
+        id={id}
+        onClick={onClick}
+        className={`text-amber-900 w-full font-bold border-solid border bg-mutedTaupe hover:bg-dustyRose h-10 rounded-md ${className || ''}`}
       >
         {content}
       </button>
