@@ -15,11 +15,12 @@ export default function GuestGiftCard({
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
   const [giftedQuantity, setGiftedQuantity] = useState<string>('')
   const arrowIcon = <IoArrowRedoSharp />
+  const giftPresent = useGiftPresent(id,giftedQuantity)
   return (
     <>
       <li
         key={id}
-        className="flex flex-col px-2 w-full items-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
+        className="flex flex-col justify-center px-2 min-w-[350px] items-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
       >
         <div className="flex flex-col p-3 gap-1 text-amber-800 font-bold">
           <h2 className="font-bold">{productName}</h2>
@@ -41,10 +42,10 @@ export default function GuestGiftCard({
               </Link>
             </div>
             {!isGiftingSetup && (
-              <div>
+              <div className='mt-2'>
                 <UserButton
                   content="Gift product"
-                  className="text-sm"
+                  className="text-sm w-[120px]"
                   onClick={() => setIsGiftingSetup(true)}
                 />
               </div>
@@ -62,17 +63,17 @@ export default function GuestGiftCard({
                     value={giftedQuantity}
                   />
                 </div>
-                <div className="flex flex-row gap-3 w-full">
+                <div className="flex flex-row items-center justify-center gap-4 w-full">
                   <div>
                     <UserButton
-                      className="bg-green-500 hover:bg-green-400"
+                      className=" hover:bg-green-400 w-[120px] bg-green-500"
                       content="Confirm"
-                      onClick={() => useGiftPresent(id, giftedQuantity)}
+                      onClick={giftPresent}
                     />
                   </div>
                   <div>
                     <UserButton
-                      className="bg-red-500 hover:bg-red-400"
+                      className="bg-red-500 hover:bg-red-400 w-[120px]"
                       content="Cancel"
                       onClick={() => setIsGiftingSetup(false)}
                     />
