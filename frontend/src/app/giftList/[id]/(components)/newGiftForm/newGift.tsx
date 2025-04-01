@@ -9,6 +9,7 @@ import { z } from 'zod'
 import Image from 'next/image'
 import { useContextWrap } from '@/contextAPI/context'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
+import UserButton from '@/components/Common/buttons/user-button/user-button'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
@@ -102,15 +103,15 @@ export default function NewGiftForm() {
             ))}
           </ul>
           <div className="flex flex-col">
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                append({ productLink: '', productName: '', quantity: '' })
-              }}
-              className="font-semibold border-solid border-red-300 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-red-400"
-            >
-              Add new gift
-            </button>
+            <UserButton
+            
+            content = 'Add new gift'
+            id='newGiftButton'
+            onClick={(e) => {
+              e.preventDefault()
+              append({ productLink: '', productName: '', quantity: '' })
+            }}
+            />
             {fields.length > 0 && (
               <>
                 <button
