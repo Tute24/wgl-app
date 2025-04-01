@@ -16,7 +16,7 @@ export interface GiftCardProps {
   productLink: string
 }
 
-export default function GiftCard({
+export default function OwnGiftCard({
   id,
   productLink,
   productName,

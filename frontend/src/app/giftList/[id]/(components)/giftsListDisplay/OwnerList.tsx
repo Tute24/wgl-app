@@ -2,7 +2,7 @@
 
 import { useContextWrap } from '@/contextAPI/context'
 import NewGiftForm from '../newGiftForm/newGift'
-import GiftCard from '../giftCard/gift-card'
+import GiftCard from '../giftCard/own-gift-card'
 
 export type objValuesType = {
   productLink: string
