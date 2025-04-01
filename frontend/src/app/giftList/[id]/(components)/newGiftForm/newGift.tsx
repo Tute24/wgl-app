@@ -1,22 +1,15 @@
 import useSubmitNewGift from '@/app/giftList/[id]/(hooks)/useSubmitNewGifts'
 import InputContainer from '@/components/Common/input-container/input-container'
-import giftCreateProps from '@/types/giftCreateProps'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
-import { useContextWrap } from '@/contextAPI/context'
-import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
 export default function NewGiftForm() {
-  // const [createNewGift, setCreateNewGift] = useState<giftCreateProps[]>([])
-  const {setGiftsArray} = useContextWrap()
-
   const {
     control,
     register,
@@ -45,7 +38,7 @@ export default function NewGiftForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className=''>
+        <div className="">
           <ul>
             {fields.map((gift, index) => (
               <li key={gift.id}>
@@ -104,21 +97,21 @@ export default function NewGiftForm() {
           </ul>
           <div className="flex flex-col gap-1.5">
             <UserButton
-            className='min-w-[260px]'
-            content = 'Add new gift'
-            id='newGiftButton'
-            onClick={(e) => {
-              e.preventDefault()
-              append({ productLink: '', productName: '', quantity: '' })
-            }}
+              className="min-w-[260px]"
+              content="Add new gift"
+              id="newGiftButton"
+              onClick={(e) => {
+                e.preventDefault()
+                append({ productLink: '', productName: '', quantity: '' })
+              }}
             />
             {fields.length > 0 && (
               <>
                 <UserButton
-                className='bg-paleGold hover:bg-warmBeige'
-                type='submit'
-                content='Submit'
-                id='submitNewGiftButton'
+                  className="bg-paleGold hover:bg-warmBeige"
+                  type="submit"
+                  content="Submit"
+                  id="submitNewGiftButton"
                 />
               </>
             )}

@@ -3,9 +3,9 @@
 import { ChangeEvent, useState } from 'react'
 import Link from 'next/link'
 import InputContainer from '../Common/input-container/input-container'
-import SubmitButton from '../Common/buttons/submit-button/submit-button'
 import { useContextWrap } from '@/contextAPI/context'
 import useSignIn from '@/functions/signInFunction'
+import UserButton from '../Common/buttons/user-button/user-button'
 
 export type usersSignType = {
   email: string
@@ -51,16 +51,16 @@ export default function LoginForm() {
             placeholder="Type your password"
           />
           <div className="py-4">
-            <SubmitButton id="submitButton" title="Sign in" />
+            <UserButton id="submitButton" content="Sign In" type='submit' />
             <span className="text-red-500 font-bold">{statusMessage}</span>
           </div>
         </form>
       </div>
       <div className="text-center">
         <span className="font-semibold text-mutedTaupe">
-          Are you a new user?
+          Are you a new user? 
           <Link href="/registerPage">
-            <span className="text-amber-800 underline">Sign up now!</span>
+            <span className="text-amber-800 underline"> Sign up now!</span>
           </Link>
         </span>
       </div>
