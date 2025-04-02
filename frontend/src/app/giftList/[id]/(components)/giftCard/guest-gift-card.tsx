@@ -66,7 +66,7 @@ export default function GuestGiftCard({
                 <div className="flex flex-row items-center justify-center gap-4 w-full">
                   <div>
                     <UserButton
-                      className=" hover:bg-green-400 w-[120px] bg-green-500"
+                      className="bg-green-400 hover:bg-green-500 w-[120px]"
                       content="Confirm"
                       onClick={giftPresent}
                     />

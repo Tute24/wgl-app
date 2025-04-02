@@ -32,7 +32,7 @@ export default function ConditionalRenderingListPage() {
       {!notGuest && !isCreator && (
         <>
           <div className="flex flex-col items-center">
-            <h1>You're this wedding's guest</h1>
+            <h1 className='font-bold text-amber-800 items-center flex justify-center'>You're this wedding's guest</h1>
             <div>
               <GuestList />
             </div>

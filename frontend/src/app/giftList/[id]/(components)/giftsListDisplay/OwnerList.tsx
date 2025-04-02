@@ -30,7 +30,7 @@ export default function OwnerList() {
           </div>
         ))}
       </ul>
-      <div className="flex flex-col items-center justify-center w-full m-auto">
+      <div className="flex flex-col items-center justify-center w-full m-auto pb-3">
         <NewGiftForm />
       </div>
     </>

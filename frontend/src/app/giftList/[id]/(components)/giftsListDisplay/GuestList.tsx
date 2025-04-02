@@ -12,7 +12,7 @@ export default function GuestList() {
         <div
           id={gift.id.toString()}
           key={gift.id}
-          className="p-3 sm:p-5 border-gray-400 w-full sm:w-3/5"
+          className="p-5 w-full"
         >
           <GuestGiftCard
             id={gift.id}
