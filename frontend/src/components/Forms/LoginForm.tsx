@@ -28,9 +28,12 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <div className="flex justify-center items-center">
-        <div className="flex items-center w-full"></div>
+    <div className="flex flex-col items-center m-auto">
+      <div className='border-solid border-2 border-dustyRose rounded-lg p-3 hover:shadow-xl hover:shadow-dustyRose'>
+      <div className="flex flex-col justify-center items-center px-7 pb-3 pt-3 m-auto">
+        <div className="flex justify-center items-center pb-2 text-mutedTaupe font-bold">
+        <h2 className="text-amber-800">Sign in to your account</h2>
+        </div>
         <form onSubmit={signIn}>
           <InputContainer
             id="email"
@@ -51,18 +54,19 @@ export default function LoginForm() {
             placeholder="Type your password"
           />
           <div className="py-4">
-            <UserButton id="submitButton" content="Sign In" type='submit' />
+            <UserButton id="submitButton" content="Sign In" type="submit" />
             <span className="text-red-500 font-bold">{statusMessage}</span>
           </div>
         </form>
       </div>
       <div className="text-center">
         <span className="font-semibold text-mutedTaupe">
-          Are you a new user? 
+          Are you a new user?
           <Link href="/registerPage">
             <span className="text-amber-800 underline"> Sign up now!</span>
           </Link>
         </span>
+      </div>
       </div>
     </div>
   )
