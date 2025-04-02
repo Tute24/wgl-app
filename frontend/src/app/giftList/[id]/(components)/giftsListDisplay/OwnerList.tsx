@@ -19,7 +19,7 @@ export default function OwnerList() {
           <div
             id={gift.id.toString()}
             key={gift.id}
-            className="p-3 sm:p-5 border-gray-400 w-full"
+            className="p-3 w-full"
           >
             <GiftCard
               id={gift.id}
