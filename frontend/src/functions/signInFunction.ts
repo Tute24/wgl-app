@@ -1,16 +1,16 @@
 'use client'
 
-import { usersSignType } from '@/components/Forms/LoginForm'
 import { useContextWrap } from '@/contextAPI/context'
+import signInSchema from '@/zodSchemas/signInSchema'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
+import { z } from 'zod'
 
-export default function useSignIn(usersSign:usersSignType) {
+export default function useSignIn() {
+  type signInData = z.infer<typeof signInSchema>
   const { setStatusMessage } = useContextWrap()
   const router = useRouter()
-  async function loginSubmitHandler(event: FormEvent) {
-    event.preventDefault()
+  async function loginSubmitHandler(usersSign: signInData) {
     try {
       const response = await axios.post(
         'http://localhost:3000/logIn',
