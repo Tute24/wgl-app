@@ -1,7 +1,6 @@
 import { useContextWrap } from '@/contextAPI/context'
 import newListSchema from '@/zodSchemas/newListSchema'
 import axios from 'axios'
-import { FormEvent } from 'react'
 import { z } from 'zod'
 
 export default function useSubmitList() {
@@ -25,18 +24,6 @@ export default function useSubmitList() {
         if (response.status === 200) {
           setStatusMessage('Wedding created successfully!')
         }
-        // setListData({
-        //   listTitle: '',
-        //   weddingDate: '',
-        //   shippingAddress: '',
-        //   gifts: [
-        //     {
-        //       productName: '',
-        //       productLink: '',
-        //       quantity: 0,
-        //     },
-        //   ],
-        // })
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {

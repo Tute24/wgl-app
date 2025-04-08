@@ -7,3 +7,11 @@ const giftsSchema = z.array(z.object({
 }))
 
 export default giftsSchema
+
+export const newGiftsSchema = z.object({
+    gifts: z.array(z.object({
+        productName: z.string(),
+        productLink: z.string(),
+        quantity: z.string(),
+    }))
+})

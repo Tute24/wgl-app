@@ -9,9 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        softWhite: "#F8F6F2",
+        softBeige: "#F1E9DD",
+        warmBeige: "#EADDC8",
+        champagneGold: "#F4E3C1",
+        paleGold: "#D9B68E",
+        dustyRose: "#C4A69D",
+        mutedTaupe: "#A8907C",
       },
+      fontFamily: {
+        hindi: ['hind', 'sans-serif']
+      }
     },
   },
   plugins: [],

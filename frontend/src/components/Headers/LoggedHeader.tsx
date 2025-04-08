@@ -4,50 +4,50 @@ import { useContextWrap } from '@/contextAPI/context'
 import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import Link from 'next/link'
+import UserButton from '../Common/buttons/user-button/user-button'
 
 export default function LoggedHeader() {
   checkAuth()
-  const {setNotGuest} = useContextWrap()
+  const { setNotGuest } = useContextWrap()
   const logOut = useLogOut()
   return (
     <>
       <div className="py-4">
-        <nav className=" flex flex-col justify-center items-center text-xs sm:justify-evenly sm:flex-row w-full sm:text-base">
-          <div className="flex items-center">
-            <Link href="/dashboard">
-              <button type="button" className="px-5">
-                <img className="h-10 w-10 p-0 " src="/vercel.svg" alt="logo" />
-              </button>
-            </Link>
-          </div>
-          <div className="font-semibold">
+        <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-base">
+          <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="aboutPage">
-              <button type="button" className="p-2 hover:text-orange1">
+              <button type="button" className="p-2">
                 About
               </button>
             </Link>
           </div>
-          <div className="font-semibold">
+          <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="/dashboard">
-              <button onClick={()=>{
-                setNotGuest(false)
-              }} type="button" className="p-2 hover:text-orange1">
+              <button
+                onClick={() => {
+                  setNotGuest(false)
+                }}
+                type="button"
+                className="p-2"
+              >
                 My lists
               </button>
             </Link>
           </div>
-          <div className="font-semibold">
+          <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="/createList">
-              <button type="button" className="p-2 hover:text-orange1">
+              <button type="button" className="p-2">
                 New wedding gift list
               </button>
             </Link>
           </div>
-          <div className="">
+          <div>
             <Link href="/">
-              <button onClick={logOut} className=" font-semibold border-solid border-gray-200 border-2 rounded-3xl px-5 py-2 mr-5 hover:bg-gray-200">
-                Logout
-              </button>
+              <UserButton
+                className="w-[105px] sm:w-[125px]"
+                content="Log Out"
+                onClick={logOut}
+              />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>
