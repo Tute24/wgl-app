@@ -70,7 +70,7 @@ getGiftedProducts.get(
               presenter: `${gifter?.firstName} ${gifter?.lastName}`,
               relatedWeddingTitle: wedding?.weddingTitle,
               relatedWeddingDate: wedding?.weddingDate,
-              quantityGifted: giftingRegister.gift_reference,
+              quantityGifted: giftingRegister.quantity,
               gift: gift?.productName,
               giftLink: gift?.productLink,
               giftedAt: giftingRegister.giftedAt,
