@@ -45,7 +45,7 @@ export default function GuestGiftCard({
               <div className='mt-2'>
                 <UserButton
                   content="Gift product"
-                  className="text-sm w-[120px]"
+                  className="text-sm !w-[130px]"
                   onClick={() => setIsGiftingSetup(true)}
                 />
               </div>
@@ -66,14 +66,14 @@ export default function GuestGiftCard({
                 <div className="flex flex-row items-center justify-center gap-4 w-full">
                   <div>
                     <UserButton
-                      className="bg-green-400 hover:bg-green-500 w-[120px]"
+                      className="!bg-green-500 hover:!bg-green-400 !w-[130px]"
                       content="Confirm"
                       onClick={giftPresent}
                     />
                   </div>
                   <div>
                     <UserButton
-                      className="bg-red-500 hover:bg-red-400 w-[120px]"
+                      className="!bg-red-500 hover:!bg-red-400 !w-[130px]"
                       content="Cancel"
                       onClick={() => setIsGiftingSetup(false)}
                     />

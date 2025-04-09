@@ -118,13 +118,13 @@ export default function OwnGiftCard({
             </div>
             <div className="flex flex-row items-center justify-center w-full gap-4 mb-2">
               <UserButton
-              className='w-[120px] bg-green-400 hover:bg-green-500'
+              className='!w-[130px] !bg-green-500 hover:!bg-green-400'
                 content="Confirm"
                 id="confirmButton"
                 onClick={useSubmitUpdate(updateProps, selectedGiftID)}
               />
               <UserButton
-              className='w-[120px] bg-red-500 hover:bg-red-400'
+              className='!w-[130px] !bg-red-500 hover:!bg-red-400'
                 content="Cancel"
                 id="cancelButton"
                 onClick={() => {

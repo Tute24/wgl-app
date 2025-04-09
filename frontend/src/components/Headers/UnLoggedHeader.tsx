@@ -4,7 +4,7 @@ import UserButton from '../Common/buttons/user-button/user-button'
 export default function UnLoggedHeader() {
   return (
     <>
-      <div className="py-4">
+      <div className="py-5 bg-softWhite">
         <nav className=" flex items-center justify-between flex-row px-5 text-amber-800 font-bold">
           <div>
             <button type="button" className="p-2 hover:text-amber-900">
@@ -13,19 +13,19 @@ export default function UnLoggedHeader() {
           </div>
           <div className="flex flex-row gap-4">
             <Link href="/registerPage">
-              <UserButton className="w-[125px]" content="Sign Up" />
+              <UserButton className="!w-[150px]" content="Sign Up" />
             </Link>
             <Link href="/">
               <UserButton
-                className="w-[125px] bg-paleGold hover:bg-warmBeige"
+                className="!w-[150px] bg-paleGold hover:bg-warmBeige"
                 content="Sign In"
               />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>
         </nav>
-        <hr className="mt-5 border-2 border-mutedTaupe" />
       </div>
+      <hr className="mb-5 border-2 border-mutedTaupe" />
     </>
   )
 }
