@@ -18,8 +18,4 @@ export const columns: ColumnDef<giftedProductsType>[] = [
     accessorKey: 'giftedAt',
     header: 'Gifted At',
   },
-  {
-    accessorKey: 'giftLink',
-    header: 'Product Link',
-  },
 ]
