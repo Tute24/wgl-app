@@ -1,20 +1,12 @@
-'use client'
-
-import { useEffect } from 'react'
-import useGetGiftedProducts from './(hooks)/useGetGiftedProducts'
 import LoggedHeader from '@/components/Headers/LoggedHeader'
+import TableSet from './(components)/table-set'
 
 export default function giftTablePage() {
-  const giftedProductsArray = useGetGiftedProducts()
-
-  useEffect(() => {
-    console.log(giftedProductsArray)
-  }, [giftedProductsArray])
   return (
     <>
       <LoggedHeader />
       <div>
-        Oi
+        <TableSet/>
       </div>
     </>
   )

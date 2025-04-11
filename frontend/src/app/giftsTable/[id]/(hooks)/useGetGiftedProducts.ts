@@ -1,3 +1,4 @@
+'use client'
 import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
 import { useParams } from 'next/navigation'
