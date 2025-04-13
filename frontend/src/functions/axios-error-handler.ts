@@ -15,16 +15,22 @@ export default function AxiosErrorHandler({
   notGuest,
   setNotGuest,
   setStatusMessage,
-  route
+  route,
 }: AxiosErrorHandlerProps) {
   if (axios.isAxiosError(error)) {
     if (error.response?.status === 401) {
       console.log('User not authenticated.')
+      if (setStatusMessage !== undefined) {
+        setStatusMessage(`User doesn't have permission.`)
+      }
     }
     if (error.response?.status === 403) {
       console.log('Invalid/Expired token.')
-      if (setNotGuest!== undefined && !notGuest) {
+      if (setNotGuest !== undefined && !notGuest) {
         setNotGuest(true)
+      }
+      if (setStatusMessage !== undefined) {
+        setStatusMessage(`Invalid credentials.`)
       }
     }
     if (error.response?.status === 404) {
@@ -33,6 +39,9 @@ export default function AxiosErrorHandler({
     }
     if (error.response?.status === 500) {
       console.log('Server error.')
+      if (setStatusMessage !== undefined) {
+        setStatusMessage(`Something went wrong. Try again.`)
+      }
     }
   }
 }
