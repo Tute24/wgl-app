@@ -1,7 +1,9 @@
 import { objValuesType } from '@/app/giftList/[id]/(components)/giftsListDisplay/OwnerList'
 import { useContextWrap } from '@/contextAPI/context'
+import AxiosErrorHandler from '@/functions/axios-error-handler'
 import giftsProps from '@/types/giftsProps'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 export default function useSubmitUpdate(
   objValues: objValuesType,
@@ -14,7 +16,7 @@ export default function useSubmitUpdate(
     quantity: objValues.quantity,
     giftID: giftID,
   }
-
+  const route = useRouter()
   async function submitUpdate() {
     try {
       const response = await axios.post(
@@ -43,23 +45,7 @@ export default function useSubmitUpdate(
         setToUpdate(false)
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          console.log('User not authenticated.')
-        }
-        if (error.response?.status === 403) {
-          console.log(
-            `Invalid/Expired token - User is not this wedding's creator`
-          )
-        }
-        if (error.response?.status === 404) {
-          console.log('User/Gift not found.')
-        }
-        if (error.response?.status === 500) {
-          console.log('Server error.')
-        }
-      }
-      console.log(error)
+      AxiosErrorHandler({ error, route })
     }
   }
 

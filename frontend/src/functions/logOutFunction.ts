@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import AxiosErrorHandler from './axios-error-handler'
 
 export default function useLogOut() {
   const route = useRouter()
@@ -22,20 +23,7 @@ export default function useLogOut() {
           route.push('/')
         }
       } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            console.log('User not authenticated.')
-          }
-          if (error.response?.status === 403) {
-            console.log('Invalid/Expired token.')
-          }
-          if (error.response?.status === 404) {
-            console.log('User not found.')
-          }
-          if (error.response?.status === 500) {
-            console.log('Server error.')
-          }
-        }
+        AxiosErrorHandler({ error, route })
       }
     }
   }

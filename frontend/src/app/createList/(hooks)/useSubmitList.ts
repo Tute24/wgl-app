@@ -1,11 +1,14 @@
 import { useContextWrap } from '@/contextAPI/context'
+import AxiosErrorHandler from '@/functions/axios-error-handler'
 import newListSchema from '@/zodSchemas/newListSchema'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 export default function useSubmitList() {
   type listData = z.infer<typeof newListSchema>
   const { userToken, setStatusMessage } = useContextWrap()
+  const route = useRouter()
 
   async function submitList(data: listData) {
     if (userToken) {
@@ -25,20 +28,7 @@ export default function useSubmitList() {
           setStatusMessage('Wedding created successfully!')
         }
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            setStatusMessage(`User doesn't have permission.`)
-          }
-          if (error.response?.status === 403) {
-            setStatusMessage(`Invalid credentials.`)
-          }
-          if (error.response?.status === 404) {
-            setStatusMessage(`Not found.`)
-          }
-          if (error.response?.status === 500) {
-            setStatusMessage(`Something went wrong. Try again.`)
-          }
-        }
+        AxiosErrorHandler({ error, setStatusMessage, route })
       }
     }
   }
