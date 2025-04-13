@@ -15,7 +15,7 @@ export default function NotPermittedPageWarning() {
         </h1>
         </div>
           <h2 className="pt-3 flex text-center">
-            You might have mystiped the address, you don't have permission.
+            You might have mystiped the address, or you don't have permission.
           </h2>
         <div className="pt-3">
           <Link href="/dashboard">

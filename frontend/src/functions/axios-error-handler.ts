@@ -32,6 +32,9 @@ export default function AxiosErrorHandler({
       if (setStatusMessage !== undefined) {
         setStatusMessage(`Invalid credentials.`)
       }
+      if(setNotGuest === undefined && setStatusMessage === undefined){
+        route.push('/403-page')
+      }
     }
     if (error.response?.status === 404) {
       console.log('User not found.')
