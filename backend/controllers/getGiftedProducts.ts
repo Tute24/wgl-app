@@ -1,6 +1,7 @@
 import express, { Router, Response } from 'express'
 import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
 import { prisma } from '../app'
+import dayjs from 'dayjs'
 const getGiftedProducts: Router = express.Router()
 
 getGiftedProducts.get(
@@ -73,7 +74,7 @@ getGiftedProducts.get(
               quantityGifted: giftingRegister.quantity,
               gift: gift?.productName,
               giftLink: gift?.productLink,
-              giftedAt: giftingRegister.giftedAt,
+              giftedAt: dayjs(giftingRegister.giftedAt).format('YYYY-MM-DD'),
             }
 
             return returnObject
