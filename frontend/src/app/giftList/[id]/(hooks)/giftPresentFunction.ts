@@ -1,7 +1,7 @@
 'use client'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftsProps from '@/types/giftsProps'
+import giftsProps from '@/types-props/giftsProps'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 

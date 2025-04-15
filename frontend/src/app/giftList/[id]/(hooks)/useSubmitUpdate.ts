@@ -1,7 +1,7 @@
 import { objValuesType } from '@/app/giftList/[id]/(components)/giftsListDisplay/OwnerList'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftsProps from '@/types/giftsProps'
+import giftsProps from '@/types-props/giftsProps'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 

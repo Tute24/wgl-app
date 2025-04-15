@@ -1,6 +1,6 @@
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftCreateProps from '@/types/giftCreateProps'
+import giftCreateProps from '@/types-props/giftCreateProps'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
