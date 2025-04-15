@@ -29,6 +29,7 @@ export default function useDeleteWedding() {
         AxiosErrorHandler({ error, route })
       }
     }
-    return deleteWedding
+    
   }
+  return deleteWedding
 }
