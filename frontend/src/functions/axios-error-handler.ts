@@ -1,3 +1,4 @@
+import weddingHeaderInfoProps from '@/types-props/weddingHeaderInfo'
 import axios from 'axios'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { useRouter } from 'next/navigation'
@@ -8,6 +9,7 @@ export interface AxiosErrorHandlerProps {
   notGuest?: boolean
   setNotGuest?: React.Dispatch<SetStateAction<boolean>>
   setStatusMessage?: React.Dispatch<SetStateAction<string>>
+  setWeddingHeaderInfo?: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
   route: AppRouterInstance
 }
 export default function AxiosErrorHandler({
@@ -16,6 +18,7 @@ export default function AxiosErrorHandler({
   setNotGuest,
   setStatusMessage,
   route,
+  setWeddingHeaderInfo
 }: AxiosErrorHandlerProps) {
   if (axios.isAxiosError(error)) {
     if (error.response?.status === 401) {
@@ -26,8 +29,9 @@ export default function AxiosErrorHandler({
     }
     if (error.response?.status === 403) {
       console.log('Invalid/Expired token.')
-      if (setNotGuest !== undefined && !notGuest) {
+      if (setNotGuest !== undefined && !notGuest && setWeddingHeaderInfo) {
         setNotGuest(true)
+        setWeddingHeaderInfo(error.response.data.weddingInfo)
       }
       if (setStatusMessage !== undefined) {
         setStatusMessage(`Invalid credentials.`)
