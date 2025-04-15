@@ -1,15 +1,20 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import { IoArrowRedoSharp } from 'react-icons/io5'
-import useGetData from '../../(hooks)/useGetData'
+
 interface weddingHeaderProps {
   owner: boolean
+  weddingTitle: string
+  weddingDate: string
+  id: number
 }
-export default function WeddingHeader({ owner }: weddingHeaderProps) {
-  const { weddingData } = useContextWrap()
+export default function WeddingHeader({
+  owner,
+  weddingDate,
+  weddingTitle,
+  id,
+}: weddingHeaderProps) {
   return (
     <>
       {owner && (
@@ -17,7 +22,7 @@ export default function WeddingHeader({ owner }: weddingHeaderProps) {
           <h2 className="font-bold text-amber-800">
             <Link
               className="flex flex-row gap-2 text-center items-center underline"
-              href={`/giftsTable/${weddingData.id}`}
+              href={`/giftsTable/${id}`}
             >
               View gifted products <IoArrowRedoSharp size={18} />
             </Link>
@@ -26,8 +31,8 @@ export default function WeddingHeader({ owner }: weddingHeaderProps) {
       )}
       <div className="flex flex-col text-center items-center">
         <h1 className="font-bold text-amber-800 text-[32px] pb-3">
-          {`${weddingData.weddingTitle}: `}
-          <span className="text-paleGold">{weddingData.weddingDate}</span>
+          {`${weddingTitle}: `}
+          <span className="text-paleGold">{weddingDate}</span>
         </h1>
       </div>
     </>

@@ -12,10 +12,15 @@ export type objValuesType = {
 }
 
 export default function OwnerList() {
-  const { giftsArray } = useContextWrap()
+  const { giftsArray, weddingData } = useContextWrap()
   return (
     <>
-      <WeddingHeader owner={true} />
+      <WeddingHeader
+        owner={true}
+        weddingDate={weddingData.weddingDate}
+        weddingTitle={weddingData.weddingTitle}
+        id={weddingData.id}
+      />
       <h2 className="font-bold text-amber-800">You're this wedding's owner</h2>
       <ul className="flex flex-col text-center items-center">
         {giftsArray.map((gift) => (
