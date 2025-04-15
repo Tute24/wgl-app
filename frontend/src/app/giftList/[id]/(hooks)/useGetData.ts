@@ -15,6 +15,7 @@ export default function useGetData() {
     setIsCreator,
     setNotGuest,
     notGuest,
+    setWeddingHeaderInfo,
   } = useContextWrap()
   const route = useRouter()
 
@@ -40,7 +41,13 @@ export default function useGetData() {
           setIsCreator(false)
         }
       } catch (error) {
-        AxiosErrorHandler({error,setNotGuest,notGuest,route})
+        AxiosErrorHandler({
+          error,
+          setNotGuest,
+          notGuest,
+          route,
+          setWeddingHeaderInfo,
+        })
       }
     }
     getData()
