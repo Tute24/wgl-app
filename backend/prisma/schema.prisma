@@ -97,6 +97,7 @@ model passwordResetTokenStorage {
   requestedBy String @map("requested_by")
   expirationDate Int @map("expiration_date")
   used Boolean
+  token String
   user Users @relation(fields: [requestedBy],references: [id])
 
   @@map("password_reset_token_storage")
