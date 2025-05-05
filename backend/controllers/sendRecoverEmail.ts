@@ -62,8 +62,9 @@ sendRecoverEmail.post(
         res.status(200).json({ message: 'Email sent.' })
         return
       }
-    } catch (error) {
-      res.status(500).json({ message: 'Server error.' })
+    } catch (error: any) {
+      console.error('There was an error:', error)
+      res.status(500).json({ message: 'Server error.', error: error.message })
       return
     }
   }
