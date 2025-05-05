@@ -95,7 +95,7 @@ model GiftedBy {
 model passwordResetTokenStorage {
   id Int @id @default(autoincrement())
   requestedBy String @map("requested_by")
-  expirationDate Int @map("expiration_date")
+  expirationDate BigInt @map("expiration_date")
   used Boolean
   token String @unique
   user Users @relation(fields: [requestedBy],references: [id])
