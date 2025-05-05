@@ -5,8 +5,9 @@ import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest'
 
-const emailSchema = z.object({
+export const emailSchema = z.object({
   email: z.string().email(),
 })
 
@@ -20,10 +21,8 @@ export default function SendMail() {
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
   })
-
-  const onSubmit: SubmitHandler<userEmail> = (data) => {
-    console.log(data)
-  }
+  const sendPasswordResetRequest = useSendPasswordResetRequest()
+  const onSubmit: SubmitHandler<userEmail> = sendPasswordResetRequest
   return (
     <>
       <UnLoggedHeader />
