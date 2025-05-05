@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from 'express'
 import { prisma } from '../app'
 const jwt = require('jsonwebtoken')
+import crypto from 'crypto'
 const { TokenExpiredError, JsonWebTokenError } = jwt
 
 interface resetPasswordTokenBody {
@@ -29,9 +30,13 @@ export default async function resetPasswordAuth(
       resetToken,
       process.env.SECRET_KEY
     ) as resetPasswordTokenBody
+    const encryptedToken = crypto
+      .createHash('sha256')
+      .update(decodedResetToken.resetToken)
+      .digest('hex')
     const storedToken = await prisma.passwordResetTokenStorage.findUnique({
       where: {
-        token: decodedResetToken.resetToken,
+        token: encryptedToken,
       },
     })
     if (!storedToken) {
