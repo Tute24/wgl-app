@@ -20,6 +20,7 @@ import createNewGiftRouter from './controllers/createNewGift'
 import deleteWeddingRouter from './controllers/deleteWedding'
 import getGiftedProducts from './controllers/getGiftedProducts'
 import sendRecoverEmail from './controllers/sendRecoverEmail'
+import resetPassword from './controllers/resetPassword'
 
 app.use(express.json())
 app.use(cors())
@@ -41,6 +42,7 @@ app.use(createNewGiftRouter)
 app.use(deleteWeddingRouter)
 app.use(getGiftedProducts)
 app.use(sendRecoverEmail)
+app.use(resetPassword)
 
 const port = process.env.PORT || 3000
 
