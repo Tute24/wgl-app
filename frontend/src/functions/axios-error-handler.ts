@@ -10,7 +10,7 @@ export interface AxiosErrorHandlerProps {
   setNotGuest?: React.Dispatch<SetStateAction<boolean>>
   setStatusMessage?: React.Dispatch<SetStateAction<string>>
   setWeddingHeaderInfo?: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
-  route: AppRouterInstance
+  route?: AppRouterInstance
 }
 export default function AxiosErrorHandler({
   error,
@@ -37,12 +37,12 @@ export default function AxiosErrorHandler({
         setStatusMessage(`Invalid credentials.`)
       }
       if(setNotGuest === undefined && setStatusMessage === undefined){
-        route.push('/403-page')
+        route?.push('/403-page')
       }
     }
     if (error.response?.status === 404) {
       console.log('User not found.')
-      route.push('/404-page')
+      route?.push('/404-page')
     }
     if (error.response?.status === 500) {
       console.log('Server error.')
