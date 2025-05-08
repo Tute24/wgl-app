@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest'
+import { useContextWrap } from '@/contextAPI/context'
 
 export const emailSchema = z.object({
   email: z.string().email(),
@@ -21,6 +22,7 @@ export default function SendMail() {
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
   })
+  const { statusMessage } = useContextWrap()
   const sendPasswordResetRequest = useSendPasswordResetRequest()
   const onSubmit: SubmitHandler<userEmail> = sendPasswordResetRequest
   return (
@@ -53,6 +55,16 @@ export default function SendMail() {
             <div className="pb-3 px-3">
               <UserButton content="Confirm" />
             </div>
+            <span
+              className={`pb-3 ${
+                statusMessage ===
+                'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
+                  ? 'text-green-500'
+                  : 'text-red-500'
+              }`}
+            >
+              {statusMessage}
+            </span>
           </form>
         </div>
       </div>
