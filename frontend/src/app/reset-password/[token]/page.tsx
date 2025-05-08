@@ -16,7 +16,7 @@ const passwordSchema = z
     path: ['confirmPassword'],
   })
 
-type newPassword = z.infer<typeof passwordSchema>
+export type newPassword = z.infer<typeof passwordSchema>
 
 export default function ResetPassword() {
   const {
