@@ -1,7 +1,6 @@
 import weddingHeaderInfoProps from '@/types-props/weddingHeaderInfo'
 import axios from 'axios'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { useRouter } from 'next/navigation'
 import { SetStateAction } from 'react'
 
 export interface AxiosErrorHandlerProps {
@@ -37,12 +36,16 @@ export default function AxiosErrorHandler({
         setStatusMessage(`Invalid credentials.`)
       }
       if(setNotGuest === undefined && setStatusMessage === undefined){
-        route?.push('/403-page')
+        if(route){
+          route?.push('/403-page')
+        }
       }
     }
     if (error.response?.status === 404) {
       console.log('User not found.')
-      route?.push('/404-page')
+      if(route){
+        route?.push('/404-page')
+      }
     }
     if (error.response?.status === 500) {
       console.log('Server error.')
