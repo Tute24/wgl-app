@@ -5,6 +5,8 @@ import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset'
+import { useContextWrap } from '@/contextAPI/context'
 
 const passwordSchema = z
   .object({
@@ -26,10 +28,9 @@ export default function ResetPassword() {
   } = useForm<newPassword>({
     resolver: zodResolver(passwordSchema),
   })
+  const { statusMessage } = useContextWrap()
 
-  const onSubmit: SubmitHandler<newPassword> = (data) => {
-    console.log(data)
-  }
+  const onSubmit: SubmitHandler<newPassword> = useSubmitPasswordReset()
   return (
     <>
       <UnLoggedHeader />
@@ -72,6 +73,16 @@ export default function ResetPassword() {
             <div className="pb-3 px-3">
               <UserButton content="Confirm Password Reset" />
             </div>
+            <span
+              className={`pb-3 ${
+                statusMessage ===
+                'Your password was updated successfully. Go back to the sign in page.'
+                  ? 'text-green-500'
+                  : 'text-red-500'
+              }`}
+            >
+              {statusMessage}
+            </span>
           </form>
         </div>
       </div>
