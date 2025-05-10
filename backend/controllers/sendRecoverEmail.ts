@@ -50,7 +50,7 @@ sendRecoverEmail.post(
         const jwtResetToken = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
           expiresIn: '10m',
         })
-        const resetLink = `http://localhost:3000/reset-password/${jwtResetToken}`
+        const resetLink = `http://localhost:3001/reset-password/${jwtResetToken}`
         const mailOptions = {
           from: process.env.SENDER_EMAIL,
           to: user.email,

@@ -34,7 +34,9 @@ userCreate.post(
         },
       })
 
-      const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY)
+      const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY, {
+        expiresIn: '3h',
+      })
       res.status(200).json({ message: 'Success!', user: newUser, token: token })
       return
     } catch (error) {
