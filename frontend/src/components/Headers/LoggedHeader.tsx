@@ -8,7 +8,7 @@ import UserButton from '../Common/buttons/user-button/user-button'
 
 export default function LoggedHeader() {
   checkAuth()
-  const { setNotGuest } = useContextWrap()
+  const { setNotGuest, setStatusMessage } = useContextWrap()
   const logOut = useLogOut()
   return (
     <>
@@ -26,6 +26,7 @@ export default function LoggedHeader() {
               <button
                 onClick={() => {
                   setNotGuest(false)
+                  setStatusMessage('')
                 }}
                 type="button"
                 className="p-2"
@@ -36,7 +37,13 @@ export default function LoggedHeader() {
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="/createList">
-              <button type="button" className="p-2">
+              <button
+                type="button"
+                className="p-2"
+                onClick={() => {
+                  setStatusMessage('')
+                }}
+              >
                 New wedding gift list
               </button>
             </Link>
@@ -46,7 +53,10 @@ export default function LoggedHeader() {
               <UserButton
                 className="!w-[80px] sm:!w-[150px]"
                 content="Log Out"
-                onClick={logOut}
+                onClick={() => {
+                  logOut
+                  setStatusMessage('')
+                }}
               />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
