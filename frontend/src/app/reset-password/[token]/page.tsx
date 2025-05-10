@@ -70,19 +70,21 @@ export default function ResetPassword() {
                 </span>
               )}
             </div>
-            <div className="pb-3 px-3">
-              <UserButton content="Confirm Password Reset" />
-            </div>
+            <div className='px-3'>
             <span
-              className={`pb-3 ${
+              className={`${
                 statusMessage ===
-                'Your password was updated successfully. Go back to the sign in page.'
+                'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
                   ? 'text-green-500'
                   : 'text-red-500'
               }`}
             >
               {statusMessage}
             </span>
+            </div>
+            <div className="pt-3 pb-3 px-3">
+              <UserButton content="Confirm Password Reset" />
+            </div>
           </form>
         </div>
       </div>

@@ -52,11 +52,9 @@ export default function SendMail() {
                 </span>
               )}
             </div>
-            <div className="pb-3 px-3">
-              <UserButton content="Confirm" />
-            </div>
+            <div className='px-3'>
             <span
-              className={`pb-3 ${
+              className={`${
                 statusMessage ===
                 'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
                   ? 'text-green-500'
@@ -65,6 +63,11 @@ export default function SendMail() {
             >
               {statusMessage}
             </span>
+            </div>
+            <div className="pt-3 pb-3 px-3">
+              <UserButton content="Confirm" />
+            </div>
+            
           </form>
         </div>
       </div>
