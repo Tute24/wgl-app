@@ -93,8 +93,12 @@ getListRoute.get(
             })
           return
         }
-
-        res.status(403).json({ message: 'User is not a guest on this wedding' })
+        const weddingHeaderInfo = {
+          weddingID: checkWedding.id,
+          weddingTitle: checkWedding.weddingTitle,
+          weddingDate: checkWedding.weddingDate
+        }
+        res.status(403).json({ message: 'User is not a guest on this wedding', weddingInfo: weddingHeaderInfo })
         return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })

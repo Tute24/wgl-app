@@ -1,8 +1,9 @@
 'use client'
 
-import giftsProps from '@/types/giftsProps'
-import weddingDataProps from '@/types/weddingDataProps'
-import weddingProps from '@/types/weddingProps'
+import giftsProps from '@/types-props/giftsProps'
+import weddingDataProps from '@/types-props/weddingDataProps'
+import weddingHeaderInfoProps from '@/types-props/weddingHeaderInfo'
+import weddingProps from '@/types-props/weddingProps'
 import { createContext, SetStateAction, useContext, useState } from 'react'
 
 interface ContextProps {
@@ -26,6 +27,8 @@ interface ContextProps {
   setWeddingID: React.Dispatch<SetStateAction<number>>
   toUpdate: boolean
   setToUpdate: React.Dispatch<SetStateAction<boolean>>
+  weddingHeaderInfo: weddingHeaderInfoProps
+  setWeddingHeaderInfo: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -38,6 +41,12 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([])
+  const [weddingHeaderInfo, setWeddingHeaderInfo] =
+    useState<weddingHeaderInfoProps>({
+      id: 0,
+      weddingTitle: '',
+      weddingDate: ''
+    })
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([])
   const [guestWeddingsArray, setGuestWeddingsArray] = useState<weddingProps[]>(
     []
@@ -83,6 +92,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setOwnWeddingsArray,
         guestWeddingsArray,
         setGuestWeddingsArray,
+        weddingHeaderInfo,
+        setWeddingHeaderInfo,
       }}
     >
       {children}

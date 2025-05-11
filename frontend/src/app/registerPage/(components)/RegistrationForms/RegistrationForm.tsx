@@ -1,17 +1,24 @@
 'use client'
 
 import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
+import InputContainer from '@/components/Common/input-container/input-container'
 import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import UserButton from '@/components/Common/buttons/user-button/user-button'
 
 type usersData = z.infer<typeof usersDataSchema>
 
 export default function RegisterForm() {
-  const {statusMessage} = useContextWrap()
-  const { register, handleSubmit, formState:{errors} } = useForm<usersData>({
+  const { statusMessage } = useContextWrap()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
   const submitRegister = useSubmitRegister()
@@ -19,80 +26,85 @@ export default function RegisterForm() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-emerald-50">
-        <div className="font-sans p-10 text-center bg-black text-white font-semibold rounded-2xl">
-          <div className="flex justify-center items-center -mt-5 mb-3">
-            <h2>Register yourself</h2>
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
-            <div className="p-2">
-              <label htmlFor="firstName">Your first name:</label>
-              <input
-                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center
-                 text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
+      <div className="flex flex-col items-center m-auto">
+        <div className="border-solid border-2 border-dustyRose rounded-lg p-3 hover:shadow-xl hover:shadow-dustyRose">
+          <div className="font-sans px-7 pb-3 pt-3 m-auto ">
+            <div className="flex justify-center items-center pb-2 text-mutedTaupe font-bold">
+              <h2 className="text-amber-800">Create your account</h2>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
+              <InputContainer
+                label="Your first name"
                 type="text"
                 id="firstName"
+                placeholder="Type your first name"
                 {...register('firstName')}
-                required
               />
-            </div>
-          
-            <div className="p-2">
-              <label htmlFor="lastName">Your Last Name</label>
-              <input
-                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center
-                 text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
+              <InputContainer
+                label="Your last name"
                 type="text"
                 id="lastName"
+                placeholder="Type your last name"
                 {...register('lastName')}
-                required
               />
-            </div>
-            <div className="p-2">
-              <label htmlFor="newEmail">Type a valid e-mail address:</label>
-              <input
-                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl 
-                text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
-                type="email"
-                id="email"
-                {...register('email')}
-                required
-              />
-              {errors.email && <span className='text-red-500 font-bold'>{errors.email.message}</span>}
-            </div>
-            
-            <div className="p-2">
-              <label htmlFor="newPassword">Type your password:</label>
-              <input
-                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
-                id="password"
-                type="password"
-                {...register('password')}
-                required
-              />
-              {errors.password && <span className='text-red-500 font-bold'>{errors.password.message}</span>}
-            </div>
-            <div className="p-2">
-              <label htmlFor="newPasswordauth">Confirm your password:</label>
-              <input
-                className="mt-1 border-solid border-2 border-amber-100 bg-amber-50 rounded-2xl text-center text-black text-sm w-full focus:outline-none ring-2 ring-amber-200 "
-                type="password"
-                {...register('confirmPassword')}
-                required
-              />
-            </div>
-            <div className="p-5 flex flex-col justify-center">
-              <button
-                className="bg-amber-50 rounded-full py-0.5 px-4 text-black font-bold border-amber-100 border-solid border-2 w-full mt-2.5 hover:bg-amber-200 focus:outline-none ring-2 ring-amber-200"
-                type="submit"
-                id="registerButton"
-              >
-                Sign Up!
-              </button>
-              <span className="text-red-500 font-bold">{statusMessage}</span>
-              
-            </div>
-          </form>
+              <div className="gap-2">
+                <InputContainer
+                  label="Type a valid e-mail address"
+                  type="email"
+                  id="email"
+                  placeholder="Insert your e-mail"
+                  {...register('email')}
+                />
+                {errors.email && (
+                  <span className="text-red-500 font-bold">
+                    {errors.email.message}
+                  </span>
+                )}
+              </div>
+              <div className="gap-2">
+                <InputContainer
+                  label="Type your password"
+                  type="password"
+                  id="password"
+                  placeholder="Create your password"
+                  {...register('password')}
+                />
+                {errors.password && (
+                  <span className="text-red-500 font-bold">
+                    {errors.password.message}
+                  </span>
+                )}
+              </div>
+              <div className="gap-2">
+                <InputContainer
+                  label="Confirm your password"
+                  type="password"
+                  id="newPasswordAuth"
+                  placeholder="Confir your password"
+                  {...register('confirmPassword')}
+                />
+                {errors.confirmPassword && (
+                  <span className="text-red-500 font-bold">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col pt-2 flex-grow">
+                <UserButton className='bg-paleGold hover:bg-warmBeige' id="registerButton" content="Sign Up!" type='submit' />
+                <span className="text-red-500 font-bold">{statusMessage}</span>
+              </div>
+              <div className="flex justify-center items-center mt-2">
+                <h2 className="font-bold text-mutedTaupe">
+                  Already registered?{' '}
+                  <Link href="/">
+                    <span className="font-bold text-amber-800 underline">
+                      Sign in!
+                    </span>
+                  </Link>
+                </h2>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

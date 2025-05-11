@@ -18,6 +18,7 @@ model Users {
   productsGifted GiftedBy[]
   weddingsGuest Guests[]
   requests Requests[]
+  passwordReset passwordResetTokenStorage[]
 
   @@map("users")
 }
@@ -89,4 +90,15 @@ model GiftedBy {
   giftedAt DateTime? @default(now())  
 
   @@map("gifted_by")
+}
+
+model passwordResetTokenStorage {
+  id Int @id @default(autoincrement())
+  requestedBy String @map("requested_by")
+  expirationDate BigInt @map("expiration_date")
+  used Boolean
+  token String @unique
+  user Users @relation(fields: [requestedBy],references: [id])
+
+  @@map("password_reset_token_storage")
 }
