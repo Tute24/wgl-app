@@ -21,6 +21,11 @@ getWeddings.get(
     }
     if (userID) {
       try {
+        const userInfoObject = {
+          userID: user.id,
+          userName: user.firstName,
+        }
+
         const createdWeddings = await prisma.weddings.findMany({
           where: {
             createdBy: userID,
@@ -56,6 +61,7 @@ getWeddings.get(
           message: 'Success.',
           own: createdWeddings,
           invited: mappedWeddings,
+          userInfo: userInfoObject,
         })
         return
       } catch (error) {

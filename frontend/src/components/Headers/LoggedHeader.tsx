@@ -5,11 +5,14 @@ import checkAuth from '@/functions/checkAuthFunction'
 import useLogOut from '@/functions/logOutFunction'
 import Link from 'next/link'
 import UserButton from '../Common/buttons/user-button/user-button'
+import { useStore } from 'zustand'
+import { useUsernameStore } from '@/stores/zustand-store'
 
 export default function LoggedHeader() {
   checkAuth()
   const { setNotGuest, setStatusMessage } = useContextWrap()
   const logOut = useLogOut()
+  const username = useStore(useUsernameStore, (state) => state.username)
   return (
     <>
       <div className="py-5 bg-softWhite">
@@ -48,7 +51,8 @@ export default function LoggedHeader() {
               </button>
             </Link>
           </div>
-          <div>
+          <div className="flex flex-row gap-5 items-center">
+            <span className="text-mutedTaupe font-bold underline-offset-0">Welcome, {username}</span>
             <Link href="/">
               <UserButton
                 className="!w-[80px] sm:!w-[150px]"
@@ -59,7 +63,6 @@ export default function LoggedHeader() {
                 }}
               />
             </Link>
-            <div className="flex flex-row gap-3 items-center"></div>
           </div>
         </nav>
       </div>
