@@ -11,34 +11,28 @@ export default function ConditionalRenderingListPage() {
   useGetData()
   return (
     <>
-    <div className='w-full'>
-      {notGuest && !isCreator && (
-        <>
-          <div className="flex flex-col items-center">
-            <GuestRequest />
-          </div>
-        </>
-      )}
-      {isCreator && (
-        <>
-          <div className="flex flex-col items-center">
-            <h1 className='font-bold text-amber-800'>You're this wedding's owner</h1>
-            <div>
+      <div className="w-full">
+        {notGuest && !isCreator && (
+          <>
+            <div className="flex flex-col items-center">
+              <GuestRequest />
+            </div>
+          </>
+        )}
+        {isCreator && (
+          <>
+            <div className="flex flex-col items-center">
               <OwnerList />
             </div>
-          </div>
-        </>
-      )}
-      {!notGuest && !isCreator && (
-        <>
-          <div className="flex flex-col items-center">
-            <h1 className='font-bold text-amber-800 items-center flex justify-center'>You're this wedding's guest</h1>
-            <div>
+          </>
+        )}
+        {!notGuest && !isCreator && (
+          <>
+            <div className="flex flex-col items-center">
               <GuestList />
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
       </div>
     </>
   )

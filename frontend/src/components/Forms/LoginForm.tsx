@@ -61,19 +61,25 @@ export default function LoginForm() {
                 {errors.password.message}
               </span>
             )}
-            <div className="py-4">
+            <div className="pt-3">
               <UserButton id="submitButton" content="Sign In" type="submit" />
               <span className="text-red-500 font-bold">{statusMessage}</span>
             </div>
           </form>
         </div>
         <div className="text-center">
-          <span className="font-semibold text-mutedTaupe">
-            Are you a new user?
+          <h2 className="font-semibold text-mutedTaupe pb-1">
+            {'Are you a new user? '}
             <Link href="/registerPage">
-              <span className="text-amber-800 underline"> Sign up now!</span>
+              <span className="text-amber-800 underline">Sign up now!</span>
             </Link>
-          </span>
+          </h2>
+          <h2 className="font-semibold text-mutedTaupe">
+            {'Forgot your password? '}
+            <Link href="/forgot-password">
+              <span className="text-amber-800 underline">Reset it now!</span>
+            </Link>
+          </h2>
         </div>
       </div>
     </div>

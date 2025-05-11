@@ -8,11 +8,11 @@ import UserButton from '../Common/buttons/user-button/user-button'
 
 export default function LoggedHeader() {
   checkAuth()
-  const { setNotGuest } = useContextWrap()
+  const { setNotGuest, setStatusMessage } = useContextWrap()
   const logOut = useLogOut()
   return (
     <>
-      <div className="py-4">
+      <div className="py-5 bg-softWhite">
         <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-base">
           <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="aboutPage">
@@ -26,6 +26,7 @@ export default function LoggedHeader() {
               <button
                 onClick={() => {
                   setNotGuest(false)
+                  setStatusMessage('')
                 }}
                 type="button"
                 className="p-2"
@@ -36,7 +37,13 @@ export default function LoggedHeader() {
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold">
             <Link href="/createList">
-              <button type="button" className="p-2">
+              <button
+                type="button"
+                className="p-2"
+                onClick={() => {
+                  setStatusMessage('')
+                }}
+              >
                 New wedding gift list
               </button>
             </Link>
@@ -44,16 +51,19 @@ export default function LoggedHeader() {
           <div>
             <Link href="/">
               <UserButton
-                className="w-[105px] sm:w-[125px]"
+                className="!w-[80px] sm:!w-[150px]"
                 content="Log Out"
-                onClick={logOut}
+                onClick={() => {
+                  logOut
+                  setStatusMessage('')
+                }}
               />
             </Link>
             <div className="flex flex-row gap-3 items-center"></div>
           </div>
         </nav>
-        <hr className="mt-5 border-2 border-gray-100" />
       </div>
+      <hr className="mb-5 border-2 border-mutedTaupe" />
     </>
   )
 }

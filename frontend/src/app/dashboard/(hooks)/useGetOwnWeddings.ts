@@ -1,11 +1,14 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
+import AxiosErrorHandler from '@/functions/axios-error-handler'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function useGetOwnWeddings() {
   const { userToken, setOwnWeddingsArray } = useContextWrap()
+  const route = useRouter()
   useEffect(() => {
     async function getWeddings() {
       if (userToken)
@@ -22,20 +25,7 @@ export default function useGetOwnWeddings() {
             setOwnWeddingsArray(response.data.own)
           }
         } catch (error) {
-          if (axios.isAxiosError(error)) {
-            if (error.response?.status === 401) {
-              console.log('User not authenticated.')
-            }
-            if (error.response?.status === 403) {
-              console.log('Invalid/Expired token.')
-            }
-            if (error.response?.status === 404) {
-              console.log('User not found.')
-            }
-            if (error.response?.status === 500) {
-              console.log('Server error.')
-            }
-          }
+          AxiosErrorHandler({ error, route })
         }
     }
 
