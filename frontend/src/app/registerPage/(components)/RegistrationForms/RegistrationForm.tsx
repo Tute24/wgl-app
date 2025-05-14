@@ -90,7 +90,12 @@ export default function RegisterForm() {
                 )}
               </div>
               <div className="flex flex-col pt-2 flex-grow">
-                <UserButton className='bg-paleGold hover:bg-warmBeige' id="registerButton" content="Sign Up!" type='submit' />
+                <UserButton
+                  className="bg-paleGold hover:bg-warmBeige"
+                  id="registerButton"
+                  content="Sign Up!"
+                  type="submit"
+                />
                 <span className="text-red-500 font-bold">{statusMessage}</span>
               </div>
               <div className="flex justify-center items-center mt-2">

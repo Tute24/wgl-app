@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation'
 
 export default function useSubmitUpdate(
   objValues: objValuesType,
-  giftID: number
+  giftID: number,
 ) {
   const { userToken, setGiftsArray, setToUpdate } = useContextWrap()
   const updateProps = {
     productLink: objValues.productLink,
     productName: objValues.productName,
     quantity: objValues.quantity,
-    giftID: giftID,
+    giftID,
   }
   const route = useRouter()
   async function submitUpdate() {
@@ -26,7 +26,7 @@ export default function useSubmitUpdate(
           headers: {
             Authorization: `Bearer: ${userToken}`,
           },
-        }
+        },
       )
 
       if (response.status === 200) {
@@ -39,8 +39,8 @@ export default function useSubmitUpdate(
                   productName: updateProps.productName,
                   quantity: updateProps.quantity,
                 }
-              : gift
-          )
+              : gift,
+          ),
         )
         setToUpdate(false)
       }

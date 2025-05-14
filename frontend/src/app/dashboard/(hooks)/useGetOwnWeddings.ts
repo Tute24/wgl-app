@@ -22,7 +22,7 @@ export default function useGetOwnWeddings() {
               headers: {
                 Authorization: `Bearer ${userToken}`,
               },
-            }
+            },
           )
           if (response.status === 200) {
             setOwnWeddingsArray(response.data.own)

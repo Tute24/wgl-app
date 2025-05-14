@@ -45,11 +45,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     useState<weddingHeaderInfoProps>({
       id: 0,
       weddingTitle: '',
-      weddingDate: ''
+      weddingDate: '',
     })
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([])
   const [guestWeddingsArray, setGuestWeddingsArray] = useState<weddingProps[]>(
-    []
+    [],
   )
   const [weddingData, setWeddingData] = useState<weddingDataProps>({
     id: 0,

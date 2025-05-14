@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import checkAuth from '@/functions/checkAuthFunction'
+import checkAuth from '@/functions/useCheckAuth'
 import useLogOut from '@/functions/logOutFunction'
 import Link from 'next/link'
 import UserButton from '../Common/buttons/user-button/user-button'
@@ -52,13 +52,15 @@ export default function LoggedHeader() {
             </Link>
           </div>
           <div className="flex flex-row gap-5 items-center">
-            <span className="text-mutedTaupe font-bold underline-offset-0">Welcome, {username}</span>
+            <span className="text-mutedTaupe font-bold underline-offset-0">
+              Welcome, {username}
+            </span>
             <Link href="/">
               <UserButton
                 className="!w-[80px] sm:!w-[150px]"
                 content="Log Out"
                 onClick={() => {
-                  logOut
+                  logOut()
                   setStatusMessage('')
                 }}
               />

@@ -37,7 +37,7 @@ export default function useGetGiftedProducts() {
             params: {
               id: weddingId,
             },
-          }
+          },
         )
 
         if (response.status === 200) {

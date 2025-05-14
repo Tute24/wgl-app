@@ -70,17 +70,17 @@ export default function ResetPassword() {
                 </span>
               )}
             </div>
-            <div className='px-3'>
-            <span
-              className={`${
-                statusMessage ===
-                'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
-                  ? 'text-green-500'
-                  : 'text-red-500'
-              }`}
-            >
-              {statusMessage}
-            </span>
+            <div className="px-3">
+              <span
+                className={`${
+                  statusMessage ===
+                  'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
+                    ? 'text-green-500'
+                    : 'text-red-500'
+                }`}
+              >
+                {statusMessage}
+              </span>
             </div>
             <div className="pt-3 pb-3 px-3">
               <UserButton content="Confirm Password Reset" />

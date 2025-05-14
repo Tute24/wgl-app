@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { IoTrashOutline } from 'react-icons/io5'
-import { IoArrowRedoSharp } from 'react-icons/io5'
+import { IoTrashOutline, IoArrowRedoSharp } from 'react-icons/io5'
+
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
 export interface WeddingCardProps {
   id: number

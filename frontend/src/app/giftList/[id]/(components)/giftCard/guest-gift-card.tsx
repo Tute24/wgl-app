@@ -15,7 +15,7 @@ export default function GuestGiftCard({
   const [isGiftingSetup, setIsGiftingSetup] = useState<boolean>(false)
   const [giftedQuantity, setGiftedQuantity] = useState<string>('')
   const arrowIcon = <IoArrowRedoSharp />
-  const giftPresent = useGiftPresent(id,giftedQuantity)
+  const giftPresent = useGiftPresent(id, giftedQuantity)
   return (
     <>
       <li
@@ -42,7 +42,7 @@ export default function GuestGiftCard({
               </Link>
             </div>
             {!isGiftingSetup && (
-              <div className='mt-2'>
+              <div className="mt-2">
                 <UserButton
                   content="Gift product"
                   className="text-sm !w-[130px]"

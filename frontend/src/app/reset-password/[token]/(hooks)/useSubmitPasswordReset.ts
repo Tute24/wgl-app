@@ -21,12 +21,12 @@ export default function useSubmitPasswordReset() {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         )
 
         if (response.status === 200) {
           setStatusMessage(
-            'Your password was updated successfully. Go back to the sign in page.'
+            'Your password was updated successfully. Go back to the sign in page.',
           )
         }
       } catch (error) {
