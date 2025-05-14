@@ -5,6 +5,7 @@
     "typescriptreact",
     "javascriptreact"
   ],
+  "eslint.experimental.useFlatConfig": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
