@@ -12,14 +12,14 @@ deleteGiftRouter.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const gift = await prisma.gifts.findUnique({
       where: {
-        id: giftID,
-      },
+        id: giftID
+      }
     })
 
     if (!user || !gift) {
@@ -31,22 +31,21 @@ deleteGiftRouter.post(
       try {
         const wedding = await prisma.weddings.findUnique({
           where: {
-            id: gift.fromWedding,
-          },
+            id: gift.fromWedding
+          }
         })
 
         if (wedding?.createdBy === userID) {
-
           const deleteGiftedByReferences = await prisma.giftedBy.deleteMany({
-            where:{
+            where: {
               gift_reference: giftID
             }
           })
 
           const deletedGift = await prisma.gifts.delete({
             where: {
-              id: giftID,
-            },
+              id: giftID
+            }
           })
 
           if (deletedGift && deleteGiftedByReferences) {
@@ -58,10 +57,8 @@ deleteGiftRouter.post(
         res
           .status(403)
           .json({ message: 'This user is not the wedding creator.' })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

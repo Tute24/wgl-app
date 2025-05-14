@@ -12,11 +12,11 @@ denyRequestRoute.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
+        id: userID
       },
       include: {
-        weddingsOwn: true,
-      },
+        weddingsOwn: true
+      }
     })
 
     if (!user) {
@@ -28,8 +28,8 @@ denyRequestRoute.post(
       try {
         const requestData = await prisma.requests.findUnique({
           where: {
-            id: reqID,
-          },
+            id: reqID
+          }
         })
 
         if (!requestData) {
@@ -57,20 +57,18 @@ denyRequestRoute.post(
           return
         }
 
-        const updatedRequest = await prisma.requests.update({
+        await prisma.requests.update({
           where: {
-            id: reqID,
+            id: reqID
           },
           data: {
-            pending: false,
-          },
+            pending: false
+          }
         })
 
         res.status(200).json({ message: 'Request denied successfully' })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

@@ -12,14 +12,14 @@ makeRequestRoute.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const checkWedding = await prisma.weddings.findUnique({
       where: {
-        id: weddingID,
-      },
+        id: weddingID
+      }
     })
 
     if (!user) {
@@ -28,26 +28,24 @@ makeRequestRoute.post(
     }
 
     if (!checkWedding) {
-      res.status(404).json({ message: `Couldn't find this wedding's list.` })
+      res.status(404).json({ message: 'Couldn\'t find this wedding\'s list.' })
       return
     }
 
     if (userID) {
       try {
-        const newRequest = await prisma.requests.create({
+        await prisma.requests.create({
           data: {
             requestBy: userID,
             relatedWedding: weddingID,
             weddingTitle: checkWedding.weddingTitle,
             requestByName: `${user.firstName} ${user.lastName}`
-          },
+          }
         })
 
         res.status(200).json({ message: 'Request successfull.' })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
-        return
       }
     }
   }

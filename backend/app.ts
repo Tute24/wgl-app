@@ -1,8 +1,5 @@
 import express from 'express'
-const app = express()
 import { PrismaClient } from '@prisma/client'
-require('dotenv').config()
-const cors = require('cors')
 import userCreate from './controllers/createUser'
 import logInRoute from './controllers/logIn'
 import logOutRoute from './controllers/logOut'
@@ -21,6 +18,9 @@ import deleteWeddingRouter from './controllers/deleteWedding'
 import getGiftedProducts from './controllers/getGiftedProducts'
 import sendRecoverEmail from './controllers/sendRecoverEmail'
 import resetPassword from './controllers/resetPassword'
+const app = express()
+require('dotenv').config()
+const cors = require('cors')
 
 app.use(express.json())
 app.use(cors())

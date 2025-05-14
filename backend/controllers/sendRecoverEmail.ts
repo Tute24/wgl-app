@@ -16,8 +16,8 @@ sendRecoverEmail.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        email: email,
-      },
+        email
+      }
     })
 
     if (!user) {
@@ -38,17 +38,17 @@ sendRecoverEmail.post(
           requestedBy: user.id,
           used: false,
           expirationDate: Date.now() + 10 * 60 * 1000,
-          token: encryptedToken,
-        },
+          token: encryptedToken
+        }
       })
 
       if (newRegister) {
         const tokenPayload = {
           id: user.id,
-          resetToken: resetToken,
+          resetToken
         }
         const jwtResetToken = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
-          expiresIn: '10m',
+          expiresIn: '10m'
         })
         const resetLink = `http://localhost:3001/reset-password/${jwtResetToken}`
         const mailOptions = {
@@ -56,16 +56,19 @@ sendRecoverEmail.post(
           to: user.email,
           subject: 'Here is the next step to resetting your password:',
           html: `<h2>Click in the following link to retrieve your password:</h2>
-                 <a href="${resetLink}">Reset Password</a>`,
+                 <a href="${resetLink}">Reset Password</a>`
         }
         await transporter.sendMail(mailOptions)
         res.status(200).json({ message: 'Email sent.' })
-        return
       }
-    } catch (error: any) {
-      console.error('There was an error:', error)
-      res.status(500).json({ message: 'Server error.', error: error.message })
-      return
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('There was an error:', error)
+        res.status(500).json({ message: 'Server error.', error: error.message })
+      } else {
+        console.error('Unexpected error:', error)
+        res.status(500).json({ message: 'Unknown server error.' })
+      }
     }
   }
 )

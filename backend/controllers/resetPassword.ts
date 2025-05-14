@@ -1,10 +1,10 @@
 import express, { Response, Router } from 'express'
 import resetPasswordAuth, {
-  ResetPasswordRequest,
+  ResetPasswordRequest
 } from '../middleware/resetPasswordMiddleware'
 import { prisma } from '../app'
-const bcrypt = require('bcrypt')
 import crypto from 'crypto'
+const bcrypt = require('bcrypt')
 const resetPassword: Router = express.Router()
 
 resetPassword.post(
@@ -24,31 +24,28 @@ resetPassword.post(
       try {
         await prisma.users.update({
           where: {
-            id: userID,
+            id: userID
           },
           data: {
-            password: newHashedPassword,
-          },
+            password: newHashedPassword
+          }
         })
 
         await prisma.passwordResetTokenStorage.update({
           where: {
-            token: encryptedToken,
+            token: encryptedToken
           },
           data: {
-            used: true,
-          },
+            used: true
+          }
         })
 
         res.status(200).json({ message: 'Password resetted successfully.' })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
-        return
       }
     } else {
       res.status(403).json({ message: 'Forbidden. Auth token not present.' })
-      return
     }
   }
 )

@@ -13,14 +13,14 @@ getGiftedProducts.get(
     const weddingId = Number(id)
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const checkWedding = await prisma.weddings.findUnique({
       where: {
-        id: weddingId,
-      },
+        id: weddingId
+      }
     })
 
     if (!user) {
@@ -29,12 +29,12 @@ getGiftedProducts.get(
     }
 
     if (!checkWedding) {
-      res.status(404).json({ message: `Couldn't find this wedding's list.` })
+      res.status(404).json({ message: 'Couldn\'t find this wedding\'s list.' })
       return
     }
 
     if (checkWedding.createdBy !== userID) {
-      res.status(403).json({ message: `You don't have access to this page.` })
+      res.status(403).json({ message: 'You don\'t have access to this page.' })
       return
     }
 
@@ -42,28 +42,28 @@ getGiftedProducts.get(
       try {
         const refWeddingGifted = await prisma.giftedBy.findMany({
           where: {
-            relatedWedding: weddingId,
-          },
+            relatedWedding: weddingId
+          }
         })
 
         const mappingAddGifter = await Promise.all(
           refWeddingGifted.map(async (giftingRegister) => {
             const gifter = await prisma.users.findUnique({
               where: {
-                id: giftingRegister.presenter,
-              },
+                id: giftingRegister.presenter
+              }
             })
 
             const gift = await prisma.gifts.findUnique({
               where: {
-                id: giftingRegister.gift_reference,
-              },
+                id: giftingRegister.gift_reference
+              }
             })
 
             const wedding = await prisma.weddings.findUnique({
               where: {
-                id: giftingRegister.relatedWedding,
-              },
+                id: giftingRegister.relatedWedding
+              }
             })
 
             const returnObject = {
@@ -74,7 +74,7 @@ getGiftedProducts.get(
               quantityGifted: giftingRegister.quantity,
               gift: gift?.productName,
               giftLink: gift?.productLink,
-              giftedAt: dayjs(giftingRegister.giftedAt).format('YYYY-MM-DD'),
+              giftedAt: dayjs(giftingRegister.giftedAt).format('YYYY-MM-DD')
             }
 
             return returnObject
@@ -83,10 +83,8 @@ getGiftedProducts.get(
         res
           .status(200)
           .json({ message: 'Fetch successful!', giftedGifts: mappingAddGifter })
-        return
       } catch (error) {
         res.send(500).json({ message: 'Server error' })
-        return
       }
     }
   }
