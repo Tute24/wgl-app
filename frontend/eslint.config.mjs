@@ -11,6 +11,11 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', '@rocketseat/eslint-config/next'),
+  {
+    rules: {
+      'react/no-unescaped-entities': 'off',
+    },
+  },
 ]
 
 export default eslintConfig
