@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const getWeddings: Router = express.Router()
 
@@ -26,11 +28,12 @@ getWeddings.get(
           userName: user.firstName
         }
 
-        const createdWeddings = await prisma.weddings.findMany({
-          where: {
-            createdBy: userID
-          }
-        })
+        const createdWeddings =
+          await prisma.weddings.findMany({
+            where: {
+              createdBy: userID
+            }
+          })
 
         console.log('Own Weddings fetched successfully.')
 
@@ -55,7 +58,9 @@ getWeddings.get(
           }) || []
         )
 
-        console.log('Weddings invited to fetched successfully.')
+        console.log(
+          'Weddings invited to fetched successfully.'
+        )
 
         res.status(200).json({
           message: 'Success.',

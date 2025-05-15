@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const makeRequestRoute: Router = express.Router()
 
@@ -28,7 +30,11 @@ makeRequestRoute.post(
     }
 
     if (!checkWedding) {
-      res.status(404).json({ message: 'Couldn\'t find this wedding\'s list.' })
+      res
+        .status(404)
+        .json({
+          message: "Couldn't find this wedding's list."
+        })
       return
     }
 
@@ -43,7 +49,9 @@ makeRequestRoute.post(
           }
         })
 
-        res.status(200).json({ message: 'Request successfull.' })
+        res
+          .status(200)
+          .json({ message: 'Request successfull.' })
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
       }

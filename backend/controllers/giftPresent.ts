@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const giftPresentRouter: Router = express.Router()
 
@@ -13,20 +15,16 @@ giftPresentRouter.post(
     const { quantity } = req.body
     const quantityGifted = Number(quantity)
 
-    const user = await prisma.users.findUnique({
-      where: {
-        id: userID
-      }
-    })
-
     const gift = await prisma.gifts.findUnique({
       where: {
         id: giftID
       }
     })
 
-    if (!user || !gift) {
-      res.status(404).json({ message: 'User/Gift not found.' })
+    if (!gift) {
+      res
+        .status(404)
+        .json({ message: 'User/Gift not found.' })
       return
     }
     if (userID) {
@@ -52,7 +50,9 @@ giftPresentRouter.post(
 
         if (updateGift) {
           console.log('yes')
-          res.status(200).json({ message: 'Presente gifted successfully.' })
+          res.status(200).json({
+            message: 'Presente gifted successfully.'
+          })
         }
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })

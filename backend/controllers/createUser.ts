@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken')
 userCreate.post(
   '/createUser',
   async (req: Request, res: Response): Promise<void> => {
-    const { firstName, lastName, email, password } = req.body
+    const { firstName, lastName, email, password } =
+      req.body
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -20,7 +21,10 @@ userCreate.post(
     if (emailCheck) {
       res
         .status(409)
-        .json({ message: 'An user with the submitted email already exists!' })
+        .json({
+          message:
+            'An user with the submitted email already exists!'
+        })
       return
     }
 
@@ -34,10 +38,16 @@ userCreate.post(
         }
       })
 
-      const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY, {
-        expiresIn: '3h'
-      })
-      res.status(200).json({ message: 'Success!', user: newUser, token })
+      const token = jwt.sign(
+        { id: newUser.id },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: '3h'
+        }
+      )
+      res
+        .status(200)
+        .json({ message: 'Success!', user: newUser, token })
     } catch (error) {
       res.status(500).json({ message: 'Server error' })
     }

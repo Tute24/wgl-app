@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const getReqRoute: Router = express.Router()
 
@@ -24,12 +26,10 @@ getReqRoute.get(
     }
 
     if (user.weddingsOwn.length === 0) {
-      res
-        .status(404)
-        .json({
-          message:
-            'No weddings created by this user were found on the database.'
-        })
+      res.status(404).json({
+        message:
+          'No weddings created by this user were found on the database.'
+      })
       return
     }
 
@@ -49,18 +49,33 @@ getReqRoute.get(
           })
         )
 
-        const existentRequests = availableRequests.every((reqs) => reqs.length === 0 || reqs[0].pending === false)
+        const existentRequests = availableRequests.every(
+          (reqs) =>
+            reqs.length === 0 || reqs[0].pending === false
+        )
 
         if (existentRequests) {
-          res.status(404).json({ message: 'There are no pending requests from guests at the time.' })
+          res
+            .status(404)
+            .json({
+              message:
+                'There are no pending requests from guests at the time.'
+            })
           return
         }
 
-        const effectiveAvailableRequests = availableRequests.filter((reqs) => reqs.length !== 0 && reqs[0].pending === true)
+        const effectiveAvailableRequests =
+          availableRequests.filter(
+            (reqs) =>
+              reqs.length !== 0 && reqs[0].pending === true
+          )
 
         res
           .status(200)
-          .json({ message: 'Fetch successfull.', requests: effectiveAvailableRequests })
+          .json({
+            message: 'Fetch successfull.',
+            requests: effectiveAvailableRequests
+          })
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
       }
