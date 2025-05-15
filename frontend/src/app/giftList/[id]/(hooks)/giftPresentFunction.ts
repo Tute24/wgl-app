@@ -10,8 +10,8 @@ export default function useGiftPresent(giftID: number, quantity: string) {
   const { id } = useParams()
 
   const sendGiftObj = {
-    giftID: giftID,
-    quantity: quantity,
+    giftID,
+    quantity,
   }
   const route = useRouter()
   async function giftPresent() {
@@ -27,7 +27,7 @@ export default function useGiftPresent(giftID: number, quantity: string) {
             params: {
               id: Number(id),
             },
-          }
+          },
         )
 
         if (response.status === 200) {
@@ -39,8 +39,8 @@ export default function useGiftPresent(giftID: number, quantity: string) {
 
                     quantity: item.quantity - Number(sendGiftObj.quantity),
                   }
-                : item
-            )
+                : item,
+            ),
           )
         }
       } catch (error) {

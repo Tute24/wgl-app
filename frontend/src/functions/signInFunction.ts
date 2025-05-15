@@ -14,7 +14,7 @@ export default function useSignIn() {
     try {
       const response = await axios.post(
         'http://localhost:3000/logIn',
-        usersSign
+        usersSign,
       )
       if (response.status === 200) {
         const userToken = response.data.token

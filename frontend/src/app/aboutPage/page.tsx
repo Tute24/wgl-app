@@ -1,9 +1,9 @@
-import LoggedHeader from "../../components/Headers/LoggedHeader";
+import LoggedHeader from '../../components/Headers/LoggedHeader'
 
-export default function About(){
-    return(
-        <>
-        <LoggedHeader/>
-        </>
-    )
+export default function About() {
+  return (
+    <>
+      <LoggedHeader />
+    </>
+  )
 }

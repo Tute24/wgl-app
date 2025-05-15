@@ -10,19 +10,19 @@ getListRoute.get(
     const userID = req.authUser?.id
     const weddingID = Number(req.query.id)
     const checkAdmin = {
-      isCreator: false,
+      isCreator: false
     }
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
+        id: userID
       }
     })
 
     const checkWedding = await prisma.weddings.findUnique({
-        where:{
-            id: weddingID
-        }
+      where: {
+        id: weddingID
+      }
     })
 
     if (!user) {
@@ -30,21 +30,21 @@ getListRoute.get(
       return
     }
 
-    if(!checkWedding){
-        res.status(404).json({ message: `Couldn't find this wedding's list.` })
-        return
-      }
+    if (!checkWedding) {
+      res.status(404).json({ message: 'Couldn\'t find this wedding\'s list.' })
+      return
+    }
 
     if (userID) {
       try {
         const userPart = await prisma.users.findUnique({
           where: {
-            id: userID,
+            id: userID
           },
           include: {
             weddingsOwn: true,
-            weddingsGuest: true,
-          },
+            weddingsGuest: true
+          }
         })
 
         const checkCreatorArray = userPart?.weddingsOwn.filter(
@@ -52,13 +52,13 @@ getListRoute.get(
         )
 
         if (checkCreatorArray?.length !== 0) {
-          checkAdmin.isCreator= true
+          checkAdmin.isCreator = true
           const ownWedding = await prisma.weddings.findUnique({
             where: {
-              id: weddingID,
+              id: weddingID
             },
             include: {
-                gifts: true
+              gifts: true
             }
           })
           res
@@ -66,7 +66,7 @@ getListRoute.get(
             .json({
               message: 'Success (owner)!',
               wedding: ownWedding,
-              checkAdmin: checkAdmin,
+              checkAdmin
             })
           return
         }
@@ -78,10 +78,10 @@ getListRoute.get(
         if (checkGuestArray?.length !== 0) {
           const guestOn = await prisma.weddings.findUnique({
             where: {
-              id: weddingID,
+              id: weddingID
             },
             include: {
-                gifts: true
+              gifts: true
             }
           })
           res
@@ -89,7 +89,7 @@ getListRoute.get(
             .json({
               message: 'Succes (guest)!',
               wedding: guestOn,
-              checkAdmin: checkAdmin,
+              checkAdmin
             })
           return
         }
@@ -99,10 +99,8 @@ getListRoute.get(
           weddingDate: checkWedding.weddingDate
         }
         res.status(403).json({ message: 'User is not a guest on this wedding', weddingInfo: weddingHeaderInfo })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
-        return
       }
     }
   }

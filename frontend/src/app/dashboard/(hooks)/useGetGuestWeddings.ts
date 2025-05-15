@@ -19,7 +19,7 @@ export default function useGetGuestWeddings() {
               headers: {
                 Authorization: `Bearer ${userToken}`,
               },
-            }
+            },
           )
           if (response.status === 200) {
             setGuestWeddingsArray(response.data.invited)

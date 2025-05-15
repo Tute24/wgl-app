@@ -17,7 +17,7 @@ export default function AxiosErrorHandler({
   setNotGuest,
   setStatusMessage,
   route,
-  setWeddingHeaderInfo
+  setWeddingHeaderInfo,
 }: AxiosErrorHandlerProps) {
   if (axios.isAxiosError(error)) {
     if (error.response?.status === 401) {
@@ -35,15 +35,15 @@ export default function AxiosErrorHandler({
       if (setStatusMessage !== undefined) {
         setStatusMessage(`Invalid credentials.`)
       }
-      if(setNotGuest === undefined && setStatusMessage === undefined){
-        if(route){
+      if (setNotGuest === undefined && setStatusMessage === undefined) {
+        if (route) {
           route?.push('/403-page')
         }
       }
     }
     if (error.response?.status === 404) {
       console.log('User not found.')
-      if(route){
+      if (route) {
         route?.push('/404-page')
       }
     }

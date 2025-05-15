@@ -1,20 +1,20 @@
 import express, { Request, Response, Router } from 'express'
-const userCreate: Router = express.Router()
 import { prisma } from '../app'
+const userCreate: Router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 userCreate.post(
   '/createUser',
-  async (req: Request, res: Response): Promise<any> => {
+  async (req: Request, res: Response): Promise<void> => {
     const { firstName, lastName, email, password } = req.body
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const emailCheck = await prisma.users.findUnique({
       where: {
-        email,
-      },
+        email
+      }
     })
 
     if (emailCheck) {
@@ -30,17 +30,16 @@ userCreate.post(
           email,
           password: hashedPassword,
           lastName,
-          firstName,
-        },
+          firstName
+        }
       })
 
       const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY, {
-        expiresIn: '3h',
+        expiresIn: '3h'
       })
-      res.status(200).json({ message: 'Success!', user: newUser, token: token })
-      return
+      res.status(200).json({ message: 'Success!', user: newUser, token })
     } catch (error) {
-      return res.status(500).json({ message: 'Server error' })
+      res.status(500).json({ message: 'Server error' })
     }
   }
 )

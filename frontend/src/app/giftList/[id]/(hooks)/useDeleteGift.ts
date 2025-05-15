@@ -9,7 +9,7 @@ export default function useDeleteGift(giftID: number) {
 
   async function deleteGift() {
     const identifier = {
-      giftID: giftID,
+      giftID,
     }
     try {
       const response = await axios.post(
@@ -19,12 +19,12 @@ export default function useDeleteGift(giftID: number) {
           headers: {
             Authorization: `Bearer: ${userToken}`,
           },
-        }
+        },
       )
 
       if (response.status === 200) {
         const filteredGiftsArrays = giftsArray.filter(
-          (gift) => gift.id !== giftID
+          (gift) => gift.id !== giftID,
         )
         setGiftsArray(filteredGiftsArrays)
       }

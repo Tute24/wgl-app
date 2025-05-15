@@ -21,7 +21,7 @@ export default function useSubmitList() {
             headers: {
               Authorization: `Bearer ${userToken}`,
             },
-          }
+          },
         )
 
         if (response.status === 200) {

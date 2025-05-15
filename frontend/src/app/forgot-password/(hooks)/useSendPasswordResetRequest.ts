@@ -14,11 +14,11 @@ export default function useSendPasswordResetRequest() {
         console.log(data)
         const response = await axios.post(
           'http://localhost:3000/sendRecoverEmail',
-          data
+          data,
         )
         if (response.status === 200) {
           setStatusMessage(
-            `If an account with that email exists, a password reset link has been sent. Please check your inbox.`
+            `If an account with that email exists, a password reset link has been sent. Please check your inbox.`,
           )
         }
       } catch (error) {

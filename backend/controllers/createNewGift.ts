@@ -15,48 +15,46 @@ createNewGiftRouter.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const checkWedding = await prisma.weddings.findUnique({
       where: {
-        id: weddingID,
-      },
+        id: weddingID
+      }
     })
 
-    if (!user|| !checkWedding) {
+    if (!user || !checkWedding) {
       res.status(404).json({ message: 'User not found.' })
       return
     }
 
     if (userID) {
       try {
-       const tryOut =  await Promise.all(
+        await Promise.all(
           newGiftsArray.map(async (giftInfo: giftProps) => {
             await prisma.gifts.create({
               data: {
                 quantity: Number(giftInfo.quantity),
                 productName: giftInfo.productName,
                 productLink: giftInfo.productLink,
-                fromWedding: weddingID,
-              },
+                fromWedding: weddingID
+              }
             })
           })
         )
-        
+
         const newGifts = await prisma.gifts.findMany({
           where: {
-            fromWedding: weddingID,
-          },
+            fromWedding: weddingID
+          }
         })
         res
           .status(200)
-          .json({ message: 'Gifts created successfully', newGifts: newGifts })
-        return
+          .json({ message: 'Gifts created successfully', newGifts })
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

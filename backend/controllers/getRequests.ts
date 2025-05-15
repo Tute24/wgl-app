@@ -11,11 +11,11 @@ getReqRoute.get(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
+        id: userID
       },
       include: {
-        weddingsOwn: true,
-      },
+        weddingsOwn: true
+      }
     })
 
     if (!user) {
@@ -28,7 +28,7 @@ getReqRoute.get(
         .status(404)
         .json({
           message:
-            'No weddings created by this user were found on the database.',
+            'No weddings created by this user were found on the database.'
         })
       return
     }
@@ -43,7 +43,7 @@ getReqRoute.get(
           ownWeddingsIDArray.map(async (ids) => {
             return await prisma.requests.findMany({
               where: {
-                relatedWedding: ids,
+                relatedWedding: ids
               }
             })
           })
@@ -51,20 +51,18 @@ getReqRoute.get(
 
         const existentRequests = availableRequests.every((reqs) => reqs.length === 0 || reqs[0].pending === false)
 
-        if(existentRequests){
-            res.status(404).json({message:"There are no pending requests from guests at the time."})
-            return
+        if (existentRequests) {
+          res.status(404).json({ message: 'There are no pending requests from guests at the time.' })
+          return
         }
 
-        const effectiveAvailableRequests = availableRequests.filter((reqs)=> reqs.length != 0 && reqs[0].pending === true )
+        const effectiveAvailableRequests = availableRequests.filter((reqs) => reqs.length !== 0 && reqs[0].pending === true)
 
         res
           .status(200)
           .json({ message: 'Fetch successfull.', requests: effectiveAvailableRequests })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

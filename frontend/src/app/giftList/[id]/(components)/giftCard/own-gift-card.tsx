@@ -4,8 +4,8 @@ import { ChangeEvent, useState } from 'react'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 import { MdEdit } from 'react-icons/md'
-import { IoTrashOutline } from 'react-icons/io5'
-import { IoArrowRedoSharp } from 'react-icons/io5'
+import { IoTrashOutline, IoArrowRedoSharp } from 'react-icons/io5'
+
 import InputContainer from '@/components/Common/input-container/input-container'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 
@@ -27,7 +27,6 @@ export default function OwnGiftCard({
   const arrowIcon = <IoArrowRedoSharp />
   const { toUpdate, setToUpdate } = useContextWrap()
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
-  const [prevSelected, setPrevSelected] = useState<number>(0)
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
@@ -40,6 +39,7 @@ export default function OwnGiftCard({
     })
   }
   const submitUpdate = useSubmitUpdate(updateProps, selectedGiftID)
+  const deleteGift = useDeleteGift(id)
   return (
     <>
       <li
@@ -52,9 +52,9 @@ export default function OwnGiftCard({
               <button
                 onClick={() => {
                   setUpdateProps({
-                    productName: productName,
-                    quantity: quantity,
-                    productLink: productLink,
+                    productName,
+                    quantity,
+                    productLink,
                   })
                   setSelectedGiftID(id)
                   setToUpdate(true)
@@ -63,7 +63,7 @@ export default function OwnGiftCard({
               >
                 {editIcon}
               </button>
-              <button onClick={useDeleteGift(id)} className="text-red-500">
+              <button onClick={deleteGift} className="text-red-500">
                 {trashIcon}
               </button>
             </div>

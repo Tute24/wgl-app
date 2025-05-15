@@ -13,14 +13,14 @@ deleteWeddingRouter.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const checkWedding = await prisma.weddings.findUnique({
       where: {
-        id: id,
-      },
+        id
+      }
     })
 
     if (!user || !checkWedding) {
@@ -31,7 +31,7 @@ deleteWeddingRouter.post(
     if (userID !== checkWedding.createdBy) {
       res
         .status(403)
-        .json({ message: `The user is not the wedding's creator.` })
+        .json({ message: 'The user is not the wedding\'s creator.' })
       return
     }
 
@@ -41,40 +41,38 @@ deleteWeddingRouter.post(
       try {
         await prisma.guests.deleteMany({
           where: {
-            referencedWedding: id,
-          },
+            referencedWedding: id
+          }
         })
 
         await prisma.gifts.deleteMany({
           where: {
-            fromWedding: id,
-          },
+            fromWedding: id
+          }
         })
 
         await prisma.requests.deleteMany({
           where: {
             relatedWedding: id,
-            pending: true,
-          },
+            pending: true
+          }
         })
 
         await prisma.giftedBy.deleteMany({
-          where:{
-            relatedWedding: id,
+          where: {
+            relatedWedding: id
           }
         })
 
         await prisma.weddings.delete({
           where: {
-            id: id,
-          },
+            id
+          }
         })
 
         res.status(200).json({ message: 'Wedding deleted successfully.' })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
-        return
       }
     }
   }

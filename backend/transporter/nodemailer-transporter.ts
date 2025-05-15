@@ -10,6 +10,6 @@ export const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.SENDER_EMAIL,
-    pass: process.env.APP_PASSWORD,
-  },
+    pass: process.env.APP_PASSWORD
+  }
 })

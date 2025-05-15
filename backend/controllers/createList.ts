@@ -1,10 +1,8 @@
 import express, { Router, Response } from 'express'
-const createListRoute: Router = express.Router()
 import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
 import { prisma } from '../app'
 import giftProps from '../types/giftProps'
-
-
+const createListRoute: Router = express.Router()
 
 createListRoute.post(
   '/createList',
@@ -16,8 +14,8 @@ createListRoute.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     if (!user) {
@@ -29,32 +27,30 @@ createListRoute.post(
         const newWedding = await prisma.weddings.create({
           data: {
             weddingTitle: listTitle,
-            weddingDate: weddingDate,
+            weddingDate,
             createdBy: userID,
-            shippingAddress: shippingAddress
-          },
+            shippingAddress
+          }
         })
 
         console.log('Wedding successfully created!')
 
-        const newGifts = ( giftsArray.map(async (giftInfo: giftProps) => {
-           await prisma.gifts.create({
+        await (giftsArray.map(async (giftInfo: giftProps) => {
+          await prisma.gifts.create({
             data: {
               quantity: Number(giftInfo.quantity),
               productName: giftInfo.productName,
               productLink: giftInfo.productLink,
               fromWedding: newWedding.id
-            },
+            }
           })
         }))
 
         res.status(200).json({
-          message: 'Information successfully submitted to the database',
+          message: 'Information successfully submitted to the database'
         })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server Error!' })
-        return
       }
     }
   }

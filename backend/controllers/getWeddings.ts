@@ -1,4 +1,4 @@
-import express, { Router, Response, Request } from 'express'
+import express, { Router, Response } from 'express'
 import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const getWeddings: Router = express.Router()
@@ -11,8 +11,8 @@ getWeddings.get(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     if (!user) {
@@ -23,24 +23,24 @@ getWeddings.get(
       try {
         const userInfoObject = {
           userID: user.id,
-          userName: user.firstName,
+          userName: user.firstName
         }
 
         const createdWeddings = await prisma.weddings.findMany({
           where: {
-            createdBy: userID,
-          },
+            createdBy: userID
+          }
         })
 
         console.log('Own Weddings fetched successfully.')
 
         const guestOn = await prisma.users.findUnique({
           where: {
-            id: userID,
+            id: userID
           },
           include: {
-            weddingsGuest: true,
-          },
+            weddingsGuest: true
+          }
         })
 
         const weddingsGuestArray = guestOn?.weddingsGuest
@@ -49,8 +49,8 @@ getWeddings.get(
           weddingsGuestArray?.map(async (wedding) => {
             return await prisma.weddings.findUnique({
               where: {
-                id: wedding.referencedWedding,
-              },
+                id: wedding.referencedWedding
+              }
             })
           }) || []
         )
@@ -61,12 +61,10 @@ getWeddings.get(
           message: 'Success.',
           own: createdWeddings,
           invited: mappedWeddings,
-          userInfo: userInfoObject,
+          userInfo: userInfoObject
         })
-        return
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

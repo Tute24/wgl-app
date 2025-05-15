@@ -12,11 +12,11 @@ acceptRequestRoute.post(
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
+        id: userID
       },
       include: {
-        weddingsOwn: true,
-      },
+        weddingsOwn: true
+      }
     })
 
     if (!user) {
@@ -28,8 +28,8 @@ acceptRequestRoute.post(
       try {
         const requestData = await prisma.requests.findUnique({
           where: {
-            id: reqID,
-          },
+            id: reqID
+          }
         })
 
         if (!requestData) {
@@ -59,19 +59,18 @@ acceptRequestRoute.post(
 
         const updatedRequest = await prisma.requests.update({
           where: {
-            id: reqID,
+            id: reqID
           },
           data: {
             accepted: true,
-            pending: false,
-          },
+            pending: false
+          }
         })
-
-        res.status(200).json({ message: 'Request accepted successfully' })
-        return
+        if (updatedRequest) {
+          res.status(200).json({ message: 'Request accepted successfully' })
+        }
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
   }

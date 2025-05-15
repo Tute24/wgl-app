@@ -13,6 +13,6 @@ export const useUsernameStore = create<UsernameStore>()(
     }),
     {
       name: 'username-storage',
-    }
-  )
+    },
+  ),
 )

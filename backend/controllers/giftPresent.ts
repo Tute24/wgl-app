@@ -8,59 +8,56 @@ giftPresentRouter.post(
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
     const userID = req.authUser?.id
-    const {id} = req.query
+    const { id } = req.query
     const { giftID } = req.body
     const { quantity } = req.body
     const quantityGifted = Number(quantity)
 
     const user = await prisma.users.findUnique({
       where: {
-        id: userID,
-      },
+        id: userID
+      }
     })
 
     const gift = await prisma.gifts.findUnique({
       where: {
-        id: giftID,
-      },
+        id: giftID
+      }
     })
 
     if (!user || !gift) {
       res.status(404).json({ message: 'User/Gift not found.' })
       return
     }
-    if(userID){
+    if (userID) {
       try {
         const newQuantity = gift.quantity - quantityGifted
         const updateGift = await prisma.gifts.update({
           where: {
-            id: giftID,
+            id: giftID
           },
           data: {
             quantity: newQuantity
-          },
+          }
         })
-  
-        const createGiftedBy = await prisma.giftedBy.create({
-          data:{
+
+        await prisma.giftedBy.create({
+          data: {
             presenter: userID,
             relatedWedding: Number(id),
             quantity: quantityGifted,
             gift_reference: giftID
           }
         })
-  
+
         if (updateGift) {
           console.log('yes')
           res.status(200).json({ message: 'Presente gifted successfully.' })
-          return
         }
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
-        return
       }
     }
-    
   }
 )
 

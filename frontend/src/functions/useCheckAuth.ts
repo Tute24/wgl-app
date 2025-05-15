@@ -4,7 +4,7 @@ import { useContextWrap } from '@/contextAPI/context'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
-export default function checkAuth() {
+export default function useCheckAuth() {
   const route = useRouter()
   const { setUserToken } = useContextWrap()
 
@@ -17,9 +17,8 @@ export default function checkAuth() {
 
       if (!storedToken) {
         route.push('/')
-        return
       }
     }
     checkAuth()
-  }, [])
+  }, [setUserToken, route])
 }

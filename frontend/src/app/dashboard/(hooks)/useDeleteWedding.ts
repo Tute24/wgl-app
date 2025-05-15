@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation'
 export default function useDeleteWedding() {
   const { userToken, setOwnWeddingsArray } = useContextWrap()
   const route = useRouter()
-  async function deleteWedding(id: Number) {
+  async function deleteWedding(id: number) {
     const weddingID = {
-      id: id,
+      id,
     }
     if (userToken) {
       try {
@@ -19,7 +19,7 @@ export default function useDeleteWedding() {
             headers: {
               Authorization: `Bearer ${userToken}`,
             },
-          }
+          },
         )
 
         if (response.status === 200) {
@@ -29,7 +29,6 @@ export default function useDeleteWedding() {
         AxiosErrorHandler({ error, route })
       }
     }
-    
   }
   return deleteWedding
 }

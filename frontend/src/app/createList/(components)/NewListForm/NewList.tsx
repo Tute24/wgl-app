@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import checkAuth from '@/functions/checkAuthFunction'
+import checkAuth from '@/functions/useCheckAuth'
 import useSubmitList from '@/app/createList/(hooks)/useSubmitList'
 import newListSchema from '@/zodSchemas/newListSchema'
 import { zodResolver } from '@hookform/resolvers/zod'

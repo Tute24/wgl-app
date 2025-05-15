@@ -16,7 +16,7 @@ export default function useSubmitRegister() {
       try {
         const response = await axios.post(
           'http://localhost:3000/createUser',
-          data
+          data,
         )
 
         if (response.status === 200) {
@@ -28,12 +28,12 @@ export default function useSubmitRegister() {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 409) {
             setStatusMessage(
-              'There is already an existent user with this email!'
+              'There is already an existent user with this email!',
             )
           }
           if (error.response?.status === 500) {
             setStatusMessage(
-              'Something went wrong within the server. Try again sonn.'
+              'Something went wrong within the server. Try again sonn.',
             )
           }
           console.log(error)
