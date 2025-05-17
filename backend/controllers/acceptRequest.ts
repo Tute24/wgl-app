@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const acceptRequestRoute: Router = express.Router()
 
@@ -26,48 +28,65 @@ acceptRequestRoute.post(
 
     if (userID) {
       try {
-        const requestData = await prisma.requests.findUnique({
-          where: {
-            id: reqID
-          }
-        })
+        const requestData =
+          await prisma.requests.findUnique({
+            where: {
+              id: reqID
+            }
+          })
 
         if (!requestData) {
           res
             .status(404)
-            .json({ message: "Couldn't find this request on the database." })
+            .json({
+              message:
+                "Couldn't find this request on the database."
+            })
           return
         }
 
         const filterWedding = user.weddingsOwn.filter(
-          (wedding) => wedding.id === requestData.relatedWedding
+          (wedding) =>
+            wedding.id === requestData.relatedWedding
         )
 
         if (filterWedding.length === 0) {
           res
             .status(403)
-            .json({ message: 'This user is not the wedding creator.' })
+            .json({
+              message:
+                'This user is not the wedding creator.'
+            })
           return
         }
 
         if (requestData.pending === false) {
           res
             .status(409)
-            .json({ message: 'This request has already been reviewed.' })
+            .json({
+              message:
+                'This request has already been reviewed.'
+            })
           return
         }
 
-        const updatedRequest = await prisma.requests.update({
-          where: {
-            id: reqID
-          },
-          data: {
-            accepted: true,
-            pending: false
+        const updatedRequest = await prisma.requests.update(
+          {
+            where: {
+              id: reqID
+            },
+            data: {
+              accepted: true,
+              pending: false
+            }
           }
-        })
+        )
         if (updatedRequest) {
-          res.status(200).json({ message: 'Request accepted successfully' })
+          res
+            .status(200)
+            .json({
+              message: 'Request accepted successfully'
+            })
         }
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })

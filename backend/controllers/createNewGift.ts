@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 import giftProps from '../types/giftProps'
 const createNewGiftRouter: Router = express.Router()
@@ -11,13 +13,6 @@ createNewGiftRouter.post(
     const userID = req.authUser?.id
     const weddingID = Number(req.query.id)
     const newGiftsArray: giftProps[] = req.body
-    // const newGiftsArray: giftProps[] = body
-
-    const user = await prisma.users.findUnique({
-      where: {
-        id: userID
-      }
-    })
 
     const checkWedding = await prisma.weddings.findUnique({
       where: {
@@ -25,8 +20,10 @@ createNewGiftRouter.post(
       }
     })
 
-    if (!user || !checkWedding) {
-      res.status(404).json({ message: 'User not found.' })
+    if (!checkWedding) {
+      res
+        .status(404)
+        .json({ message: 'That wedding does not exist.' })
       return
     }
 
@@ -50,9 +47,10 @@ createNewGiftRouter.post(
             fromWedding: weddingID
           }
         })
-        res
-          .status(200)
-          .json({ message: 'Gifts created successfully', newGifts })
+        res.status(200).json({
+          message: 'Gifts created successfully',
+          newGifts
+        })
       } catch (error) {
         res.status(500).json({ message: 'Server error.' })
       }

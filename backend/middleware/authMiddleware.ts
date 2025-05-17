@@ -32,6 +32,6 @@ export default function isAuthenticated (
     req.authUser = decodedToken
     next()
   } catch (error) {
-    res.status(403).json({ message: 'Invalid or expired token.' })
+    res.status(500).json({ message: 'Server error.' })
   }
 }

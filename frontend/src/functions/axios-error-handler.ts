@@ -23,17 +23,18 @@ export default function AxiosErrorHandler({
     if (error.response?.status === 401) {
       console.log('User not authenticated.')
       if (setStatusMessage !== undefined) {
-        setStatusMessage(`User doesn't have permission.`)
+        setStatusMessage(`Not signed in.`)
       }
+      route?.push('/401-page')
     }
     if (error.response?.status === 403) {
-      console.log('Invalid/Expired token.')
+      console.log('User is not authorized.')
       if (setNotGuest !== undefined && !notGuest && setWeddingHeaderInfo) {
         setNotGuest(true)
         setWeddingHeaderInfo(error.response.data.weddingInfo)
       }
       if (setStatusMessage !== undefined) {
-        setStatusMessage(`Invalid credentials.`)
+        setStatusMessage(`You're not authorized to access this page.`)
       }
       if (setNotGuest === undefined && setStatusMessage === undefined) {
         if (route) {
@@ -42,7 +43,7 @@ export default function AxiosErrorHandler({
       }
     }
     if (error.response?.status === 404) {
-      console.log('User not found.')
+      console.log('User or page not found.')
       if (route) {
         route?.push('/404-page')
       }

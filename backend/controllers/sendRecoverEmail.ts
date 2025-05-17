@@ -23,38 +23,49 @@ sendRecoverEmail.post(
     if (!user) {
       res
         .status(404)
-        .json({ message: "There's no active user with this e-mail address." })
+        .json({
+          message:
+            "There's no active user with this e-mail address."
+        })
       return
     }
 
     try {
-      const resetToken = crypto.randomBytes(32).toString('hex')
+      const resetToken = crypto
+        .randomBytes(32)
+        .toString('hex')
       const encryptedToken = crypto
         .createHash('sha256')
         .update(resetToken)
         .digest('hex')
-      const newRegister = await prisma.passwordResetTokenStorage.create({
-        data: {
-          requestedBy: user.id,
-          used: false,
-          expirationDate: Date.now() + 10 * 60 * 1000,
-          token: encryptedToken
-        }
-      })
+      const newRegister =
+        await prisma.passwordResetTokenStorage.create({
+          data: {
+            requestedBy: user.id,
+            used: false,
+            expirationDate: Date.now() + 10 * 60 * 1000,
+            token: encryptedToken
+          }
+        })
 
       if (newRegister) {
         const tokenPayload = {
           id: user.id,
           resetToken
         }
-        const jwtResetToken = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
-          expiresIn: '10m'
-        })
+        const jwtResetToken = jwt.sign(
+          tokenPayload,
+          process.env.SECRET_KEY,
+          {
+            expiresIn: '10m'
+          }
+        )
         const resetLink = `http://localhost:3001/reset-password/${jwtResetToken}`
         const mailOptions = {
           from: process.env.SENDER_EMAIL,
           to: user.email,
-          subject: 'Here is the next step to resetting your password:',
+          subject:
+            'Here is the next step to resetting your password:',
           html: `<h2>Click in the following link to retrieve your password:</h2>
                  <a href="${resetLink}">Reset Password</a>`
         }
@@ -64,10 +75,17 @@ sendRecoverEmail.post(
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('There was an error:', error)
-        res.status(500).json({ message: 'Server error.', error: error.message })
+        res
+          .status(500)
+          .json({
+            message: 'Server error.',
+            error: error.message
+          })
       } else {
         console.error('Unexpected error:', error)
-        res.status(500).json({ message: 'Unknown server error.' })
+        res
+          .status(500)
+          .json({ message: 'Unknown server error.' })
       }
     }
   }

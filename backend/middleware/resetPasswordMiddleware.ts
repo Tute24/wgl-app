@@ -17,7 +17,8 @@ export default async function resetPasswordAuth (
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  const resetToken = req.headers.authorization?.split(' ')[1]
+  const resetToken =
+    req.headers.authorization?.split(' ')[1]
 
   if (!resetToken) {
     res.status(401).json({ message: 'Unauthorized' })
@@ -33,13 +34,16 @@ export default async function resetPasswordAuth (
       .createHash('sha256')
       .update(decodedResetToken.resetToken)
       .digest('hex')
-    const storedToken = await prisma.passwordResetTokenStorage.findUnique({
-      where: {
-        token: encryptedToken
-      }
-    })
+    const storedToken =
+      await prisma.passwordResetTokenStorage.findUnique({
+        where: {
+          token: encryptedToken
+        }
+      })
     if (!storedToken) {
-      res.status(404).json({ message: 'Token not present in the database.' })
+      res.status(404).json({
+        message: 'Token not present in the database.'
+      })
       return
     }
     if (storedToken.requestedBy !== decodedResetToken.id) {
@@ -50,17 +54,20 @@ export default async function resetPasswordAuth (
       return
     }
     if (storedToken.used === true) {
-      res.status(409).json({ message: 'This link has already been used.' })
+      res.status(409).json({
+        message: 'This link has already been used.'
+      })
       return
     }
 
     req.authData = decodedResetToken
     next()
   } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
-      res.status(403).json({ message: 'Token expired.' })
-    } else if (error instanceof jwt.JsonWebTokenError) {
-      res.status(403).json({ message: 'Invalid token.' })
+    if (
+      error instanceof jwt.TokenExpiredError ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
+      res.status(401).json({ message: 'Token expired.' })
     } else {
       res.status(500).json({ message: 'Server error.' })
     }

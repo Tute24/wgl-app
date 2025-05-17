@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 import giftProps from '../types/giftProps'
 const createListRoute: Router = express.Router()
@@ -8,20 +10,11 @@ createListRoute.post(
   '/createList',
   isAuthenticated,
   async (req: CustomRequest, res: Response) => {
-    const { listTitle, weddingDate, shippingAddress } = req.body
+    const { listTitle, weddingDate, shippingAddress } =
+      req.body
     const giftsArray = req.body.gifts
     const userID = req.authUser?.id
 
-    const user = await prisma.users.findUnique({
-      where: {
-        id: userID
-      }
-    })
-
-    if (!user) {
-      res.status(404).json({ message: 'User not found.' })
-      return
-    }
     if (userID) {
       try {
         const newWedding = await prisma.weddings.create({
@@ -35,19 +28,22 @@ createListRoute.post(
 
         console.log('Wedding successfully created!')
 
-        await (giftsArray.map(async (giftInfo: giftProps) => {
-          await prisma.gifts.create({
-            data: {
-              quantity: Number(giftInfo.quantity),
-              productName: giftInfo.productName,
-              productLink: giftInfo.productLink,
-              fromWedding: newWedding.id
-            }
-          })
-        }))
+        await giftsArray.map(
+          async (giftInfo: giftProps) => {
+            await prisma.gifts.create({
+              data: {
+                quantity: Number(giftInfo.quantity),
+                productName: giftInfo.productName,
+                productLink: giftInfo.productLink,
+                fromWedding: newWedding.id
+              }
+            })
+          }
+        )
 
         res.status(200).json({
-          message: 'Information successfully submitted to the database'
+          message:
+            'Information successfully submitted to the database'
         })
       } catch (error) {
         res.status(500).json({ message: 'Server Error!' })

@@ -1,5 +1,7 @@
 import express, { Router, Response } from 'express'
-import isAuthenticated, { CustomRequest } from '../middleware/authMiddleware'
+import isAuthenticated, {
+  CustomRequest
+} from '../middleware/authMiddleware'
 import { prisma } from '../app'
 const deleteWeddingRouter: Router = express.Router()
 
@@ -11,31 +13,25 @@ deleteWeddingRouter.post(
     const { id } = req.body
     console.log(userID)
 
-    const user = await prisma.users.findUnique({
-      where: {
-        id: userID
-      }
-    })
-
     const checkWedding = await prisma.weddings.findUnique({
       where: {
         id
       }
     })
 
-    if (!user || !checkWedding) {
-      res.status(404).json({ message: 'User not found.' })
+    if (!checkWedding) {
+      res
+        .status(404)
+        .json({ message: 'Wedding not found.' })
       return
     }
 
     if (userID !== checkWedding.createdBy) {
-      res
-        .status(403)
-        .json({ message: 'The user is not the wedding\'s creator.' })
+      res.status(403).json({
+        message: "The user is not the wedding's creator."
+      })
       return
     }
-
-    console.log('aight', user, checkWedding)
 
     if (userID) {
       try {
@@ -70,7 +66,9 @@ deleteWeddingRouter.post(
           }
         })
 
-        res.status(200).json({ message: 'Wedding deleted successfully.' })
+        res.status(200).json({
+          message: 'Wedding deleted successfully.'
+        })
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
       }

@@ -14,7 +14,10 @@ resetPassword.post(
     const userID = req.authData?.id
     const resetToken = req.authData?.resetToken
     const { password } = req.body
-    const newHashedPassword = await bcrypt.hash(password, 10)
+    const newHashedPassword = await bcrypt.hash(
+      password,
+      10
+    )
     if (resetToken) {
       const encryptedToken = crypto
         .createHash('sha256')
@@ -40,12 +43,16 @@ resetPassword.post(
           }
         })
 
-        res.status(200).json({ message: 'Password resetted successfully.' })
+        res.status(200).json({
+          message: 'Password resetted successfully.'
+        })
       } catch (error) {
         res.status(500).json({ message: 'Server Error.' })
       }
     } else {
-      res.status(403).json({ message: 'Forbidden. Auth token not present.' })
+      res.status(401).json({
+        message: 'Auth token not present.'
+      })
     }
   }
 )

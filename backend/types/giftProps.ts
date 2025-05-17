@@ -1,5 +1,5 @@
 export default interface giftProps {
-    productName: string
-    productLink: string
-    quantity: number
-  }
+  productName: string
+  productLink: string
+  quantity: number
+}
