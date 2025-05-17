@@ -16,7 +16,7 @@ export default function useCheckAuth() {
       }
 
       if (!storedToken) {
-        route.push('/')
+        route.push('/401-page')
       }
     }
     checkAuth()
