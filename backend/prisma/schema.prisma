@@ -47,7 +47,6 @@ model Gifts {
   wedding Weddings @relation(fields: [fromWedding],references: [id])
   fromWedding Int @map("from_wedding")
   createdAt DateTime? @default(now())
-  giftPresenters GiftedBy []
 
   @@map("gifts")
 }
@@ -85,8 +84,7 @@ model GiftedBy {
   user Users @relation(fields: [presenter],references: [id])
   wedding Weddings @relation(fields: [relatedWedding],references: [id])
   quantity Int
-  gift_reference Int @map("gift_reference")
-  gift Gifts @relation(fields: [gift_reference],references: [id])
+  giftName Int @map("gift_name")
   giftedAt DateTime? @default(now())  
 
   @@map("gifted_by")
