@@ -3,15 +3,15 @@ import UserButton from '../Common/buttons/user-button/user-button'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 export interface deleteWeddingModalProps {
-  wedding: string
+  gift: string
   onCloseModal: () => void
   onDelete: (id: number) => Promise<void>
   isOpen: boolean
   id: number
 }
 
-export default function DeleteWeddingModal({
-  wedding,
+export default function DeleteGiftModal({
+  gift,
   onCloseModal,
   onDelete,
   isOpen,
@@ -48,11 +48,11 @@ export default function DeleteWeddingModal({
           <div className="text-amber-800 flex flex-col gap-2">
             <h2>
               Are you sure you want to delete{' '}
-              <span className="font-bold">{wedding}</span>?
+              <span className="font-bold">{gift}</span>?
             </h2>
             <h3 className="text-sm font-light">
-              This action can't be undone, and all the data related to the
-              wedding will be excluded as well.
+              This action can't be undone, and this gift will be deleted
+              permanently from your list.
             </h3>
           </div>
           <div className="flex flex-row gap-4 items-center justify-between">
