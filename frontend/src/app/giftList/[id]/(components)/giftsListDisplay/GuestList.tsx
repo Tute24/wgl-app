@@ -15,7 +15,9 @@ export default function GuestList() {
         weddingTitle={weddingData.weddingTitle}
         id={weddingData.id}
       />
-      <h2 className="font-bold text-amber-800">You're this wedding's owner</h2>
+      <h2 className="font-bold text-lg text-amber-800">
+        You're this wedding's guest
+      </h2>
       <ul className="flex flex-col text-center items-center">
         {giftsArray.map((gift) => (
           <div id={gift.id.toString()} key={gift.id} className="p-5 w-full">

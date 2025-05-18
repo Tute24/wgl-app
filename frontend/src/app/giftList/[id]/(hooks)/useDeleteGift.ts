@@ -3,11 +3,11 @@ import AxiosErrorHandler from '@/functions/axios-error-handler'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
-export default function useDeleteGift(giftID: number) {
+export default function useDeleteGift() {
   const { userToken, setGiftsArray, giftsArray } = useContextWrap()
   const route = useRouter()
 
-  async function deleteGift() {
+  async function deleteGift(giftID: number) {
     const identifier = {
       giftID,
     }

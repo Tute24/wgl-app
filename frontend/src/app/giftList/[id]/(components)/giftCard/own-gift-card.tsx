@@ -1,7 +1,6 @@
 import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
 import { ChangeEvent, useState } from 'react'
-import useDeleteGift from '../../(hooks)/useDeleteGift'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 import { MdEdit } from 'react-icons/md'
 import { IoTrashOutline, IoArrowRedoSharp } from 'react-icons/io5'
@@ -25,7 +24,7 @@ export default function OwnGiftCard({
   const editIcon = <MdEdit />
   const trashIcon = <IoTrashOutline />
   const arrowIcon = <IoArrowRedoSharp />
-  const { toUpdate, setToUpdate } = useContextWrap()
+  const { toUpdate, setToUpdate, setModalObject } = useContextWrap()
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
   const [updateProps, setUpdateProps] = useState({
     productName: '',
@@ -39,7 +38,6 @@ export default function OwnGiftCard({
     })
   }
   const submitUpdate = useSubmitUpdate(updateProps, selectedGiftID)
-  const deleteGift = useDeleteGift(id)
   return (
     <>
       <li
@@ -63,7 +61,16 @@ export default function OwnGiftCard({
               >
                 {editIcon}
               </button>
-              <button onClick={deleteGift} className="text-red-500">
+              <button
+                onClick={() =>
+                  setModalObject({
+                    id,
+                    name: productName,
+                    isOpen: true,
+                  })
+                }
+                className="text-red-500"
+              >
                 {trashIcon}
               </button>
             </div>
