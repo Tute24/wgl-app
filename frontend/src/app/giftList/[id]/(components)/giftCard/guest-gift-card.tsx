@@ -68,7 +68,10 @@ export default function GuestGiftCard({
                     <UserButton
                       className="!bg-green-500 hover:!bg-green-400 !w-[130px]"
                       content="Confirm"
-                      onClick={giftPresent}
+                      onClick={() => {
+                        giftPresent()
+                        setIsGiftingSetup(false)
+                      }}
                     />
                   </div>
                   <div>
