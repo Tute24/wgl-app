@@ -48,6 +48,13 @@ export default function AxiosErrorHandler({
         route?.push('/404-page')
       }
     }
+    if (error.response?.status === 409) {
+      console.log('Conflict')
+      if (setStatusMessage)
+        setStatusMessage(
+          'You submitted a gift with a name that already exists.',
+        )
+    }
     if (error.response?.status === 500) {
       console.log('Server error.')
       if (setStatusMessage !== undefined) {
