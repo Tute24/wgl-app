@@ -8,7 +8,7 @@ import { z } from 'zod'
 export default function useSubmitNewGift() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { userToken, setGiftsArray } = useContextWrap()
+  const { userToken, setGiftsArray, setStatusMessage } = useContextWrap()
   const route = useRouter()
   type submitData = z.infer<typeof newGiftsSchema>
 
@@ -33,7 +33,7 @@ export default function useSubmitNewGift() {
         }
       }
     } catch (error) {
-      AxiosErrorHandler({ error, route })
+      AxiosErrorHandler({ error, setStatusMessage, route })
     }
   }
   return submitNewGifts

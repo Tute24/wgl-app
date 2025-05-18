@@ -1,5 +1,6 @@
 'use client'
 
+import { generalModalProps } from '@/types-props/general-modal-props'
 import giftsProps from '@/types-props/giftsProps'
 import weddingDataProps from '@/types-props/weddingDataProps'
 import weddingHeaderInfoProps from '@/types-props/weddingHeaderInfo'
@@ -29,6 +30,8 @@ interface ContextProps {
   setToUpdate: React.Dispatch<SetStateAction<boolean>>
   weddingHeaderInfo: weddingHeaderInfoProps
   setWeddingHeaderInfo: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
+  modalObject: generalModalProps
+  setModalObject: React.Dispatch<SetStateAction<generalModalProps>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -68,6 +71,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       },
     ],
   })
+  const [modalObject, setModalObject] = useState<generalModalProps>({
+    id: 0,
+    name: '',
+    isOpen: false,
+  })
 
   return (
     <contextWrap.Provider
@@ -94,6 +102,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setGuestWeddingsArray,
         weddingHeaderInfo,
         setWeddingHeaderInfo,
+        modalObject,
+        setModalObject,
       }}
     >
       {children}

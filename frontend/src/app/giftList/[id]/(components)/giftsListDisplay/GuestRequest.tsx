@@ -22,7 +22,7 @@ export default function GuestRequest() {
           weddingTitle={weddingHeaderInfo.weddingTitle}
           id={weddingHeaderInfo.id}
         />
-        <h2 className="font-bold text-amber-800">
+        <h2 className="font-bold text-lg text-amber-800">
           Not a guest of this wedding currently. You can make a request or go
           back to the initial page.
         </h2>

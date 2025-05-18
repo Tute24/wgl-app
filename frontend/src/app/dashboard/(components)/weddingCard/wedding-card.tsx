@@ -1,7 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { IoTrashOutline, IoArrowRedoSharp } from 'react-icons/io5'
-
-import useDeleteWedding from '../../(hooks)/useDeleteWedding'
+import { useContextWrap } from '@/contextAPI/context'
 export interface WeddingCardProps {
   id: number
   title: string
@@ -14,7 +15,7 @@ export default function WeddingCard({
   date,
   isOwn,
 }: WeddingCardProps) {
-  const deleteWedding = useDeleteWedding()
+  const { setModalObject } = useContextWrap()
   const trashIcon = <IoTrashOutline />
   const arrowIcon = <IoArrowRedoSharp />
   return (
@@ -26,7 +27,15 @@ export default function WeddingCard({
         <div className="flex flex-col justify-between">
           {isOwn && (
             <div className="flex justify-end mt-1 -mb-1">
-              <button onClick={() => deleteWedding(id)}>
+              <button
+                onClick={() =>
+                  setModalObject({
+                    id,
+                    name: title,
+                    isOpen: true,
+                  })
+                }
+              >
                 <span className="text-red-500">{trashIcon}</span>
               </button>
             </div>

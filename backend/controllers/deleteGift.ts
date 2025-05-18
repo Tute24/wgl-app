@@ -34,24 +34,18 @@ deleteGiftRouter.post(
         })
 
         if (wedding?.createdBy === userID) {
-          const deleteGiftedByReferences =
-            await prisma.giftedBy.deleteMany({
-              where: {
-                gift_reference: giftID
-              }
-            })
-
+          console.log('ok')
           const deletedGift = await prisma.gifts.delete({
             where: {
               id: giftID
             }
           })
 
-          if (deletedGift && deleteGiftedByReferences) {
+          if(deletedGift){
             res.status(200).json({
-              message: 'Gift deleted successfully.'
-            })
-            return
+            message: 'Gift deleted successfully.'
+          })
+          return
           }
         }
 
@@ -59,6 +53,7 @@ deleteGiftRouter.post(
           message: 'This user is not the wedding creator.'
         })
       } catch (error) {
+        console.log('Couldnt delete')
         res.status(500).json({ message: 'Server error.' })
       }
     }

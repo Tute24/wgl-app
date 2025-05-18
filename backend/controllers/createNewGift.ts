@@ -29,6 +29,33 @@ createNewGiftRouter.post(
 
     if (userID) {
       try {
+        const existentGifts = await prisma.gifts.findMany({
+          where: {
+            fromWedding: weddingID
+          }
+        })
+        const existentNames = new Set(
+          existentGifts.map((gift) =>
+            gift.productName.trim().toLowerCase()
+          )
+        )
+
+        const conflictingGifts = newGiftsArray.filter(
+          (gift) =>
+            existentNames.has(
+              gift.productName.trim().toLowerCase()
+            )
+        )
+
+        if (conflictingGifts.length > 0) {
+          res.status(409).json({
+            message: `Conflict - Gifts with the same name as existent ones can't be submitted.`,
+            conflictingGiftNames: conflictingGifts.map(
+              (g) => g.productName
+            )
+          })
+          return
+        }
         await Promise.all(
           newGiftsArray.map(async (giftInfo: giftProps) => {
             await prisma.gifts.create({
