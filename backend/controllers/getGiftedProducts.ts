@@ -51,11 +51,11 @@ getGiftedProducts.get(
               }
             })
 
-            const gift = await prisma.gifts.findUnique({
-              where: {
-                id: giftingRegister.gift_reference
+            const giftOnCreatedBy = await prisma.giftedBy.findFirst({
+              where:{
+                giftName: giftingRegister.giftName
               }
-            })
+            }) //goes by the assumption that the wedding won't have two rows with the same product name
 
             const wedding =
               await prisma.weddings.findUnique({
@@ -70,8 +70,7 @@ getGiftedProducts.get(
               relatedWeddingTitle: wedding?.weddingTitle,
               relatedWeddingDate: wedding?.weddingDate,
               quantityGifted: giftingRegister.quantity,
-              gift: gift?.productName,
-              giftLink: gift?.productLink,
+              gift: giftOnCreatedBy?.giftName,
               giftedAt: dayjs(
                 giftingRegister.giftedAt
               ).format('YYYY-MM-DD')

@@ -44,7 +44,7 @@ giftPresentRouter.post(
             presenter: userID,
             relatedWedding: Number(id),
             quantity: quantityGifted,
-            gift_reference: giftID
+            giftName: updateGift.productName
           }
         })
 
