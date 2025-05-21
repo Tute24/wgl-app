@@ -1,23 +1,23 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client'
-import userCreate from './controllers/createUser'
-import logInRoute from './controllers/logIn'
-import logOutRoute from './controllers/logOut'
-import createListRoute from './controllers/createList'
-import getWeddings from './controllers/getWeddings'
-import getListRoute from './controllers/getList'
-import makeRequestRoute from './controllers/makeRequest'
-import getReqRoute from './controllers/getRequests'
-import acceptRequestRoute from './controllers/acceptRequest'
-import denyRequestRoute from './controllers/denyRequest'
-import giftPresentRouter from './controllers/giftPresent'
-import updateGiftRouter from './controllers/updateGift'
-import deleteGiftRouter from './controllers/deleteGift'
-import createNewGiftRouter from './controllers/createNewGift'
-import deleteWeddingRouter from './controllers/deleteWedding'
-import getGiftedProducts from './controllers/getGiftedProducts'
-import sendRecoverEmail from './controllers/sendRecoverEmail'
-import resetPassword from './controllers/resetPassword'
+import logInRoute from './base/logIn'
+import logOutRoute from './base/logOut'
+import createListRoute from './base/createList'
+import getWeddings from './base/getWeddings'
+import getListRoute from './base/getList'
+import makeRequestRoute from './base/makeRequest'
+import getReqRoute from './base/getRequests'
+import acceptRequestRoute from './base/acceptRequest'
+import denyRequestRoute from './base/denyRequest'
+import giftPresentRouter from './base/giftPresent'
+import updateGiftRouter from './base/updateGift'
+import deleteGiftRouter from './base/deleteGift'
+import createNewGiftRouter from './base/createNewGift'
+import deleteWeddingRouter from './base/deleteWedding'
+import getGiftedProducts from './base/getGiftedProducts'
+import sendRecoverEmail from './base/sendRecoverEmail'
+import resetPassword from './base/resetPassword'
+import { usersRouter } from './features/users/users.routes'
 const app = express()
 require('dotenv').config()
 const cors = require('cors')
@@ -25,7 +25,7 @@ const cors = require('cors')
 app.use(express.json())
 app.use(cors())
 export const prisma = new PrismaClient()
-app.use(userCreate)
+app.use('/users', usersRouter)
 app.use(logInRoute)
 app.use(logOutRoute)
 app.use(createListRoute)
