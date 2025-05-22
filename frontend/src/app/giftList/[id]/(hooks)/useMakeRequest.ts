@@ -7,6 +7,7 @@ export default function useMakeRequest(id: number) {
   const { userToken, setStatusMessage } = useContextWrap()
   const weddingID = id
   const route = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
 
   async function makeRequest() {
     const identifier = {
@@ -16,7 +17,7 @@ export default function useMakeRequest(id: number) {
     if (userToken) {
       try {
         const response = await axios.post(
-          'http://localhost:3000/makeRequest',
+          `${apiURL}/requests/make`,
           identifier,
           {
             headers: {
