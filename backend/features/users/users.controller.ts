@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { createUserService } from './users.service'
-import { AppError } from '../../classes/app-error'
+import { controllerErrorHandler } from '../../utils/controller-error-handler'
 
 export async function userCreateController (
   req: Request,
@@ -22,12 +22,6 @@ export async function userCreateController (
       token: response.token
     })
   } catch (error) {
-    if (error instanceof AppError) {
-      res
-        .status(error.status)
-        .json({ message: error.message })
-    } else {
-      res.status(500).json({ message: 'Server Error.' })
-    }
+    controllerErrorHandler(error, res)
   }
 }

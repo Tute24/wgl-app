@@ -7,7 +7,6 @@ import getWeddings from './base/getWeddings'
 import getListRoute from './base/getList'
 import makeRequestRoute from './base/makeRequest'
 import getReqRoute from './base/getRequests'
-import acceptRequestRoute from './base/acceptRequest'
 import denyRequestRoute from './base/denyRequest'
 import giftPresentRouter from './base/giftPresent'
 import updateGiftRouter from './base/updateGift'
@@ -18,6 +17,7 @@ import getGiftedProducts from './base/getGiftedProducts'
 import sendRecoverEmail from './base/sendRecoverEmail'
 import resetPassword from './base/resetPassword'
 import { usersRouter } from './features/users/users.routes'
+import { requestsRouter } from './features/requests/requests.routes'
 const app = express()
 require('dotenv').config()
 const cors = require('cors')
@@ -26,6 +26,7 @@ app.use(express.json())
 app.use(cors())
 export const prisma = new PrismaClient()
 app.use('/users', usersRouter)
+app.use('/requests', requestsRouter)
 app.use(logInRoute)
 app.use(logOutRoute)
 app.use(createListRoute)
@@ -33,7 +34,6 @@ app.use(getWeddings)
 app.use(getListRoute)
 app.use(makeRequestRoute)
 app.use(getReqRoute)
-app.use(acceptRequestRoute)
 app.use(denyRequestRoute)
 app.use(giftPresentRouter)
 app.use(updateGiftRouter)
