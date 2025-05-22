@@ -1,10 +1,20 @@
 import express, { Router } from 'express'
 import isAuthenticated from '../../middleware/authMiddleware'
-import { acceptRequestController } from './requests.controller'
+import {
+  acceptRequestController,
+  makeRequestController
+} from './requests.controller'
 
 export const requestsRouter: Router = express.Router()
+
 requestsRouter.post(
-  '/accept-request',
+  '/accept',
   isAuthenticated,
   acceptRequestController
+)
+
+requestsRouter.post(
+  '/make',
+  isAuthenticated,
+  makeRequestController
 )

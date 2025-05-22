@@ -1,6 +1,9 @@
 import { Response } from 'express'
 import { CustomRequest } from '../../middleware/authMiddleware'
-import { acceptRequestService } from './requests.service'
+import {
+  acceptRequestService,
+  makeRequestService
+} from './requests.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 
 export async function acceptRequestController (
@@ -17,6 +20,26 @@ export async function acceptRequestController (
       reqIDInt
     )
     const message = response?.message
+    res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function makeRequestController (
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const { weddingID } = req.body
+  const weddingIDInt = Number(weddingID)
+
+  try {
+    const response = await makeRequestService(
+      userID,
+      weddingIDInt
+    )
+    const message = response.message
     res.status(200).json({ message })
   } catch (error) {
     controllerErrorHandler(error, res)

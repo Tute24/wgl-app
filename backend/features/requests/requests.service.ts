@@ -63,3 +63,42 @@ export async function acceptRequestService (
     return { message }
   }
 }
+
+export async function makeRequestService (
+  userID: string,
+  weddingID: number
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  const checkWedding = await prisma.weddings.findUnique({
+    where: {
+      id: weddingID
+    }
+  })
+
+  if (!user) {
+    throw new AppError('User not found', 404)
+  }
+
+  if (!checkWedding) {
+    throw new AppError(
+      "Couldn't find this wedding's list",
+      404
+    )
+  }
+
+  await prisma.requests.create({
+    data: {
+      requestBy: userID,
+      relatedWedding: weddingID,
+      weddingTitle: checkWedding.weddingTitle,
+      requestByName: `${user.firstName} ${user.lastName}`
+    }
+  })
+  const message = 'Request successfull.'
+  return { message }
+}
