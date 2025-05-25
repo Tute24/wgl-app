@@ -2,6 +2,7 @@ import express, { Router } from 'express'
 import isAuthenticated from '../../middleware/authMiddleware'
 import {
   acceptRequestController,
+  denyRequestController,
   makeRequestController
 } from './requests.controller'
 
@@ -17,4 +18,10 @@ requestsRouter.post(
   '/make',
   isAuthenticated,
   makeRequestController
+)
+
+requestsRouter.post(
+  '/deny',
+  isAuthenticated,
+  denyRequestController
 )

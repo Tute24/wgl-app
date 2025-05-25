@@ -2,11 +2,12 @@ import { Response } from 'express'
 import { CustomRequest } from '../../middleware/authMiddleware'
 import {
   acceptRequestService,
+  denyRequestService,
   makeRequestService
 } from './requests.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 
-export async function acceptRequestController (
+export async function acceptRequestController(
   req: CustomRequest,
   res: Response
 ) {
@@ -26,7 +27,7 @@ export async function acceptRequestController (
   }
 }
 
-export async function makeRequestController (
+export async function makeRequestController(
   req: CustomRequest,
   res: Response
 ) {
@@ -39,6 +40,22 @@ export async function makeRequestController (
       userID,
       weddingIDInt
     )
+    const message = response.message
+    res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function denyRequestController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const { reqID } = req.body
+
+  try {
+    const response = await denyRequestService(userID, reqID)
     const message = response.message
     res.status(200).json({ message })
   } catch (error) {

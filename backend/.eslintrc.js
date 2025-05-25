@@ -4,6 +4,9 @@ module.exports = {
     node: true
   },
   extends: ['standard', 'plugin:@typescript-eslint/recommended'],
+  rules: {
+    'space-before-function-paren': 'off'
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
