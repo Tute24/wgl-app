@@ -3,6 +3,7 @@ import isAuthenticated from '../../middleware/authMiddleware'
 import {
   acceptRequestController,
   denyRequestController,
+  getRequestsController,
   makeRequestController
 } from './requests.controller'
 
@@ -24,4 +25,10 @@ requestsRouter.post(
   '/deny',
   isAuthenticated,
   denyRequestController
+)
+
+requestsRouter.get(
+  '/get',
+  isAuthenticated,
+  getRequestsController
 )
