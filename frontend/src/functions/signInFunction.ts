@@ -13,7 +13,7 @@ export default function useSignIn() {
   const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function loginSubmitHandler(usersSign: signInData) {
     try {
-      const response = await axios.post(`${apiURL}/sign-in`, usersSign)
+      const response = await axios.post(`${apiURL}/auth/sign-in`, usersSign)
       if (response.status === 200) {
         const userToken = response.data.token
         localStorage.setItem('userToken', JSON.stringify(userToken))

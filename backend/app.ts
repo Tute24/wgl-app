@@ -18,6 +18,7 @@ import sendRecoverEmail from './base/sendRecoverEmail'
 import resetPassword from './base/resetPassword'
 import { usersRouter } from './features/users/users.routes'
 import { requestsRouter } from './features/requests/requests.routes'
+import { authRouter } from './features/auth/auth.routes'
 const app = express()
 require('dotenv').config()
 const cors = require('cors')
@@ -27,6 +28,7 @@ app.use(cors())
 export const prisma = new PrismaClient()
 app.use('/users', usersRouter)
 app.use('/requests', requestsRouter)
+app.use('/auth', authRouter)
 app.use(logInRoute)
 app.use(logOutRoute)
 app.use(createListRoute)

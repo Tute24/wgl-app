@@ -17,3 +17,13 @@ export async function signInController(
     controllerErrorHandler(error, res)
   }
 }
+
+export function signOutController(res: Response) {
+  try {
+    res
+      .status(200)
+      .json({ message: 'User signed out successfully.' })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
