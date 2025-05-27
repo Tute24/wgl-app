@@ -10,12 +10,10 @@ export default function useSignIn() {
   type signInData = z.infer<typeof signInSchema>
   const { setStatusMessage } = useContextWrap()
   const router = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function loginSubmitHandler(usersSign: signInData) {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/logIn',
-        usersSign,
-      )
+      const response = await axios.post(`${apiURL}/sign-in`, usersSign)
       if (response.status === 200) {
         const userToken = response.data.token
         localStorage.setItem('userToken', JSON.stringify(userToken))
