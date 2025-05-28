@@ -1,9 +1,11 @@
 import { Response, Request } from 'express'
 import {
   forgotPasswordService,
+  resetPasswordService,
   signInService
 } from './auth.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
+import { ResetPasswordRequest } from '../../middleware/resetPasswordMiddleware'
 
 export async function signInController(
   req: Request,
@@ -38,6 +40,25 @@ export async function forgotPasswordController(
   const { email } = req.body
   try {
     const response = await forgotPasswordService(email)
+    const message = response.message
+    res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function resetPasswordController(
+  req: ResetPasswordRequest,
+  res: Response
+) {
+  const { id, resetToken } = req.authData!
+  const { password } = req.body
+  try {
+    const response = await resetPasswordService(
+      id,
+      resetToken,
+      password
+    )
     const message = response.message
     res.status(200).json({ message })
   } catch (error) {

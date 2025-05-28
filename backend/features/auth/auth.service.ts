@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 import crypto from 'crypto'
@@ -95,4 +96,45 @@ export async function forgotPasswordService(email: string) {
   await transporter.sendMail(mailOptions)
   const message = 'Recovery e-mail successfully sent.'
   return { message }
+}
+
+export async function resetPasswordService(
+  userID: string,
+  resetToken: string,
+  password: string
+) {
+  const newHashedPassword = await bcrypt.hash(password, 10)
+
+  if (!resetToken) {
+    throw new AppError('Reset Token not present.', 401)
+  }
+
+  const encryptedToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+
+  await prisma.users.update({
+    where: {
+      id: userID
+    },
+    data: {
+      password: newHashedPassword
+    }
+  })
+
+  await prisma.passwordResetTokenStorage.update({
+    where: {
+      token: encryptedToken
+    },
+    data: {
+      used: true
+    }
+  })
+
+  const message = 'Password reset successfully.'
+
+  return {
+    message
+  }
 }
