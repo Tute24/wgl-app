@@ -1,5 +1,8 @@
 import { Response, Request } from 'express'
-import { signInService } from './auth.service'
+import {
+  forgotPasswordService,
+  signInService
+} from './auth.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 
 export async function signInController(
@@ -23,6 +26,20 @@ export function signOutController(res: Response) {
     res
       .status(200)
       .json({ message: 'User signed out successfully.' })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function forgotPasswordController(
+  req: Request,
+  res: Response
+) {
+  const { email } = req.body
+  try {
+    const response = await forgotPasswordService(email)
+    const message = response.message
+    res.status(200).json({ message })
   } catch (error) {
     controllerErrorHandler(error, res)
   }
