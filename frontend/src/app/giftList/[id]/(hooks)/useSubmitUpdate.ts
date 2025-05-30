@@ -17,10 +17,11 @@ export default function useSubmitUpdate(
     giftID,
   }
   const route = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_URL
   async function submitUpdate() {
     try {
       const response = await axios.post(
-        'http://localhost:3000/updateGift',
+        `${apiURL}/gifts/update-gift`,
         updateProps,
         {
           headers: {
