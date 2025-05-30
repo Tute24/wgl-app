@@ -1,6 +1,9 @@
 import { Response } from 'express'
 import { CustomRequest } from '../../middleware/authMiddleware'
-import { updateGiftService } from './gifts.service'
+import {
+  giftPresentService,
+  updateGiftService
+} from './gifts.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 
 export async function updateGiftController(
@@ -18,6 +21,28 @@ export async function updateGiftController(
       productLink as string,
       Number(quantity),
       Number(giftID)
+    )
+    const message = response.message
+    res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function giftPresentController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const { id } = req.query
+  const { giftID, quantity } = req.body
+
+  try {
+    const response = await giftPresentService(
+      userID,
+      Number(id),
+      Number(giftID),
+      Number(quantity)
     )
     const message = response.message
     res.status(200).json({ message })

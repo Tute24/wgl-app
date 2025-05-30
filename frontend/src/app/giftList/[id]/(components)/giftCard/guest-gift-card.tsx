@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { IoArrowRedoSharp } from 'react-icons/io5'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 import InputContainer from '@/components/Common/input-container/input-container'
-import useGiftPresent from '../../(hooks)/giftPresentFunction'
+import useGiftPresent from '../../(hooks)/useGiftPresent'
 
 export default function GuestGiftCard({
   id,
