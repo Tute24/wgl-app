@@ -19,7 +19,7 @@ export default function useGiftPresent(giftID: number, quantity: string) {
     if (sendGiftObj) {
       try {
         const response = await axios.post(
-          `${apiURL}/gifts/gift-present`,
+          `${apiURL}/gifts/present`,
           sendGiftObj,
           {
             headers: {

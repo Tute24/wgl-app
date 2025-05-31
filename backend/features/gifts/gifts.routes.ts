@@ -7,13 +7,19 @@ import {
 export const giftsRouter: Router = express.Router()
 
 giftsRouter.post(
-  'update-gift',
+  'update',
   isAuthenticated,
   updateGiftController
 )
 
 giftsRouter.post(
-  'gift-present',
+  'present',
+  isAuthenticated,
+  giftPresentController
+)
+
+giftsRouter.post(
+  'delete',
   isAuthenticated,
   giftPresentController
 )

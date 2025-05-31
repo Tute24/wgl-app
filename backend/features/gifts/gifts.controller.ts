@@ -1,6 +1,7 @@
 import { Response } from 'express'
 import { CustomRequest } from '../../middleware/authMiddleware'
 import {
+  deleteGiftService,
   giftPresentService,
   updateGiftService
 } from './gifts.service'
@@ -43,6 +44,25 @@ export async function giftPresentController(
       Number(id),
       Number(giftID),
       Number(quantity)
+    )
+    const message = response.message
+    res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function deleteGiftController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const { giftID } = req.body
+
+  try {
+    const response = await deleteGiftService(
+      userID,
+      Number(giftID)
     )
     const message = response.message
     res.status(200).json({ message })

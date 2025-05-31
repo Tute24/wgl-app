@@ -8,7 +8,13 @@ export async function updateGiftService(
   quantity: number,
   giftID: number
 ) {
-  if (!userID) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
     throw new AppError(
       "Couldn't find the user on the database.",
       404
@@ -62,7 +68,13 @@ export async function giftPresentService(
   giftID: number,
   quantity: number
 ) {
-  if (!userID) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
     throw new AppError(
       "Couldn't find the user on the database.",
       404
@@ -103,4 +115,57 @@ export async function giftPresentService(
 
   const message = 'Present gifted successfully.'
   return { message }
+}
+
+export async function deleteGiftService(
+  userID: string,
+  giftID: number
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
+    throw new AppError(
+      "Couldn't find the user on the database.",
+      404
+    )
+  }
+
+  const gift = await prisma.gifts.findUnique({
+    where: {
+      id: giftID
+    }
+  })
+
+  if (!gift) {
+    throw new AppError(
+      "Couldn't find the gift on the database.",
+      404
+    )
+  }
+
+  const wedding = await prisma.weddings.findUnique({
+    where: {
+      id: gift.fromWedding
+    }
+  })
+
+  if (wedding?.createdBy === userID) {
+    await prisma.gifts.delete({
+      where: {
+        id: giftID
+      }
+    })
+
+    const message = 'Gift deleted successfully.'
+    return { message }
+  } else {
+    throw new AppError(
+      'This user is not the wedding creator.',
+      403
+    )
+  }
 }
