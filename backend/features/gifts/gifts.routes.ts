@@ -1,6 +1,7 @@
 import express, { Router } from 'express'
 import isAuthenticated from '../../middleware/authMiddleware'
 import {
+  createGiftController,
   deleteGiftController,
   giftPresentController,
   updateGiftController
@@ -23,4 +24,10 @@ giftsRouter.post(
   'delete',
   isAuthenticated,
   deleteGiftController
+)
+
+giftsRouter.post(
+  'create',
+  isAuthenticated,
+  createGiftController
 )

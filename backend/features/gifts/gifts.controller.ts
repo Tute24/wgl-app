@@ -1,11 +1,13 @@
 import { Response } from 'express'
 import { CustomRequest } from '../../middleware/authMiddleware'
 import {
+  createGiftService,
   deleteGiftService,
   giftPresentService,
   updateGiftService
 } from './gifts.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
+import giftProps from '../../types/giftProps'
 
 export async function updateGiftController(
   req: CustomRequest,
@@ -66,6 +68,28 @@ export async function deleteGiftController(
     )
     const message = response.message
     res.status(200).json({ message })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function createGiftController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const weddingID = Number(req.query.id)
+  const newGiftsArray: giftProps[] = req.body
+
+  try {
+    const response = await createGiftService(
+      userID,
+      weddingID,
+      newGiftsArray
+    )
+    const message = response.message
+    const newGifts = response.newGifts
+    res.status(200).json({ message, newGifts })
   } catch (error) {
     controllerErrorHandler(error, res)
   }

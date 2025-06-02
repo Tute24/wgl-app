@@ -1,5 +1,6 @@
 import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
+import giftProps from '../../types/giftProps'
 
 export async function updateGiftService(
   userID: string,
@@ -167,5 +168,84 @@ export async function deleteGiftService(
       'This user is not the wedding creator.',
       403
     )
+  }
+}
+
+export async function createGiftService(
+  userID: string,
+  weddingID: number,
+  newGiftsArray: giftProps[]
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
+    throw new AppError(
+      "Couldn't find the user on the database.",
+      404
+    )
+  }
+
+  const checkWedding = await prisma.weddings.findUnique({
+    where: {
+      id: weddingID
+    }
+  })
+
+  if (!checkWedding) {
+    throw new AppError(
+      "Couldn't find the wedding on the database.",
+      404
+    )
+  }
+
+  const existentGifts = await prisma.gifts.findMany({
+    where: {
+      fromWedding: weddingID
+    }
+  })
+  const existentNames = new Set(
+    existentGifts.map((gift) =>
+      gift.productName.trim().toLowerCase()
+    )
+  )
+
+  const conflictingGifts = newGiftsArray.filter((gift) =>
+    existentNames.has(gift.productName.trim().toLowerCase())
+  )
+
+  if (conflictingGifts.length > 0) {
+    throw new AppError(
+      "Conflict - Gifts with the same name as existent ones can't be submitted.",
+      409
+    )
+  }
+
+  await Promise.all(
+    newGiftsArray.map(async (giftInfo: giftProps) => {
+      await prisma.gifts.create({
+        data: {
+          quantity: Number(giftInfo.quantity),
+          productName: giftInfo.productName,
+          productLink: giftInfo.productLink,
+          fromWedding: weddingID
+        }
+      })
+    })
+  )
+
+  const newGifts = await prisma.gifts.findMany({
+    where: {
+      fromWedding: weddingID
+    }
+  })
+  const message = 'Gifts created successfully'
+
+  return {
+    newGifts,
+    message
   }
 }
