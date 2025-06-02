@@ -3,9 +3,6 @@ import { PrismaClient } from '@prisma/client'
 import createListRoute from './base/createList'
 import getWeddings from './base/getWeddings'
 import getListRoute from './base/getList'
-import giftPresentRouter from './base/giftPresent'
-import deleteGiftRouter from './base/deleteGift'
-import createNewGiftRouter from './base/createNewGift'
 import deleteWeddingRouter from './base/deleteWedding'
 import getGiftedProducts from './base/getGiftedProducts'
 import { usersRouter } from './features/users/users.routes'
@@ -26,9 +23,6 @@ app.use('/gifts', giftsRouter)
 app.use(createListRoute)
 app.use(getWeddings)
 app.use(getListRoute)
-app.use(giftPresentRouter)
-app.use(deleteGiftRouter)
-app.use(createNewGiftRouter)
 app.use(deleteWeddingRouter)
 app.use(getGiftedProducts)
 
