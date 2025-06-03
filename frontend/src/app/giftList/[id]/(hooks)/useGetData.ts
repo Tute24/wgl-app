@@ -17,6 +17,7 @@ export default function useGetData() {
     notGuest,
     setWeddingHeaderInfo,
   } = useContextWrap()
+  const apiURL = process.env.NEXT_PUBLIC_URL
   const route = useRouter()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function useGetData() {
 
     async function getData() {
       try {
-        const response = await axios.get('http://localhost:3000/getList', {
+        const response = await axios.get(`${apiURL}/gifts/get`, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },

@@ -31,7 +31,7 @@ export default function AxiosErrorHandler({
       console.log('User is not authorized.')
       if (setNotGuest !== undefined && !notGuest && setWeddingHeaderInfo) {
         setNotGuest(true)
-        setWeddingHeaderInfo(error.response.data.weddingInfo)
+        setWeddingHeaderInfo(error.response.data.errorResponseObject)
       }
       if (setStatusMessage !== undefined) {
         setStatusMessage(`You're not authorized to access this page.`)
