@@ -3,6 +3,7 @@ import { CustomRequest } from '../../middleware/authMiddleware'
 import {
   createGiftService,
   deleteGiftService,
+  getGiftedProductsService,
   getGiftsService,
   giftPresentService,
   updateGiftService
@@ -118,5 +119,25 @@ export async function getGiftsController(
       return controllerErrorHandler(error, res, error.data)
     }
     return controllerErrorHandler(error, res)
+  }
+}
+
+export async function getGiftedProductsController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const weddingID = Number(req.query.id)
+
+  try {
+    const response = await getGiftedProductsService(
+      userID,
+      weddingID
+    )
+    const message = response.message
+    const giftedProducts = response.giftedProducts
+    res.status(200).json({ message, giftedProducts })
+  } catch (error) {
+    controllerErrorHandler(error, res)
   }
 }

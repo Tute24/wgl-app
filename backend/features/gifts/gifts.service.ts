@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 import giftProps from '../../types/giftProps'
@@ -349,4 +350,92 @@ export async function getGiftsService(
     403,
     weddingInfo
   )
+}
+
+export async function getGiftedProductsService(
+  userID: string,
+  weddingID: number
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
+    throw new AppError(
+      "Couldn't find the user on the database.",
+      404
+    )
+  }
+
+  const checkWedding = await prisma.weddings.findUnique({
+    where: {
+      id: weddingID
+    }
+  })
+
+  if (!checkWedding) {
+    throw new AppError(
+      "Couldn't find the wedding on the database.",
+      404
+    )
+  }
+
+  if (checkWedding.createdBy !== userID) {
+    throw new AppError(
+      "You don't have access to this page.",
+      403
+    )
+  }
+
+  const refWeddingGifted = await prisma.giftedBy.findMany({
+    where: {
+      relatedWedding: weddingID
+    }
+  })
+
+  const mappingAddGifter = await Promise.all(
+    refWeddingGifted.map(async (giftingRegister) => {
+      const gifter = await prisma.users.findUnique({
+        where: {
+          id: giftingRegister.presenter
+        }
+      })
+
+      const giftOnCreatedBy =
+        await prisma.giftedBy.findFirst({
+          where: {
+            giftName: giftingRegister.giftName
+          }
+        }) // goes by the assumption that the wedding won't have two rows with the same product name
+
+      const wedding = await prisma.weddings.findUnique({
+        where: {
+          id: giftingRegister.relatedWedding
+        }
+      })
+
+      const returnObject = {
+        id: giftingRegister.id,
+        presenter: `${gifter?.firstName} ${gifter?.lastName}`,
+        relatedWeddingTitle: wedding?.weddingTitle,
+        relatedWeddingDate: wedding?.weddingDate,
+        quantityGifted: giftingRegister.quantity,
+        gift: giftOnCreatedBy?.giftName,
+        giftedAt: dayjs(giftingRegister.giftedAt).format(
+          'YYYY-MM-DD'
+        )
+      }
+
+      return returnObject
+    })
+  )
+  const message = 'Fetch successful!'
+  const giftedProducts = mappingAddGifter
+
+  return {
+    message,
+    giftedProducts
+  }
 }
