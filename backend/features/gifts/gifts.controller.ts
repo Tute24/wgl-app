@@ -3,11 +3,13 @@ import { CustomRequest } from '../../middleware/authMiddleware'
 import {
   createGiftService,
   deleteGiftService,
+  getGiftsService,
   giftPresentService,
   updateGiftService
 } from './gifts.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 import giftProps from '../../types/giftProps'
+import { AppError } from '../../classes/app-error'
 
 export async function updateGiftController(
   req: CustomRequest,
@@ -92,5 +94,29 @@ export async function createGiftController(
     res.status(200).json({ message, newGifts })
   } catch (error) {
     controllerErrorHandler(error, res)
+  }
+}
+
+export async function getGiftsController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const weddingID = Number(req.query.id)
+
+  try {
+    const response = await getGiftsService(
+      userID,
+      weddingID
+    )
+    const message = response.message
+    const wedding = response.wedding
+    const checkAdmin = response.checkAdmin
+    res.status(200).json({ message, wedding, checkAdmin })
+  } catch (error) {
+    if (error instanceof AppError && error.data) {
+      return controllerErrorHandler(error, res, error.data)
+    }
+    return controllerErrorHandler(error, res)
   }
 }

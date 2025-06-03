@@ -3,6 +3,7 @@ import isAuthenticated from '../../middleware/authMiddleware'
 import {
   createGiftController,
   deleteGiftController,
+  getGiftsController,
   giftPresentController,
   updateGiftController
 } from './gifts.controller'
@@ -31,3 +32,5 @@ giftsRouter.post(
   isAuthenticated,
   createGiftController
 )
+
+giftsRouter.get('get', isAuthenticated, getGiftsController)

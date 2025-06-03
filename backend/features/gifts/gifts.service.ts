@@ -249,3 +249,104 @@ export async function createGiftService(
     message
   }
 }
+
+export async function getGiftsService(
+  userID: string,
+  weddingID: number
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
+    throw new AppError(
+      "Couldn't find the user on the database.",
+      404
+    )
+  }
+
+  const checkWedding = await prisma.weddings.findUnique({
+    where: {
+      id: weddingID
+    }
+  })
+
+  if (!checkWedding) {
+    throw new AppError(
+      "Couldn't find the wedding on the database.",
+      404
+    )
+  }
+
+  const checkAdmin = {
+    isCreator: false
+  }
+
+  const userPart = await prisma.users.findUnique({
+    where: {
+      id: userID
+    },
+    include: {
+      weddingsOwn: true,
+      weddingsGuest: true
+    }
+  })
+
+  const checkCreatorArray = userPart?.weddingsOwn.filter(
+    (weddings) => weddings.id === weddingID
+  )
+
+  if (checkCreatorArray?.length !== 0) {
+    checkAdmin.isCreator = true
+    const ownWedding = await prisma.weddings.findUnique({
+      where: {
+        id: weddingID
+      },
+      include: {
+        gifts: true
+      }
+    })
+    const message = 'Success (owner)!'
+    const wedding = ownWedding
+    return {
+      message,
+      wedding,
+      checkAdmin
+    }
+  }
+
+  const checkGuestArray = userPart?.weddingsGuest.filter(
+    (guestOn) => guestOn.referencedWedding === weddingID
+  )
+
+  if (checkGuestArray?.length !== 0) {
+    const guestOn = await prisma.weddings.findUnique({
+      where: {
+        id: weddingID
+      },
+      include: {
+        gifts: true
+      }
+    })
+    const message = 'Success (guest)!'
+    const wedding = guestOn
+    return {
+      message,
+      wedding,
+      checkAdmin
+    }
+  }
+  const weddingInfo = {
+    weddingID: checkWedding.id,
+    weddingTitle: checkWedding.weddingTitle,
+    weddingDate: checkWedding.weddingDate
+  }
+
+  throw new AppError(
+    'User is not a guest on this wedding',
+    403,
+    weddingInfo
+  )
+}

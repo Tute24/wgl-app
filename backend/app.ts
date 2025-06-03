@@ -2,7 +2,6 @@ import express from 'express'
 import { PrismaClient } from '@prisma/client'
 import createListRoute from './base/createList'
 import getWeddings from './base/getWeddings'
-import getListRoute from './base/getList'
 import deleteWeddingRouter from './base/deleteWedding'
 import getGiftedProducts from './base/getGiftedProducts'
 import { usersRouter } from './features/users/users.routes'
@@ -22,7 +21,6 @@ app.use('/auth', authRouter)
 app.use('/gifts', giftsRouter)
 app.use(createListRoute)
 app.use(getWeddings)
-app.use(getListRoute)
 app.use(deleteWeddingRouter)
 app.use(getGiftedProducts)
 
