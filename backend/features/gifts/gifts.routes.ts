@@ -11,33 +11,33 @@ import {
 export const giftsRouter: Router = express.Router()
 
 giftsRouter.post(
-  'update',
+  '/update',
   isAuthenticated,
   updateGiftController
 )
 
 giftsRouter.post(
-  'present',
+  '/present',
   isAuthenticated,
   giftPresentController
 )
 
 giftsRouter.post(
-  'delete',
+  '/delete',
   isAuthenticated,
   deleteGiftController
 )
 
 giftsRouter.post(
-  'create',
+  '/create',
   isAuthenticated,
   createGiftController
 )
 
-giftsRouter.get('get', isAuthenticated, getGiftsController)
+giftsRouter.get('/get', isAuthenticated, getGiftsController)
 
 giftsRouter.get(
-  'gifted-products',
+  '/gifted-products',
   isAuthenticated,
   getGiftedProductsController
 )
