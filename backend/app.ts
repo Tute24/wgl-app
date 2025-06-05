@@ -1,6 +1,5 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client'
-import deleteWeddingRouter from './base/deleteWedding'
 import { usersRouter } from './features/users/users.routes'
 import { requestsRouter } from './features/requests/requests.routes'
 import { authRouter } from './features/auth/auth.routes'
@@ -18,7 +17,6 @@ app.use('/requests', requestsRouter)
 app.use('/auth', authRouter)
 app.use('/gifts', giftsRouter)
 app.use('/weddings', weddingsRouter)
-app.use(deleteWeddingRouter)
 
 const port = process.env.PORT || 3000
 

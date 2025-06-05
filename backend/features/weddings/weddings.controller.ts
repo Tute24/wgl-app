@@ -4,16 +4,17 @@ import giftProps from '../../types/giftProps'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 import {
   createWeddingService,
+  deleteWeddingService,
   getWeddingsService
 } from './weddings.service'
 
 export type weddingResponse = {
-    id: number
-    weddingTitle: string
-    weddingDate: string
-    shippingAddress: string
-    createdBy: string
-    createdAt: Date | null
+  id: number
+  weddingTitle: string
+  weddingDate: string
+  shippingAddress: string
+  createdBy: string
+  createdAt: Date | null
 }
 
 export async function createWeddingController(
@@ -49,10 +50,38 @@ export async function getWeddingsController(
   try {
     const response = await getWeddingsService(userID)
     const message = response.message
-    const ownWeddings: weddingResponse[] | [] = response.ownWeddings
-    const guestWeddings: weddingResponse[] | [] = response.guestWeddings
+    const ownWeddings: weddingResponse[] | [] =
+      response.ownWeddings
+    const guestWeddings: weddingResponse[] | [] =
+      response.guestWeddings
     const userInfo = response.userInfo
-    res.status(200).json({ message, ownWeddings, guestWeddings, userInfo })
+    res
+      .status(200)
+      .json({
+        message,
+        ownWeddings,
+        guestWeddings,
+        userInfo
+      })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function deleteWeddingController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+  const weddingID = Number(req.body.id)
+
+  try {
+    const response = await deleteWeddingService(
+      userID,
+      weddingID
+    )
+    const message = response.message
+    res.status(200).json({ message })
   } catch (error) {
     controllerErrorHandler(error, res)
   }

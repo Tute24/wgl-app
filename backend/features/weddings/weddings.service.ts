@@ -111,3 +111,67 @@ export async function getWeddingsService(userID: string) {
     userInfo: userInfoObject
   }
 }
+
+export async function deleteWeddingService(
+  userID: string,
+  weddingID: number
+) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userID
+    }
+  })
+
+  if (!user) {
+    throw new AppError(
+      "Couldn't find the user on the database.",
+      404
+    )
+  }
+
+  const checkWedding = await prisma.weddings.findUnique({
+    where: {
+      id: weddingID
+    }
+  })
+
+  if (!checkWedding) {
+    throw new AppError(
+      "Couldn't find the wedding on the database.",
+      404
+    )
+  }
+
+  await prisma.guests.deleteMany({
+    where: {
+      referencedWedding: weddingID
+    }
+  })
+
+  await prisma.gifts.deleteMany({
+    where: {
+      fromWedding: weddingID
+    }
+  })
+
+  await prisma.requests.deleteMany({
+    where: {
+      relatedWedding: weddingID,
+      pending: true
+    }
+  })
+
+  await prisma.giftedBy.deleteMany({
+    where: {
+      relatedWedding: weddingID
+    }
+  })
+
+  await prisma.weddings.delete({
+    where: {
+      id: weddingID
+    }
+  })
+
+  return { message: 'Wedding deleted successfully.' }
+}

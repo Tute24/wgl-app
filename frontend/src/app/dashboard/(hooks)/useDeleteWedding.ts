@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function useDeleteWedding() {
   const { userToken, setOwnWeddingsArray } = useContextWrap()
   const route = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function deleteWedding(id: number) {
     const weddingID = {
       id,
@@ -13,7 +14,7 @@ export default function useDeleteWedding() {
     if (userToken) {
       try {
         const response = await axios.post(
-          'http://localhost:3000/deleteWedding',
+          `${apiURL}/weddings/delete`,
           weddingID,
           {
             headers: {
