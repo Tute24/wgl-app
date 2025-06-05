@@ -6,21 +6,17 @@ import { useRouter } from 'next/navigation'
 export default function useDeleteGift() {
   const { userToken, setGiftsArray, giftsArray } = useContextWrap()
   const route = useRouter()
-
+  const apiURL = process.env.NEXT_PUBLIC_URL
   async function deleteGift(giftID: number) {
     const identifier = {
       giftID,
     }
     try {
-      const response = await axios.post(
-        'http://localhost:3000/deleteGift',
-        identifier,
-        {
-          headers: {
-            Authorization: `Bearer: ${userToken}`,
-          },
+      const response = await axios.post(`${apiURL}/gifts/delete`, identifier, {
+        headers: {
+          Authorization: `Bearer: ${userToken}`,
         },
-      )
+      })
 
       if (response.status === 200) {
         const filteredGiftsArrays = giftsArray.filter(

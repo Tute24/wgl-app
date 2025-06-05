@@ -14,11 +14,12 @@ export default function useGiftPresent(giftID: number, quantity: string) {
     quantity,
   }
   const route = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_URL
   async function giftPresent() {
     if (sendGiftObj) {
       try {
         const response = await axios.post(
-          'http://localhost:3000/giftPresent',
+          `${apiURL}/gifts/present`,
           sendGiftObj,
           {
             headers: {
