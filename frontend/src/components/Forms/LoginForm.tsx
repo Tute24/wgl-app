@@ -9,6 +9,7 @@ import { z } from 'zod'
 import signInSchema from '@/zodSchemas/signInSchema'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Spinner } from '../Common/spinner/spinner'
 
 export type usersSignType = {
   email: string
@@ -22,7 +23,7 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<signInData>({
     resolver: zodResolver(signInSchema),
   })
@@ -62,7 +63,12 @@ export default function LoginForm() {
               </span>
             )}
             <div className="pt-3">
-              <UserButton id="submitButton" content="Sign In" type="submit" />
+              <UserButton
+                id="submitButton"
+                content={isSubmitting ? <Spinner /> : 'Sign In'}
+                type="submit"
+                disabled={isSubmitting}
+              />
               <span className="text-red-500 font-bold">{statusMessage}</span>
             </div>
           </form>

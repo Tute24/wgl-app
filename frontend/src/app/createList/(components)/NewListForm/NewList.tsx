@@ -11,6 +11,7 @@ import InputContainer from '@/components/Common/input-container/input-container'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 
 import Image from 'next/image'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 export type listData = z.infer<typeof newListSchema>
 
@@ -19,7 +20,7 @@ export default function GiftListForm() {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<listData>({
     resolver: zodResolver(newListSchema),
   })
@@ -156,8 +157,9 @@ export default function GiftListForm() {
               <UserButton
                 className="bg-paleGold hover:bg-warmBeige"
                 id="createWeddingButton"
-                content="Create wedding"
+                content={isSubmitting ? <Spinner /> : 'Create wedding'}
                 type="submit"
+                disabled={isSubmitting}
               />
               <span
                 className={`font-bold flex justify-center ${

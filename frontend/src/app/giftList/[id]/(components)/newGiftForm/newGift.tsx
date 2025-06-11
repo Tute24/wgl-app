@@ -6,6 +6,7 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
@@ -15,7 +16,7 @@ export default function NewGiftForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<newGiftsData>({
     resolver: zodResolver(newGiftsSchema),
   })
@@ -98,12 +99,13 @@ export default function NewGiftForm() {
           <div className="flex flex-col gap-1.5">
             <UserButton
               className="min-w-[260px]"
-              content="Add new gift"
+              content={isSubmitting ? <Spinner /> : 'Add new gift'}
               id="newGiftButton"
               onClick={(e) => {
                 e.preventDefault()
                 append({ productLink: '', productName: '', quantity: '' })
               }}
+              disabled={isSubmitting}
             />
             {fields.length > 0 && (
               <>

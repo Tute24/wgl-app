@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 type usersData = z.infer<typeof usersDataSchema>
 
@@ -17,7 +18,7 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
@@ -93,8 +94,9 @@ export default function RegisterForm() {
                 <UserButton
                   className="bg-paleGold hover:bg-warmBeige"
                   id="registerButton"
-                  content="Sign Up!"
+                  content={isSubmitting ? <Spinner /> : 'Sign Up!'}
                   type="submit"
+                  disabled={isSubmitting}
                 />
                 <span className="text-red-500 font-bold">{statusMessage}</span>
               </div>

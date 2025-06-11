@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset'
 import { useContextWrap } from '@/contextAPI/context'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 const passwordSchema = z
   .object({
@@ -24,7 +25,7 @@ export default function ResetPassword() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<newPassword>({
     resolver: zodResolver(passwordSchema),
   })
@@ -83,7 +84,10 @@ export default function ResetPassword() {
               </span>
             </div>
             <div className="pt-3 pb-3 px-3">
-              <UserButton content="Confirm Password Reset" />
+              <UserButton
+                content={isSubmitting ? <Spinner /> : 'Confirm Password Reset'}
+                disabled={isSubmitting}
+              />
             </div>
           </form>
         </div>
