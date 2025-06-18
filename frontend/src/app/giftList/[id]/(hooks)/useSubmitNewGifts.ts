@@ -9,7 +9,7 @@ export default function useSubmitNewGift() {
   const { id } = useParams()
   const weddingID = Number(id)
   const { userToken, setGiftsArray, setStatusMessage } = useContextWrap()
-  const apiURL = process.env.NEXT_PUBLIC_URL
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   const route = useRouter()
   type submitData = z.infer<typeof newGiftsSchema>
 

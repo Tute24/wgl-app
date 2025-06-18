@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function useDeleteGift() {
   const { userToken, setGiftsArray, giftsArray } = useContextWrap()
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_URL
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function deleteGift(giftID: number) {
     const identifier = {
       giftID,

@@ -17,7 +17,7 @@ export default function useSubmitUpdate(
     giftID,
   }
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_URL
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function submitUpdate() {
     try {
       const response = await axios.post(`${apiURL}/gifts/update`, updateProps, {

@@ -14,7 +14,7 @@ export default function useGiftPresent(giftID: number, quantity: string) {
     quantity,
   }
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_URL
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function giftPresent() {
     if (sendGiftObj) {
       try {
