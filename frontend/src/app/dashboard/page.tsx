@@ -6,22 +6,16 @@ export default function Dashboard() {
   return (
     <>
       <LoggedHeader />
-      <div className="flex flex-col gap-5 w-full sm:gap-0 sm:flex-row  items-center">
-        <div className="flex flex-col items-center w-full sm:w-1/2">
-          <h2 className="font-bold flex flex-col items-center text-amber-800 mb-4">
-            My weddings:
-          </h2>
-          <div className="flex flex-col justify-center items-center">
-            <WeddingsOwn />
-          </div>
+      <div className="grid lg:grid-cols-2 gap-5 lg:gap-20 items-center md:items-start w-full pb-5 md:px-20 xl:px-40">
+        <div className="flex flex-col gap-6 items-center">
+          <h1 className="font-bold text-amber-800 text-2xl">My Weddings:</h1>
+          <WeddingsOwn />
         </div>
-        <div className="flex flex-col items-center w-full sm:w-1/2">
-          <h2 className="font-bold mt-0 text-amber-800 items-center">
+        <div className="flex flex-col gap-6 items-center">
+          <h1 className="font-bold text-amber-800 text-2xl">
             Weddings I'm a guest at:
-          </h2>
-          <div className="m-auto">
-            <WeddingsGuest />
-          </div>
+          </h1>
+          <WeddingsGuest />
         </div>
       </div>
     </>

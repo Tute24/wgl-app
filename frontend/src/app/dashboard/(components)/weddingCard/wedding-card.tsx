@@ -44,7 +44,7 @@ export default function WeddingCard({
       <CardContent className="flex flex-col gap-6 font-semibold min-w-[350px]">
         <div className="flex flex-row gap-4 items-center">
           <Gem size={24} className="text-amber-800" />
-          <h1 className="text-xl lg:text-2xl text-stone-700">{title}</h1>
+          <h2 className="text-xl lg:text-2xl text-stone-700">{title}</h2>
         </div>
         <div className="flex flex-row gap-4 items-center">
           <CalendarHeart size={24} className="text-amber-800" />
