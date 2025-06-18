@@ -12,20 +12,16 @@ export default function WeddingsGuest() {
   if (guestWeddingsArray.length > 0) {
     return (
       <>
-        <ul className="flex flex-col text-center items-center">
+        <ul className="flex flex-col text-center items-center gap-10">
           {guestWeddingsArray.map((wedding) => (
-            <div
-              id={`${wedding.id}`}
-              key={wedding.id}
-              className="p-3 sm:p-5 border-gray-400 w-full flex flex-row"
-            >
+            <li key={wedding.id}>
               <WeddingCard
                 id={wedding.id}
                 title={wedding.weddingTitle}
-                date={wedding.weddingDate}
+                date={wedding.weddingDate.replace(/-/g, '/')}
                 isOwn={false}
               />
-            </div>
+            </li>
           ))}
         </ul>
       </>

@@ -21,15 +21,16 @@ export default function WeddingsOwn() {
   if (ownWeddingsArray.length > 0) {
     return (
       <>
-        <ul className="flex flex-col text-center items-center gap-5">
+        <ul className="flex flex-col text-center items-center gap-10">
           {ownWeddingsArray.map((wedding) => (
-            <WeddingCard
-              key={wedding.id}
-              id={wedding.id}
-              title={wedding.weddingTitle}
-              date={wedding.weddingDate.replace(/-/g, '/')}
-              isOwn={true}
-            />
+            <li key={wedding.id}>
+              <WeddingCard
+                id={wedding.id}
+                title={wedding.weddingTitle}
+                date={wedding.weddingDate.replace(/-/g, '/')}
+                isOwn={true}
+              />
+            </li>
           ))}
         </ul>
         <div>

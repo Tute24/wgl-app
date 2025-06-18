@@ -1,6 +1,6 @@
 import LoggedHeader from '../../components/Headers/LoggedHeader'
-import WeddingsOwn from './(components)/weddingsDisplay/OwnWeddings'
-import WeddingsGuest from './(components)/weddingsDisplay/GuestWeddings'
+import WeddingsOwn from './(components)/weddingsDisplay/own-weddings'
+import WeddingsGuest from './(components)/weddingsDisplay/guest-weddings'
 
 export default function Dashboard() {
   return (
