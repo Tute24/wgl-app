@@ -42,8 +42,7 @@ export default function OwnGiftCard({
   } = useForm<updateData>({
     resolver: zodResolver(updateSchema),
   })
-  const { setToUpdate, setModalObject, setSelectedGiftID, selectedGiftID } =
-    useContextWrap()
+  const { setModalObject, setSelectedGiftID, selectedGiftID } = useContextWrap()
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
@@ -81,7 +80,6 @@ export default function OwnGiftCard({
                   productLink,
                 })
                 setSelectedGiftID(id)
-                setToUpdate(true)
               }}
             >
               <Pencil
@@ -185,7 +183,6 @@ export default function OwnGiftCard({
                   type="button"
                   className="w-full text-stone-100"
                   onClick={() => {
-                    setToUpdate(false)
                     setSelectedGiftID(0)
                   }}
                 >
