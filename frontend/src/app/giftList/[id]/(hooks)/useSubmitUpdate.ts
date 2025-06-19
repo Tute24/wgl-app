@@ -6,8 +6,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 export default function useSubmitUpdate() {
-  const { userToken, setGiftsArray, setToUpdate, setSelectedGiftID } =
-    useContextWrap()
+  const { userToken, setGiftsArray, setSelectedGiftID } = useContextWrap()
 
   const route = useRouter()
   const apiURL = process.env.NEXT_PUBLIC_API_URL
@@ -27,7 +26,6 @@ export default function useSubmitUpdate() {
       })
 
       if (response.status === 200) {
-        setToUpdate(false)
         setSelectedGiftID(0)
         setGiftsArray((prev: giftsProps[]) =>
           prev.map((gift) =>
@@ -41,7 +39,6 @@ export default function useSubmitUpdate() {
               : gift,
           ),
         )
-        setToUpdate(false)
       }
     } catch (error) {
       AxiosErrorHandler({ error, route })

@@ -26,8 +26,6 @@ interface ContextProps {
   setNotGuest: React.Dispatch<SetStateAction<boolean>>
   weddingID: number
   setWeddingID: React.Dispatch<SetStateAction<number>>
-  toUpdate: boolean
-  setToUpdate: React.Dispatch<SetStateAction<boolean>>
   weddingHeaderInfo: weddingHeaderInfoProps
   setWeddingHeaderInfo: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
   modalObject: generalModalProps
@@ -43,7 +41,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [userToken, setUserToken] = useState<string | null>(null)
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
-  const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([])
   const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
@@ -97,8 +94,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setNotGuest,
         weddingID,
         setWeddingID,
-        toUpdate,
-        setToUpdate,
         ownWeddingsArray,
         setOwnWeddingsArray,
         guestWeddingsArray,

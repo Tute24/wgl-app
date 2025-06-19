@@ -42,13 +42,8 @@ export default function OwnGiftCard({
   } = useForm<updateData>({
     resolver: zodResolver(updateSchema),
   })
-  const {
-    toUpdate,
-    setToUpdate,
-    setModalObject,
-    setSelectedGiftID,
-    selectedGiftID,
-  } = useContextWrap()
+  const { setToUpdate, setModalObject, setSelectedGiftID, selectedGiftID } =
+    useContextWrap()
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
@@ -56,14 +51,14 @@ export default function OwnGiftCard({
   })
 
   useEffect(() => {
-    if (toUpdate && id === selectedGiftID) {
+    if (id === selectedGiftID) {
       reset({
         productName: updateProps.productName,
         productLink: updateProps.productLink,
         quantity: updateProps.quantity,
       })
     }
-  }, [toUpdate, selectedGiftID, id, updateProps, reset])
+  }, [selectedGiftID, id, updateProps, reset])
 
   const submitUpdate = useSubmitUpdate()
 
@@ -139,7 +134,7 @@ export default function OwnGiftCard({
           </CardFooter>
         </Card>
       )}
-      {toUpdate && id === selectedGiftID && (
+      {id === selectedGiftID && (
         <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300 min-w-[350px]">
           <CardHeader className="flex items-center text-center">
             <h2 className="text-amber-800 font-bold">
@@ -201,7 +196,6 @@ export default function OwnGiftCard({
           </CardContent>
         </Card>
       )}
-      {!toUpdate && id === selectedGiftID && <></>}
     </>
   )
 }
