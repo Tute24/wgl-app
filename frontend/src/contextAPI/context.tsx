@@ -32,6 +32,8 @@ interface ContextProps {
   setWeddingHeaderInfo: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
   modalObject: generalModalProps
   setModalObject: React.Dispatch<SetStateAction<generalModalProps>>
+  selectedGiftID: number
+  setSelectedGiftID: React.Dispatch<SetStateAction<number>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -44,6 +46,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([])
+  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
   const [weddingHeaderInfo, setWeddingHeaderInfo] =
     useState<weddingHeaderInfoProps>({
       id: 0,
@@ -104,6 +107,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setWeddingHeaderInfo,
         modalObject,
         setModalObject,
+        selectedGiftID,
+        setSelectedGiftID,
       }}
     >
       {children}
