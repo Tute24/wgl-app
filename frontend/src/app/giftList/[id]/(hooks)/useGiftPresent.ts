@@ -5,17 +5,16 @@ import giftsProps from '@/types-props/giftsProps'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 
-export default function useGiftPresent(giftID: number, quantity: string) {
-  const { userToken, setGiftsArray } = useContextWrap()
+export default function useGiftPresent() {
+  const { userToken, setGiftsArray, setSelectedGiftID } = useContextWrap()
   const { id } = useParams()
-
-  const sendGiftObj = {
-    giftID,
-    quantity,
-  }
   const route = useRouter()
   const apiURL = process.env.NEXT_PUBLIC_API_URL
-  async function giftPresent() {
+  async function giftPresent(giftID: number, quantity: number) {
+    const sendGiftObj = {
+      giftID,
+      quantity,
+    }
     if (sendGiftObj) {
       try {
         const response = await axios.post(
@@ -32,6 +31,7 @@ export default function useGiftPresent(giftID: number, quantity: string) {
         )
 
         if (response.status === 200) {
+          setSelectedGiftID(0)
           setGiftsArray((prevGifts: giftsProps[]) =>
             prevGifts.map((item) =>
               item.id === sendGiftObj.giftID

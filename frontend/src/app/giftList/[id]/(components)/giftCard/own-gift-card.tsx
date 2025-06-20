@@ -143,37 +143,39 @@ export default function OwnGiftCard({
             <form
               className="text-stone-700"
               onSubmit={handleSubmit(onSubmit, (errors) => {
-                console.log('Erros no form:', errors)
+                console.log('Error on submitting:', errors)
               })}
             >
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label>Update the gift's title:</Label>
+                <Label className="text-md">Update the gift's title:</Label>
                 <Input
                   type="text"
                   {...register('productName')}
-                  className="text-amber-800 font-semibold"
+                  className="text-amber-800 font-semibold bg-white"
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label>Update the gift's quantity:</Label>
+                <Label className="text-md">Update the gift's quantity:</Label>
                 <Input
                   type="number"
                   {...register('quantity', { valueAsNumber: true })}
-                  className="text-amber-800 font-semibold"
+                  className="text-amber-800 font-semibold bg-white"
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label>Update the gift's purchase link:</Label>
+                <Label className="text-md">
+                  Update the gift's purchase link:
+                </Label>
                 <Input
                   type="text"
                   {...register('productLink')}
-                  className="text-amber-800 font-semibold"
+                  className="text-amber-800 font-semibold bg-white"
                 />
               </div>
               <div className="flex flex-row gap-5">
                 <Button
                   type="submit"
-                  className="w-full bg-stone-500"
+                  className="w-full bg-stone-500 text-md"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? <Spinner /> : 'Update'}
@@ -181,7 +183,7 @@ export default function OwnGiftCard({
                 <Button
                   variant="destructive"
                   type="button"
-                  className="w-full text-stone-100"
+                  className="w-full text-stone-100 text-md"
                   onClick={() => {
                     setSelectedGiftID(0)
                   }}
