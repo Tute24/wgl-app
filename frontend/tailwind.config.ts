@@ -60,6 +60,8 @@ export default {
       },
       fontFamily: {
         hindi: ['hind', 'sans-serif'],
+        inter: ['var(--font-inter)'],
+        poppins: ['var(--font-poppins)'],
       },
       borderRadius: {
         lg: 'var(--radius)',
