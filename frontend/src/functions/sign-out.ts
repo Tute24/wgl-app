@@ -14,7 +14,7 @@ export default function useLogOut() {
       try {
         const response = await axios.get(`${apiURL}/auth/sign-out`, {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer: ${userToken}`,
           },
         })
 
