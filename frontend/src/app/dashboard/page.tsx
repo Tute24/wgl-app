@@ -1,4 +1,4 @@
-import LoggedHeader from '../../components/Headers/LoggedHeader'
+import LoggedHeader from '../../components/Headers/logged-header'
 import WeddingsOwn from './(components)/weddingsDisplay/own-weddings'
 import WeddingsGuest from './(components)/weddingsDisplay/guest-weddings'
 

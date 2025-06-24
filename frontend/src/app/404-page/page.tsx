@@ -1,5 +1,5 @@
 import UserButton from '@/components/Common/buttons/user-button/user-button'
-import LoggedHeader from '@/components/Headers/LoggedHeader'
+import LoggedHeader from '@/components/Headers/logged-header'
 import Link from 'next/link'
 import { BsEmojiFrown } from 'react-icons/bs'
 
