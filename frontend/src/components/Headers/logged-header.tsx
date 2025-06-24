@@ -78,7 +78,10 @@ export default function LoggedHeader() {
               <DropdownMenuTrigger>
                 <Menu className="text-amber-800" size={28} />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="font-medium text-amber-800 px-3 bg-stone-100">
+              <DropdownMenuContent
+                align="end"
+                className="font-medium text-amber-800 px-3 bg-white"
+              >
                 <DropdownMenuLabel className="text-xl font-bold font-poppins">
                   Options
                 </DropdownMenuLabel>
