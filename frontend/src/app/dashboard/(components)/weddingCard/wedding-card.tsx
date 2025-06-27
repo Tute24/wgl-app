@@ -20,7 +20,7 @@ export default function WeddingCard({
 }: WeddingCardProps) {
   const { setModalObject } = useContextWrap()
   return (
-    <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300">
+    <Card className="w-full sm:min-w-[400px] bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300 font-inter">
       <CardHeader className="flex items-end text-center px-4 pt-3 pb-1 mx-1.5">
         {isOwn ? (
           <button

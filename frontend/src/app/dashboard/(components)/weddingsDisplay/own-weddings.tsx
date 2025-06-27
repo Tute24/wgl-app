@@ -48,7 +48,7 @@ export default function WeddingsOwn() {
     )
   } else {
     return (
-      <h2 className="flex flex-col justify-center items-center font-bold">
+      <h2 className="flex flex-col font-inter justify-center items-center font-bold">
         You haven't registered any weddings
       </h2>
     )

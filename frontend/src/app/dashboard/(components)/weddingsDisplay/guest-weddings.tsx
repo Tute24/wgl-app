@@ -12,7 +12,7 @@ export default function WeddingsGuest() {
   if (guestWeddingsArray.length > 0) {
     return (
       <>
-        <ul className="flex flex-col text-center items-center gap-10">
+        <ul className="flex flex-col text-center items-center gap-10 w-full">
           {guestWeddingsArray.map((wedding) => (
             <li key={wedding.id}>
               <WeddingCard
@@ -28,7 +28,7 @@ export default function WeddingsGuest() {
     )
   } else {
     return (
-      <h2 className="flex flex-col justify-center items-center font-bold">
+      <h2 className="flex flex-col font-inter justify-center items-center font-bold">
         There are no weddings to exhibit at this section.
       </h2>
     )
