@@ -22,11 +22,11 @@ export default function GuestRequest() {
           weddingTitle={weddingHeaderInfo.weddingTitle}
           id={weddingHeaderInfo.id}
         />
-        <h2 className="font-bold text-md sm:text-xl text-amber-800">
+        <h2 className="font-bold text-md sm:text-xl text-amber-800 font-inter">
           Not currently a guest of this wedding. <br /> You can make a request
           or go back to the initial page.
         </h2>
-        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8 justify-center text-center w-full">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8 justify-center text-center w-full font-inter">
           <Button
             onClick={() => {
               setNotGuest(false)

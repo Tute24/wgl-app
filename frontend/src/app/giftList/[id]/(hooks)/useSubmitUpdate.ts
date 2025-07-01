@@ -1,4 +1,4 @@
-import { objValuesType } from '@/app/giftList/[id]/(components)/giftsListDisplay/OwnerList'
+import { objValuesType } from '@/app/giftList/[id]/(components)/giftsListDisplay/owner-list'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
 import giftsProps from '@/types-props/giftsProps'
@@ -36,8 +36,8 @@ export default function useSubmitUpdate() {
                   productName: updateProps.productName,
                   quantity: updateProps.quantity,
                 }
-              : gift,
-          ),
+              : gift
+          )
         )
       }
     } catch (error) {

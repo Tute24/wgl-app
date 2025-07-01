@@ -26,27 +26,33 @@ export default function OwnerList() {
     useContextWrap()
   return (
     <>
-      <WeddingHeader
-        owner={true}
-        weddingDate={weddingData.weddingDate}
-        weddingTitle={weddingData.weddingTitle}
-        id={weddingData.id}
-      />
-      <h2 className="font-bold text-amber-800 text-lg">
-        You're this wedding's owner
-      </h2>
-      <ul className="flex flex-col text-center items-center">
-        {giftsArray.map((gift) => (
-          <div id={gift.id.toString()} key={gift.id} className="p-3 w-full">
-            <GiftCard
-              id={gift.id}
-              productLink={gift.productLink}
-              productName={gift.productName}
-              quantity={gift.quantity}
-            />
-          </div>
-        ))}
-      </ul>
+      <div className="flex flex-col items-center gap-3 sm:gap-5">
+        <WeddingHeader
+          owner={true}
+          weddingDate={weddingData.weddingDate}
+          weddingTitle={weddingData.weddingTitle}
+          id={weddingData.id}
+        />
+        <h2 className="font-bold text-amber-800 text-2xl font-inter">
+          You're this wedding's owner
+        </h2>
+        <ul className="flex flex-col text-center items-center">
+          {giftsArray.map((gift) => (
+            <div id={gift.id.toString()} key={gift.id} className="p-3 w-full">
+              <GiftCard
+                id={gift.id}
+                productLink={gift.productLink}
+                productName={gift.productName}
+                quantity={gift.quantity}
+              />
+            </div>
+          ))}
+        </ul>
+
+        <div className="flex flex-col items-center justify-center w-full m-auto pb-3">
+          <NewGiftForm />
+        </div>
+      </div>
       <div>
         <DeleteGiftModal
           gift={modalObject.name}
@@ -55,9 +61,6 @@ export default function OwnerList() {
           onCloseModal={closeModal}
           onDelete={deleteGift}
         />
-      </div>
-      <div className="flex flex-col items-center justify-center w-full m-auto pb-3">
-        <NewGiftForm />
       </div>
     </>
   )
