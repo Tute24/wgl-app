@@ -46,7 +46,7 @@ export default function GuestGiftCard({
   return (
     <>
       {id !== selectedGiftID && (
-        <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300">
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
           <CardContent className="flex flex-col gap-6 font-semibold min-w-[350px] pt-6">
             <div className="flex flex-row gap-4 items-center">
               <Gift size={24} className="text-amber-800" />
@@ -78,7 +78,7 @@ export default function GuestGiftCard({
             </Link>
             <Button
               type="button"
-              className="bg-stone-500 w-full text-md"
+              className="bg-stone-700 w-full text-md"
               onClick={() => setSelectedGiftID(id)}
             >
               Gift Present
@@ -87,11 +87,11 @@ export default function GuestGiftCard({
         </Card>
       )}
       {id === selectedGiftID && (
-        <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300">
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
           <CardContent className="flex flex-col gap-6 font-semibold min-w-[350px] pt-6">
             <div className="flex flex-row gap-4 items-center">
               <Gift size={24} className="text-amber-800" />
-              <span className="text-lg text-stone-700">{productName}</span>
+              <span className="text-lg text-stone-700 ">{productName}</span>
             </div>
             <div className="flex flex-row gap-4 items-center">
               <Boxes size={24} className="text-amber-800" />

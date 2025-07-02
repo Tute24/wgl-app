@@ -28,9 +28,11 @@ export default function WeddingsGuest() {
     )
   } else {
     return (
-      <h2 className="flex flex-col font-inter justify-center items-center font-bold">
-        There are no weddings to exhibit at this section.
-      </h2>
+      <div className="flex justify-center items-center w-full h-full m-auto">
+        <h2 className="font-inter font-bold text-center text-stone-700 text-lg">
+          There are no weddings to exhibit at this section.
+        </h2>
+      </div>
     )
   }
 }

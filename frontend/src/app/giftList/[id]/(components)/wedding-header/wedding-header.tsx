@@ -19,7 +19,7 @@ export default function WeddingHeader({
     <div className="relative w-full">
       {owner && (
         <div className="absolute right-4 top-0 text-sm sm:text-[18px]">
-          <h2 className="font-bold text-amber-800 font-poppins">
+          <h2 className="text-amber-800 font-poppins">
             <Link
               className="flex flex-row gap-2 text-center items-center hover:underline"
               href={`/giftsTable/${id}`}

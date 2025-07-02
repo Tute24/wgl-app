@@ -48,9 +48,11 @@ export default function WeddingsOwn() {
     )
   } else {
     return (
-      <h2 className="flex flex-col font-inter justify-center items-center font-bold">
-        You haven't registered any weddings
-      </h2>
+      <div className="flex justify-center items-center w-full h-full m-auto">
+        <h2 className="font-inter font-bold text-center text-stone-700 text-lg">
+          You haven't created any wedding.
+        </h2>
+      </div>
     )
   }
 }

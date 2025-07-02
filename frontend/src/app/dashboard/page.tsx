@@ -13,7 +13,7 @@ export default function Dashboard() {
           </h1>
           <WeddingsOwn />
         </div>
-        <div className="flex flex-col gap-6 items-center">
+        <div className="flex flex-col gap-6 items-center min-h-[250px]">
           <h1 className="font-bold font-poppins text-amber-800 text-2xl">
             Weddings I'm a guest at:
           </h1>

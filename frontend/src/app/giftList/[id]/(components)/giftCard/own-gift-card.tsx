@@ -69,7 +69,7 @@ export default function OwnGiftCard({
   return (
     <>
       {id !== selectedGiftID && (
-        <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300">
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
           <CardHeader className="flex flex-row justify-end items-end text-center gap-3 px-4 pt-3 pb-1 mx-1.5">
             <button
               type="button"
@@ -108,7 +108,7 @@ export default function OwnGiftCard({
             <div className="flex flex-row gap-4 items-center">
               <Boxes size={24} className="text-amber-800" />
               <span className="text-lg text-stone-700">
-                Quantity on list remaining:{' '}
+                Quantity remaining on list:{' '}
                 <span className="text-amber-800">{quantity}</span>
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function OwnGiftCard({
         </Card>
       )}
       {id === selectedGiftID && (
-        <Card className="w-full max-w-sm bg-stone-50 border-2 hover:bg-stone-100 hover:shadow-lg hover:shadow-stone-300 min-w-[350px]">
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 min-w-[350px] font-inter">
           <CardHeader className="flex items-center text-center">
             <h2 className="text-amber-800 font-bold">
               Update this gift's Infos:
@@ -151,7 +151,7 @@ export default function OwnGiftCard({
                 <Input
                   type="text"
                   {...register('productName')}
-                  className="text-amber-800 font-semibold bg-white"
+                  className="text-amber-800 bg-white"
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
@@ -159,7 +159,7 @@ export default function OwnGiftCard({
                 <Input
                   type="number"
                   {...register('quantity', { valueAsNumber: true })}
-                  className="text-amber-800 font-semibold bg-white"
+                  className="text-amber-800 bg-white"
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
@@ -169,7 +169,7 @@ export default function OwnGiftCard({
                 <Input
                   type="text"
                   {...register('productLink')}
-                  className="text-amber-800 font-semibold bg-white"
+                  className="text-amber-800 bg-white"
                 />
               </div>
               <div className="flex flex-row gap-5">
