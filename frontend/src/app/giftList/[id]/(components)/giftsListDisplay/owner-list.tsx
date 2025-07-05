@@ -4,8 +4,8 @@ import { useContextWrap } from '@/contextAPI/context'
 import NewGiftForm from '../newGiftForm/newGift'
 import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
-import DeleteGiftModal from '@/components/modals/delete-gift-modal'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
+import DeleteModal from '@/components/modals/delete-modal'
 
 export type objValuesType = {
   productLink: string
@@ -54,12 +54,13 @@ export default function OwnerList() {
         </div>
       </div>
       <div>
-        <DeleteGiftModal
-          gift={modalObject.name}
+        <DeleteModal
+          itemName={modalObject.name}
           isOpen={modalObject.isOpen}
           id={modalObject.id}
           onCloseModal={closeModal}
           onDelete={deleteGift}
+          ctaText="Delete Gift"
         />
       </div>
     </>

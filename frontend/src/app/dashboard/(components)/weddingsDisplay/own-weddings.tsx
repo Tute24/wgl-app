@@ -3,8 +3,8 @@
 import { useContextWrap } from '@/contextAPI/context'
 import useGetOwnWeddings from '../../(hooks)/useGetOwnWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
-import DeleteWeddingModal from '@/components/modals/delete-weddings-modal'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
+import DeleteModal from '@/components/modals/delete-modal'
 
 export default function WeddingsOwn() {
   function closeModal() {
@@ -33,17 +33,16 @@ export default function WeddingsOwn() {
             </li>
           ))}
         </ul>
-        <div>
-          {modalObject && (
-            <DeleteWeddingModal
-              wedding={name}
-              onDelete={deleteWedding}
-              onCloseModal={closeModal}
-              isOpen={isOpen}
-              id={id}
-            />
-          )}
-        </div>
+        {modalObject && (
+          <DeleteModal
+            itemName={name}
+            onDelete={deleteWedding}
+            onCloseModal={closeModal}
+            isOpen={isOpen}
+            id={id}
+            ctaText="Delete Wedding"
+          />
+        )}
       </>
     )
   } else {
