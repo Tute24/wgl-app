@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import NewGiftForm from '../newGiftForm/newGift'
+import NewGiftForm from '../new-gift-form/new-gift-form'
 import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
@@ -36,7 +36,7 @@ export default function OwnerList() {
         <h2 className="font-bold text-amber-800 text-2xl font-inter">
           You're this wedding's owner
         </h2>
-        <ul className="flex flex-col text-center items-center">
+        <ul className="flex flex-col text-center items-center m-auto">
           {giftsArray.map((gift) => (
             <div id={gift.id.toString()} key={gift.id} className="p-3 w-full">
               <GiftCard
@@ -47,11 +47,10 @@ export default function OwnerList() {
               />
             </div>
           ))}
+          <div className="flex flex-col items-center justify-center w-full m-auto">
+            <NewGiftForm />
+          </div>
         </ul>
-
-        <div className="flex flex-col items-center justify-center w-full m-auto pb-3">
-          <NewGiftForm />
-        </div>
       </div>
       <div>
         <DeleteModal
