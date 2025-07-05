@@ -87,6 +87,7 @@ export default function NewGiftForm() {
                         type="text"
                         {...register(`gifts.${index}.productName`)}
                         placeholder="Enter the product's name"
+                        required
                       />
                       {errors.gifts?.[index]?.productName && (
                         <span className="font-inter text-red-600 text-sm text-start">
@@ -103,6 +104,7 @@ export default function NewGiftForm() {
                         type="text"
                         {...register(`gifts.${index}.productLink`)}
                         placeholder="Link to buy the gift"
+                        required
                       />
                       {errors.gifts?.[index]?.productLink && (
                         <span className="font-inter text-red-600 text-sm text-start">
@@ -117,6 +119,7 @@ export default function NewGiftForm() {
                         type="number"
                         min={1}
                         {...register(`gifts.${index}.quantity`)}
+                        required
                       />
                       {errors.gifts?.[index]?.quantity && (
                         <span className="font-inter text-red-600 text-sm text-start">
