@@ -44,7 +44,7 @@ export default function GuestRequest() {
             Request access to the list
           </Button>
         </div>
-        <div className="flex flex-col justify-center items-center text-center">
+        <div className="flex flex-col justify-center items-center text-center font-inter">
           <span className="font-bold text-sm pt-5 text-green-800">
             {statusMessage}
           </span>
