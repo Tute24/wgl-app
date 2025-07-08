@@ -10,12 +10,10 @@ export default function useSignIn() {
   type signInData = z.infer<typeof signInSchema>
   const { setStatusMessage } = useContextWrap()
   const router = useRouter()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function loginSubmitHandler(usersSign: signInData) {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/logIn',
-        usersSign
-      )
+      const response = await axios.post(`${apiURL}/auth/sign-in`, usersSign)
       if (response.status === 200) {
         const userToken = response.data.token
         localStorage.setItem('userToken', JSON.stringify(userToken))
@@ -23,11 +21,11 @@ export default function useSignIn() {
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          setStatusMessage(`This email doesn't belong to an existent user`)
+        if (error.response?.status === 404) {
+          setStatusMessage(`This email doesn't belong to an existent user.`)
         }
-        if (error.response?.status === 403) {
-          setStatusMessage('Incorrect password.')
+        if (error.response?.status === 401) {
+          setStatusMessage('Incorrect password. Try again!')
         }
         if (error.response?.status === 500) {
           setStatusMessage('Something went wrong. Try again!')

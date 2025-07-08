@@ -6,20 +6,21 @@ import { useRouter } from 'next/navigation'
 export default function useDeleteWedding() {
   const { userToken, setOwnWeddingsArray } = useContextWrap()
   const route = useRouter()
-  async function deleteWedding(id: Number) {
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
+  async function deleteWedding(id: number) {
     const weddingID = {
-      id: id,
+      id,
     }
     if (userToken) {
       try {
         const response = await axios.post(
-          'http://localhost:3000/deleteWedding',
+          `${apiURL}/weddings/delete`,
           weddingID,
           {
             headers: {
               Authorization: `Bearer ${userToken}`,
             },
-          }
+          },
         )
 
         if (response.status === 200) {
@@ -29,7 +30,6 @@ export default function useDeleteWedding() {
         AxiosErrorHandler({ error, route })
       }
     }
-    
   }
   return deleteWedding
 }

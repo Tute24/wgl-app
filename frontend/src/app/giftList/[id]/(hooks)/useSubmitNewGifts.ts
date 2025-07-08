@@ -1,16 +1,15 @@
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftCreateProps from '@/types-props/giftCreateProps'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
 import { z } from 'zod'
 
 export default function useSubmitNewGift() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { userToken, setGiftsArray } = useContextWrap()
+  const { userToken, setGiftsArray, setStatusMessage } = useContextWrap()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   const route = useRouter()
   type submitData = z.infer<typeof newGiftsSchema>
 
@@ -18,7 +17,7 @@ export default function useSubmitNewGift() {
     try {
       if (userToken) {
         const response = await axios.post(
-          'http://localhost:3000/createNewGift',
+          `${apiURL}/gifts/create`,
           data.gifts,
           {
             headers: {
@@ -27,7 +26,7 @@ export default function useSubmitNewGift() {
             params: {
               id: weddingID,
             },
-          }
+          },
         )
 
         if (response.status === 200) {
@@ -35,7 +34,7 @@ export default function useSubmitNewGift() {
         }
       }
     } catch (error) {
-      AxiosErrorHandler({ error, route })
+      AxiosErrorHandler({ error, setStatusMessage, route })
     }
   }
   return submitNewGifts

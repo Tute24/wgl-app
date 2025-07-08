@@ -1,13 +1,17 @@
 import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
-import { ChangeEvent, useState } from 'react'
-import useDeleteGift from '../../(hooks)/useDeleteGift'
+import { useEffect, useState } from 'react'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
-import { MdEdit } from 'react-icons/md'
-import { IoTrashOutline } from 'react-icons/io5'
-import { IoArrowRedoSharp } from 'react-icons/io5'
-import InputContainer from '@/components/Common/input-container/input-container'
-import UserButton from '@/components/Common/buttons/user-button/user-button'
+import { Trash2, Gift, Pencil, Boxes, Link2 } from 'lucide-react'
+
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 export interface GiftCardProps {
   id: number
@@ -16,183 +20,181 @@ export interface GiftCardProps {
   productLink: string
 }
 
+const updateSchema = z.object({
+  productName: z.string(),
+  productLink: z.string(),
+  quantity: z.number().int().positive(),
+})
+
+type updateData = z.infer<typeof updateSchema>
+
 export default function OwnGiftCard({
   id,
   productLink,
   productName,
   quantity,
 }: GiftCardProps) {
-  const editIcon = <MdEdit />
-  const trashIcon = <IoTrashOutline />
-  const arrowIcon = <IoArrowRedoSharp />
-  const { toUpdate, setToUpdate } = useContextWrap()
-  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
-  const [prevSelected, setPrevSelected] = useState<number>(0)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<updateData>({
+    resolver: zodResolver(updateSchema),
+  })
+  const { setModalObject, setSelectedGiftID, selectedGiftID } = useContextWrap()
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
     productLink: '',
   })
-  function handleUpdateInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setUpdateProps({
-      ...updateProps,
-      [e.target.name]: e.target.value,
-    })
+
+  useEffect(() => {
+    if (id === selectedGiftID) {
+      reset({
+        productName: updateProps.productName,
+        productLink: updateProps.productLink,
+        quantity: updateProps.quantity,
+      })
+    }
+  }, [selectedGiftID, id, updateProps, reset])
+
+  const submitUpdate = useSubmitUpdate()
+
+  const onSubmit: SubmitHandler<updateData> = (formData) => {
+    console.log(formData)
+    submitUpdate(formData, selectedGiftID)
   }
-  const submitUpdate = useSubmitUpdate(updateProps, selectedGiftID)
+
   return (
     <>
-      <li
-        key={id}
-        className="flex flex-col px-2 w-full items-center border-solid bg-softBeige border-2 border-dustyRose shadow-sm shadow-dustyRose rounded-lg hover:shadow-lg hover:shadow-dustyRose "
-      >
-        {id !== selectedGiftID && (
-          <>
-            <div className="flex pt-2 -mb-1 justify-between w-full ">
-              <button
-                onClick={() => {
-                  setUpdateProps({
-                    productName: productName,
-                    quantity: quantity,
-                    productLink: productLink,
-                  })
-                  setSelectedGiftID(id)
-                  setToUpdate(true)
-                }}
-                className="text-green-500"
-              >
-                {editIcon}
-              </button>
-              <button onClick={useDeleteGift(id)} className="text-red-500">
-                {trashIcon}
-              </button>
+      {id !== selectedGiftID && (
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
+          <CardHeader className="flex flex-row justify-end items-end text-center gap-3 px-4 pt-3 pb-1 mx-1.5">
+            <button
+              type="button"
+              onClick={() => {
+                setUpdateProps({
+                  productName,
+                  quantity,
+                  productLink,
+                })
+                setSelectedGiftID(id)
+              }}
+            >
+              <Pencil
+                size={18}
+                className="text-green-500 hover:text-green-700"
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setModalObject({
+                  id,
+                  name: productName,
+                  isOpen: true,
+                })
+              }
+            >
+              <Trash2 size={18} className="text-red-500 hover:text-red-700" />
+            </button>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6 font-semibold min-w-[350px]">
+            <div className="flex flex-row gap-4 items-center">
+              <Gift size={24} className="text-amber-800" />
+              <span className="text-lg text-stone-700">{productName}</span>
             </div>
-            <div className="flex flex-col p-3 gap-1 text-amber-800 font-bold">
-              <h2 className="font-bold">{productName}</h2>
-              <div className="flex flex-col items-center gap-1 ">
-                <p>
-                  Quantity: <span className="text-mutedTaupe">{quantity}</span>
-                </p>
-                <div className="flex items-center">
-                  <Link
-                    href={
-                      productLink.startsWith('http')
-                        ? productLink
-                        : `https://${productLink}`
-                    }
-                    target="_blank"
-                    className=" hover:underline flex flex-row items-center gap-2"
-                  >
-                    Check the product's page {arrowIcon}
-                  </Link>
-                </div>
+            <div className="flex flex-row gap-4 items-center">
+              <Boxes size={24} className="text-amber-800" />
+              <span className="text-lg text-stone-700">
+                Quantity remaining on list:{' '}
+                <span className="text-amber-800">{quantity}</span>
+              </span>
+            </div>
+          </CardContent>
+          <CardFooter className="items-center flex flex-row gap-4">
+            <Link
+              href={
+                productLink.startsWith('http')
+                  ? productLink
+                  : `https://${productLink}`
+              }
+              target="_blank"
+            >
+              <div className="flex flex-row gap-4 items-center">
+                <Link2 size={24} className="text-amber-800" />
+                <span className="text-stone-700 hover:underline hover:text-amber-800">
+                  Open this product's page on store
+                </span>
               </div>
-            </div>
-          </>
-        )}
-        {toUpdate && id === selectedGiftID && (
-          <>
-            <div className="flex flex-col w-full items-start gap-3 p-2">
-              <InputContainer
-                label={`Update the gift's title`}
-                type="text"
-                id="productName"
-                name="productName"
-                value={updateProps.productName}
-                onChange={handleUpdateInputChange}
-              />
-              <InputContainer
-                label={`Update the quantity`}
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={updateProps.quantity}
-                onChange={handleUpdateInputChange}
-              />
-              <InputContainer
-                label={`Update the gift's purchase link`}
-                type="text"
-                id="productLink"
-                name="productLink"
-                value={updateProps.productLink}
-                onChange={handleUpdateInputChange}
-              />
-            </div>
-            <div className="flex flex-row items-center justify-center w-full gap-4 mb-2">
-              <UserButton
-                className="!w-[130px] !bg-green-500 hover:!bg-green-400"
-                content="Confirm"
-                id="confirmButton"
-                onClick={() => {
-                  submitUpdate()
-                  setToUpdate(false)
-                  setSelectedGiftID(0)
-                }}
-              />
-              <UserButton
-                className="!w-[130px] !bg-red-500 hover:!bg-red-400"
-                content="Cancel"
-                id="cancelButton"
-                onClick={() => {
-                  setToUpdate(false)
-                  setSelectedGiftID(0)
-                }}
-              />
-            </div>
-          </>
-        )}
-        {!toUpdate && id === selectedGiftID && (
-          <>
-            <div className="flex flex-col w-full items-start gap-3 p-2">
-              <InputContainer
-                label={`Update the gift's title`}
-                type="text"
-                id="productName"
-                name="productName"
-                value={updateProps.productName}
-                onChange={handleUpdateInputChange}
-              />
-              <InputContainer
-                label={`Update the quantity`}
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={updateProps.quantity}
-                onChange={handleUpdateInputChange}
-              />
-              <InputContainer
-                label={`Update the gift's purchase link`}
-                type="text"
-                id="productLink"
-                name="productLink"
-                value={updateProps.productLink}
-                onChange={handleUpdateInputChange}
-              />
-            </div>
-            <div className="flex flex-row items-center justify-center w-full gap-4 mb-2">
-              <UserButton
-                className="!w-[130px] !bg-green-500 hover:!bg-green-400"
-                content="Confirm"
-                id="confirmButton"
-                onClick={() => {
-                  submitUpdate()
-                  setToUpdate(false)
-                  setSelectedGiftID(0)
-                }}
-              />
-              <UserButton
-                className="!w-[130px] !bg-red-500 hover:!bg-red-400"
-                content="Cancel"
-                id="cancelButton"
-                onClick={() => {
-                  setToUpdate(false)
-                  setSelectedGiftID(0)
-                }}
-              />
-            </div>
-          </>
-        )}
-      </li>
+            </Link>
+          </CardFooter>
+        </Card>
+      )}
+      {id === selectedGiftID && (
+        <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 min-w-[350px] font-inter">
+          <CardHeader className="flex items-center text-center">
+            <h2 className="text-amber-800 font-bold">
+              Update this gift's Infos:
+            </h2>
+          </CardHeader>
+          <CardContent className="w-full gap-3">
+            <form
+              className="text-stone-700"
+              onSubmit={handleSubmit(onSubmit, (errors) => {
+                console.log('Error on submitting:', errors)
+              })}
+            >
+              <div className="flex flex-col gap-3 mb-3 items-start">
+                <Label className="text-md">Update the gift's title:</Label>
+                <Input
+                  type="text"
+                  {...register('productName')}
+                  className="text-amber-800 bg-white"
+                />
+              </div>
+              <div className="flex flex-col gap-3 mb-3 items-start">
+                <Label className="text-md">Update the gift's quantity:</Label>
+                <Input
+                  type="number"
+                  {...register('quantity', { valueAsNumber: true })}
+                  className="text-amber-800 bg-white"
+                />
+              </div>
+              <div className="flex flex-col gap-3 mb-3 items-start">
+                <Label className="text-md">
+                  Update the gift's purchase link:
+                </Label>
+                <Input
+                  type="text"
+                  {...register('productLink')}
+                  className="text-amber-800 bg-white"
+                />
+              </div>
+              <div className="flex flex-row gap-5">
+                <Button
+                  type="submit"
+                  className="w-full bg-stone-500 text-md"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? <Spinner /> : 'Update'}
+                </Button>
+                <Button
+                  variant="destructive"
+                  type="button"
+                  className="w-full text-stone-100 text-md"
+                  onClick={() => {
+                    setSelectedGiftID(0)
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      )}
     </>
   )
 }

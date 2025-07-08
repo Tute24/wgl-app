@@ -1,5 +1,6 @@
 'use client'
 
+import { generalModalProps } from '@/types-props/general-modal-props'
 import giftsProps from '@/types-props/giftsProps'
 import weddingDataProps from '@/types-props/weddingDataProps'
 import weddingHeaderInfoProps from '@/types-props/weddingHeaderInfo'
@@ -25,10 +26,12 @@ interface ContextProps {
   setNotGuest: React.Dispatch<SetStateAction<boolean>>
   weddingID: number
   setWeddingID: React.Dispatch<SetStateAction<number>>
-  toUpdate: boolean
-  setToUpdate: React.Dispatch<SetStateAction<boolean>>
   weddingHeaderInfo: weddingHeaderInfoProps
   setWeddingHeaderInfo: React.Dispatch<SetStateAction<weddingHeaderInfoProps>>
+  modalObject: generalModalProps
+  setModalObject: React.Dispatch<SetStateAction<generalModalProps>>
+  selectedGiftID: number
+  setSelectedGiftID: React.Dispatch<SetStateAction<number>>
 }
 
 const contextWrap = createContext<ContextProps | undefined>(undefined)
@@ -38,18 +41,18 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [userToken, setUserToken] = useState<string | null>(null)
   const [isCreator, setIsCreator] = useState<boolean>(false)
   const [notGuest, setNotGuest] = useState<boolean>(false)
-  const [toUpdate, setToUpdate] = useState<boolean>(false)
   const [weddingID, setWeddingID] = useState<number>(0)
   const [giftsArray, setGiftsArray] = useState<giftsProps[]>([])
+  const [selectedGiftID, setSelectedGiftID] = useState<number>(0)
   const [weddingHeaderInfo, setWeddingHeaderInfo] =
     useState<weddingHeaderInfoProps>({
       id: 0,
       weddingTitle: '',
-      weddingDate: ''
+      weddingDate: '',
     })
   const [ownWeddingsArray, setOwnWeddingsArray] = useState<weddingProps[]>([])
   const [guestWeddingsArray, setGuestWeddingsArray] = useState<weddingProps[]>(
-    []
+    [],
   )
   const [weddingData, setWeddingData] = useState<weddingDataProps>({
     id: 0,
@@ -67,6 +70,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         giftedBy: '',
       },
     ],
+  })
+  const [modalObject, setModalObject] = useState<generalModalProps>({
+    id: 0,
+    name: '',
+    isOpen: false,
   })
 
   return (
@@ -86,14 +94,16 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         setNotGuest,
         weddingID,
         setWeddingID,
-        toUpdate,
-        setToUpdate,
         ownWeddingsArray,
         setOwnWeddingsArray,
         guestWeddingsArray,
         setGuestWeddingsArray,
         weddingHeaderInfo,
         setWeddingHeaderInfo,
+        modalObject,
+        setModalObject,
+        selectedGiftID,
+        setSelectedGiftID,
       }}
     >
       {children}

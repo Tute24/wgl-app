@@ -3,28 +3,24 @@ import AxiosErrorHandler from '@/functions/axios-error-handler'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
-export default function useDeleteGift(giftID: number) {
+export default function useDeleteGift() {
   const { userToken, setGiftsArray, giftsArray } = useContextWrap()
   const route = useRouter()
-
-  async function deleteGift() {
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
+  async function deleteGift(giftID: number) {
     const identifier = {
-      giftID: giftID,
+      giftID,
     }
     try {
-      const response = await axios.post(
-        'http://localhost:3000/deleteGift',
-        identifier,
-        {
-          headers: {
-            Authorization: `Bearer: ${userToken}`,
-          },
-        }
-      )
+      const response = await axios.post(`${apiURL}/gifts/delete`, identifier, {
+        headers: {
+          Authorization: `Bearer: ${userToken}`,
+        },
+      })
 
       if (response.status === 200) {
         const filteredGiftsArrays = giftsArray.filter(
-          (gift) => gift.id !== giftID
+          (gift) => gift.id !== giftID,
         )
         setGiftsArray(filteredGiftsArrays)
       }

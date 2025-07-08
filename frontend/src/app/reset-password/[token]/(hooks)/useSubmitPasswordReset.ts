@@ -9,24 +9,25 @@ import AxiosErrorHandler from '@/functions/axios-error-handler'
 export default function useSubmitPasswordReset() {
   const { setStatusMessage } = useContextWrap()
   const { token } = useParams()
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function submitPasswordReset(data: newPassword) {
     if (data.password !== data.confirmPassword) {
       setStatusMessage('Passwords must be the same!')
     } else {
       try {
         const response = await axios.post(
-          'http://localhost:3000/resetPassword',
+          `${apiURL}/auth/reset-password`,
           data,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         )
 
         if (response.status === 200) {
           setStatusMessage(
-            'Your password was updated successfully. Go back to the sign in page.'
+            'Your password was updated successfully. Go back to the sign in page.',
           )
         }
       } catch (error) {

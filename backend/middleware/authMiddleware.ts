@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
 import { Response, Request, NextFunction } from 'express'
+const jwt = require('jsonwebtoken')
 
 interface tokenBody {
   id: string
@@ -9,12 +9,12 @@ export interface CustomRequest extends Request {
   authUser?: tokenBody
 }
 
-export default function isAuthenticated(
+export default function isAuthenticated (
   req: CustomRequest,
   res: Response,
   next: NextFunction
 ):void {
-  const token = req.headers['authorization']?.split(' ')[1]
+  const token = req.headers.authorization?.split(' ')[1]
 
   if (!token) {
     res.status(401).json({ message: 'Unauthorized' })
@@ -32,7 +32,6 @@ export default function isAuthenticated(
     req.authUser = decodedToken
     next()
   } catch (error) {
-     res.status(403).json({ message: 'Invalid or expired token.' })
-     return
+    res.status(500).json({ message: 'Server error.' })
   }
 }

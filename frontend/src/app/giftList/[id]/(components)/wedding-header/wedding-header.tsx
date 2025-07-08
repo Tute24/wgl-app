@@ -16,12 +16,12 @@ export default function WeddingHeader({
   id,
 }: weddingHeaderProps) {
   return (
-    <>
+    <div className="relative w-full">
       {owner && (
-        <div className="flex flex-row justify-end items-end w-full pr-6 text-[18px]">
-          <h2 className="font-bold text-amber-800">
+        <div className="absolute right-4 top-0 text-sm sm:text-[18px]">
+          <h2 className="text-amber-800 font-poppins">
             <Link
-              className="flex flex-row gap-2 text-center items-center underline"
+              className="flex flex-row gap-2 text-center items-center hover:underline"
               href={`/giftsTable/${id}`}
             >
               View gifted products <IoArrowRedoSharp size={18} />
@@ -29,12 +29,14 @@ export default function WeddingHeader({
           </h2>
         </div>
       )}
-      <div className="flex flex-col text-center items-center">
-        <h1 className="font-bold text-amber-800 text-[32px] pb-3">
+      <div
+        className={`flex flex-col text-center items-center ${owner ? 'mt-10' : ''}`}
+      >
+        <h1 className="font-bold text-stone-700 text-2xl sm:text-[32px] font-poppins">
           {`${weddingTitle}: `}
           <span className="text-paleGold">{weddingDate}</span>
         </h1>
       </div>
-    </>
+    </div>
   )
 }

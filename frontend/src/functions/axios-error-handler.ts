@@ -17,35 +17,43 @@ export default function AxiosErrorHandler({
   setNotGuest,
   setStatusMessage,
   route,
-  setWeddingHeaderInfo
+  setWeddingHeaderInfo,
 }: AxiosErrorHandlerProps) {
   if (axios.isAxiosError(error)) {
     if (error.response?.status === 401) {
       console.log('User not authenticated.')
       if (setStatusMessage !== undefined) {
-        setStatusMessage(`User doesn't have permission.`)
+        setStatusMessage(`Not signed in.`)
       }
+      route?.push('/401-page')
     }
     if (error.response?.status === 403) {
-      console.log('Invalid/Expired token.')
+      console.log('User is not authorized.')
       if (setNotGuest !== undefined && !notGuest && setWeddingHeaderInfo) {
         setNotGuest(true)
-        setWeddingHeaderInfo(error.response.data.weddingInfo)
+        setWeddingHeaderInfo(error.response.data.errorResponseObject)
       }
       if (setStatusMessage !== undefined) {
-        setStatusMessage(`Invalid credentials.`)
+        setStatusMessage(`You're not authorized to access this page.`)
       }
-      if(setNotGuest === undefined && setStatusMessage === undefined){
-        if(route){
+      if (setNotGuest === undefined && setStatusMessage === undefined) {
+        if (route) {
           route?.push('/403-page')
         }
       }
     }
     if (error.response?.status === 404) {
-      console.log('User not found.')
-      if(route){
+      console.log('User or page not found.')
+      if (route) {
         route?.push('/404-page')
       }
+    }
+    if (error.response?.status === 409) {
+      console.log('Conflict')
+      if (setStatusMessage)
+        setStatusMessage(
+          'You submitted a gift with a name that already exists.',
+        )
     }
     if (error.response?.status === 500) {
       console.log('Server error.')

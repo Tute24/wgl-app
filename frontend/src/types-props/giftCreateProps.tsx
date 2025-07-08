@@ -1,5 +1,5 @@
-export default interface giftCreateProps{
-    productName: string
-    productLink: string
-    quantity: number
+export default interface giftCreateProps {
+  productName: string
+  productLink: string
+  quantity: number
 }
