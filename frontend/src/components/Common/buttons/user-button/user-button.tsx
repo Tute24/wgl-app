@@ -1,6 +1,6 @@
 interface UserButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  content: string
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'content'> {
+  content: string | React.ReactNode
   className?: string
 }
 

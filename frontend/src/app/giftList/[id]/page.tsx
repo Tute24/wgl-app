@@ -1,4 +1,4 @@
-import LoggedHeader from '../../../components/Headers/LoggedHeader'
+import LoggedHeader from '../../../components/Headers/logged-header'
 
 import ConditionalRenderingListPage from './(components)/conditionalRender/conditionalRender'
 

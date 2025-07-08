@@ -35,11 +35,11 @@ export function DataTable<TData, TValue>({
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow className="bg-softBeige" key={headerGroup.id}>
+            <TableRow className="bg-stone-200" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead
-                    className="!text-amber-800 text-center font-bold"
+                    className="!text-amber-800 text-center font-bold font-inter"
                     key={header.id}
                   >
                     {header.isPlaceholder
@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
-                    className="text-center text-amber-800"
+                    className="text-center text-stone-700 font-inter"
                     key={cell.id}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -1,4 +1,4 @@
-import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
+import UnLoggedHeader from '@/components/Headers/unlogged-header'
 import Link from 'next/link'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 
@@ -6,7 +6,7 @@ export default function NotPermittedPageWarning() {
   return (
     <div>
       <UnLoggedHeader />
-      <div className="flex text-sm sm:text-base flex-col  justify-center items-center m-auto h-auto text-amber-800 p-3">
+      <div className="flex text-sm sm:text-base flex-col  justify-center items-center m-auto h-auto text-amber-800 p-3 font-poppins">
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <IoMdCloseCircleOutline size={65} />
           <h1 className="font-bold text-center">

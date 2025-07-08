@@ -11,9 +11,7 @@ const cors = require('cors')
 
 app.use(express.json())
 app.use(cors())
-export const prisma = new PrismaClient({
-  log: ['query', 'error']
-})
+export const prisma = new PrismaClient()
 app.use('/users', usersRouter)
 app.use('/requests', requestsRouter)
 app.use('/auth', authRouter)

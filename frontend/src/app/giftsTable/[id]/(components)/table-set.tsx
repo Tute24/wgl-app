@@ -7,7 +7,7 @@ import { DataTable } from './data-table'
 export default function TableSet() {
   const giftedProductsArray = useGetGiftedProducts()
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto px-2 sm:px-10 py-10">
       <DataTable columns={columns} data={giftedProductsArray} />
     </div>
   )

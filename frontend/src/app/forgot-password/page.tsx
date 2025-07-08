@@ -1,12 +1,13 @@
 'use client'
 import UserButton from '@/components/Common/buttons/user-button/user-button'
 import InputContainer from '@/components/Common/input-container/input-container'
-import UnLoggedHeader from '@/components/Headers/UnLoggedHeader'
+import UnLoggedHeader from '@/components/Headers/unlogged-header'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest'
 import { useContextWrap } from '@/contextAPI/context'
+import { Spinner } from '@/components/Common/spinner/spinner'
 
 export const emailSchema = z.object({
   email: z.string().email(),
@@ -18,7 +19,7 @@ export default function SendMail() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
   })
@@ -65,7 +66,10 @@ export default function SendMail() {
               </span>
             </div>
             <div className="pt-3 pb-3 px-3">
-              <UserButton content="Confirm" />
+              <UserButton
+                content={isSubmitting ? <Spinner /> : 'Confirm'}
+                disabled={isSubmitting}
+              />
             </div>
           </form>
         </div>

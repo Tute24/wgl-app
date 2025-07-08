@@ -1,5 +1,5 @@
-import UserButton from '@/components/Common/buttons/user-button/user-button'
-import LoggedHeader from '@/components/Headers/LoggedHeader'
+import LoggedHeader from '@/components/Headers/logged-header'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { BsSignStop } from 'react-icons/bs'
 
@@ -7,7 +7,7 @@ export default function NotPermittedPageWarning() {
   return (
     <div>
       <LoggedHeader />
-      <div className="flex text-sm sm:text-base flex-col  justify-center items-center m-auto text-amber-800 p-3">
+      <div className="flex text-sm sm:text-base flex-col  justify-center items-center m-auto text-amber-800 p-3 font-poppins">
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <BsSignStop size={55} />
           <h1 className="font-bold text-center">
@@ -19,10 +19,7 @@ export default function NotPermittedPageWarning() {
         </h2>
         <div className="pt-3">
           <Link href="/dashboard">
-            <UserButton
-              className="!w-[225px] sm:!w-[275px]"
-              content="Go back to the dashboard page."
-            />
+            <Button className="font-semibold">Go back to the dashboard</Button>
           </Link>
         </div>
       </div>

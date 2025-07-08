@@ -22,7 +22,7 @@ export default function useGetGiftedProducts() {
   const { userToken } = useContextWrap()
   const [giftedProducts, setGiftedProducts] = useState<giftedProductsType[]>([])
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_URL
+  const apiURL = process.env.NEXT_PUBLIC_API_URL
 
   useEffect(() => {
     if (!userToken) return

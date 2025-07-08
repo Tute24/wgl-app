@@ -11,7 +11,7 @@ export const authRouter: Router = express.Router()
 
 authRouter.post('/sign-in', signInController)
 
-authRouter.post(
+authRouter.get(
   '/sign-out',
   isAuthenticated,
   signOutController

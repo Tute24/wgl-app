@@ -14,8 +14,7 @@ export function controllerErrorHandler(
     res
       .status(error.status)
       .json({ message: error.message, errorResponseObject })
-  }
-  if (error instanceof AppError) {
+  } else if (error instanceof AppError) {
     res
       .status(error.status)
       .json({ message: error.message })
