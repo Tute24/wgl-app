@@ -1,8 +1,8 @@
 'use client'
 
+import { axiosInstance } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
 import { authStoreInstance } from '@/stores/auth/auth.provider'
-
 import signInSchema from '@/zodSchemas/signInSchema'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -12,14 +12,12 @@ export default function useSignIn() {
   type signInData = z.infer<typeof signInSchema>
   const { setStatusMessage } = useContextWrap()
   const router = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
   const setToken = authStoreInstance.getState().setToken
   async function loginSubmitHandler(usersSign: signInData) {
     try {
-      const response = await axios.post(`${apiURL}/auth/sign-in`, usersSign)
+      const response = await axiosInstance.post('/auth/sign-in', usersSign)
       if (response.status === 200) {
-        const userToken = response.data.token
-        localStorage.setItem('userToken', JSON.stringify(userToken))
+        const userToken = response.data.token as string
         setToken(userToken)
         router.push('/dashboard')
       }
@@ -38,6 +36,5 @@ export default function useSignIn() {
       console.log(error)
     }
   }
-
   return loginSubmitHandler
 }

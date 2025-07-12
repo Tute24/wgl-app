@@ -1,15 +1,14 @@
 'use client'
+import { AxiosApi } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
 import giftsProps from '@/types-props/giftsProps'
-import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 
 export default function useGiftPresent() {
-  const { userToken, setGiftsArray, setSelectedGiftID } = useContextWrap()
+  const { setGiftsArray, setSelectedGiftID } = useContextWrap()
   const { id } = useParams()
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function giftPresent(giftID: number, quantity: number) {
     const sendGiftObj = {
       giftID,
@@ -17,18 +16,14 @@ export default function useGiftPresent() {
     }
     if (sendGiftObj) {
       try {
-        const response = await axios.post(
-          `${apiURL}/gifts/present`,
-          sendGiftObj,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-            params: {
-              id: Number(id),
-            },
+        const response = await AxiosApi({
+          httpMethod: 'post',
+          route: '/gifts/present',
+          data: sendGiftObj,
+          params: {
+            id: Number(id),
           },
-        )
+        })
 
         if (response.status === 200) {
           setSelectedGiftID(0)

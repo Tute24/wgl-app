@@ -1,27 +1,24 @@
+import { AxiosApi } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import axios from 'axios'
+import { useAuthStore } from '@/stores/auth/auth.provider'
 import { useRouter } from 'next/navigation'
 
 export default function useDeleteWedding() {
-  const { userToken, setOwnWeddingsArray } = useContextWrap()
+  const { setOwnWeddingsArray } = useContextWrap()
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
+  const token = useAuthStore((store) => store.token)
   async function deleteWedding(id: number) {
     const weddingID = {
       id,
     }
-    if (userToken) {
+    if (token) {
       try {
-        const response = await axios.post(
-          `${apiURL}/weddings/delete`,
-          weddingID,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          },
-        )
+        const response = await AxiosApi({
+          httpMethod: 'post',
+          route: '/weddings/delete',
+          data: weddingID,
+        })
 
         if (response.status === 200) {
           setOwnWeddingsArray((prev) => prev.filter((item) => item.id !== id))

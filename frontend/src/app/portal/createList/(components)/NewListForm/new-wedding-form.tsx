@@ -2,7 +2,6 @@
 
 import { useContextWrap } from '@/contextAPI/context'
 import checkAuth from '@/functions/useCheckAuth'
-import useSubmitList from '@/app/createList/(hooks)/useSubmitList'
 import newListSchema from '@/zodSchemas/newListSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
@@ -21,6 +20,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import useSubmitList from '../../(hooks)/useSubmitList'
 
 export type listData = z.infer<typeof newListSchema>
 

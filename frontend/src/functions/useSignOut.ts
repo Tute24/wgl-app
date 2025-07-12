@@ -1,27 +1,24 @@
 'use client'
 
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import AxiosErrorHandler from './axios-error-handler'
 import { authStoreInstance } from '@/stores/auth/auth.provider'
+import { AxiosApi } from '@/common/axios-api/axios-api'
 
 export default function useLogOut() {
   const setToken = authStoreInstance.getState().setToken
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function logOut() {
     const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
 
     if (userToken) {
       try {
-        const response = await axios.get(`${apiURL}/auth/sign-out`, {
-          headers: {
-            Authorization: `Bearer: ${userToken}`,
-          },
+        const response = await AxiosApi({
+          httpMethod: 'get',
+          route: '/auth/sign-out',
         })
 
         if (response.status === 200) {
-          localStorage.removeItem('userToken')
           setToken(null)
           route.push('/')
         }

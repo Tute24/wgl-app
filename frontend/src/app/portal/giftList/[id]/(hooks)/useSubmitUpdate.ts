@@ -1,15 +1,13 @@
-import { objValuesType } from '@/app/giftList/[id]/(components)/giftsListDisplay/owner-list'
 import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
 import giftsProps from '@/types-props/giftsProps'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { objValuesType } from '../(components)/giftsListDisplay/owner-list'
+import { AxiosApi } from '@/common/axios-api/axios-api'
 
 export default function useSubmitUpdate() {
-  const { userToken, setGiftsArray, setSelectedGiftID } = useContextWrap()
-
+  const { setGiftsArray, setSelectedGiftID } = useContextWrap()
   const route = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function submitUpdate(objValues: objValuesType, giftID: number) {
     const updateProps = {
       productLink: objValues.productLink,
@@ -17,14 +15,12 @@ export default function useSubmitUpdate() {
       quantity: objValues.quantity,
       giftID,
     }
-    console.log(updateProps)
     try {
-      const response = await axios.post(`${apiURL}/gifts/update`, updateProps, {
-        headers: {
-          Authorization: `Bearer: ${userToken}`,
-        },
+      const response = await AxiosApi({
+        httpMethod: 'post',
+        route: '/gifts/update',
+        data: updateProps,
       })
-
       if (response.status === 200) {
         setSelectedGiftID(0)
         setGiftsArray((prev: giftsProps[]) =>
@@ -36,14 +32,13 @@ export default function useSubmitUpdate() {
                   productName: updateProps.productName,
                   quantity: updateProps.quantity,
                 }
-              : gift
-          )
+              : gift,
+          ),
         )
       }
     } catch (error) {
       AxiosErrorHandler({ error, route })
     }
   }
-
   return submitUpdate
 }

@@ -2,7 +2,7 @@
 
 import { useContextWrap } from '@/contextAPI/context'
 import checkAuth from '@/functions/useCheckAuth'
-import useLogOut from '@/functions/sign-out'
+import useLogOut from '@/functions/useSignOut'
 import Link from 'next/link'
 import { useStore } from 'zustand'
 import { useUsernameStore } from '@/stores/zustand-store'

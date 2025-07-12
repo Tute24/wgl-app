@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useContextWrap } from '@/contextAPI/context'
-import useSignIn from '@/functions/signInFunction'
+import useSignIn from '@/functions/useSignIn'
 import { z } from 'zod'
 import signInSchema from '@/zodSchemas/signInSchema'
 import { SubmitHandler, useForm } from 'react-hook-form'
