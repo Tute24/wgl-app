@@ -1,7 +1,6 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import checkAuth from '@/functions/useCheckAuth'
 import useLogOut from '@/functions/useSignOut'
 import Link from 'next/link'
 import { useStore } from 'zustand'
@@ -25,7 +24,6 @@ import {
 import Image from 'next/image'
 
 export default function LoggedHeader() {
-  checkAuth()
   const { setNotGuest, setStatusMessage } = useContextWrap()
   const logOut = useLogOut()
   const username = useStore(useUsernameStore, (state) => state.username)

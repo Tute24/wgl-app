@@ -1,7 +1,6 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import checkAuth from '@/functions/useCheckAuth'
 import newListSchema from '@/zodSchemas/newListSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
@@ -38,7 +37,6 @@ export default function GiftListForm() {
     control,
     name: 'gifts',
   })
-  checkAuth()
   const submitForm = useSubmitList()
   const onSubmit: SubmitHandler<listData> = (data) => {
     submitForm(data)
