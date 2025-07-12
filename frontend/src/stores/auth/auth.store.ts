@@ -7,7 +7,7 @@ type AuthStoreState = {
 }
 
 type AuthStoreAction = {
-  setToken: (token: string) => void
+  setToken: (token: string | null) => void
 }
 
 export type AuthStore = AuthStoreState & AuthStoreAction
