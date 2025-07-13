@@ -1,4 +1,3 @@
-import LoggedHeader from '@/components/Headers/logged-header'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { BsSignStop } from 'react-icons/bs'
@@ -6,7 +5,6 @@ import { BsSignStop } from 'react-icons/bs'
 export default function NotPermittedPageWarning() {
   return (
     <div>
-      <LoggedHeader />
       <div className="flex text-sm sm:text-base flex-col  justify-center items-center m-auto text-amber-800 p-3 font-poppins">
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <BsSignStop size={55} />
