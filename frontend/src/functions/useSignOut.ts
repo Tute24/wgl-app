@@ -9,22 +9,18 @@ export default function useLogOut() {
   const setToken = authStoreInstance.getState().setToken
   const route = useRouter()
   async function logOut() {
-    const userToken = JSON.parse(localStorage.getItem('userToken') ?? 'null')
+    try {
+      const response = await AxiosApi({
+        httpMethod: 'get',
+        route: '/auth/sign-out',
+      })
 
-    if (userToken) {
-      try {
-        const response = await AxiosApi({
-          httpMethod: 'get',
-          route: '/auth/sign-out',
-        })
-
-        if (response.status === 200) {
-          setToken(null)
-          route.push('/')
-        }
-      } catch (error: unknown) {
-        AxiosErrorHandler({ error, route })
+      if (response.status === 200) {
+        route.push('/')
+        setToken(null)
       }
+    } catch (error: unknown) {
+      AxiosErrorHandler({ error, route })
     }
   }
   return logOut

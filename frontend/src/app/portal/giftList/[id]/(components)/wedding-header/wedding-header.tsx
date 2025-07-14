@@ -22,7 +22,7 @@ export default function WeddingHeader({
           <h2 className="text-amber-800 font-poppins">
             <Link
               className="flex flex-row gap-2 text-center items-center hover:underline"
-              href={`/giftsTable/${id}`}
+              href={`/portal/giftsTable/${id}`}
             >
               View gifted products <IoArrowRedoSharp size={18} />
             </Link>

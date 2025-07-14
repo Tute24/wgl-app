@@ -32,7 +32,7 @@ export default function LoggedHeader() {
       <div className="py-5 bg-stone-100 font-poppins">
         <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-xl">
           <div className="-mt-5 -mb-8 lg:-mt-10 lg:-mb-10">
-            <Link href="/dashboard">
+            <Link href="/portal/dashboard">
               <Image
                 src="/reworked-logo.png"
                 alt="Logo"
@@ -42,7 +42,7 @@ export default function LoggedHeader() {
             </Link>
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold hidden lg:block">
-            <Link href="/dashboard">
+            <Link href="/portal/dashboard">
               <button
                 onClick={() => {
                   setNotGuest(false)
@@ -56,7 +56,7 @@ export default function LoggedHeader() {
             </Link>
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold hidden lg:block">
-            <Link href="/createList">
+            <Link href="/portal/createList">
               <button
                 type="button"
                 className="p-2"
@@ -84,7 +84,7 @@ export default function LoggedHeader() {
                   Options
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-amber-800 -mx-3" />
-                <Link href="/dashboard">
+                <Link href="/portal/dashboard">
                   <DropdownMenuItem className="lg:hidden">
                     <button
                       className="flex flex-row gap-2 items-center"
@@ -98,7 +98,7 @@ export default function LoggedHeader() {
                     </button>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/createList">
+                <Link href="/portal/createList">
                   <DropdownMenuItem className="lg:hidden">
                     <button
                       className="flex flex-row gap-2 items-center"

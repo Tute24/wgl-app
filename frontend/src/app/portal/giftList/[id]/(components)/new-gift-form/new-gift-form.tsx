@@ -1,4 +1,4 @@
-import useSubmitNewGift from '@/app/giftList/[id]/(hooks)/useSubmitNewGifts'
+import useSubmitNewGift from '@/app/portal/giftList/[id]/(hooks)/useSubmitNewGifts'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'

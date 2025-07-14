@@ -5,8 +5,13 @@ import useGetOwnWeddings from '../../(hooks)/useGetOwnWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
 import DeleteModal from '@/components/modals/delete-modal'
+import { useEffect } from 'react'
 
 export default function WeddingsOwn() {
+  const getOwnWeddings = useGetOwnWeddings()
+  useEffect(() => {
+    getOwnWeddings()
+  }, [])
   function closeModal() {
     setModalObject({
       id: 0,
@@ -16,7 +21,7 @@ export default function WeddingsOwn() {
   }
   const { ownWeddingsArray, modalObject, setModalObject } = useContextWrap()
   const { id, name, isOpen } = modalObject
-  useGetOwnWeddings()
+
   const deleteWedding = useDeleteWedding()
   if (ownWeddingsArray.length > 0) {
     return (
@@ -49,7 +54,7 @@ export default function WeddingsOwn() {
     return (
       <div className="flex justify-center items-center w-full h-full m-auto">
         <h2 className="font-inter font-bold text-center text-stone-700 text-lg">
-          You haven't created any wedding.
+          You haven't created any weddings.
         </h2>
       </div>
     )

@@ -1,7 +1,7 @@
 'use client'
 
 import { useContextWrap } from '@/contextAPI/context'
-import useMakeRequest from '@/app/giftList/[id]/(hooks)/useMakeRequest'
+import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
 import WeddingHeader from '../wedding-header/wedding-header'
 import { Button } from '@/components/ui/button'

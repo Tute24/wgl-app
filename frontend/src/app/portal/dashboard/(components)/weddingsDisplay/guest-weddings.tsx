@@ -3,11 +3,16 @@
 import { useContextWrap } from '@/contextAPI/context'
 import useGetGuestWeddings from '../../(hooks)/useGetGuestWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
+import { useEffect } from 'react'
 
 export default function WeddingsGuest() {
   const { guestWeddingsArray } = useContextWrap()
 
-  useGetGuestWeddings()
+  const getGuestWeddings = useGetGuestWeddings()
+
+  useEffect(() => {
+    getGuestWeddings()
+  }, [])
 
   if (guestWeddingsArray.length > 0) {
     return (

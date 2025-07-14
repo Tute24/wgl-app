@@ -36,7 +36,7 @@ export default function WeddingCard({
             <Trash2 size={18} className="text-red-500 hover:text-red-700" />
           </button>
         ) : (
-          <Link href={`/giftList/${id}`}>
+          <Link href={`/portal/giftList/${id}`}>
             <ArrowRight size={18} className="text-amber-800" />
           </Link>
         )}
@@ -54,7 +54,7 @@ export default function WeddingCard({
         </div>
       </CardContent>
       <CardFooter className="items-center flex flex-row gap-4 ">
-        <Link href={`/giftList/${id}`}>
+        <Link href={`/portal/giftList/${id}`}>
           <div className="flex flex-row gap-4 items-center">
             <Link2 size={24} className="text-amber-800" />
             <span className="text-stone-700 hover:underline hover:text-amber-800">

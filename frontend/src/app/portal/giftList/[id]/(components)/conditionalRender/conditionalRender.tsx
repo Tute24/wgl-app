@@ -1,10 +1,10 @@
 'use client'
 
-import GuestList from '@/app/giftList/[id]/(components)/giftsListDisplay/guest-list'
-import GuestRequest from '@/app/giftList/[id]/(components)/giftsListDisplay/guest-request'
-import OwnerList from '@/app/giftList/[id]/(components)/giftsListDisplay/owner-list'
+import GuestList from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/guest-list'
+import GuestRequest from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/guest-request'
+import OwnerList from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/owner-list'
 import { useContextWrap } from '@/contextAPI/context'
-import useGetData from '@/app/giftList/[id]/(hooks)/useGetData'
+import useGetData from '@/app/portal/giftList/[id]/(hooks)/useGetData'
 
 export default function ConditionalRenderingListPage() {
   const { notGuest, isCreator } = useContextWrap()
