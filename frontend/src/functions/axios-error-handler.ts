@@ -38,14 +38,14 @@ export default function AxiosErrorHandler({
       }
       if (setNotGuest === undefined && setStatusMessage === undefined) {
         if (route) {
-          route?.push('/403-page')
+          route?.push('/portal/403-page')
         }
       }
     }
     if (error.response?.status === 404) {
       console.log('User or page not found.')
       if (route) {
-        route?.push('/404-page')
+        route?.push('/portal/404-page')
       }
     }
     if (error.response?.status === 409) {
