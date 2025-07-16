@@ -29,7 +29,7 @@ export type WeddingsStoreAction = {
 
 export type WeddingsStore = WeddingsStoreState & WeddingsStoreAction
 
-export const createWeddings = (
+export const createWeddingsStore = (
   initState: WeddingsStoreState = defaultInitState,
 ) => {
   return createStore<WeddingsStore>()(
