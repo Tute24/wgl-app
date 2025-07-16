@@ -1,24 +1,39 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import useGetGuestWeddings from '../../(hooks)/useGetGuestWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
 import { useEffect } from 'react'
+import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
+import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
 
 export default function WeddingsGuest() {
-  const { guestWeddingsArray } = useContextWrap()
-
   const getGuestWeddings = useGetGuestWeddings()
 
   useEffect(() => {
     getGuestWeddings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (guestWeddingsArray.length > 0) {
+  const { invitedWeddings, hasHydrated } = useWeddingsStore(
+    useShallow((store) => ({
+      invitedWeddings: store.invitedWeddings,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
+
+  if (!hasHydrated)
+    return (
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
+      </div>
+    )
+
+  if (invitedWeddings.length > 0) {
     return (
       <>
         <ul className="flex flex-col text-center items-center gap-10 w-full">
-          {guestWeddingsArray.map((wedding) => (
+          {invitedWeddings.map((wedding) => (
             <li key={wedding.id}>
               <WeddingCard
                 id={wedding.id}
