@@ -6,12 +6,17 @@ import WeddingCard from '../weddingCard/wedding-card'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
 import DeleteModal from '@/components/modals/delete-modal'
 import { useEffect } from 'react'
+import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
+import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
 
 export default function WeddingsOwn() {
   const getOwnWeddings = useGetOwnWeddings()
   useEffect(() => {
     getOwnWeddings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  const deleteWedding = useDeleteWedding()
   function closeModal() {
     setModalObject({
       id: 0,
@@ -19,15 +24,27 @@ export default function WeddingsOwn() {
       isOpen: false,
     })
   }
-  const { ownWeddingsArray, modalObject, setModalObject } = useContextWrap()
+  const { modalObject, setModalObject } = useContextWrap()
   const { id, name, isOpen } = modalObject
+  const { ownWeddings, hasHydrated } = useWeddingsStore(
+    useShallow((store) => ({
+      ownWeddings: store.ownWeddings,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
 
-  const deleteWedding = useDeleteWedding()
-  if (ownWeddingsArray.length > 0) {
+  if (!hasHydrated)
+    return (
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
+      </div>
+    )
+
+  if (ownWeddings.length > 0) {
     return (
       <>
         <ul className="flex flex-col text-center items-center gap-10">
-          {ownWeddingsArray.map((wedding) => (
+          {ownWeddings.map((wedding) => (
             <li key={wedding.id}>
               <WeddingCard
                 id={wedding.id}

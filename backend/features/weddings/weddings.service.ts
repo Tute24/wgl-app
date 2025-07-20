@@ -3,6 +3,14 @@ import { AppError } from '../../classes/app-error'
 import giftProps from '../../types/giftProps'
 import { weddingResponse } from './weddings.controller'
 
+export type WeddingsProps = {
+  id: number
+  weddingTitle: string
+  weddingDate: string
+  shippingAddress?: string
+  createdBy: string
+}
+
 export async function createWeddingService(
   userID: string,
   listTitle: string,
@@ -31,6 +39,14 @@ export async function createWeddingService(
     }
   })
 
+  const newlyCreatedWedding: WeddingsProps = {
+    id: newWedding.id,
+    weddingTitle: newWedding.weddingTitle,
+    weddingDate: newWedding.weddingDate,
+    shippingAddress: newWedding.shippingAddress,
+    createdBy: newWedding.createdBy
+  }
+
   console.log('Wedding successfully created!')
 
   giftsArray.map(async (giftInfo: giftProps) => {
@@ -47,7 +63,8 @@ export async function createWeddingService(
   const message =
     'Information successfully submitted to the database'
   return {
-    message
+    message,
+    newlyCreatedWedding
   }
 }
 
