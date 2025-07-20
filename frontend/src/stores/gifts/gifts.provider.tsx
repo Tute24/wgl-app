@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, ReactNode, useContext } from 'react'
 import { createGiftsStore, GiftsStore } from './gifts.store'
 import { useStore } from 'zustand'

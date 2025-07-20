@@ -2,7 +2,7 @@ import { createStore } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface weddingGiftsProps {
-  weddingId: number
+  Id: number
   quantity: number
   productName: string
   productLink: string
@@ -19,6 +19,7 @@ export type GiftsStoreState = {
   listHeader: listHeaderProps | null
   isCreator: boolean
   isGuest: boolean
+  selectedGiftId: number | null
   hasHydrated: boolean
 }
 
@@ -27,6 +28,7 @@ const defaultInitState: GiftsStoreState = {
   listHeader: null,
   isCreator: false,
   isGuest: false,
+  selectedGiftId: null,
   hasHydrated: false,
 }
 
@@ -35,6 +37,7 @@ export type GiftsStoreActions = {
   setListHeader: (listHeader: listHeaderProps | null) => void
   setIsCreator: (isCreator: boolean) => void
   setIsGuest: (isGuest: boolean) => void
+  setSelectedGiftID: (selectedGiftId: number) => void
   setDefaultInitState: () => void
 }
 
@@ -53,6 +56,8 @@ export const createGiftsStore = (
           set((store) => ({ ...store, listHeader })),
         setIsCreator: (isCreator) => set((store) => ({ ...store, isCreator })),
         setIsGuest: (isGuest) => set((store) => ({ ...store, isGuest })),
+        setSelectedGiftID: (selectedGiftId) =>
+          set((store) => ({ ...store, selectedGiftId })),
         setDefaultInitState: () => set(() => ({ ...defaultInitState })),
       }),
       {
