@@ -1,12 +1,18 @@
-import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftsProps from '@/types-props/giftsProps'
 import { useRouter } from 'next/navigation'
 import { objValuesType } from '../(components)/giftsListDisplay/owner-list'
 import { AxiosApi } from '@/common/axios-api/axios-api'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitUpdate() {
-  const { setGiftsArray, setSelectedGiftID } = useContextWrap()
+  const { setWeddingGifts, weddingGifts, setSelectedGiftID } = useGiftsStore(
+    useShallow((store) => ({
+      setWeddingGifts: store.setWeddingGifts,
+      weddingGifts: store.weddingGifts,
+      setSelectedGiftID: store.setSelectedGiftID,
+    })),
+  )
   const route = useRouter()
   async function submitUpdate(objValues: objValuesType, giftID: number) {
     const updateProps = {
@@ -22,10 +28,10 @@ export default function useSubmitUpdate() {
         data: updateProps,
       })
       if (response.status === 200) {
-        setSelectedGiftID(0)
-        setGiftsArray((prev: giftsProps[]) =>
-          prev.map((gift) =>
-            updateProps.giftID === gift.id
+        setSelectedGiftID(null)
+        setWeddingGifts(
+          weddingGifts.map((gift) =>
+            updateProps.giftID === gift.Id
               ? {
                   ...gift,
                   productLink: updateProps.productLink,
