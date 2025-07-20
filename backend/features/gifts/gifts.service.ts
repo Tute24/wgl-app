@@ -310,11 +310,26 @@ export async function getGiftsService(
       }
     })
     const message = 'Success (owner)!'
-    const wedding = ownWedding
+    const listHeader = {
+      weddingId: ownWedding?.id,
+      listHeaderTitle: ownWedding?.weddingTitle,
+      listHeaderDate: ownWedding?.weddingDate
+    }
+    const weddingGifts = ownWedding?.gifts.map((gifts) => ({
+      weddingId: gifts.id,
+      quantity: gifts.quantity,
+      productName: gifts.productName,
+      productLink: gifts.productLink
+    }))
+
+    const responseObject = {
+      checkAdmin,
+      listHeader,
+      weddingGifts
+    }
     return {
       message,
-      wedding,
-      checkAdmin
+      responseObject
     }
   }
 
@@ -332,11 +347,27 @@ export async function getGiftsService(
       }
     })
     const message = 'Success (guest)!'
-    const wedding = guestOn
+    const listHeader = {
+      weddingId: guestOn?.id,
+      listHeaderTitle: guestOn?.weddingTitle,
+      listHeaderDate: guestOn?.weddingDate
+    }
+    const weddingGifts = guestOn?.gifts.map((gifts) => ({
+      weddingId: gifts.id,
+      quantity: gifts.quantity,
+      productName: gifts.productName,
+      productLink: gifts.productLink
+    }))
+
+    const responseObject = {
+      checkAdmin,
+      listHeader,
+      weddingGifts
+    }
+
     return {
       message,
-      wedding,
-      checkAdmin
+      responseObject
     }
   }
   const weddingInfo = {
