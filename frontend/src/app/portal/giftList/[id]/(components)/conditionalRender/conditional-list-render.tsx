@@ -6,15 +6,32 @@ import OwnerList from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/
 import { useContextWrap } from '@/contextAPI/context'
 import { useEffect } from 'react'
 import useGetGifts from '@/app/portal/giftList/[id]/(hooks)/useGetGifts'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
 
-export default function ConditionalRenderingListPage() {
-  const { notGuest, isCreator } = useContextWrap()
+export default function ConditionalListRender() {
+  const { notGuest } = useContextWrap()
   const getGifts = useGetGifts()
+  const { isCreator, hasHydrated } = useGiftsStore(
+    useShallow((store) => ({
+      isCreator: store.isCreator,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
 
   useEffect(() => {
     getGifts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (!hasHydrated)
+    return (
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
+      </div>
+    )
+
   return (
     <>
       <div className="w-full">
