@@ -37,7 +37,7 @@ export type GiftsStoreActions = {
   setListHeader: (listHeader: listHeaderProps | null) => void
   setIsCreator: (isCreator: boolean) => void
   setIsGuest: (isGuest: boolean) => void
-  setSelectedGiftID: (selectedGiftId: number) => void
+  setSelectedGiftID: (selectedGiftId: number | null) => void
   setDefaultInitState: () => void
 }
 

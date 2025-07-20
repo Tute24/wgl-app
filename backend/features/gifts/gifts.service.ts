@@ -316,7 +316,7 @@ export async function getGiftsService(
       listHeaderDate: ownWedding?.weddingDate
     }
     const weddingGifts = ownWedding?.gifts.map((gifts) => ({
-      weddingId: gifts.id,
+      Id: gifts.id,
       quantity: gifts.quantity,
       productName: gifts.productName,
       productLink: gifts.productLink
