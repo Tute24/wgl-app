@@ -24,8 +24,22 @@ export default function OwnerList() {
     })
   }
   const deleteGift = useDeleteGift()
-  const { giftsArray, modalObject, setModalObject } = useContextWrap()
-  const listHeader = useGiftsStore(useShallow((store) => store.listHeader))
+  const { modalObject, setModalObject } = useContextWrap()
+  const { weddingGifts, listHeader, hasHydrated } = useGiftsStore(
+    useShallow((store) => ({
+      listHeader: store.listHeader,
+      weddingGifts: store.weddingGifts,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
+
+  if (!hasHydrated || !listHeader) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    )
+  }
   return (
     <>
       <div className="flex flex-col items-center gap-3 sm:gap-5">
@@ -39,10 +53,10 @@ export default function OwnerList() {
           You're this wedding's owner
         </h2>
         <ul className="flex flex-col text-center items-center m-auto">
-          {giftsArray.map((gift) => (
-            <div id={gift.id.toString()} key={gift.id} className="p-3 w-full">
+          {weddingGifts.map((gift) => (
+            <div id={gift.Id.toString()} key={gift.Id} className="p-3 w-full">
               <GiftCard
-                id={gift.id}
+                id={gift.Id}
                 productLink={gift.productLink}
                 productName={gift.productName}
                 quantity={gift.quantity}

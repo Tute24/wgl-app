@@ -255,6 +255,7 @@ export async function getGiftsService(
   userID: string,
   weddingID: number
 ) {
+  console.log('calling')
   const user = await prisma.users.findUnique({
     where: {
       id: userID
@@ -311,6 +312,7 @@ export async function getGiftsService(
       }
     })
     const message = 'Success (owner)!'
+    console.log(message)
     const listHeader = {
       weddingId: ownWedding?.id,
       listHeaderTitle: ownWedding?.weddingTitle,
@@ -349,13 +351,14 @@ export async function getGiftsService(
     })
     const message = 'Success (guest)!'
     checkPreferences.isGuest = true
+    console.log(message)
     const listHeader = {
       weddingId: guestOn?.id,
       listHeaderTitle: guestOn?.weddingTitle,
       listHeaderDate: guestOn?.weddingDate
     }
     const weddingGifts = guestOn?.gifts.map((gifts) => ({
-      weddingId: gifts.id,
+      Id: gifts.id,
       quantity: gifts.quantity,
       productName: gifts.productName,
       productLink: gifts.productLink
@@ -366,16 +369,16 @@ export async function getGiftsService(
       listHeader,
       weddingGifts
     }
-
+    console.log(responseObject)
     return {
       message,
       responseObject
     }
   }
   const listHeader = {
-    weddingID: checkWedding.id,
-    weddingTitle: checkWedding.weddingTitle,
-    weddingDate: checkWedding.weddingDate
+    weddingId: checkWedding.id,
+    listHeaderTitle: checkWedding.weddingTitle,
+    listHeaderDate: checkWedding.weddingDate
   }
 
   const responseObject = {
@@ -384,6 +387,7 @@ export async function getGiftsService(
     weddingGifts: []
   }
   const message = 'Not a creator neither a guest.'
+  console.log(message)
 
   return {
     message,

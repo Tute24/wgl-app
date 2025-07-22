@@ -28,17 +28,20 @@ export default function useGetGifts() {
           id: weddingID,
         },
       })
-
-      setWeddingGifts(
-        response.data.responseObject.weddingGifts as weddingGiftsProps[],
-      )
-      setListHeader(response.data.responseObject.listHeader as listHeaderProps)
-      setIsCreator(
-        response.data.responseObject.checkPreferences.isCreator as boolean,
-      )
-      setIsGuest(
-        response.data.responseObject.checkPreferences.isGuest as boolean,
-      )
+      if (response.status === 200) {
+        setIsCreator(
+          response.data.responseObject.checkPreferences.isCreator as boolean,
+        )
+        setIsGuest(
+          response.data.responseObject.checkPreferences.isGuest as boolean,
+        )
+        setListHeader(
+          response.data.responseObject.listHeader as listHeaderProps,
+        )
+        setWeddingGifts(
+          response.data.responseObject.weddingGifts as weddingGiftsProps[],
+        )
+      }
     } catch (error) {
       AxiosErrorHandler({
         error,

@@ -2,12 +2,15 @@ import { AxiosApi } from '@/common/axios-api/axios-api'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useRouter } from 'next/navigation'
+import { useShallow } from 'zustand/shallow'
 
 export default function useDeleteGift() {
-  const { setWeddingGifts, weddingGifts } = useGiftsStore((store) => ({
-    setWeddingGifts: store.setWeddingGifts,
-    weddingGifts: store.weddingGifts,
-  }))
+  const { setWeddingGifts, weddingGifts } = useGiftsStore(
+    useShallow((store) => ({
+      setWeddingGifts: store.setWeddingGifts,
+      weddingGifts: store.weddingGifts,
+    })),
+  )
   const route = useRouter()
   async function deleteGift(giftID: number) {
     const identifier = {

@@ -3,10 +3,7 @@
 import { useContextWrap } from '@/contextAPI/context'
 import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
-import WeddingHeader from '../wedding-header/wedding-header'
 import { Button } from '@/components/ui/button'
-import { useGiftsStore } from '@/stores/gifts/gifts.provider'
-import { useShallow } from 'zustand/shallow'
 
 export default function GuestRequest() {
   const { id } = useParams()
@@ -14,16 +11,20 @@ export default function GuestRequest() {
   const { statusMessage } = useContextWrap()
   const makeRequest = useMakeRequest(weddingID)
   const route = useRouter()
-  const listHeader = useGiftsStore(useShallow((store) => store.listHeader))
+  // const { listHeader } = useGiftsStore(
+  //   useShallow((store) => ({
+  //     listHeader: store.listHeader,
+  //   })),
+  // )
   return (
     <>
       <div className="flex flex-col items-center justify-center text-center gap-5">
-        <WeddingHeader
+        {/* <WeddingHeader
           owner={false}
           weddingDate={listHeader!.listHeaderDate}
           weddingTitle={listHeader!.listHeaderTitle}
           id={listHeader!.weddingId}
-        />
+        /> */}
         <h2 className="font-bold text-md sm:text-xl text-amber-800 font-inter">
           Not currently a guest of this wedding. <br /> You can make a request
           or go back to the initial page.

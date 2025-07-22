@@ -1,14 +1,26 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import GuestGiftCard from '../giftCard/guest-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 
 export default function GuestList() {
-  const { giftsArray } = useContextWrap()
-  const listHeader = useGiftsStore(useShallow((store) => store.listHeader))
+  const { weddingGifts, listHeader, hasHydrated } = useGiftsStore(
+    useShallow((store) => ({
+      listHeader: store.listHeader,
+      weddingGifts: store.weddingGifts,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
+
+  if (!hasHydrated || !listHeader) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    )
+  }
   return (
     <div className=" flex flex-col items-center gap-5">
       <WeddingHeader
@@ -21,10 +33,10 @@ export default function GuestList() {
         You're this wedding's guest
       </h2>
       <ul className="flex flex-col text-center items-center gap-8 mb-5">
-        {giftsArray.map((gift) => (
-          <div id={gift.id.toString()} key={gift.id} className="w-full">
+        {weddingGifts.map((gift) => (
+          <div id={gift.Id.toString()} key={gift.Id} className="w-full">
             <GuestGiftCard
-              id={gift.id}
+              id={gift.Id}
               productLink={gift.productLink}
               productName={gift.productName}
               quantity={gift.quantity}

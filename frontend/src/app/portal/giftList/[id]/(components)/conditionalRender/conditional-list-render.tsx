@@ -31,7 +31,7 @@ export default function ConditionalListRender() {
       </div>
     )
 
-  if (isCreator)
+  if (isCreator && !isGuest)
     return (
       <div className="w-full">
         <div className="flex flex-col">
@@ -40,7 +40,7 @@ export default function ConditionalListRender() {
       </div>
     )
 
-  if (isGuest)
+  if (!isCreator && isGuest)
     return (
       <div className="w-full">
         <div className="flex flex-col items-center">
@@ -49,11 +49,12 @@ export default function ConditionalListRender() {
       </div>
     )
 
-  return (
-    <div className="w-full">
-      <div className="flex flex-col items-center">
-        <GuestRequest />
+  if (!isCreator && !isGuest)
+    return (
+      <div className="w-full">
+        <div className="flex flex-col items-center">
+          <GuestRequest />
+        </div>
       </div>
-    </div>
-  )
+    )
 }
