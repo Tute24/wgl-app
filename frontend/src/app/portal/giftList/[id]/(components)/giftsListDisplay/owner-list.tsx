@@ -6,6 +6,8 @@ import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
 import DeleteModal from '@/components/modals/delete-modal'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
 
 export type objValuesType = {
   productLink: string
@@ -22,16 +24,16 @@ export default function OwnerList() {
     })
   }
   const deleteGift = useDeleteGift()
-  const { giftsArray, weddingData, modalObject, setModalObject } =
-    useContextWrap()
+  const { giftsArray, modalObject, setModalObject } = useContextWrap()
+  const listHeader = useGiftsStore(useShallow((store) => store.listHeader))
   return (
     <>
       <div className="flex flex-col items-center gap-3 sm:gap-5">
         <WeddingHeader
           owner={true}
-          weddingDate={weddingData.weddingDate}
-          weddingTitle={weddingData.weddingTitle}
-          id={weddingData.id}
+          weddingDate={listHeader!.listHeaderDate}
+          weddingTitle={listHeader!.listHeaderTitle}
+          id={listHeader!.weddingId}
         />
         <h2 className="font-bold text-amber-800 text-2xl font-inter">
           You're this wedding's owner

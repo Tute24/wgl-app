@@ -281,8 +281,9 @@ export async function getGiftsService(
     )
   }
 
-  const checkAdmin = {
-    isCreator: false
+  const checkPreferences = {
+    isCreator: false,
+    isGuest: false
   }
 
   const userPart = await prisma.users.findUnique({
@@ -300,7 +301,7 @@ export async function getGiftsService(
   )
 
   if (checkCreatorArray?.length !== 0) {
-    checkAdmin.isCreator = true
+    checkPreferences.isCreator = true
     const ownWedding = await prisma.weddings.findUnique({
       where: {
         id: weddingID
@@ -323,7 +324,7 @@ export async function getGiftsService(
     }))
 
     const responseObject = {
-      checkAdmin,
+      checkPreferences,
       listHeader,
       weddingGifts
     }
@@ -347,6 +348,7 @@ export async function getGiftsService(
       }
     })
     const message = 'Success (guest)!'
+    checkPreferences.isGuest = true
     const listHeader = {
       weddingId: guestOn?.id,
       listHeaderTitle: guestOn?.weddingTitle,
@@ -360,7 +362,7 @@ export async function getGiftsService(
     }))
 
     const responseObject = {
-      checkAdmin,
+      checkPreferences,
       listHeader,
       weddingGifts
     }
@@ -370,17 +372,23 @@ export async function getGiftsService(
       responseObject
     }
   }
-  const weddingInfo = {
+  const listHeader = {
     weddingID: checkWedding.id,
     weddingTitle: checkWedding.weddingTitle,
     weddingDate: checkWedding.weddingDate
   }
 
-  throw new AppError(
-    'User is not a guest on this wedding',
-    403,
-    weddingInfo
-  )
+  const responseObject = {
+    checkPreferences,
+    listHeader,
+    weddingGifts: []
+  }
+  const message = 'Not a creator neither a guest.'
+
+  return {
+    message,
+    responseObject
+  }
 }
 
 export async function getGiftedProductsService(

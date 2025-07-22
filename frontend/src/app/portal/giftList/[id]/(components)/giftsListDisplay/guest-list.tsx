@@ -3,17 +3,19 @@
 import { useContextWrap } from '@/contextAPI/context'
 import GuestGiftCard from '../giftCard/guest-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function GuestList() {
-  const { giftsArray, weddingData } = useContextWrap()
-
+  const { giftsArray } = useContextWrap()
+  const listHeader = useGiftsStore(useShallow((store) => store.listHeader))
   return (
     <div className=" flex flex-col items-center gap-5">
       <WeddingHeader
         owner={false}
-        weddingDate={weddingData.weddingDate}
-        weddingTitle={weddingData.weddingTitle}
-        id={weddingData.id}
+        weddingDate={listHeader!.listHeaderDate}
+        weddingTitle={listHeader!.listHeaderTitle}
+        id={listHeader!.weddingId}
       />
       <h2 className="font-bold text-2xl text-amber-800 font-inter">
         You're this wedding's guest

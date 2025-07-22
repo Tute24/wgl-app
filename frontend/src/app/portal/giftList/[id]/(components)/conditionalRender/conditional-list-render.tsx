@@ -3,7 +3,6 @@
 import GuestList from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/guest-list'
 import GuestRequest from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/guest-request'
 import OwnerList from '@/app/portal/giftList/[id]/(components)/giftsListDisplay/owner-list'
-import { useContextWrap } from '@/contextAPI/context'
 import { useEffect } from 'react'
 import useGetGifts from '@/app/portal/giftList/[id]/(hooks)/useGetGifts'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
@@ -11,11 +10,11 @@ import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 
 export default function ConditionalListRender() {
-  const { notGuest } = useContextWrap()
   const getGifts = useGetGifts()
-  const { isCreator, hasHydrated } = useGiftsStore(
+  const { isCreator, isGuest, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       isCreator: store.isCreator,
+      isGuest: store.isGuest,
       hasHydrated: store.hasHydrated,
     })),
   )
@@ -32,31 +31,29 @@ export default function ConditionalListRender() {
       </div>
     )
 
-  return (
-    <>
+  if (isCreator)
+    return (
       <div className="w-full">
-        {notGuest && !isCreator && (
-          <>
-            <div className="flex flex-col items-center">
-              <GuestRequest />
-            </div>
-          </>
-        )}
-        {isCreator && (
-          <>
-            <div className="flex flex-col">
-              <OwnerList />
-            </div>
-          </>
-        )}
-        {!notGuest && !isCreator && (
-          <>
-            <div className="flex flex-col items-center">
-              <GuestList />
-            </div>
-          </>
-        )}
+        <div className="flex flex-col">
+          <OwnerList />
+        </div>
       </div>
-    </>
+    )
+
+  if (isGuest)
+    return (
+      <div className="w-full">
+        <div className="flex flex-col items-center">
+          <GuestList />
+        </div>
+      </div>
+    )
+
+  return (
+    <div className="w-full">
+      <div className="flex flex-col items-center">
+        <GuestRequest />
+      </div>
+    </div>
   )
 }
