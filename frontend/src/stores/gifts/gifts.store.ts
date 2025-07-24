@@ -14,9 +14,20 @@ export interface listHeaderProps {
   listHeaderDate: string
 }
 
+export interface GiftedProductsProps {
+  id: number
+  presenter: string
+  relatedWeddingTitle: string
+  relatedWeddindDate: string
+  quantityGifted: number
+  gift: string
+  giftedAt: string
+}
+
 export type GiftsStoreState = {
   weddingGifts: weddingGiftsProps[] | []
   listHeader: listHeaderProps | null
+  giftedProducts: GiftedProductsProps[] | []
   isCreator: boolean
   isGuest: boolean
   selectedGiftId: number | null
@@ -26,6 +37,7 @@ export type GiftsStoreState = {
 const defaultInitState: GiftsStoreState = {
   weddingGifts: [],
   listHeader: null,
+  giftedProducts: [],
   isCreator: false,
   isGuest: false,
   selectedGiftId: null,
@@ -35,6 +47,7 @@ const defaultInitState: GiftsStoreState = {
 export type GiftsStoreActions = {
   setWeddingGifts: (weddingsGifts: weddingGiftsProps[] | []) => void
   setListHeader: (listHeader: listHeaderProps | null) => void
+  setGiftedProducts: (giftedProducts: GiftedProductsProps[] | []) => void
   setIsCreator: (isCreator: boolean) => void
   setIsGuest: (isGuest: boolean) => void
   setSelectedGiftID: (selectedGiftId: number | null) => void
@@ -54,6 +67,8 @@ export const createGiftsStore = (
           set((store) => ({ ...store, weddingGifts })),
         setListHeader: (listHeader) =>
           set((store) => ({ ...store, listHeader })),
+        setGiftedProducts: (giftedProducts) =>
+          set((store) => ({ ...store, giftedProducts })),
         setIsCreator: (isCreator) => set((store) => ({ ...store, isCreator })),
         setIsGuest: (isGuest) => set((store) => ({ ...store, isGuest })),
         setSelectedGiftID: (selectedGiftId) =>
