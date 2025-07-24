@@ -255,7 +255,6 @@ export async function getGiftsService(
   userID: string,
   weddingID: number
 ) {
-  console.log('calling')
   const user = await prisma.users.findUnique({
     where: {
       id: userID
@@ -312,7 +311,6 @@ export async function getGiftsService(
       }
     })
     const message = 'Success (owner)!'
-    console.log(message)
     const listHeader = {
       weddingId: ownWedding?.id,
       listHeaderTitle: ownWedding?.weddingTitle,
@@ -351,7 +349,6 @@ export async function getGiftsService(
     })
     const message = 'Success (guest)!'
     checkPreferences.isGuest = true
-    console.log(message)
     const listHeader = {
       weddingId: guestOn?.id,
       listHeaderTitle: guestOn?.weddingTitle,

@@ -1,8 +1,10 @@
 'use client'
 import { AxiosApi } from '@/common/axios-api/axios-api'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { GiftedProductsProps } from '@/stores/gifts/gifts.store'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 export type giftedProductsType = {
   id: number
@@ -18,28 +20,29 @@ export type giftedProductsType = {
 export default function useGetGiftedProducts() {
   const { id } = useParams()
   const weddingId = Number(id)
-  const [giftedProducts, setGiftedProducts] = useState<giftedProductsType[]>([])
   const route = useRouter()
+  const { setGiftedProducts } = useGiftsStore(
+    useShallow((store) => ({
+      setGiftedProducts: store.setGiftedProducts,
+    })),
+  )
 
-  useEffect(() => {
-    async function getGiftedProducts() {
-      try {
-        const response = await AxiosApi({
-          httpMethod: 'get',
-          route: '/gifts/gifted-products',
-          params: {
-            id: weddingId,
-          },
-        })
+  async function getGiftedProducts() {
+    try {
+      const response = await AxiosApi({
+        httpMethod: 'get',
+        route: '/gifts/gifted-products',
+        params: {
+          id: weddingId,
+        },
+      })
 
-        if (response.status === 200) {
-          setGiftedProducts(response.data.giftedProducts)
-        }
-      } catch (error) {
-        AxiosErrorHandler({ error, route })
+      if (response.status === 200) {
+        setGiftedProducts(response.data.giftedProducts as GiftedProductsProps[])
       }
+    } catch (error) {
+      AxiosErrorHandler({ error, route })
     }
-    getGiftedProducts()
-  }, [])
-  return giftedProducts
+  }
+  return getGiftedProducts
 }

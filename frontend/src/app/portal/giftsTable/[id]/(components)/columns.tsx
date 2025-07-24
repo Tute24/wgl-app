@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { giftedProductsType } from '../(hooks)/useGetGiftedProducts'
+import { GiftedProductsProps } from '@/stores/gifts/gifts.store'
 
-export const columns: ColumnDef<giftedProductsType>[] = [
+export const columns: ColumnDef<GiftedProductsProps>[] = [
   {
     accessorKey: 'gift',
     header: 'Gifted Product',
