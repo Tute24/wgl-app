@@ -8,6 +8,7 @@ import useDeleteGift from '../../(hooks)/useDeleteGift'
 import DeleteModal from '@/components/modals/delete-modal'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
 
 export type objValuesType = {
   productLink: string
@@ -35,8 +36,8 @@ export default function OwnerList() {
 
   if (!hasHydrated || !listHeader) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
       </div>
     )
   }
