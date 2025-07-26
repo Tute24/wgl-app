@@ -462,14 +462,14 @@ export async function getGiftedProductsService(
     })
   )
 
-  const weddingInfo = {
+  const listHeader = {
     weddingId: checkWedding.id,
-    weddingTitle: checkWedding.weddingTitle,
-    weddingDate: checkWedding.weddingDate
+    listHeaderTitle: checkWedding.weddingTitle,
+    listHeaderDate: checkWedding.weddingDate
   }
   const message = 'Fetch successful!'
   const giftedProducts = {
-    weddingInfo,
+    listHeader,
     mappingAddGifter
   }
 

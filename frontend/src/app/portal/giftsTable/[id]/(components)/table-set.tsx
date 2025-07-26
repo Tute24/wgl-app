@@ -9,9 +9,10 @@ import { ClipLoader } from 'react-spinners'
 import { useShallow } from 'zustand/shallow'
 
 export default function TableSet() {
-  const { giftedProducts, hasHydrated } = useGiftsStore(
+  const { giftedProducts, listHeader, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       giftedProducts: store.giftedProducts,
+      listHeader: store.listHeader,
       hasHydrated: store.hasHydrated,
     })),
   )
@@ -21,7 +22,7 @@ export default function TableSet() {
     getGiftedProducts()
   }, [getGiftedProducts])
 
-  if (!hasHydrated) {
+  if (!hasHydrated || !listHeader) {
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
@@ -34,9 +35,7 @@ export default function TableSet() {
       <div className="flex flex-col justify-center text-center gap-3 font-inter">
         <h2 className="sm:text-2xl text-amber-800 font-bold px-2 sm:px-0">
           Gifted Products Table from{' '}
-          <span className="text-stone-700">
-            {giftedProducts[0].relatedWeddingTitle}
-          </span>
+          <span className="text-stone-700">{listHeader.listHeaderTitle}</span>
         </h2>
         <p className="text-center text-stone-500 font-medium">
           Here you can see the guests who have gifted the products on your gift

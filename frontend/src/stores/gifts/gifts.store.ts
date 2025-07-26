@@ -17,8 +17,6 @@ export interface listHeaderProps {
 export interface GiftedProductsProps {
   id: number
   presenter: string
-  relatedWeddingTitle: string
-  relatedWeddindDate: string
   quantityGifted: number
   gift: string
   giftedAt: string

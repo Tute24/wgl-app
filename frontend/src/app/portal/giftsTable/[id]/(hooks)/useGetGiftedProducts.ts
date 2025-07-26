@@ -2,7 +2,10 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
-import { GiftedProductsProps } from '@/stores/gifts/gifts.store'
+import {
+  GiftedProductsProps,
+  listHeaderProps,
+} from '@/stores/gifts/gifts.store'
 import { useParams, useRouter } from 'next/navigation'
 import { useShallow } from 'zustand/shallow'
 
@@ -21,9 +24,10 @@ export default function useGetGiftedProducts() {
   const { id } = useParams()
   const weddingId = Number(id)
   const route = useRouter()
-  const { setGiftedProducts } = useGiftsStore(
+  const { setGiftedProducts, setListHeader } = useGiftsStore(
     useShallow((store) => ({
       setGiftedProducts: store.setGiftedProducts,
+      setListHeader: store.setListHeader,
     })),
   )
 
@@ -38,7 +42,13 @@ export default function useGetGiftedProducts() {
       })
 
       if (response.status === 200) {
-        setGiftedProducts(response.data.giftedProducts as GiftedProductsProps[])
+        setListHeader(
+          response.data.giftedProducts.listHeader as listHeaderProps,
+        )
+        setGiftedProducts(
+          response.data.giftedProducts
+            .mappingAddGifter as GiftedProductsProps[],
+        )
       }
     } catch (error) {
       AxiosErrorHandler({ error, route })
