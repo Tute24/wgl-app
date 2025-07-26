@@ -450,29 +450,28 @@ export async function getGiftedProductsService(
           }
         }) // goes by the assumption that the wedding won't have two rows with the same product name
 
-      const wedding = await prisma.weddings.findUnique({
-        where: {
-          id: giftingRegister.relatedWedding
-        }
-      })
-
-      const returnObject = {
+      return {
         id: giftingRegister.id,
         presenter: `${gifter?.firstName} ${gifter?.lastName}`,
-        relatedWeddingTitle: wedding?.weddingTitle,
-        relatedWeddingDate: wedding?.weddingDate,
         quantityGifted: giftingRegister.quantity,
         gift: giftOnCreatedBy?.giftName,
         giftedAt: dayjs(giftingRegister.giftedAt).format(
           'YYYY-MM-DD'
         )
       }
-
-      return returnObject
     })
   )
+
+  const weddingInfo = {
+    weddingId: checkWedding.id,
+    weddingTitle: checkWedding.weddingTitle,
+    weddingDate: checkWedding.weddingDate
+  }
   const message = 'Fetch successful!'
-  const giftedProducts = mappingAddGifter
+  const giftedProducts = {
+    weddingInfo,
+    mappingAddGifter
+  }
 
   return {
     message,
