@@ -30,8 +30,22 @@ export default function TableSet() {
   }
 
   return (
-    <div className="container mx-auto px-2 sm:px-10 py-10">
-      <DataTable columns={columns} data={giftedProducts} />
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col justify-center text-center gap-3 font-inter">
+        <h2 className="sm:text-2xl text-amber-800 font-bold px-2 sm:px-0">
+          Gifted Products Table from{' '}
+          <span className="text-stone-700">
+            {giftedProducts[0].relatedWeddingTitle}
+          </span>
+        </h2>
+        <p className="text-center text-stone-500 font-medium">
+          Here you can see the guests who have gifted the products on your gift
+          list.
+        </p>
+      </div>
+      <div className="container mx-auto px-2 sm:px-10 py-10">
+        <DataTable columns={columns} data={giftedProducts} />
+      </div>
     </div>
   )
 }
