@@ -1,10 +1,16 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useRouter } from 'next/navigation'
+import { useShallow } from 'zustand/shallow'
 
 export default function useDeleteGift() {
-  const { setGiftsArray, giftsArray } = useContextWrap()
+  const { setWeddingGifts, weddingGifts } = useGiftsStore(
+    useShallow((store) => ({
+      setWeddingGifts: store.setWeddingGifts,
+      weddingGifts: store.weddingGifts,
+    })),
+  )
   const route = useRouter()
   async function deleteGift(giftID: number) {
     const identifier = {
@@ -18,10 +24,7 @@ export default function useDeleteGift() {
       })
 
       if (response.status === 200) {
-        const filteredGiftsArrays = giftsArray.filter(
-          (gift) => gift.id !== giftID,
-        )
-        setGiftsArray(filteredGiftsArrays)
+        setWeddingGifts(weddingGifts.filter((gift) => gift.Id !== giftID))
       }
     } catch (error) {
       AxiosErrorHandler({ error, route })

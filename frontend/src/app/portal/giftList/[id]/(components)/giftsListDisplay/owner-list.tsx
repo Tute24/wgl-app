@@ -6,6 +6,9 @@ import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
 import DeleteModal from '@/components/modals/delete-modal'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
 
 export type objValuesType = {
   productLink: string
@@ -22,25 +25,39 @@ export default function OwnerList() {
     })
   }
   const deleteGift = useDeleteGift()
-  const { giftsArray, weddingData, modalObject, setModalObject } =
-    useContextWrap()
+  const { modalObject, setModalObject } = useContextWrap()
+  const { weddingGifts, listHeader, hasHydrated } = useGiftsStore(
+    useShallow((store) => ({
+      listHeader: store.listHeader,
+      weddingGifts: store.weddingGifts,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
+
+  if (!hasHydrated || !listHeader) {
+    return (
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
+      </div>
+    )
+  }
   return (
     <>
       <div className="flex flex-col items-center gap-3 sm:gap-5">
         <WeddingHeader
           owner={true}
-          weddingDate={weddingData.weddingDate}
-          weddingTitle={weddingData.weddingTitle}
-          id={weddingData.id}
+          weddingDate={listHeader!.listHeaderDate}
+          weddingTitle={listHeader!.listHeaderTitle}
+          id={listHeader!.weddingId}
         />
         <h2 className="font-bold text-amber-800 text-2xl font-inter">
           You're this wedding's owner
         </h2>
         <ul className="flex flex-col text-center items-center m-auto">
-          {giftsArray.map((gift) => (
-            <div id={gift.id.toString()} key={gift.id} className="p-3 w-full">
+          {weddingGifts.map((gift) => (
+            <div id={gift.Id.toString()} key={gift.Id} className="p-3 w-full">
               <GiftCard
-                id={gift.id}
+                id={gift.Id}
                 productLink={gift.productLink}
                 productName={gift.productName}
                 quantity={gift.quantity}

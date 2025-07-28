@@ -1,12 +1,18 @@
 'use client'
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import { useContextWrap } from '@/contextAPI/context'
 import AxiosErrorHandler from '@/functions/axios-error-handler'
-import giftsProps from '@/types-props/giftsProps'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useParams, useRouter } from 'next/navigation'
+import { useShallow } from 'zustand/shallow'
 
 export default function useGiftPresent() {
-  const { setGiftsArray, setSelectedGiftID } = useContextWrap()
+  const { setWeddingGifts, weddingGifts, setSelectedGiftID } = useGiftsStore(
+    useShallow((store) => ({
+      setWeddingGifts: store.setWeddingGifts,
+      weddingGifts: store.weddingGifts,
+      setSelectedGiftID: store.setSelectedGiftID,
+    })),
+  )
   const { id } = useParams()
   const route = useRouter()
   async function giftPresent(giftID: number, quantity: number) {
@@ -26,13 +32,12 @@ export default function useGiftPresent() {
         })
 
         if (response.status === 200) {
-          setSelectedGiftID(0)
-          setGiftsArray((prevGifts: giftsProps[]) =>
-            prevGifts.map((item) =>
-              item.id === sendGiftObj.giftID
+          setSelectedGiftID(null)
+          setWeddingGifts(
+            weddingGifts.map((item) =>
+              item.Id === sendGiftObj.giftID
                 ? {
                     ...item,
-
                     quantity: item.quantity - Number(sendGiftObj.quantity),
                   }
                 : item,

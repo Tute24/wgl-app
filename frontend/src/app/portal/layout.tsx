@@ -5,6 +5,7 @@ import { AuthStoreProvider } from '@/stores/auth/auth.provider'
 import { AuthWrapper } from './(components)/auth-wrapper'
 import React from 'react'
 import { WeddingsStoreProvider } from '@/stores/weddings/weddings.provider'
+import { GiftsStoreProvider } from '@/stores/gifts/gifts.provider'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const metadata: Metadata = {
@@ -20,9 +21,11 @@ export default function PortalLayout({
   return (
     <AuthStoreProvider>
       <WeddingsStoreProvider>
-        <ContextProvider>
-          <AuthWrapper>{children}</AuthWrapper>
-        </ContextProvider>
+        <GiftsStoreProvider>
+          <ContextProvider>
+            <AuthWrapper>{children}</AuthWrapper>
+          </ContextProvider>
+        </GiftsStoreProvider>
       </WeddingsStoreProvider>
     </AuthStoreProvider>
   )

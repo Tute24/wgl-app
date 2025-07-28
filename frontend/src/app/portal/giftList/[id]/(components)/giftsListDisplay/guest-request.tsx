@@ -3,24 +3,41 @@
 import { useContextWrap } from '@/contextAPI/context'
 import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
-import WeddingHeader from '../wedding-header/wedding-header'
 import { Button } from '@/components/ui/button'
+import { useGiftsStore } from '@/stores/gifts/gifts.provider'
+import { useShallow } from 'zustand/shallow'
+import { ClipLoader } from 'react-spinners'
+import WeddingHeader from '../wedding-header/wedding-header'
 
 export default function GuestRequest() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { statusMessage, setNotGuest, weddingHeaderInfo } = useContextWrap()
+  const { statusMessage } = useContextWrap()
   const makeRequest = useMakeRequest(weddingID)
   const route = useRouter()
+  const { listHeader, hasHydrated } = useGiftsStore(
+    useShallow((store) => ({
+      listHeader: store.listHeader,
+      hasHydrated: store.hasHydrated,
+    })),
+  )
+
+  if (!hasHydrated || !listHeader) {
+    return (
+      <div className="flex flex-col m-auto h-screen justify-center items-center">
+        <ClipLoader color="#92400e" size={150} />
+      </div>
+    )
+  }
 
   return (
     <>
       <div className="flex flex-col items-center justify-center text-center gap-5">
         <WeddingHeader
           owner={false}
-          weddingDate={weddingHeaderInfo.weddingDate}
-          weddingTitle={weddingHeaderInfo.weddingTitle}
-          id={weddingHeaderInfo.id}
+          weddingDate={listHeader!.listHeaderDate}
+          weddingTitle={listHeader!.listHeaderTitle}
+          id={listHeader!.weddingId}
         />
         <h2 className="font-bold text-md sm:text-xl text-amber-800 font-inter">
           Not currently a guest of this wedding. <br /> You can make a request
@@ -29,7 +46,6 @@ export default function GuestRequest() {
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8 justify-center text-center w-full font-inter">
           <Button
             onClick={() => {
-              setNotGuest(false)
               route.push('/dashboard')
             }}
             variant="default"
