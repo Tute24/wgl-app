@@ -1,4 +1,5 @@
 /* eslint-disable space-before-function-paren */
+import dayjs from 'dayjs'
 import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 
@@ -181,18 +182,11 @@ export async function getRequestsService(userID: string) {
     throw new AppError('User not found.', 404)
   }
 
-  if (user.weddingsOwn.length === 0) {
-    throw new AppError(
-      'No weddings created by this user were found on the database.',
-      404
-    )
-  }
-
   const ownWeddingsIDArray = user.weddingsOwn.map(
     (weddings) => weddings.id
   )
 
-  const availableRequests = await Promise.all(
+  const requestsHistory = await Promise.all(
     ownWeddingsIDArray.map(async (ids) => {
       return await prisma.requests.findMany({
         where: {
@@ -202,24 +196,13 @@ export async function getRequestsService(userID: string) {
     })
   )
 
-  const existentRequests = availableRequests.every(
-    (reqs) => reqs.length === 0 || reqs[0].pending === false
-  )
-
-  if (existentRequests) {
-    throw new AppError(
-      'There are no pending requests from guests at the time.',
-      404
-    )
-  }
-
-  const effectiveAvailableRequests =
-    availableRequests.filter(
-      (reqs) =>
-        reqs.length !== 0 && reqs[0].pending === true
-    )
   const message = 'Fetch successfull.'
-  const requests = effectiveAvailableRequests
+  const requests = requestsHistory.flatMap((request) =>
+    request.map((req) => ({
+      ...req,
+      madeOn: dayjs(req.madeOn).format('YYYY-MM-DD')
+    }))
+  )
   return {
     message,
     requests

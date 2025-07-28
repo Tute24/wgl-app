@@ -73,8 +73,8 @@ export async function getRequestsController(
   try {
     const response = await getRequestsService(userID)
     const message = response.message
-    const activeRequests = response.requests
-    res.status(200).json({ message, activeRequests })
+    const requests = response.requests
+    res.status(200).json({ message, requests })
   } catch (error) {
     controllerErrorHandler(error, res)
   }
