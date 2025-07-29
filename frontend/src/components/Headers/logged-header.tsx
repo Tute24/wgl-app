@@ -115,18 +115,20 @@ export default function LoggedHeader() {
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuItem>
-                  <button
-                    className="flex flex-row gap-2 items-center"
-                    type="button"
-                    onClick={() => {
-                      setStatusMessage('')
-                    }}
-                  >
-                    <Hourglass size={24} />
-                    <span className="text-lg font-poppins">
-                      Pending Requests
-                    </span>
-                  </button>
+                  <Link href="/portal/requests-history">
+                    <button
+                      className="flex flex-row gap-2 items-center"
+                      type="button"
+                      onClick={() => {
+                        setStatusMessage('')
+                      }}
+                    >
+                      <Hourglass size={24} />
+                      <span className="text-lg font-poppins">
+                        Requests List
+                      </span>
+                    </button>
+                  </Link>
                 </DropdownMenuItem>
                 <Link href="/aboutPage">
                   <DropdownMenuItem>
