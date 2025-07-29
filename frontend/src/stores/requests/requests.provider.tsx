@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext } from 'react'
 import { createRequestsStore, RequestsStore } from './requests.store'
 import { useStore } from 'zustand'
