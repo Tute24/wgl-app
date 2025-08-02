@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { useAcceptRequest } from '../(hooks)/useAcceptRequest'
+import { useDenyRequest } from '../(hooks)/useDenyRequest'
 
 export interface RequestCardProps {
   requestId: number
@@ -11,6 +13,8 @@ export interface RequestCardProps {
 }
 
 export default function RequestCard({ ...RequestCardProps }: RequestCardProps) {
+  const acceptRequest = useAcceptRequest()
+  const denyRequest = useDenyRequest()
   return (
     <Card className=" min-w-[350px] sm:min-w-[450px] pt-6">
       <CardContent>
@@ -41,12 +45,18 @@ export default function RequestCard({ ...RequestCardProps }: RequestCardProps) {
         {RequestCardProps.pending ? (
           <div className="flex flex-row gap-6 items-center justify-start">
             <div>
-              <Button className="bg-green-400 hover:bg-green-500 text-stone-600 font-medium">
+              <Button
+                onClick={() => acceptRequest(RequestCardProps.requestId)}
+                className="bg-green-400 hover:bg-green-500 text-stone-600 font-medium"
+              >
                 Accept Request
               </Button>
             </div>
             <div>
-              <Button className="bg-red-500 hover:bg-red-600 font-medium">
+              <Button
+                onClick={() => denyRequest(RequestCardProps.requestId)}
+                className="bg-red-500 hover:bg-red-600 font-medium"
+              >
                 Deny Request
               </Button>
             </div>
