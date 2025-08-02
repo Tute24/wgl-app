@@ -71,7 +71,7 @@ export default function WeddingsOwn() {
     return (
       <div className="flex justify-center items-center w-full h-full m-auto">
         <h2 className="font-inter font-bold text-center text-stone-700 text-lg">
-          You haven't created any weddings.
+          There are no weddings to exhibit at this section.
         </h2>
       </div>
     )
