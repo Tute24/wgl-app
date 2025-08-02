@@ -4,9 +4,10 @@ import { useRequestsStore } from '@/stores/requests/requests.provider'
 import { useShallow } from 'zustand/shallow'
 
 export default function useGetRequests() {
-  const { setRequests } = useRequestsStore(
+  const { setRequests, setFilteredRequests } = useRequestsStore(
     useShallow((store) => ({
       setRequests: store.setRequests,
+      setFilteredRequests: store.setFilteredRequests,
     })),
   )
   async function getRequests() {
@@ -18,6 +19,7 @@ export default function useGetRequests() {
 
       if (response.status === 200) {
         setRequests(response.data.requests)
+        setFilteredRequests(response.data.requests)
       }
     } catch (error) {
       AxiosErrorHandler({ error })

@@ -4,12 +4,15 @@ import { useRequestsStore } from '@/stores/requests/requests.provider'
 import { useShallow } from 'zustand/shallow'
 
 export function useDenyRequest() {
-  const { requests, setRequests } = useRequestsStore(
-    useShallow((store) => ({
-      requests: store.requests,
-      setRequests: store.setRequests,
-    })),
-  )
+  const { requests, setRequests, filteredRequests, setFilteredRequests } =
+    useRequestsStore(
+      useShallow((store) => ({
+        requests: store.requests,
+        setRequests: store.setRequests,
+        filteredRequests: store.filteredRequests,
+        setFilteredRequests: store.setFilteredRequests,
+      })),
+    )
   async function denyRequest(reqID: number) {
     try {
       const response = await AxiosApi({
@@ -23,6 +26,13 @@ export function useDenyRequest() {
       if (response.status === 200) {
         setRequests(
           requests.map((request) =>
+            request.id === reqID
+              ? { ...request, pending: false, accepted: false }
+              : request,
+          ),
+        )
+        setFilteredRequests(
+          filteredRequests.map((request) =>
             request.id === reqID
               ? { ...request, pending: false, accepted: false }
               : request,
