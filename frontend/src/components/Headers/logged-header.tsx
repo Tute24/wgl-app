@@ -74,7 +74,10 @@ export default function LoggedHeader() {
             </span>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Menu className="text-amber-800" size={28} />
+                <div className="relative">
+                  <Menu className="text-amber-800" size={28} />
+                  <span className="absolute -top-0 -right-0 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
@@ -115,20 +118,23 @@ export default function LoggedHeader() {
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuItem>
-                  <Link href="/portal/requests-history">
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
-                    >
-                      <Hourglass size={24} />
-                      <span className="text-lg font-poppins">
-                        Requests List
-                      </span>
-                    </button>
-                  </Link>
+                  <div className="relative">
+                    <Link href="/portal/requests-history">
+                      <button
+                        className="flex flex-row gap-2 items-center"
+                        type="button"
+                        onClick={() => {
+                          setStatusMessage('')
+                        }}
+                      >
+                        <Hourglass size={24} />
+                        <span className="text-lg font-poppins">
+                          Requests List
+                        </span>
+                        <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                      </button>
+                    </Link>
+                  </div>
                 </DropdownMenuItem>
                 <Link href="/aboutPage">
                   <DropdownMenuItem>
