@@ -6,14 +6,26 @@ import { useShallow } from 'zustand/shallow'
 import { useEffect } from 'react'
 import useGetRequests from './(hooks)/useGetRequests'
 import { ClipLoader } from 'react-spinners'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 export default function RequestsHistoryPage() {
-  const { requests, hasHydrated } = useRequestsStore(
-    useShallow((store) => ({
-      requests: store.requests,
-      hasHydrated: store.hasHydrated,
-    })),
-  )
+  const { requests, hasHydrated, filteredRequests, setFilteredRequests } =
+    useRequestsStore(
+      useShallow((store) => ({
+        requests: store.requests,
+        filteredRequests: store.filteredRequests,
+        setFilteredRequests: store.setFilteredRequests,
+        hasHydrated: store.hasHydrated,
+      })),
+    )
 
   const getRequests = useGetRequests()
 
@@ -37,26 +49,94 @@ export default function RequestsHistoryPage() {
           accepted or denied as well.
         </h2>
       </div>
-      <div className="flex flex-col items-center mx-auto px-4 py-5 gap-5">
-        {requests.length > 0 ? (
-          requests
-            .sort((a, b) => Number(b.pending) - Number(a.pending))
-            .map((request) => (
-              <RequestCard
-                key={request.id}
-                requestId={request.id}
-                madeOn={request.madeOn}
-                weddingTitle={request.weddingTitle}
-                requestByName={request.requestByName}
-                pending={request.pending}
-                accepted={request.accepted}
-              />
-            ))
-        ) : (
-          <div className="font-inter text-stone-700 font-semibold text-xl text-center">
-            No requests to show at the moment.
+      <div className="flex flex-col mx-auto">
+        <div className="flex flex-row items-center mx-auto max-w-[600px] gap-6">
+          <div>
+            <Select
+              onValueChange={(value) => {
+                if (value === 'resetFilter') {
+                  setFilteredRequests(requests)
+                } else {
+                  setFilteredRequests(
+                    requests.filter(
+                      (request) => request.requestByName === value,
+                    ),
+                  )
+                }
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Users Filter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Users</SelectLabel>
+                  <SelectItem value="resetFilter">Reset Filter</SelectItem>
+                  {[...new Set(requests.map((r) => r.requestByName))].map(
+                    (name) => (
+                      <SelectItem key={name} value={name}>
+                        {name}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
-        )}
+          <div>
+            <Select
+              onValueChange={(value) => {
+                if (value === 'resetFilter') {
+                  setFilteredRequests(requests)
+                } else {
+                  setFilteredRequests(
+                    requests.filter(
+                      (request) => request.weddingTitle === value,
+                    ),
+                  )
+                }
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Lists Filter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Lists</SelectLabel>
+                  <SelectItem value="resetFilter">Reset Filter</SelectItem>
+                  {[...new Set(requests.map((r) => r.weddingTitle))].map(
+                    (name) => (
+                      <SelectItem key={name} value={name}>
+                        {name}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <div className="flex flex-col items-center mx-auto px-4 py-5 gap-5">
+          {filteredRequests.length > 0 ? (
+            filteredRequests
+              .sort((a, b) => Number(b.pending) - Number(a.pending))
+              .map((request) => (
+                <RequestCard
+                  key={request.id}
+                  requestId={request.id}
+                  madeOn={request.madeOn}
+                  weddingTitle={request.weddingTitle}
+                  requestByName={request.requestByName}
+                  pending={request.pending}
+                  accepted={request.accepted}
+                />
+              ))
+          ) : (
+            <div className="font-inter text-stone-700 font-semibold text-xl text-center">
+              No requests to show at the moment.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
