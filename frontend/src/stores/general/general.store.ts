@@ -1,0 +1,56 @@
+import { createStore } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
+
+export type GeneralStoreState = {
+  isLoading: boolean
+  statusMessage: string
+  pendingRequests: number
+  username: string
+  hasHydrated: boolean
+}
+
+const defaultInitState: GeneralStoreState = {
+  isLoading: false,
+  statusMessage: '',
+  pendingRequests: 0,
+  username: '',
+  hasHydrated: false,
+}
+
+export type GeneralStoreActions = {
+  setIsLoading: (isLoading: boolean) => void
+  setStatusMessage: (statusMessage: string) => void
+  setPendingRequests: (pendingRequests: number) => void
+  setUsername: (username: string) => void
+  setDefaultInitState: () => void
+}
+
+export type GeneralStore = GeneralStoreState & GeneralStoreActions
+
+export const createGeneralStore = (
+  initState: GeneralStoreState = defaultInitState,
+) => {
+  return createStore<GeneralStore>()(
+    persist(
+      (set) => ({
+        ...initState,
+        setIsLoading: (isLoading) => set((store) => ({ ...store, isLoading })),
+        setStatusMessage: (statusMessage) =>
+          set((store) => ({ ...store, statusMessage })),
+        setPendingRequests: (pendingRequests) =>
+          set((store) => ({ ...store, pendingRequests })),
+        setUsername: (username) => set((store) => ({ ...store, username })),
+        setDefaultInitState: () => set(() => ({ ...defaultInitState })),
+      }),
+      {
+        name: 'general-store',
+        storage: createJSONStorage(() => sessionStorage),
+        onRehydrateStorage: () => (state) => {
+          if (state) {
+            state.hasHydrated = true
+          }
+        },
+      },
+    ),
+  )
+}
