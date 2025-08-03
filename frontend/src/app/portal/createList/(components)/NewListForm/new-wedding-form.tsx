@@ -7,7 +7,6 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { CircleX } from 'lucide-react'
 
-import { Spinner } from '@/components/Common/spinner/spinner'
 import {
   Card,
   CardContent,
@@ -15,11 +14,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+} from '@/app/(components)/ui/card'
+
 import useSubmitList from '../../(hooks)/useSubmitList'
+import { Label } from '@/app/(components)/ui/label'
+import { Input } from '@/app/(components)/ui/input'
+import { Button } from '@/app/(components)/ui/button'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 
 export type listData = z.infer<typeof newListSchema>
 

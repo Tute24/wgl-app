@@ -1,17 +1,22 @@
 import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/app/(components)/ui/card'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 import { Trash2, Gift, Pencil, Boxes, Link2 } from 'lucide-react'
 
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import { Label } from '@/app/(components)/ui/label'
+import { Input } from '@/app/(components)/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/(components)/ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 
 export interface GiftCardProps {
   id: number

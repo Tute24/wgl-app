@@ -1,6 +1,6 @@
 'use client'
 
-import LoggedHeader from '@/components/Headers/logged-header'
+import LoggedHeader from '@/app/(components)/headers/logged-header'
 import { useAuthStore } from '@/stores/auth/auth.provider'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'

@@ -14,7 +14,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/app/(components)/ui/select'
 
 export default function RequestsHistoryPage() {
   const { requests, hasHydrated, filteredRequests, setFilteredRequests } =

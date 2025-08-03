@@ -3,11 +3,11 @@
 import { useContextWrap } from '@/contextAPI/context'
 import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import WeddingHeader from '../wedding-header/wedding-header'
+import { Button } from '@/app/(components)/ui/button'
 
 export default function GuestRequest() {
   const { id } = useParams()

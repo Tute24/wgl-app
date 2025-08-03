@@ -7,17 +7,17 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+} from '@/app/(components)/ui/card'
+import { Input } from '@/app/(components)/ui/input'
+import { Label } from '@/app/(components)/ui/label'
+import { Button } from '@/app/(components)/ui/button'
 
 type usersData = z.infer<typeof usersDataSchema>
 

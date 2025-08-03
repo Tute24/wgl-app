@@ -5,10 +5,10 @@ import NewGiftForm from '../new-gift-form/new-gift-form'
 import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
-import DeleteModal from '@/components/modals/delete-modal'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
+import DeleteModal from '@/app/(components)/modals/delete-modal'
 
 export type objValuesType = {
   productLink: string

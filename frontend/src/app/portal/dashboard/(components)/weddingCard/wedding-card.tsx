@@ -2,7 +2,12 @@
 
 import Link from 'next/link'
 import { useContextWrap } from '@/contextAPI/context'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/app/(components)/ui/card'
 import { Trash2, Gem, CalendarHeart, Link2, ArrowRight } from 'lucide-react'
 
 export interface WeddingCardProps {
