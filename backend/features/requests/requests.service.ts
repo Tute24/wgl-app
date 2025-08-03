@@ -168,7 +168,10 @@ export async function denyRequestService(
   }
 }
 
-export async function getRequestsService(userID: string) {
+export async function getRequestsService(
+  userID: string,
+  onlyPending: boolean = false
+) {
   const user = await prisma.users.findUnique({
     where: {
       id: userID
@@ -196,15 +199,23 @@ export async function getRequestsService(userID: string) {
     })
   )
 
-  const message = 'Fetch successfull.'
   const requests = requestsHistory.flatMap((request) =>
     request.map((req) => ({
       ...req,
       madeOn: dayjs(req.madeOn).format('YYYY-MM-DD')
     }))
   )
+
+  if (onlyPending) {
+    const pendingRequests = requests.filter(
+      (request) => request.pending === true
+    ).length
+
+    return {
+      pendingRequests
+    }
+  }
   return {
-    message,
     requests
   }
 }

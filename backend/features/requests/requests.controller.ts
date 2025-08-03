@@ -72,9 +72,23 @@ export async function getRequestsController(
 
   try {
     const response = await getRequestsService(userID)
-    const message = response.message
     const requests = response.requests
-    res.status(200).json({ message, requests })
+    res.status(200).json({ requests })
+  } catch (error) {
+    controllerErrorHandler(error, res)
+  }
+}
+
+export async function getPendingRequestsController(
+  req: CustomRequest,
+  res: Response
+) {
+  const userID = req.authUser!.id
+
+  try {
+    const response = await getRequestsService(userID, true)
+    const pendingRequests = response.pendingRequests
+    res.status(200).json({ pendingRequests })
   } catch (error) {
     controllerErrorHandler(error, res)
   }

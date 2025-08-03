@@ -5,7 +5,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="grid lg:grid-cols-2 gap-5 lg:gap-20 items-center md:items-start w-full pb-5 md:px-20 xl:px-40">
-        <div className="flex flex-col gap-6 items-center">
+        <div className="flex flex-col gap-6 items-center min-h-[250px]">
           <h1 className="font-bold font-poppins text-amber-800 text-2xl">
             My Weddings:
           </h1>
