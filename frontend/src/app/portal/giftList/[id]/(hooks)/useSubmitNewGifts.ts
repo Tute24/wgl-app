@@ -1,6 +1,6 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import { useParams, useRouter } from 'next/navigation'

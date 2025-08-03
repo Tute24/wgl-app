@@ -1,7 +1,7 @@
 'use client'
 
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { useUsernameStore } from '@/stores/zustand-store'
 import { useRouter } from 'next/navigation'

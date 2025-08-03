@@ -1,6 +1,6 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useRouter } from 'next/navigation'
 
 export default function useMakeRequest(id: number) {

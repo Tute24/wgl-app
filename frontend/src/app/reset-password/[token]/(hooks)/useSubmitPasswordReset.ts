@@ -4,7 +4,7 @@ import { useContextWrap } from '@/contextAPI/context'
 import { newPassword } from '../page'
 import { useParams } from 'next/navigation'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 
 export default function useSubmitPasswordReset() {
   const { setStatusMessage } = useContextWrap()

@@ -1,5 +1,5 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useRequestsStore } from '@/stores/requests/requests.provider'
 import { useShallow } from 'zustand/shallow'
 

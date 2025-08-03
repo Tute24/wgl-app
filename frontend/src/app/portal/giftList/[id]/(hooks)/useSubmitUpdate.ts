@@ -1,4 +1,4 @@
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useRouter } from 'next/navigation'
 import { objValuesType } from '../(components)/giftsListDisplay/owner-list'
 import { AxiosApi } from '@/common/axios-api/axios-api'

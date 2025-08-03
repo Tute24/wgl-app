@@ -1,6 +1,6 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
 import { useContextWrap } from '@/contextAPI/context'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { WeddingsProps } from '@/stores/weddings/weddings.store'
 import newListSchema from '@/zodSchemas/newListSchema'

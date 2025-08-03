@@ -1,6 +1,6 @@
 'use client'
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useParams, useRouter } from 'next/navigation'
 import { useShallow } from 'zustand/shallow'

@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { emailSchema } from '../page'
 import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 
 export default function useSendPasswordResetRequest() {
   type userEmail = z.infer<typeof emailSchema>

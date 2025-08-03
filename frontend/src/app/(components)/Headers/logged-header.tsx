@@ -1,10 +1,7 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
-import useLogOut from '@/functions/useSignOut'
+import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut'
 import Link from 'next/link'
-import { useStore } from 'zustand'
-import { useUsernameStore } from '@/stores/zustand-store'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/app/(components)/ui/dropdown-menu'
 import {
   Menu,
   LogOut,
@@ -22,11 +19,25 @@ import {
   ShieldQuestionIcon,
 } from 'lucide-react'
 import Image from 'next/image'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
+import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests'
+import { useEffect } from 'react'
 
 export default function LoggedHeader() {
-  const { setNotGuest, setStatusMessage } = useContextWrap()
+  const getPendingRequests = useGetPendingRequests()
+  useEffect(() => {
+    getPendingRequests()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const logOut = useLogOut()
-  const username = useStore(useUsernameStore, (state) => state.username)
+  const { setStatusMessage, username, pendingRequests } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+      username: store.username,
+      pendingRequests: store.pendingRequests,
+    })),
+  )
   return (
     <>
       <div className="py-5 bg-stone-100 font-poppins">
@@ -45,7 +56,6 @@ export default function LoggedHeader() {
             <Link href="/portal/dashboard">
               <button
                 onClick={() => {
-                  setNotGuest(false)
                   setStatusMessage('')
                 }}
                 type="button"
@@ -76,7 +86,9 @@ export default function LoggedHeader() {
               <DropdownMenuTrigger>
                 <div className="relative">
                   <Menu className="text-amber-800" size={28} />
-                  <span className="absolute -top-0 -right-0 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                  {pendingRequests > 0 && (
+                    <span className="absolute -top-0 -right-0 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                  )}
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -131,7 +143,9 @@ export default function LoggedHeader() {
                         <span className="text-lg font-poppins">
                           Requests List
                         </span>
-                        <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                        {pendingRequests > 0 && (
+                          <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
+                        )}
                       </button>
                     </Link>
                   </div>
