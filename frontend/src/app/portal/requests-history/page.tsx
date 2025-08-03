@@ -3,7 +3,7 @@
 import { useRequestsStore } from '@/stores/requests/requests.provider'
 import RequestCard from './(components)/request-card'
 import { useShallow } from 'zustand/shallow'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useGetRequests from './(hooks)/useGetRequests'
 import { ClipLoader } from 'react-spinners'
 import {
@@ -27,11 +27,29 @@ export default function RequestsHistoryPage() {
       })),
     )
 
+  const [selectedUser, setSelectedUser] = useState('resetFilter')
+  const [selectedWedding, setSelectedWedding] = useState('resetFilter')
+
   const getRequests = useGetRequests()
 
   useEffect(() => {
     getRequests()
-  }, [getRequests])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    let filtered = requests
+
+    if (selectedUser !== 'resetFilter') {
+      filtered = filtered.filter((r) => r.requestByName === selectedUser)
+    }
+
+    if (selectedWedding !== 'resetFilter') {
+      filtered = filtered.filter((r) => r.weddingTitle === selectedWedding)
+    }
+
+    setFilteredRequests(filtered)
+  }, [selectedUser, selectedWedding, requests, setFilteredRequests])
 
   if (!hasHydrated) {
     return (
@@ -52,26 +70,14 @@ export default function RequestsHistoryPage() {
       <div className="flex flex-col mx-auto">
         <div className="flex flex-row items-center mx-auto max-w-[600px] gap-6">
           <div>
-            <Select
-              onValueChange={(value) => {
-                if (value === 'resetFilter') {
-                  setFilteredRequests(requests)
-                } else {
-                  setFilteredRequests(
-                    requests.filter(
-                      (request) => request.requestByName === value,
-                    ),
-                  )
-                }
-              }}
-            >
-              <SelectTrigger className="w-[180px]">
+            <Select onValueChange={(value) => setSelectedUser(value)}>
+              <SelectTrigger className="w-[150px] sm:w-[180px] !text-amber-800">
                 <SelectValue placeholder="Users Filter" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Users</SelectLabel>
-                  <SelectItem value="resetFilter">Reset Filter</SelectItem>
+                  <SelectItem value="resetFilter">All Users</SelectItem>
                   {[...new Set(requests.map((r) => r.requestByName))].map(
                     (name) => (
                       <SelectItem key={name} value={name}>
@@ -84,26 +90,14 @@ export default function RequestsHistoryPage() {
             </Select>
           </div>
           <div>
-            <Select
-              onValueChange={(value) => {
-                if (value === 'resetFilter') {
-                  setFilteredRequests(requests)
-                } else {
-                  setFilteredRequests(
-                    requests.filter(
-                      (request) => request.weddingTitle === value,
-                    ),
-                  )
-                }
-              }}
-            >
-              <SelectTrigger className="w-[180px]">
+            <Select onValueChange={(value) => setSelectedWedding(value)}>
+              <SelectTrigger className="w-[150px] sm:w-[180px] !text-amber-800">
                 <SelectValue placeholder="Lists Filter" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Lists</SelectLabel>
-                  <SelectItem value="resetFilter">Reset Filter</SelectItem>
+                  <SelectItem value="resetFilter">All Lists</SelectItem>
                   {[...new Set(requests.map((r) => r.weddingTitle))].map(
                     (name) => (
                       <SelectItem key={name} value={name}>
@@ -116,7 +110,7 @@ export default function RequestsHistoryPage() {
             </Select>
           </div>
         </div>
-        <div className="flex flex-col items-center mx-auto px-4 py-5 gap-5">
+        <div className="flex flex-col items-center mx-auto py-5 gap-5">
           {filteredRequests.length > 0 ? (
             filteredRequests
               .sort((a, b) => Number(b.pending) - Number(a.pending))
