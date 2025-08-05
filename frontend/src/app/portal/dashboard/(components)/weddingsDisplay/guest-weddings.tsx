@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function WeddingsGuest() {
   const getGuestWeddings = useGetGuestWeddings()
@@ -21,8 +22,13 @@ export default function WeddingsGuest() {
       hasHydrated: store.hasHydrated,
     })),
   )
+  const { isRendering } = useGeneralStore(
+    useShallow((store) => ({
+      isRendering: store.isRendering,
+    })),
+  )
 
-  if (!hasHydrated)
+  if (!hasHydrated || isRendering)
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />

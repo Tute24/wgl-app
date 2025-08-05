@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from '../ui/dialog'
 import { Button } from '../ui/button'
+import { Spinner } from '../Common/spinner/spinner'
 
 export interface deleteModalProps {
   itemName: string
@@ -16,6 +17,7 @@ export interface deleteModalProps {
   isOpen: boolean
   id: number
   ctaText: string
+  isLoading: boolean
 }
 
 export default function DeleteModal({
@@ -25,6 +27,7 @@ export default function DeleteModal({
   isOpen,
   id,
   ctaText,
+  isLoading,
 }: deleteModalProps) {
   const [open, setOpen] = useState<boolean>(false)
 
@@ -70,6 +73,7 @@ export default function DeleteModal({
                 setOpen(false)
                 onCloseModal()
               }}
+              disabled={isLoading}
             >
               Cancel
             </Button>
@@ -80,8 +84,9 @@ export default function DeleteModal({
                 onCloseModal()
               }}
               className="bg-red-600 hover:bg-red-500"
+              disabled={isLoading}
             >
-              {ctaText}
+              {isLoading ? <Spinner /> : ctaText}
             </Button>
           </DialogFooter>
         </DialogContent>
