@@ -2,6 +2,7 @@ import { AxiosApi } from '@/common/axios-api/axios-api'
 import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useRequestsStore } from '@/stores/requests/requests.provider'
 import { useShallow } from 'zustand/shallow'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export function useDenyRequest() {
   const { requests, setRequests, filteredRequests, setFilteredRequests } =
@@ -13,8 +14,15 @@ export function useDenyRequest() {
         setFilteredRequests: store.setFilteredRequests,
       })),
     )
+  const { setIsLoading } = useGeneralStore(
+    useShallow((store) => ({
+      setIsLoading: store.setIsLoading,
+    })),
+  )
+
   async function denyRequest(reqID: number) {
     try {
+      setIsLoading(true)
       const response = await AxiosApi({
         httpMethod: 'post',
         data: {
@@ -41,6 +49,8 @@ export function useDenyRequest() {
       }
     } catch (error) {
       AxiosErrorHandler({ error })
+    } finally {
+      setIsLoading(false)
     }
   }
   return denyRequest

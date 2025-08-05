@@ -2,6 +2,7 @@ import { Button } from '@/app/(components)/ui/button'
 import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card'
 import { useAcceptRequest } from '../(hooks)/useAcceptRequest'
 import { useDenyRequest } from '../(hooks)/useDenyRequest'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 
 export interface RequestCardProps {
   requestId: number
@@ -10,6 +11,7 @@ export interface RequestCardProps {
   requestByName: string
   pending: boolean
   accepted: boolean
+  isLoading: boolean
 }
 
 export default function RequestCard({ ...RequestCardProps }: RequestCardProps) {
@@ -48,16 +50,18 @@ export default function RequestCard({ ...RequestCardProps }: RequestCardProps) {
               <Button
                 onClick={() => acceptRequest(RequestCardProps.requestId)}
                 className="bg-green-400 hover:bg-green-500 text-stone-600 font-medium"
+                disabled={RequestCardProps.isLoading}
               >
-                Accept Request
+                {RequestCardProps.isLoading ? <Spinner /> : 'Accept Request'}
               </Button>
             </div>
             <div>
               <Button
                 onClick={() => denyRequest(RequestCardProps.requestId)}
                 className="bg-red-500 hover:bg-red-600 font-medium"
+                disabled={RequestCardProps.isLoading}
               >
-                Deny Request
+                {RequestCardProps.isLoading ? <Spinner /> : 'Deny Request'}
               </Button>
             </div>
           </div>

@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/(components)/ui/select'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function RequestsHistoryPage() {
   const { requests, hasHydrated, filteredRequests, setFilteredRequests } =
@@ -26,6 +27,12 @@ export default function RequestsHistoryPage() {
         hasHydrated: store.hasHydrated,
       })),
     )
+  const { isRendering, isLoading } = useGeneralStore(
+    useShallow((store) => ({
+      isLoading: store.isLoading,
+      isRendering: store.isRendering,
+    })),
+  )
 
   const [selectedUser, setSelectedUser] = useState('resetFilter')
   const [selectedWedding, setSelectedWedding] = useState('resetFilter')
@@ -51,7 +58,7 @@ export default function RequestsHistoryPage() {
     setFilteredRequests(filtered)
   }, [selectedUser, selectedWedding, requests, setFilteredRequests])
 
-  if (!hasHydrated) {
+  if (!hasHydrated || isRendering) {
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
@@ -123,6 +130,7 @@ export default function RequestsHistoryPage() {
                   requestByName={request.requestByName}
                   pending={request.pending}
                   accepted={request.accepted}
+                  isLoading={isLoading}
                 />
               ))
           ) : (
