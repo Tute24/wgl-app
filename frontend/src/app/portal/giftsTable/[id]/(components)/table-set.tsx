@@ -7,6 +7,7 @@ import { DataTable } from './data-table'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { ClipLoader } from 'react-spinners'
 import { useShallow } from 'zustand/shallow'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function TableSet() {
   const { giftedProducts, listHeader, hasHydrated } = useGiftsStore(
@@ -16,11 +17,16 @@ export default function TableSet() {
       hasHydrated: store.hasHydrated,
     })),
   )
-
+  const { isRendering } = useGeneralStore(
+    useShallow((store) => ({
+      isRendering: store.isRendering,
+    })),
+  )
   const getGiftedProducts = useGetGiftedProducts()
   useEffect(() => {
     getGiftedProducts()
-  }, [getGiftedProducts])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!hasHydrated || !listHeader) {
     return (
@@ -43,7 +49,13 @@ export default function TableSet() {
         </p>
       </div>
       <div className="container mx-auto px-2 sm:px-10 py-10">
-        <DataTable columns={columns} data={giftedProducts} />
+        {isRendering ? (
+          <div className="flex flex-col m-auto h-screen justify-center items-center">
+            <ClipLoader color="#92400e" size={150} />
+          </div>
+        ) : (
+          <DataTable columns={columns} data={giftedProducts} />
+        )}
       </div>
     </div>
   )

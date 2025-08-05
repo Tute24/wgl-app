@@ -8,6 +8,7 @@ import {
 } from '@/stores/gifts/gifts.store'
 import { useParams, useRouter } from 'next/navigation'
 import { useShallow } from 'zustand/shallow'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export type giftedProductsType = {
   id: number
@@ -30,9 +31,15 @@ export default function useGetGiftedProducts() {
       setListHeader: store.setListHeader,
     })),
   )
+  const { setIsRendering } = useGeneralStore(
+    useShallow((store) => ({
+      setIsRendering: store.setIsRendering,
+    })),
+  )
 
   async function getGiftedProducts() {
     try {
+      setIsRendering(true)
       const response = await AxiosApi({
         httpMethod: 'get',
         route: '/gifts/gifted-products',
@@ -52,6 +59,8 @@ export default function useGetGiftedProducts() {
       }
     } catch (error) {
       AxiosErrorHandler({ error, route })
+    } finally {
+      setIsRendering(false)
     }
   }
   return getGiftedProducts
