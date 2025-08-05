@@ -3,6 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 export type GeneralStoreState = {
   isLoading: boolean
+  isRendering: boolean
   statusMessage: string
   pendingRequests: number
   username: string
@@ -11,6 +12,7 @@ export type GeneralStoreState = {
 
 const defaultInitState: GeneralStoreState = {
   isLoading: false,
+  isRendering: false,
   statusMessage: '',
   pendingRequests: 0,
   username: '',
@@ -19,6 +21,7 @@ const defaultInitState: GeneralStoreState = {
 
 export type GeneralStoreActions = {
   setIsLoading: (isLoading: boolean) => void
+  setIsRendering: (isRendering: boolean) => void
   setStatusMessage: (statusMessage: string) => void
   setPendingRequests: (pendingRequests: number) => void
   setUsername: (username: string) => void
@@ -35,6 +38,8 @@ export const createGeneralStore = (
       (set) => ({
         ...initState,
         setIsLoading: (isLoading) => set((store) => ({ ...store, isLoading })),
+        setIsRendering: (isRendering) =>
+          set((store) => ({ ...store, isRendering })),
         setStatusMessage: (statusMessage) =>
           set((store) => ({ ...store, statusMessage })),
         setPendingRequests: (pendingRequests) =>
