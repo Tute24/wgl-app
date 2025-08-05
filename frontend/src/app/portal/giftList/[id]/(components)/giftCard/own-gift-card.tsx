@@ -192,6 +192,7 @@ export default function OwnGiftCard({
                   onClick={() => {
                     setSelectedGiftID(0)
                   }}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>

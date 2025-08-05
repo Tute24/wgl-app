@@ -9,6 +9,7 @@ import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import DeleteModal from '@/app/(components)/modals/delete-modal'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export type objValuesType = {
   productLink: string
@@ -31,6 +32,11 @@ export default function OwnerList() {
       listHeader: store.listHeader,
       weddingGifts: store.weddingGifts,
       hasHydrated: store.hasHydrated,
+    })),
+  )
+  const { isLoading } = useGeneralStore(
+    useShallow((store) => ({
+      isLoading: store.isLoading,
     })),
   )
 
@@ -77,6 +83,7 @@ export default function OwnerList() {
           onCloseModal={closeModal}
           onDelete={deleteGift}
           ctaText="Delete Gift"
+          isLoading={isLoading}
         />
       </div>
     </>

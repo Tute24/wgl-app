@@ -151,6 +151,7 @@ export default function GuestGiftCard({
                     onClick={() => {
                       setSelectedGiftID(0)
                     }}
+                    disabled={isSubmitting}
                   >
                     Cancel
                   </Button>

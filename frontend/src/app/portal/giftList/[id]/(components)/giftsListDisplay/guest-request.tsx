@@ -8,6 +8,8 @@ import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import WeddingHeader from '../wedding-header/wedding-header'
 import { Button } from '@/app/(components)/ui/button'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 
 export default function GuestRequest() {
   const { id } = useParams()
@@ -19,6 +21,11 @@ export default function GuestRequest() {
     useShallow((store) => ({
       listHeader: store.listHeader,
       hasHydrated: store.hasHydrated,
+    })),
+  )
+  const { isLoading } = useGeneralStore(
+    useShallow((store) => ({
+      isLoading: store.isLoading,
     })),
   )
 
@@ -56,8 +63,9 @@ export default function GuestRequest() {
           <Button
             onClick={makeRequest}
             className="min-w-[225px] text-md bg-paleGold text-amber-800 font-bold hover:bg-mutedTaupe hover:text-champagneGold"
+            disabled={isLoading}
           >
-            Request access to the list
+            {isLoading ? <Spinner /> : 'Request access to the list'}
           </Button>
         </div>
         <div className="flex flex-col justify-center items-center text-center font-inter">
