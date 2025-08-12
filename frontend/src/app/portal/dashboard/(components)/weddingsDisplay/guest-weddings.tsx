@@ -22,9 +22,10 @@ export default function WeddingsGuest() {
       hasHydrated: store.hasHydrated,
     })),
   )
-  const { isRendering } = useGeneralStore(
+  const { isRendering, setModalObject } = useGeneralStore(
     useShallow((store) => ({
       isRendering: store.isRendering,
+      setModalObject: store.setModalObject,
     })),
   )
 
@@ -46,6 +47,7 @@ export default function WeddingsGuest() {
                 title={wedding.weddingTitle}
                 date={wedding.weddingDate.replace(/-/g, '/')}
                 isOwn={false}
+                setModalObject={setModalObject}
               />
             </li>
           ))}

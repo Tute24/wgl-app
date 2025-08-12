@@ -1,6 +1,5 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import useGetOwnWeddings from '../../(hooks)/useGetOwnWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
@@ -25,20 +24,21 @@ export default function WeddingsOwn() {
       isOpen: false,
     })
   }
-  const { modalObject, setModalObject } = useContextWrap()
-  const { id, name, isOpen } = modalObject
   const { ownWeddings, hasHydrated } = useWeddingsStore(
     useShallow((store) => ({
       ownWeddings: store.ownWeddings,
       hasHydrated: store.hasHydrated,
     })),
   )
-  const { isRendering, isLoading } = useGeneralStore(
-    useShallow((store) => ({
-      isRendering: store.isRendering,
-      isLoading: store.isLoading,
-    })),
-  )
+  const { isRendering, isLoading, modalObject, setModalObject } =
+    useGeneralStore(
+      useShallow((store) => ({
+        isRendering: store.isRendering,
+        isLoading: store.isLoading,
+        modalObject: store.modalObject,
+        setModalObject: store.setModalObject,
+      })),
+    )
 
   if (!hasHydrated || isRendering)
     return (
@@ -58,17 +58,18 @@ export default function WeddingsOwn() {
                 title={wedding.weddingTitle}
                 date={wedding.weddingDate.replace(/-/g, '/')}
                 isOwn={true}
+                setModalObject={setModalObject}
               />
             </li>
           ))}
         </ul>
         {modalObject && (
           <DeleteModal
-            itemName={name}
+            itemName={modalObject.name}
             onDelete={deleteWedding}
             onCloseModal={closeModal}
-            isOpen={isOpen}
-            id={id}
+            isOpen={modalObject.isOpen}
+            id={modalObject.id}
             ctaText="Delete Wedding"
             isLoading={isLoading}
           />

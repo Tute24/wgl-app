@@ -1,4 +1,3 @@
-import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import {
@@ -17,12 +16,14 @@ import { Button } from '@/app/(components)/ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import { generalModalProps } from '@/types-props/general-modal-props'
 
 export interface GiftCardProps {
   id: number
   productName: string
   quantity: number
   productLink: string
+  setModalObject: (modalObject: generalModalProps) => void
 }
 
 const updateSchema = z.object({
@@ -38,6 +39,7 @@ export default function OwnGiftCard({
   productLink,
   productName,
   quantity,
+  setModalObject,
 }: GiftCardProps) {
   const {
     register,
@@ -48,7 +50,6 @@ export default function OwnGiftCard({
     resolver: zodResolver(updateSchema),
   })
   const [selectedGiftID, setSelectedGiftID] = useState(0)
-  const { setModalObject } = useContextWrap()
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,

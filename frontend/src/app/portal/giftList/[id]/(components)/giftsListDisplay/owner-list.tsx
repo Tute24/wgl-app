@@ -1,6 +1,5 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import NewGiftForm from '../new-gift-form/new-gift-form'
 import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
@@ -26,7 +25,6 @@ export default function OwnerList() {
     })
   }
   const deleteGift = useDeleteGift()
-  const { modalObject, setModalObject } = useContextWrap()
   const { weddingGifts, listHeader, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       listHeader: store.listHeader,
@@ -34,9 +32,11 @@ export default function OwnerList() {
       hasHydrated: store.hasHydrated,
     })),
   )
-  const { isLoading } = useGeneralStore(
+  const { isLoading, modalObject, setModalObject } = useGeneralStore(
     useShallow((store) => ({
       isLoading: store.isLoading,
+      modalObject: store.modalObject,
+      setModalObject: store.setModalObject,
     })),
   )
 
@@ -67,6 +67,7 @@ export default function OwnerList() {
                 productLink={gift.productLink}
                 productName={gift.productName}
                 quantity={gift.quantity}
+                setModalObject={setModalObject}
               />
             </div>
           ))}
@@ -76,15 +77,17 @@ export default function OwnerList() {
         </ul>
       </div>
       <div>
-        <DeleteModal
-          itemName={modalObject.name}
-          isOpen={modalObject.isOpen}
-          id={modalObject.id}
-          onCloseModal={closeModal}
-          onDelete={deleteGift}
-          ctaText="Delete Gift"
-          isLoading={isLoading}
-        />
+        {modalObject && (
+          <DeleteModal
+            itemName={modalObject.name}
+            isOpen={modalObject.isOpen}
+            id={modalObject.id}
+            onCloseModal={closeModal}
+            onDelete={deleteGift}
+            ctaText="Delete Gift"
+            isLoading={isLoading}
+          />
+        )}
       </div>
     </>
   )
