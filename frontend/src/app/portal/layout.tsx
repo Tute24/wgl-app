@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import '../../app/globals.css'
-import { ContextProvider } from '../../contextAPI/context'
 import { AuthStoreProvider } from '@/stores/auth/auth.provider'
 import { AuthWrapper } from './(components)/auth-wrapper'
 import React from 'react'
@@ -24,9 +23,7 @@ export default function PortalLayout({
       <WeddingsStoreProvider>
         <GiftsStoreProvider>
           <RequestsStoreProvider>
-            <ContextProvider>
-              <AuthWrapper>{children}</AuthWrapper>
-            </ContextProvider>
+            <AuthWrapper>{children}</AuthWrapper>
           </RequestsStoreProvider>
         </GiftsStoreProvider>
       </WeddingsStoreProvider>
