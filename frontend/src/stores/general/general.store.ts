@@ -1,3 +1,4 @@
+import { generalModalProps } from '@/types-props/general-modal-props'
 import { createStore } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -7,6 +8,7 @@ export type GeneralStoreState = {
   statusMessage: string
   pendingRequests: number
   username: string
+  modalObject: generalModalProps | null
   hasHydrated: boolean
 }
 
@@ -16,6 +18,7 @@ const defaultInitState: GeneralStoreState = {
   statusMessage: '',
   pendingRequests: 0,
   username: '',
+  modalObject: null,
   hasHydrated: false,
 }
 
@@ -25,6 +28,7 @@ export type GeneralStoreActions = {
   setStatusMessage: (statusMessage: string) => void
   setPendingRequests: (pendingRequests: number) => void
   setUsername: (username: string) => void
+  setModalObject: (modalObject: generalModalProps | null) => void
   setDefaultInitState: () => void
 }
 
@@ -45,6 +49,8 @@ export const createGeneralStore = (
         setPendingRequests: (pendingRequests) =>
           set((store) => ({ ...store, pendingRequests })),
         setUsername: (username) => set((store) => ({ ...store, username })),
+        setModalObject: (modalObject) =>
+          set((store) => ({ ...store, modalObject })),
         setDefaultInitState: () => set(() => ({ ...defaultInitState })),
       }),
       {
