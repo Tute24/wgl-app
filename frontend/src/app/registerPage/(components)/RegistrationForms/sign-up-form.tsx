@@ -1,7 +1,6 @@
 'use client'
 
 import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
-import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -18,11 +17,17 @@ import {
 import { Input } from '@/app/(components)/ui/input'
 import { Label } from '@/app/(components)/ui/label'
 import { Button } from '@/app/(components)/ui/button'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 type usersData = z.infer<typeof usersDataSchema>
 
 export default function RegisterForm() {
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
   const {
     register,
     handleSubmit,

@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useContextWrap } from '@/contextAPI/context'
 import useSignIn from '@/app/(auxiliary-functions)/hooks/useSignIn'
 import { z } from 'zod'
 import signInSchema from '@/zodSchemas/signInSchema'
@@ -18,6 +17,8 @@ import {
   CardTitle,
 } from '../ui/card'
 import { Button } from '../ui/button'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export type usersSignType = {
   email: string
@@ -27,7 +28,11 @@ export type usersSignType = {
 export type signInData = z.infer<typeof signInSchema>
 
 export default function SignInForm() {
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
   const {
     register,
     handleSubmit,

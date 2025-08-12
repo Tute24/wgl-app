@@ -1,6 +1,5 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
@@ -14,7 +13,6 @@ import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 export default function GuestRequest() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { statusMessage } = useContextWrap()
   const makeRequest = useMakeRequest(weddingID)
   const route = useRouter()
   const { listHeader, hasHydrated } = useGiftsStore(
@@ -23,9 +21,10 @@ export default function GuestRequest() {
       hasHydrated: store.hasHydrated,
     })),
   )
-  const { isLoading } = useGeneralStore(
+  const { isLoading, statusMessage } = useGeneralStore(
     useShallow((store) => ({
       isLoading: store.isLoading,
+      statusMessage: store.statusMessage,
     })),
   )
 

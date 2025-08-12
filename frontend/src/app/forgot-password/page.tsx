@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest'
-import { useContextWrap } from '@/contextAPI/context'
 import UnLoggedHeader from '../(components)/headers/unlogged-header'
 import InputContainer from '../(components)/Common/input-container/input-container'
 import UserButton from '../(components)/Common/buttons/user-button/user-button'
 import { Spinner } from '../(components)/Common/spinner/spinner'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export const emailSchema = z.object({
   email: z.string().email(),
@@ -24,7 +25,11 @@ export default function SendMail() {
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
   })
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
   const sendPasswordResetRequest = useSendPasswordResetRequest()
   const onSubmit: SubmitHandler<userEmail> = sendPasswordResetRequest
   return (

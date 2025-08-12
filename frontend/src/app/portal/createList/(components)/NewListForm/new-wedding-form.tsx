@@ -1,6 +1,5 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import newListSchema from '@/zodSchemas/newListSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
@@ -21,6 +20,8 @@ import { Label } from '@/app/(components)/ui/label'
 import { Input } from '@/app/(components)/ui/input'
 import { Button } from '@/app/(components)/ui/button'
 import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export type listData = z.infer<typeof newListSchema>
 
@@ -44,7 +45,11 @@ export default function GiftListForm() {
     reset()
     remove()
   }
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
   return (
     <div className="flex flex-col items-center justify-center m-auto pt-20 px-4 font-inter pb-10">
       <Card className="border-amber-800 hover:shadow-md hover:shadow-amber-800">

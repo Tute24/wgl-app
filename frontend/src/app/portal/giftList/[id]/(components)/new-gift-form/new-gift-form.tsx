@@ -16,7 +16,8 @@ import { Button } from '@/app/(components)/ui/button'
 import { Label } from '@/app/(components)/ui/label'
 import { CircleX } from 'lucide-react'
 import { Input } from '@/app/(components)/ui/input'
-import { useContextWrap } from '@/contextAPI/context'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
@@ -31,7 +32,11 @@ export default function NewGiftForm() {
     resolver: zodResolver(newGiftsSchema),
   })
 
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
 
   const { fields, append, remove } = useFieldArray<newGiftsData>({
     control,
