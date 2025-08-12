@@ -5,10 +5,9 @@ import { Boxes, Gift, Link2 } from 'lucide-react'
 import Link from 'next/link'
 
 import { z } from 'zod'
-import { useContextWrap } from '@/contextAPI/context'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/app/(components)/ui/button'
 import { Label } from '@/app/(components)/ui/label'
 import { Input } from '@/app/(components)/ui/input'
@@ -26,7 +25,7 @@ export default function GuestGiftCard({
   productName,
   quantity,
 }: GiftCardProps) {
-  const { setSelectedGiftID, selectedGiftID } = useContextWrap()
+  const [selectedGiftID, setSelectedGiftID] = useState(0)
   const {
     register,
     handleSubmit,

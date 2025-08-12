@@ -47,7 +47,8 @@ export default function OwnGiftCard({
   } = useForm<updateData>({
     resolver: zodResolver(updateSchema),
   })
-  const { setModalObject, setSelectedGiftID, selectedGiftID } = useContextWrap()
+  const [selectedGiftID, setSelectedGiftID] = useState(0)
+  const { setModalObject } = useContextWrap()
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
