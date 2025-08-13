@@ -1,12 +1,17 @@
 import { z } from 'zod'
 import { emailSchema } from '../page'
-import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSendPasswordResetRequest() {
   type userEmail = z.infer<typeof emailSchema>
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+    })),
+  )
   const apiURL = process.env.NEXT_PUBLIC_API_URL
 
   async function sendPasswordResetRequest(data: userEmail) {

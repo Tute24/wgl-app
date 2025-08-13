@@ -1,7 +1,8 @@
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useRequestsStore } from '@/stores/requests/requests.provider'
 import { useShallow } from 'zustand/shallow'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function useGetRequests() {
   const { setRequests, setFilteredRequests } = useRequestsStore(
@@ -10,8 +11,14 @@ export default function useGetRequests() {
       setFilteredRequests: store.setFilteredRequests,
     })),
   )
+  const { setIsRendering } = useGeneralStore(
+    useShallow((store) => ({
+      setIsRendering: store.setIsRendering,
+    })),
+  )
   async function getRequests() {
     try {
+      setIsRendering(true)
       const response = await AxiosApi({
         httpMethod: 'get',
         route: '/requests/get',
@@ -23,6 +30,8 @@ export default function useGetRequests() {
       }
     } catch (error) {
       AxiosErrorHandler({ error })
+    } finally {
+      setIsRendering(false)
     }
   }
   return getRequests

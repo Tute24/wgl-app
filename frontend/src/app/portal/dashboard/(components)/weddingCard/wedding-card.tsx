@@ -1,15 +1,21 @@
 'use client'
 
 import Link from 'next/link'
-import { useContextWrap } from '@/contextAPI/context'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/app/(components)/ui/card'
 import { Trash2, Gem, CalendarHeart, Link2, ArrowRight } from 'lucide-react'
+import { generalModalProps } from '@/types-props/general-modal-props'
 
 export interface WeddingCardProps {
   id: number
   title: string
   date: string
   isOwn: boolean
+  setModalObject: (modalObject: generalModalProps) => void
 }
 
 export default function WeddingCard({
@@ -17,8 +23,8 @@ export default function WeddingCard({
   title,
   date,
   isOwn,
+  setModalObject,
 }: WeddingCardProps) {
-  const { setModalObject } = useContextWrap()
   return (
     <Card className="w-full sm:min-w-[400px] border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
       <CardHeader className="flex items-end text-center px-4 pt-3 pb-1 mx-1.5">

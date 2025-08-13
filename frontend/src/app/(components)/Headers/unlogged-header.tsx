@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useContextWrap } from '@/contextAPI/context'
 import Image from 'next/image'
 import { Menu, ShieldQuestionIcon, LogIn, UserPlus } from 'lucide-react'
 import {
@@ -12,9 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function UnLoggedHeader() {
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+    })),
+  )
   return (
     <>
       <div className="flex flex-row py-5 bg-stone-100 font-poppins max-h-[85px] text-center items-center w-full">

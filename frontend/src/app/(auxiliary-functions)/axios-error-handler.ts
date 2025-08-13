@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { SetStateAction } from 'react'
 
 export interface AxiosErrorHandlerProps {
   error: unknown
-  setStatusMessage?: React.Dispatch<SetStateAction<string>>
+  setStatusMessage?: (statusMessage: string) => void
   route?: AppRouterInstance
 }
 export default function AxiosErrorHandler({

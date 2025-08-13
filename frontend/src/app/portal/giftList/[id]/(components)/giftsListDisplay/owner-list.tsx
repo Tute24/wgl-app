@@ -1,14 +1,14 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import NewGiftForm from '../new-gift-form/new-gift-form'
 import GiftCard from '../giftCard/own-gift-card'
 import WeddingHeader from '../wedding-header/wedding-header'
 import useDeleteGift from '../../(hooks)/useDeleteGift'
-import DeleteModal from '@/components/modals/delete-modal'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
+import DeleteModal from '@/app/(components)/modals/delete-modal'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export type objValuesType = {
   productLink: string
@@ -25,12 +25,18 @@ export default function OwnerList() {
     })
   }
   const deleteGift = useDeleteGift()
-  const { modalObject, setModalObject } = useContextWrap()
   const { weddingGifts, listHeader, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       listHeader: store.listHeader,
       weddingGifts: store.weddingGifts,
       hasHydrated: store.hasHydrated,
+    })),
+  )
+  const { isLoading, modalObject, setModalObject } = useGeneralStore(
+    useShallow((store) => ({
+      isLoading: store.isLoading,
+      modalObject: store.modalObject,
+      setModalObject: store.setModalObject,
     })),
   )
 
@@ -61,6 +67,7 @@ export default function OwnerList() {
                 productLink={gift.productLink}
                 productName={gift.productName}
                 quantity={gift.quantity}
+                setModalObject={setModalObject}
               />
             </div>
           ))}
@@ -70,14 +77,17 @@ export default function OwnerList() {
         </ul>
       </div>
       <div>
-        <DeleteModal
-          itemName={modalObject.name}
-          isOpen={modalObject.isOpen}
-          id={modalObject.id}
-          onCloseModal={closeModal}
-          onDelete={deleteGift}
-          ctaText="Delete Gift"
-        />
+        {modalObject && (
+          <DeleteModal
+            itemName={modalObject.name}
+            isOpen={modalObject.isOpen}
+            id={modalObject.id}
+            onCloseModal={closeModal}
+            onDelete={deleteGift}
+            ctaText="Delete Gift"
+            isLoading={isLoading}
+          />
+        )}
       </div>
     </>
   )

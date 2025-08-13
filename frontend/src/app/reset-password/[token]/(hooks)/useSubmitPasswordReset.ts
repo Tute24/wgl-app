@@ -1,13 +1,18 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import { newPassword } from '../page'
 import { useParams } from 'next/navigation'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitPasswordReset() {
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+    })),
+  )
   const { token } = useParams()
   const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function submitPasswordReset(data: newPassword) {

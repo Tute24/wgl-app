@@ -1,14 +1,14 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import useGetOwnWeddings from '../../(hooks)/useGetOwnWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
-import DeleteModal from '@/components/modals/delete-modal'
+import DeleteModal from '@/app/(components)/modals/delete-modal'
 import { useEffect } from 'react'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function WeddingsOwn() {
   const getOwnWeddings = useGetOwnWeddings()
@@ -24,16 +24,23 @@ export default function WeddingsOwn() {
       isOpen: false,
     })
   }
-  const { modalObject, setModalObject } = useContextWrap()
-  const { id, name, isOpen } = modalObject
   const { ownWeddings, hasHydrated } = useWeddingsStore(
     useShallow((store) => ({
       ownWeddings: store.ownWeddings,
       hasHydrated: store.hasHydrated,
     })),
   )
+  const { isRendering, isLoading, modalObject, setModalObject } =
+    useGeneralStore(
+      useShallow((store) => ({
+        isRendering: store.isRendering,
+        isLoading: store.isLoading,
+        modalObject: store.modalObject,
+        setModalObject: store.setModalObject,
+      })),
+    )
 
-  if (!hasHydrated)
+  if (!hasHydrated || isRendering)
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
@@ -51,18 +58,20 @@ export default function WeddingsOwn() {
                 title={wedding.weddingTitle}
                 date={wedding.weddingDate.replace(/-/g, '/')}
                 isOwn={true}
+                setModalObject={setModalObject}
               />
             </li>
           ))}
         </ul>
         {modalObject && (
           <DeleteModal
-            itemName={name}
+            itemName={modalObject.name}
             onDelete={deleteWedding}
             onCloseModal={closeModal}
-            isOpen={isOpen}
-            id={id}
+            isOpen={modalObject.isOpen}
+            id={modalObject.id}
             ctaText="Delete Wedding"
+            isLoading={isLoading}
           />
         )}
       </>

@@ -1,24 +1,30 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
 import { useParams, useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import WeddingHeader from '../wedding-header/wedding-header'
+import { Button } from '@/app/(components)/ui/button'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 
 export default function GuestRequest() {
   const { id } = useParams()
   const weddingID = Number(id)
-  const { statusMessage } = useContextWrap()
   const makeRequest = useMakeRequest(weddingID)
   const route = useRouter()
   const { listHeader, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       listHeader: store.listHeader,
       hasHydrated: store.hasHydrated,
+    })),
+  )
+  const { isLoading, statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      isLoading: store.isLoading,
+      statusMessage: store.statusMessage,
     })),
   )
 
@@ -56,8 +62,9 @@ export default function GuestRequest() {
           <Button
             onClick={makeRequest}
             className="min-w-[225px] text-md bg-paleGold text-amber-800 font-bold hover:bg-mutedTaupe hover:text-champagneGold"
+            disabled={isLoading}
           >
-            Request access to the list
+            {isLoading ? <Spinner /> : 'Request access to the list'}
           </Button>
         </div>
         <div className="flex flex-col justify-center items-center text-center font-inter">

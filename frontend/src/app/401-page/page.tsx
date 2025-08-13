@@ -1,6 +1,6 @@
-import UnLoggedHeader from '@/components/Headers/unlogged-header'
 import Link from 'next/link'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
+import UnLoggedHeader from '../(components)/headers/unlogged-header'
 
 export default function NotPermittedPageWarning() {
   return (

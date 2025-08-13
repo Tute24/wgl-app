@@ -1,14 +1,19 @@
 import { axiosInstance } from '@/common/axios-api/axios-api'
-import { useContextWrap } from '@/contextAPI/context'
 import { authStoreInstance } from '@/stores/auth/auth.provider'
+import { useGeneralStore } from '@/stores/general/general.provider'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitRegister() {
   type usersData = z.infer<typeof usersDataSchema>
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+    })),
+  )
   const setToken = authStoreInstance.getState().setToken
   const router = useRouter()
 

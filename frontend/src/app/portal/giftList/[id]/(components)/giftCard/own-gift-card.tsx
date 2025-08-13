@@ -1,23 +1,29 @@
-import { useContextWrap } from '@/contextAPI/context'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/app/(components)/ui/card'
 import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
 import { Trash2, Gift, Pencil, Boxes, Link2 } from 'lucide-react'
 
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import { Label } from '@/app/(components)/ui/label'
+import { Input } from '@/app/(components)/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/(components)/ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import { generalModalProps } from '@/types-props/general-modal-props'
 
 export interface GiftCardProps {
   id: number
   productName: string
   quantity: number
   productLink: string
+  setModalObject: (modalObject: generalModalProps) => void
 }
 
 const updateSchema = z.object({
@@ -33,6 +39,7 @@ export default function OwnGiftCard({
   productLink,
   productName,
   quantity,
+  setModalObject,
 }: GiftCardProps) {
   const {
     register,
@@ -42,7 +49,7 @@ export default function OwnGiftCard({
   } = useForm<updateData>({
     resolver: zodResolver(updateSchema),
   })
-  const { setModalObject, setSelectedGiftID, selectedGiftID } = useContextWrap()
+  const [selectedGiftID, setSelectedGiftID] = useState(0)
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
@@ -187,6 +194,7 @@ export default function OwnGiftCard({
                   onClick={() => {
                     setSelectedGiftID(0)
                   }}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>

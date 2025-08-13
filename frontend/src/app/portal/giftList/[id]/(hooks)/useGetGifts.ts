@@ -1,10 +1,11 @@
 'use client'
 import { AxiosApi } from '@/common/axios-api/axios-api'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { listHeaderProps, weddingGiftsProps } from '@/stores/gifts/gifts.store'
 import { useParams, useRouter } from 'next/navigation'
 import { useShallow } from 'zustand/shallow'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function useGetGifts() {
   const { id } = useParams()
@@ -18,9 +19,15 @@ export default function useGetGifts() {
         setIsGuest: store.setIsGuest,
       })),
     )
+  const { setIsRendering } = useGeneralStore(
+    useShallow((store) => ({
+      setIsRendering: store.setIsRendering,
+    })),
+  )
   const route = useRouter()
   async function getGifts() {
     try {
+      setIsRendering(true)
       const response = await AxiosApi({
         httpMethod: 'get',
         route: '/gifts/get',
@@ -47,6 +54,8 @@ export default function useGetGifts() {
         error,
         route,
       })
+    } finally {
+      setIsRendering(false)
     }
   }
   return getGifts

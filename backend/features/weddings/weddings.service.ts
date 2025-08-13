@@ -173,8 +173,7 @@ export async function deleteWeddingService(
 
   await prisma.requests.deleteMany({
     where: {
-      relatedWedding: weddingID,
-      pending: true
+      relatedWedding: weddingID
     }
   })
 

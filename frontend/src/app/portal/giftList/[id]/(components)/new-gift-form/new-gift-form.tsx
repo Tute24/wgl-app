@@ -3,7 +3,7 @@ import { newGiftsSchema } from '@/zodSchemas/giftsSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 import {
   Card,
   CardContent,
@@ -11,12 +11,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
+} from '@/app/(components)/ui/card'
+import { Button } from '@/app/(components)/ui/button'
+import { Label } from '@/app/(components)/ui/label'
 import { CircleX } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { useContextWrap } from '@/contextAPI/context'
+import { Input } from '@/app/(components)/ui/input'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 type newGiftsData = z.infer<typeof newGiftsSchema>
 
@@ -31,7 +32,11 @@ export default function NewGiftForm() {
     resolver: zodResolver(newGiftsSchema),
   })
 
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
 
   const { fields, append, remove } = useFieldArray<newGiftsData>({
     control,

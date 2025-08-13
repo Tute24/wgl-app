@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import AxiosErrorHandler from './axios-error-handler'
+import AxiosErrorHandler from '../axios-error-handler'
 import { authStoreInstance } from '@/stores/auth/auth.provider'
 import { AxiosApi } from '@/common/axios-api/axios-api'
 

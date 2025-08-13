@@ -1,13 +1,14 @@
 'use client'
-import UserButton from '@/components/Common/buttons/user-button/user-button'
-import InputContainer from '@/components/Common/input-container/input-container'
-import UnLoggedHeader from '@/components/Headers/unlogged-header'
+import UserButton from '@/app/(components)/Common/buttons/user-button/user-button'
+import InputContainer from '@/app/(components)/Common/input-container/input-container'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset'
-import { useContextWrap } from '@/contextAPI/context'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import UnLoggedHeader from '@/app/(components)/headers/unlogged-header'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 const passwordSchema = z
   .object({
@@ -29,7 +30,11 @@ export default function ResetPassword() {
   } = useForm<newPassword>({
     resolver: zodResolver(passwordSchema),
   })
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
 
   const onSubmit: SubmitHandler<newPassword> = useSubmitPasswordReset()
   return (

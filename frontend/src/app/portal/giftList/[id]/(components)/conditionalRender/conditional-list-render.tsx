@@ -8,6 +8,7 @@ import useGetGifts from '@/app/portal/giftList/[id]/(hooks)/useGetGifts'
 import { useGiftsStore } from '@/stores/gifts/gifts.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
+import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function ConditionalListRender() {
   const getGifts = useGetGifts()
@@ -18,13 +19,17 @@ export default function ConditionalListRender() {
       hasHydrated: store.hasHydrated,
     })),
   )
-
+  const { isRendering } = useGeneralStore(
+    useShallow((store) => ({
+      isRendering: store.isRendering,
+    })),
+  )
   useEffect(() => {
     getGifts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!hasHydrated)
+  if (!hasHydrated || isRendering)
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
