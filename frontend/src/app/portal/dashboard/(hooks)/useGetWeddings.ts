@@ -7,17 +7,19 @@ import { useRouter } from 'next/navigation'
 import { useShallow } from 'zustand/shallow'
 import { useGeneralStore } from '@/stores/general/general.provider'
 
-export default function useGetGuestWeddings() {
+export default function useGetWeddings() {
   const route = useRouter()
-  const setInvitedWeddings = useWeddingsStore(
-    useShallow((store) => store.setInvitedWeddings),
+  const { setOwnWeddings, setInvitedWeddings } = useWeddingsStore(
+    useShallow((store) => ({
+      setOwnWeddings: store.setOwnWeddings,
+      setInvitedWeddings: store.setInvitedWeddings,
+    })),
   )
   const { setIsRendering } = useGeneralStore(
     useShallow((store) => ({
       setIsRendering: store.setIsRendering,
     })),
   )
-
   async function getWeddings() {
     try {
       setIsRendering(true)
@@ -25,8 +27,8 @@ export default function useGetGuestWeddings() {
         httpMethod: 'get',
         route: '/weddings/get',
       })
-
       if (response.status === 200) {
+        setOwnWeddings(response.data.ownWeddings)
         setInvitedWeddings(response.data.guestWeddings)
       }
     } catch (error) {

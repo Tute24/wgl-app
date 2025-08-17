@@ -1,21 +1,14 @@
 'use client'
 
-import useGetOwnWeddings from '../../(hooks)/useGetOwnWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
 import useDeleteWedding from '../../(hooks)/useDeleteWedding'
 import DeleteModal from '@/app/(components)/modals/delete-modal'
-import { useEffect } from 'react'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function WeddingsOwn() {
-  const getOwnWeddings = useGetOwnWeddings()
-  useEffect(() => {
-    getOwnWeddings()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   const deleteWedding = useDeleteWedding()
   function closeModal() {
     setModalObject({

@@ -1,21 +1,12 @@
 'use client'
 
-import useGetGuestWeddings from '../../(hooks)/useGetGuestWeddings'
 import WeddingCard from '../weddingCard/wedding-card'
-import { useEffect } from 'react'
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
 import { useShallow } from 'zustand/shallow'
 import { ClipLoader } from 'react-spinners'
 import { useGeneralStore } from '@/stores/general/general.provider'
 
 export default function WeddingsGuest() {
-  const getGuestWeddings = useGetGuestWeddings()
-
-  useEffect(() => {
-    getGuestWeddings()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const { invitedWeddings, hasHydrated } = useWeddingsStore(
     useShallow((store) => ({
       invitedWeddings: store.invitedWeddings,
