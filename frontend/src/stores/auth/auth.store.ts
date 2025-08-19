@@ -1,4 +1,4 @@
-import { createStore } from 'zustand'
+import { createStore } from 'zustand/vanilla'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 type AuthStoreState = {
@@ -20,8 +20,8 @@ const defaultInitState: AuthStoreState = {
 export const createAuthStore = (
   initState: AuthStoreState = defaultInitState,
 ) => {
-  return createStore<AuthStore>()(
-    persist(
+  return createStore(
+    persist<AuthStore>(
       (set) => ({
         ...initState,
         setToken: (token) => set((store) => ({ ...store, token })),

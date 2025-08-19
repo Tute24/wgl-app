@@ -1,4 +1,4 @@
-import { createStore } from 'zustand'
+import { createStore } from 'zustand/vanilla'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface requestsResponseProps {
@@ -34,8 +34,8 @@ const defaultInitState: RequestsStoreState = {
 export const createRequestsStore = (
   initState: RequestsStoreState = defaultInitState,
 ) => {
-  return createStore<RequestsStore>()(
-    persist(
+  return createStore(
+    persist<RequestsStore>(
       (set) => ({
         ...initState,
         setRequests: (requests) => set((store) => ({ ...store, requests })),

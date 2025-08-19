@@ -37,8 +37,8 @@ export type GeneralStore = GeneralStoreState & GeneralStoreActions
 export const createGeneralStore = (
   initState: GeneralStoreState = defaultInitState,
 ) => {
-  return createStore<GeneralStore>()(
-    persist(
+  return createStore(
+    persist<GeneralStore>(
       (set) => ({
         ...initState,
         setIsLoading: (isLoading) => set((store) => ({ ...store, isLoading })),
