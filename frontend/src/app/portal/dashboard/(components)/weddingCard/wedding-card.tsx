@@ -30,6 +30,7 @@ export default function WeddingCard({
       <CardHeader className="flex items-end text-center px-4 pt-3 pb-1 mx-1.5">
         {isOwn ? (
           <button
+            aria-label="delete"
             type="button"
             onClick={() =>
               setModalObject({
