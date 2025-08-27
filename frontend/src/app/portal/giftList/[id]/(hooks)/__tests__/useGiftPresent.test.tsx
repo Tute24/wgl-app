@@ -46,6 +46,12 @@ describe('useGiftPresent', () => {
       await result.current(mockSendGiftObj.giftID, mockSendGiftObj.quantity)
     })
 
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/gifts/present',
+      data: mockSendGiftObj,
+      params: { id: giftListMocks.listHeader.weddingId },
+    })
     expect(mockSetSelectedGiftID).toHaveBeenCalledWith(null)
     expect(mockSetWeddingGifts).toHaveBeenCalledWith(
       giftListMocks.weddingGifts.map((item) =>
@@ -70,6 +76,13 @@ describe('useGiftPresent', () => {
 
     await act(async () => {
       await result.current(mockSendGiftObj.giftID, mockSendGiftObj.quantity)
+    })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/gifts/present',
+      data: mockSendGiftObj,
+      params: { id: giftListMocks.listHeader.weddingId },
     })
     expect(mockAxiosErrorHandler).toHaveBeenCalledWith({
       route: { router: mockRouter },

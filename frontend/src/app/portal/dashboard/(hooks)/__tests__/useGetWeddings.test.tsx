@@ -45,6 +45,11 @@ describe('useGetWeddings', () => {
     await act(async () => {
       await result.current()
     })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'get',
+      route: '/weddings/get',
+    })
     expect(mockSetIsRendering).toHaveBeenNthCalledWith(1, true)
     expect(mockSetOwnWeddings).toHaveBeenCalledWith([weddingsMock.ownWeddings])
     expect(mockSetInvitedWeddings).toHaveBeenCalledWith([
@@ -66,6 +71,11 @@ describe('useGetWeddings', () => {
 
     await act(async () => {
       await result.current()
+    })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'get',
+      route: '/weddings/get',
     })
     expect(mockSetIsRendering).toHaveBeenNthCalledWith(1, true)
     expect(mockAxiosErrorHandler).toHaveBeenCalledWith({

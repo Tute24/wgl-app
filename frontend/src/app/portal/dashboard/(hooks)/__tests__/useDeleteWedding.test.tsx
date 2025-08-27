@@ -42,6 +42,13 @@ describe('useDeleteWedding', () => {
       await result.current(weddingsMock.ownWeddings.id)
     })
 
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/weddings/delete',
+      data: {
+        id: weddingsMock.ownWeddings.id,
+      },
+    })
     expect(mockSetIsLoading).toHaveBeenNthCalledWith(1, true)
     expect(mockSetOwnWeddings).toHaveBeenCalledWith(
       mockOwnWeddings.filter((item) => item.id !== weddingsMock.ownWeddings.id),
@@ -62,6 +69,14 @@ describe('useDeleteWedding', () => {
 
     await act(async () => {
       await result.current(weddingsMock.ownWeddings.id)
+    })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/weddings/delete',
+      data: {
+        id: weddingsMock.ownWeddings.id,
+      },
     })
     expect(mockSetIsLoading).toHaveBeenNthCalledWith(1, true)
     expect(mockAxiosErrorHandler).toHaveBeenCalledWith({

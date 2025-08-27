@@ -43,6 +43,13 @@ describe('useDeleteGifts', () => {
       await result.current(giftListMocks.weddingGifts[0].Id)
     })
 
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/gifts/delete',
+      data: {
+        giftID: giftListMocks.weddingGifts[0].Id,
+      },
+    })
     expect(mockSetIsLoading).toHaveBeenNthCalledWith(1, true)
     expect(mockSetWeddingGifts).toHaveBeenCalledWith(
       mockWeddingGifts.filter(
@@ -65,6 +72,14 @@ describe('useDeleteGifts', () => {
 
     await act(async () => {
       await result.current(1)
+    })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'post',
+      route: '/gifts/delete',
+      data: {
+        giftID: giftListMocks.weddingGifts[0].Id,
+      },
     })
     expect(mockSetIsLoading).toHaveBeenNthCalledWith(1, true)
     expect(mockAxiosErrorHandler).toHaveBeenCalledWith({

@@ -63,6 +63,11 @@ describe('useGetGifts', () => {
       await result.current()
     })
 
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'get',
+      route: '/gifts/get',
+      params: { id: giftListMocks.listHeader.weddingId },
+    })
     expect(mockSetIsRendering).toHaveBeenNthCalledWith(1, true)
     expect(mockSetIsCreator).toHaveBeenCalledWith(
       mockResponseObject.checkPreferences.isCreator,
@@ -89,6 +94,12 @@ describe('useGetGifts', () => {
 
     await act(async () => {
       await result.current()
+    })
+
+    expect(mockAxiosApi).toHaveBeenCalledWith({
+      httpMethod: 'get',
+      route: '/gifts/get',
+      params: { id: giftListMocks.listHeader.weddingId },
     })
     expect(mockSetIsRendering).toHaveBeenNthCalledWith(1, true)
     expect(mockAxiosErrorHandler).toHaveBeenCalledWith({
