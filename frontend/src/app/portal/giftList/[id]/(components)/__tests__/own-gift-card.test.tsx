@@ -10,7 +10,7 @@ vi.mock('../../(hooks)/useSubmitUpdate')
 
 const mockUseSubmitUpdate = useSubmitUpdate as Mock
 
-describe('GuestGiftCard', () => {
+describe('OwnGiftCard', () => {
   const giftCardProps: GiftCardProps = {
     id: giftListMocks.weddingGifts[0].Id,
     productLink: giftListMocks.weddingGifts[0].productLink,

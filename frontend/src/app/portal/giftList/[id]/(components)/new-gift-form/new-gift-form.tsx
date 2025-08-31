@@ -83,7 +83,11 @@ export default function NewGiftForm() {
                         <Label className="text-md text-stone-700">
                           Product name
                         </Label>
-                        <button type="button" onClick={() => remove(index)}>
+                        <button
+                          aria-label="remove-set"
+                          type="button"
+                          onClick={() => remove(index)}
+                        >
                           <CircleX size={18} />
                         </button>
                       </div>
