@@ -1,9 +1,8 @@
 import { describe, expect, it, Mock, vi } from 'vitest'
 import { giftListMocks } from '../../__mocks__/gift-list-mocks'
-import { GiftCardProps } from '../giftCard/own-gift-card'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import GuestGiftCard from '../giftCard/guest-gift-card'
+import GuestGiftCard, { GuestGiftCardProps } from '../giftCard/guest-gift-card'
 import useGiftPresent from '../../(hooks)/useGiftPresent'
 
 vi.mock('../../(hooks)/useGiftPresent')
@@ -11,12 +10,11 @@ vi.mock('../../(hooks)/useGiftPresent')
 const mockUseGiftPresent = useGiftPresent as Mock
 
 describe('GuestGiftCard', () => {
-  const giftCardProps: GiftCardProps = {
+  const giftCardProps: GuestGiftCardProps = {
     id: giftListMocks.weddingGifts[0].Id,
     productLink: giftListMocks.weddingGifts[0].productLink,
     productName: giftListMocks.weddingGifts[0].productName,
     quantity: giftListMocks.weddingGifts[0].quantity,
-    setModalObject: vi.fn(),
   }
 
   it('should render the initial state correctly', () => {

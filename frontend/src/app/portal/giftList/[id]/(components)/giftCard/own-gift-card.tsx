@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 import { generalModalProps } from '@/types-props/general-modal-props'
 
-export interface GiftCardProps {
+export interface OwnGiftCardProps {
   id: number
   productName: string
   quantity: number
@@ -40,7 +40,7 @@ export default function OwnGiftCard({
   productName,
   quantity,
   setModalObject,
-}: GiftCardProps) {
+}: OwnGiftCardProps) {
   const {
     register,
     handleSubmit,

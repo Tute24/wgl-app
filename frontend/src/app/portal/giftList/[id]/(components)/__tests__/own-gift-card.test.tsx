@@ -1,6 +1,6 @@
 import { describe, expect, it, Mock, vi } from 'vitest'
 import { giftListMocks } from '../../__mocks__/gift-list-mocks'
-import OwnGiftCard, { GiftCardProps } from '../giftCard/own-gift-card'
+import OwnGiftCard, { OwnGiftCardProps } from '../giftCard/own-gift-card'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
@@ -11,7 +11,7 @@ vi.mock('../../(hooks)/useSubmitUpdate')
 const mockUseSubmitUpdate = useSubmitUpdate as Mock
 
 describe('OwnGiftCard', () => {
-  const giftCardProps: GiftCardProps = {
+  const giftCardProps: OwnGiftCardProps = {
     id: giftListMocks.weddingGifts[0].Id,
     productLink: giftListMocks.weddingGifts[0].productLink,
     productName: giftListMocks.weddingGifts[0].productName,
