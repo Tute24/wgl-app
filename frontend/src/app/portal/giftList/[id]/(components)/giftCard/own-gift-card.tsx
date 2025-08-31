@@ -79,6 +79,7 @@ export default function OwnGiftCard({
         <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 font-inter">
           <CardHeader className="flex flex-row justify-end items-end text-center gap-3 px-4 pt-3 pb-1 mx-1.5">
             <button
+              aria-label="update-gift-button"
               type="button"
               onClick={() => {
                 setUpdateProps({
@@ -96,6 +97,7 @@ export default function OwnGiftCard({
             </button>
             <button
               type="button"
+              aria-label="delete-gift-button"
               onClick={() =>
                 setModalObject({
                   id,
@@ -156,6 +158,7 @@ export default function OwnGiftCard({
               <div className="flex flex-col gap-3 mb-3 items-start">
                 <Label className="text-md">Update the gift's title:</Label>
                 <Input
+                  aria-label="productName-input"
                   type="text"
                   {...register('productName')}
                   className="text-amber-800 bg-white"
@@ -164,6 +167,7 @@ export default function OwnGiftCard({
               <div className="flex flex-col gap-3 mb-3 items-start">
                 <Label className="text-md">Update the gift's quantity:</Label>
                 <Input
+                  aria-label="quantity-input"
                   type="number"
                   {...register('quantity', { valueAsNumber: true })}
                   className="text-amber-800 bg-white"
@@ -174,6 +178,7 @@ export default function OwnGiftCard({
                   Update the gift's purchase link:
                 </Label>
                 <Input
+                  aria-label="productLink-input"
                   type="text"
                   {...register('productLink')}
                   className="text-amber-800 bg-white"
