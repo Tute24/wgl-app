@@ -10,7 +10,7 @@ export const mockWedding: WeddingsProps = {
 
 export const mockNewList = {
   listTitle: 'Wedding1',
-  weddingDate: '01-01-2025',
+  weddingDate: '2025-01-01',
   shippingAddress: 'Street1',
   gifts: [
     {

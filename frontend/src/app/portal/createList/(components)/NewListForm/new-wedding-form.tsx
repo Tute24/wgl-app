@@ -82,6 +82,7 @@ export default function GiftListForm() {
               <div className="flex flex-col gap-3 w-full">
                 <Label className="text-md text-stone-700">Wedding date</Label>
                 <Input
+                  data-testid="wedding-date-input"
                   className="!text-md !text-amber-800 !placeholder-amber-800"
                   type="date"
                   {...register('weddingDate')}
