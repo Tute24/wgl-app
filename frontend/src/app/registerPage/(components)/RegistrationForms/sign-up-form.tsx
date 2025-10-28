@@ -31,12 +31,16 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
   const submitRegister = useSubmitRegister()
-  const onSubmit: SubmitHandler<usersData> = submitRegister
+  const onSubmit: SubmitHandler<usersData> = (data) => {
+    submitRegister(data)
+    reset()
+  }
 
   return (
     <div className="flex flex-col items-center justify-center m-auto h-screen px-4">
