@@ -26,7 +26,7 @@ export default function UnLoggedHeader() {
         <nav className=" flex items-center justify-between lg:justify-between flex-row w-full px-5 sm:text-xl">
           <div className="flex flex-row items-center lg:gap-20 lg:px-20">
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-100 lg:h-100 mt-1">
-              <Link href="/">
+              <Link data-testid="unlogged-header-logo" href="/">
                 <Image
                   src="/reworked-logo.png"
                   alt="Logo"
@@ -39,7 +39,7 @@ export default function UnLoggedHeader() {
           </div>
           <div className="flex flex-row items-center gap-5 lg:gap-20 text-center lg:px-20">
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger data-testid="unlogged-menu-trigger">
                 <Menu className="text-amber-800" size={36} />
               </DropdownMenuTrigger>
               <DropdownMenuContent

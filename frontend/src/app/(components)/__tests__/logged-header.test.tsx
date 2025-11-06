@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest'
 import { useGeneralStore } from '@/stores/general/general.provider'
-import LoggedHeader from '../logged-header'
+import LoggedHeader from '../headers/logged-header'
 import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut'
 import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests'
 import userEvent from '@testing-library/user-event'
