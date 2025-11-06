@@ -43,7 +43,7 @@ export default function LoggedHeader() {
       <div className="py-5 bg-stone-100 font-poppins">
         <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-xl">
           <div className="-mt-5 -mb-8 lg:-mt-10 lg:-mb-10">
-            <Link href="/portal/dashboard">
+            <Link href="/portal/dashboard" data-testid="logged-header-logo">
               <Image
                 src="/reworked-logo.png"
                 alt="Logo"
@@ -84,7 +84,7 @@ export default function LoggedHeader() {
             </span>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <div className="relative">
+                <div className="relative" data-testid="logged-menu-trigger">
                   <Menu className="text-amber-800" size={28} />
                   {pendingRequests > 0 && (
                     <span className="absolute -top-0 -right-0 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
