@@ -34,9 +34,10 @@ export default function SendMail() {
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
   })
-  const { statusMessage } = useGeneralStore(
+  const { statusMessage, isLoading } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
+      isLoading: store.isLoading,
     })),
   )
   const sendPasswordResetRequest = useSendPasswordResetRequest()
@@ -79,7 +80,7 @@ export default function SendMail() {
                     className="w-full bg-paleGold hover:bg-mutedTaupe text-amber-800 hover:text-champagneGold font-bold text-lg font-inter"
                     type="submit"
                   >
-                    {isSubmitting ? <Spinner /> : 'Confirm'}
+                    {isSubmitting || isLoading ? <Spinner /> : 'Confirm'}
                   </Button>
                 </div>
               </div>

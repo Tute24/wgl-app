@@ -7,9 +7,10 @@ import { useShallow } from 'zustand/shallow'
 
 export default function useSendPasswordResetRequest() {
   type userEmail = z.infer<typeof emailSchema>
-  const { setStatusMessage } = useGeneralStore(
+  const { setStatusMessage, setIsLoading } = useGeneralStore(
     useShallow((store) => ({
       setStatusMessage: store.setStatusMessage,
+      setIsLoading: store.setIsLoading,
     })),
   )
   const apiURL = process.env.NEXT_PUBLIC_API_URL
@@ -17,7 +18,7 @@ export default function useSendPasswordResetRequest() {
   async function sendPasswordResetRequest(data: userEmail) {
     if (data) {
       try {
-        console.log(data)
+        setIsLoading(true)
         const response = await axios.post(
           `${apiURL}/auth/forgot-password`,
           data,
@@ -29,6 +30,8 @@ export default function useSendPasswordResetRequest() {
         }
       } catch (error) {
         AxiosErrorHandler({ error })
+      } finally {
+        setIsLoading(false)
       }
     }
   }
