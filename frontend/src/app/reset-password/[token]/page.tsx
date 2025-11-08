@@ -1,6 +1,4 @@
 'use client'
-import UserButton from '@/app/(components)/Common/buttons/user-button/user-button'
-import InputContainer from '@/app/(components)/Common/input-container/input-container'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -9,18 +7,30 @@ import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 import UnLoggedHeader from '@/app/(components)/headers/unlogged-header'
 import { useGeneralStore } from '@/stores/general/general.provider'
 import { useShallow } from 'zustand/shallow'
+import { passwordSchema } from '@/zodSchemas/usersDataSchema'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/app/(components)/ui/card'
+import { Label } from '@/app/(components)/ui/label'
+import { Input } from '@/app/(components)/ui/input'
+import { Button } from '@/app/(components)/ui/button'
 
-const passwordSchema = z
+const newPasswordSchema = z
   .object({
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
+    password: passwordSchema,
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must be equal!',
     path: ['confirmPassword'],
   })
 
-export type newPassword = z.infer<typeof passwordSchema>
+export type newPassword = z.infer<typeof newPasswordSchema>
 
 export default function ResetPassword() {
   const {
@@ -28,11 +38,12 @@ export default function ResetPassword() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<newPassword>({
-    resolver: zodResolver(passwordSchema),
+    resolver: zodResolver(newPasswordSchema),
   })
-  const { statusMessage } = useGeneralStore(
+  const { statusMessage, isLoading } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
+      isLoading: store.isLoading,
     })),
   )
 
@@ -40,62 +51,64 @@ export default function ResetPassword() {
   return (
     <>
       <UnLoggedHeader />
-      <div className="flex flex-col justify-center m-auto items-center">
-        <div className=" w-[350px] border-solid border-2 border-dustyRose rounded-lg hover:shadow-xl hover:shadow-dustyRose">
-          <div>
-            <h1 className="text-amber-800 font-bold text-start px-3 py-2 text-xl">
-              PASSWORD RESET
-            </h1>
-            <hr className="border-solid border-1 border-mutedTaupe py-2" />
-            <h2 className="text-amber-800 font-bold flex justify-start pb-3 px-3">
-              Type your new password.
-            </h2>
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="pb-3 px-3">
-              <InputContainer
-                {...register('password')}
-                label="New Password"
-                type="password"
-              />
-              {errors.password && (
-                <span className="text-red-500  text-center">
-                  {errors.password.message}
-                </span>
-              )}
-            </div>
-            <div className="pb-3 px-3">
-              <InputContainer
-                {...register('confirmPassword')}
-                label="Confirm your new password"
-                type="password"
-              />
-              {errors.confirmPassword && (
-                <span className="text-red-500  text-center items-center">
-                  {errors.confirmPassword.message}
-                </span>
-              )}
-            </div>
-            <div className="px-3">
-              <span
-                className={`${
-                  statusMessage ===
-                  'If an account with that email exists, a password reset link has been sent. Please check your inbox.'
-                    ? 'text-green-500'
-                    : 'text-red-500'
-                }`}
-              >
-                {statusMessage}
-              </span>
-            </div>
-            <div className="pt-3 pb-3 px-3">
-              <UserButton
-                content={isSubmitting ? <Spinner /> : 'Confirm Password Reset'}
-                disabled={isSubmitting}
-              />
-            </div>
-          </form>
-        </div>
+      <div className="flex flex-col items-center justify-center m-auto pt-20">
+        <Card className="w-[400px] border-amber-800 hover:shadow-md hover:shadow-amber-800">
+          <CardHeader>
+            <CardTitle className="!text-amber-800 text-bold text-xl font-inter text-center">
+              Password Reset
+            </CardTitle>
+            <CardDescription className="text-sm font-inter">
+              Create your new password
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="flex flex-col items-start gap-3 font-inter w-full">
+                <div className="flex flex-col gap-2 items-start justify-start w-full">
+                  <Label className="text-md text-stone-700">New Password</Label>
+                  <Input
+                    className="!text-md !text-amber-800 !placeholder-amber-800"
+                    type="password"
+                    {...register('password')}
+                    placeholder="Your new password here"
+                  />
+                  {errors.password && (
+                    <p className="font-inter text-red-600 text-sm">
+                      {errors.password.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 items-start justify-start w-full">
+                  <Label className="text-md text-stone-700">
+                    Confirm your new password
+                  </Label>
+                  <Input
+                    className="!text-md !text-amber-800 !placeholder-amber-800"
+                    type="password"
+                    {...register('confirmPassword')}
+                    placeholder="Confirm your new password here"
+                  />
+                  {errors.confirmPassword && (
+                    <p className="font-inter text-red-600 text-sm">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full items-center pt-3 flex flex-col">
+                  <Button
+                    className="w-full bg-paleGold hover:bg-mutedTaupe text-amber-800 hover:text-champagneGold font-bold text-lg font-inter"
+                    type="submit"
+                  >
+                    {isSubmitting || isLoading ? <Spinner /> : 'Reset Password'}
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col gap-3 items-center text-sm text-muted-foreground font-inter">
+            {statusMessage}
+          </CardFooter>
+        </Card>
       </div>
     </>
   )
