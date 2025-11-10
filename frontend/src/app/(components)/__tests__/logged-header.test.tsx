@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest'
 import { useGeneralStore } from '@/stores/general/general.provider'
 import LoggedHeader from '../headers/logged-header'
@@ -17,7 +17,6 @@ const mockUseGetPendingRequests = useGetPendingRequests as Mock<
   typeof useGetPendingRequests
 >
 const mockGetPendingRequests = vi.fn()
-const mockSetStatusMessage = vi.fn()
 
 describe('LoggedHeader', () => {
   beforeEach(() => {
@@ -27,7 +26,6 @@ describe('LoggedHeader', () => {
     mockUseGetPendingRequests.mockReturnValue(mockGetPendingRequests)
 
     mockUseGeneralStore.mockReturnValue({
-      setStatusMessage: mockSetStatusMessage,
       username: 'John Doe',
       pendingRequests: 3,
     })
@@ -78,17 +76,6 @@ describe('LoggedHeader', () => {
     )
   })
 
-  it('calls setStatusMessage("") when clicking on a link', () => {
-    render(<LoggedHeader />)
-
-    const dashboardButton = screen.getByRole('button', {
-      name: /Weddings Dashboard/i,
-    })
-    fireEvent.click(dashboardButton)
-
-    expect(mockSetStatusMessage).toHaveBeenCalledWith('')
-  })
-
   it('calls logOut when clicking "Sign Out"', async () => {
     render(<LoggedHeader />)
 
@@ -101,6 +88,5 @@ describe('LoggedHeader', () => {
     await userEvent.click(signOutButton)
 
     expect(mockLogOut).toHaveBeenCalled()
-    expect(mockSetStatusMessage).toHaveBeenCalledWith('')
   })
 })

@@ -11,15 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
 
 export default function UnLoggedHeader() {
-  const { setStatusMessage } = useGeneralStore(
-    useShallow((store) => ({
-      setStatusMessage: store.setStatusMessage,
-    })),
-  )
   return (
     <>
       <div className="flex flex-row py-5 bg-stone-100 font-poppins max-h-[85px] text-center items-center w-full">
@@ -55,9 +48,6 @@ export default function UnLoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <LogIn size={24} />
                       <span className="text-lg font-poppins">Sign In</span>
@@ -69,9 +59,6 @@ export default function UnLoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <UserPlus size={24} />
                       <span className="text-lg font-poppins">Sign Up</span>
@@ -83,9 +70,6 @@ export default function UnLoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <ShieldQuestionIcon size={24} />
                       <span className="text-lg font-poppins">About Us</span>

@@ -1,21 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { vi, describe, it, expect, beforeEach, Mock } from 'vitest'
-import { useGeneralStore } from '@/stores/general/general.provider'
+import { vi, describe, it, expect, beforeEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import UnLoggedHeader from '../headers/unlogged-header'
-
-vi.mock('@/stores/general/general.provider')
-
-const mockUseGeneralStore = useGeneralStore as Mock<typeof useGeneralStore>
-const mockSetStatusMessage = vi.fn()
 
 describe('UnLoggedHeader', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-
-    mockUseGeneralStore.mockReturnValue({
-      setStatusMessage: mockSetStatusMessage,
-    })
   })
 
   it('renders the initial state correctly', () => {
@@ -47,18 +37,5 @@ describe('UnLoggedHeader', () => {
       'href',
       '/aboutPage',
     )
-  })
-
-  it('calls setStatusMessage("") when clicking on a link', async () => {
-    render(<UnLoggedHeader />)
-    const trigger = screen.getByTestId('unlogged-menu-trigger')
-    await userEvent.click(trigger)
-
-    const signUpLink = screen.getByText('Sign Up')
-
-    expect(signUpLink).toBeInTheDocument()
-    await userEvent.click(signUpLink)
-
-    expect(mockSetStatusMessage).toHaveBeenCalledWith('')
   })
 })
