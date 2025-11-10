@@ -18,7 +18,7 @@ export default function NotPermittedPageWarning() {
             Sign in
           </Link>{' '}
           or{' '}
-          <Link className="underline font-bold" href="registerPage">
+          <Link className="underline font-bold" href="/registerPage">
             create an account
           </Link>{' '}
           to access this page.
