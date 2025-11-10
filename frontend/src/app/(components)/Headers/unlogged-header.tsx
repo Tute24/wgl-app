@@ -65,7 +65,7 @@ export default function UnLoggedHeader() {
                     </button>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/aboutPage">
+                <Link href="/about-page">
                   <DropdownMenuItem>
                     <button
                       className="flex flex-row gap-2 items-center"

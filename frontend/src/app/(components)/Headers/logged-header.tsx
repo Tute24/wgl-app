@@ -128,7 +128,7 @@ export default function LoggedHeader() {
                     </Link>
                   </div>
                 </DropdownMenuItem>
-                <Link href="/aboutPage">
+                <Link href="/portal/about-page">
                   <DropdownMenuItem>
                     <button
                       className="flex flex-row gap-2 items-center"

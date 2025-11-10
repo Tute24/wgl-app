@@ -72,7 +72,7 @@ describe('LoggedHeader', () => {
     )
     expect(screen.getByText('About Us').closest('a')).toHaveAttribute(
       'href',
-      '/aboutPage',
+      '/portal/about-page',
     )
   })
 

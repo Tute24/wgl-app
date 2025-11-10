@@ -35,7 +35,7 @@ describe('UnLoggedHeader', () => {
     )
     expect(screen.getByText('About Us').closest('a')).toHaveAttribute(
       'href',
-      '/aboutPage',
+      '/about-page',
     )
   })
 })
