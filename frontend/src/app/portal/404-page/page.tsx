@@ -18,7 +18,7 @@ export default function NotFoundPageWarning() {
           available.
         </h2>
         <div className="pt-3">
-          <Link href="/dashboard">
+          <Link href="/portal/dashboard">
             <Button className="font-semibold">Go back to the dashboard</Button>
           </Link>
         </div>
