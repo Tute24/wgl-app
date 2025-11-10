@@ -46,8 +46,10 @@ export default function ResetPassword() {
       isLoading: store.isLoading,
     })),
   )
-
-  const onSubmit: SubmitHandler<newPassword> = useSubmitPasswordReset()
+  const submitPasswordReset = useSubmitPasswordReset()
+  const onSubmit: SubmitHandler<newPassword> = (data) => {
+    submitPasswordReset(data)
+  }
   return (
     <>
       <UnLoggedHeader />
@@ -86,7 +88,7 @@ export default function ResetPassword() {
                     className="!text-md !text-amber-800 !placeholder-amber-800"
                     type="password"
                     {...register('confirmPassword')}
-                    placeholder="Confirm your new password here"
+                    placeholder="Confirm your password here"
                   />
                   {errors.confirmPassword && (
                     <p className="font-inter text-red-600 text-sm">
