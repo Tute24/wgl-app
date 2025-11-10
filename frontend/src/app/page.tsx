@@ -1,5 +1,5 @@
-import SignInForm from '../components/Forms/sign-in-form'
-import UnLoggedHeader from '../components/Headers/unlogged-header'
+import SignInForm from './(components)/forms/sign-in-form'
+import UnLoggedHeader from './(components)/headers/unlogged-header'
 
 export default function signIn() {
   return (

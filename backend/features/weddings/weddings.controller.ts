@@ -5,7 +5,8 @@ import { controllerErrorHandler } from '../../utils/controller-error-handler'
 import {
   createWeddingService,
   deleteWeddingService,
-  getWeddingsService
+  getWeddingsService,
+  WeddingsProps
 } from './weddings.service'
 
 export type weddingResponse = {
@@ -34,8 +35,10 @@ export async function createWeddingController(
       shippingAddress as string,
       giftsArray
     )
-    const message = response.message
-    res.status(200).json({ message })
+    const message = response.message as string
+    const newlyCreatedWedding =
+      response.newlyCreatedWedding as WeddingsProps
+    res.status(200).json({ message, newlyCreatedWedding })
   } catch (error) {
     controllerErrorHandler(error, res)
   }
@@ -55,14 +58,12 @@ export async function getWeddingsController(
     const guestWeddings: weddingResponse[] | [] =
       response.guestWeddings
     const userInfo = response.userInfo
-    res
-      .status(200)
-      .json({
-        message,
-        ownWeddings,
-        guestWeddings,
-        userInfo
-      })
+    res.status(200).json({
+      message,
+      ownWeddings,
+      guestWeddings,
+      userInfo
+    })
   } catch (error) {
     controllerErrorHandler(error, res)
   }

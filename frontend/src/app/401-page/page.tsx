@@ -1,6 +1,6 @@
-import UnLoggedHeader from '@/components/Headers/unlogged-header'
 import Link from 'next/link'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
+import UnLoggedHeader from '../(components)/headers/unlogged-header'
 
 export default function NotPermittedPageWarning() {
   return (
@@ -18,7 +18,7 @@ export default function NotPermittedPageWarning() {
             Sign in
           </Link>{' '}
           or{' '}
-          <Link className="underline font-bold" href="registerPage">
+          <Link className="underline font-bold" href="/registerPage">
             create an account
           </Link>{' '}
           to access this page.

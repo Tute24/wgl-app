@@ -1,18 +1,24 @@
 import { z } from 'zod'
 import { emailSchema } from '../page'
-import { useContextWrap } from '@/contextAPI/context'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSendPasswordResetRequest() {
   type userEmail = z.infer<typeof emailSchema>
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage, setIsLoading } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+      setIsLoading: store.setIsLoading,
+    })),
+  )
   const apiURL = process.env.NEXT_PUBLIC_API_URL
 
   async function sendPasswordResetRequest(data: userEmail) {
     if (data) {
       try {
-        console.log(data)
+        setIsLoading(true)
         const response = await axios.post(
           `${apiURL}/auth/forgot-password`,
           data,
@@ -24,6 +30,8 @@ export default function useSendPasswordResetRequest() {
         }
       } catch (error) {
         AxiosErrorHandler({ error })
+      } finally {
+        setIsLoading(false)
       }
     }
   }

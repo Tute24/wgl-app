@@ -3,6 +3,7 @@ import isAuthenticated from '../../middleware/authMiddleware'
 import {
   acceptRequestController,
   denyRequestController,
+  getPendingRequestsController,
   getRequestsController,
   makeRequestController
 } from './requests.controller'
@@ -31,4 +32,10 @@ requestsRouter.get(
   '/get',
   isAuthenticated,
   getRequestsController
+)
+
+requestsRouter.get(
+  '/pending-requests',
+  isAuthenticated,
+  getPendingRequestsController
 )

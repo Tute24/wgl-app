@@ -1,13 +1,19 @@
 'use client'
 
-import { useContextWrap } from '@/contextAPI/context'
 import { newPassword } from '../page'
 import { useParams } from 'next/navigation'
 import axios from 'axios'
-import AxiosErrorHandler from '@/functions/axios-error-handler'
+import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitPasswordReset() {
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage, setIsLoading } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+      setIsLoading: store.setIsLoading,
+    })),
+  )
   const { token } = useParams()
   const apiURL = process.env.NEXT_PUBLIC_API_URL
   async function submitPasswordReset(data: newPassword) {
@@ -15,6 +21,7 @@ export default function useSubmitPasswordReset() {
       setStatusMessage('Passwords must be the same!')
     } else {
       try {
+        setIsLoading(true)
         const response = await axios.post(
           `${apiURL}/auth/reset-password`,
           data,
@@ -32,6 +39,8 @@ export default function useSubmitPasswordReset() {
         }
       } catch (error) {
         AxiosErrorHandler({ error })
+      } finally {
+        setIsLoading(false)
       }
     }
   }

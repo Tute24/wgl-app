@@ -1,25 +1,32 @@
-import { useContextWrap } from '@/contextAPI/context'
+import { axiosInstance } from '@/common/axios-api/axios-api'
+import { authStoreInstance } from '@/stores/auth/auth.provider'
+import { useGeneralStore } from '@/stores/general/general.provider'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
+import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitRegister() {
   type usersData = z.infer<typeof usersDataSchema>
-  const { setStatusMessage } = useContextWrap()
+  const { setStatusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      setStatusMessage: store.setStatusMessage,
+    })),
+  )
+  const setToken = authStoreInstance.getState().setToken
   const router = useRouter()
-  const apiURL = process.env.NEXT_PUBLIC_API_URL
 
   async function submitRegister(data: usersData) {
     if (data.password !== data.confirmPassword) {
       setStatusMessage('Passwords must be the same!')
     } else {
       try {
-        const response = await axios.post(`${apiURL}/users/user-create`, data)
+        const response = await axiosInstance.post('/users/user-create', data)
 
         if (response.status === 200) {
-          const userToken = response.data.token
-          localStorage.setItem('userToken', JSON.stringify(userToken))
+          const userToken = response.data.token as string
+          setToken(userToken)
           router.push('/dashboard')
         }
       } catch (error: unknown) {

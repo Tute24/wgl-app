@@ -111,9 +111,8 @@ export async function getGiftsController(
       weddingID
     )
     const message = response.message
-    const wedding = response.wedding
-    const checkAdmin = response.checkAdmin
-    res.status(200).json({ message, wedding, checkAdmin })
+    const responseObject = response.responseObject
+    res.status(200).json({ message, responseObject })
   } catch (error) {
     if (error instanceof AppError && error.data) {
       return controllerErrorHandler(error, res, error.data)

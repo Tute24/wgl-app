@@ -1,37 +1,46 @@
 'use client'
 
 import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
-import { useContextWrap } from '@/contextAPI/context'
 import usersDataSchema from '@/zodSchemas/usersDataSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Spinner } from '@/components/Common/spinner/spinner'
+import { Spinner } from '@/app/(components)/Common/spinner/spinner'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+} from '@/app/(components)/ui/card'
+import { Input } from '@/app/(components)/ui/input'
+import { Label } from '@/app/(components)/ui/label'
+import { Button } from '@/app/(components)/ui/button'
+import { useGeneralStore } from '@/stores/general/general.provider'
+import { useShallow } from 'zustand/shallow'
 
 type usersData = z.infer<typeof usersDataSchema>
 
 export default function RegisterForm() {
-  const { statusMessage } = useContextWrap()
+  const { statusMessage } = useGeneralStore(
+    useShallow((store) => ({
+      statusMessage: store.statusMessage,
+    })),
+  )
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
   })
   const submitRegister = useSubmitRegister()
-  const onSubmit: SubmitHandler<usersData> = submitRegister
+  const onSubmit: SubmitHandler<usersData> = (data) => {
+    submitRegister(data)
+    reset()
+  }
 
   return (
     <div className="flex flex-col items-center justify-center m-auto h-screen px-4">
@@ -97,7 +106,7 @@ export default function RegisterForm() {
                   placeholder="Enter your password"
                 />
                 {errors.password && (
-                  <p className="font-inter text-red-600 text-sm">
+                  <p className="font-inter text-red-600 text-sm max-w-[400px]">
                     {errors.password.message}
                   </p>
                 )}
@@ -123,7 +132,7 @@ export default function RegisterForm() {
                   className="w-full bg-paleGold hover:bg-mutedTaupe text-amber-800 hover:text-champagneGold font-bold text-lg font-inter"
                   type="submit"
                 >
-                  {isSubmitting ? <Spinner /> : 'Sign In'}
+                  {isSubmitting ? <Spinner /> : 'Sign Up'}
                 </Button>
                 <span className="font-inter text-red-600 text-sm pt-2">
                   {statusMessage}

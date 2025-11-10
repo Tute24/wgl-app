@@ -17,8 +17,8 @@ export async function signInController(
   try {
     const response = await signInService(email, password)
     const token = response.token
-    const message = response.message
-    res.status(200).json({ message, token })
+    const username = response.username
+    res.status(200).json({ username, token })
   } catch (error) {
     controllerErrorHandler(error, res)
   }

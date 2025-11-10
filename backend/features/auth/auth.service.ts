@@ -35,10 +35,9 @@ export async function signInService(
       expiresIn: '3h'
     }
   )
-  console.log(token)
-  const message = 'User successfully signed in.'
+  const username = logInUser.firstName
   return {
-    message,
+    username,
     token
   }
 }
