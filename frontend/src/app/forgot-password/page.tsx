@@ -41,7 +41,9 @@ export default function SendMail() {
     })),
   )
   const sendPasswordResetRequest = useSendPasswordResetRequest()
-  const onSubmit: SubmitHandler<userEmail> = sendPasswordResetRequest
+  const onSubmit: SubmitHandler<userEmail> = (data) => {
+    sendPasswordResetRequest(data)
+  }
   return (
     <>
       <UnLoggedHeader />
