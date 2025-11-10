@@ -11,22 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
 
 export default function UnLoggedHeader() {
-  const { setStatusMessage } = useGeneralStore(
-    useShallow((store) => ({
-      setStatusMessage: store.setStatusMessage,
-    })),
-  )
   return (
     <>
       <div className="flex flex-row py-5 bg-stone-100 font-poppins max-h-[85px] text-center items-center w-full">
         <nav className=" flex items-center justify-between lg:justify-between flex-row w-full px-5 sm:text-xl">
           <div className="flex flex-row items-center lg:gap-20 lg:px-20">
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-100 lg:h-100 mt-1">
-              <Link href="/">
+              <Link data-testid="unlogged-header-logo" href="/">
                 <Image
                   src="/reworked-logo.png"
                   alt="Logo"
@@ -39,7 +32,7 @@ export default function UnLoggedHeader() {
           </div>
           <div className="flex flex-row items-center gap-5 lg:gap-20 text-center lg:px-20">
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger data-testid="unlogged-menu-trigger">
                 <Menu className="text-amber-800" size={36} />
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -55,9 +48,6 @@ export default function UnLoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <LogIn size={24} />
                       <span className="text-lg font-poppins">Sign In</span>
@@ -69,23 +59,17 @@ export default function UnLoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <UserPlus size={24} />
                       <span className="text-lg font-poppins">Sign Up</span>
                     </button>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/aboutPage">
+                <Link href="/about-page">
                   <DropdownMenuItem>
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <ShieldQuestionIcon size={24} />
                       <span className="text-lg font-poppins">About Us</span>

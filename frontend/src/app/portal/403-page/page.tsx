@@ -16,7 +16,7 @@ export default function NotPermittedPageWarning() {
           You might have mystiped the address, or you don't have permission.
         </h2>
         <div className="pt-3">
-          <Link href="/dashboard">
+          <Link href="/portal/dashboard">
             <Button className="font-semibold">Go back to the dashboard</Button>
           </Link>
         </div>

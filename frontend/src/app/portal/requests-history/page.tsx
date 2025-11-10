@@ -61,7 +61,11 @@ export default function RequestsHistoryPage() {
   if (!hasHydrated || isRendering) {
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
-        <ClipLoader color="#92400e" size={150} />
+        <ClipLoader
+          color="#92400e"
+          data-testid="clip-loader-requests"
+          size={150}
+        />
       </div>
     )
   }

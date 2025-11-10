@@ -1,4 +1,3 @@
-import { GiftCardProps } from './own-gift-card'
 import useGiftPresent from '../../(hooks)/useGiftPresent'
 import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card'
 import { Boxes, Gift, Link2 } from 'lucide-react'
@@ -17,6 +16,13 @@ const giftPresentSchema = z.object({
   quantity: z.number().nonnegative(),
 })
 
+export interface GuestGiftCardProps {
+  id: number
+  productName: string
+  quantity: number
+  productLink: string
+}
+
 type giftPresentType = z.infer<typeof giftPresentSchema>
 
 export default function GuestGiftCard({
@@ -24,7 +30,7 @@ export default function GuestGiftCard({
   productLink,
   productName,
   quantity,
-}: GiftCardProps) {
+}: GuestGiftCardProps) {
   const [selectedGiftID, setSelectedGiftID] = useState(0)
   const {
     register,

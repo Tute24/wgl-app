@@ -31,9 +31,8 @@ export default function LoggedHeader() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const logOut = useLogOut()
-  const { setStatusMessage, username, pendingRequests } = useGeneralStore(
+  const { username, pendingRequests } = useGeneralStore(
     useShallow((store) => ({
-      setStatusMessage: store.setStatusMessage,
       username: store.username,
       pendingRequests: store.pendingRequests,
     })),
@@ -43,7 +42,7 @@ export default function LoggedHeader() {
       <div className="py-5 bg-stone-100 font-poppins">
         <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-xl">
           <div className="-mt-5 -mb-8 lg:-mt-10 lg:-mb-10">
-            <Link href="/portal/dashboard">
+            <Link href="/portal/dashboard" data-testid="logged-header-logo">
               <Image
                 src="/reworked-logo.png"
                 alt="Logo"
@@ -54,26 +53,14 @@ export default function LoggedHeader() {
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold hidden lg:block">
             <Link href="/portal/dashboard">
-              <button
-                onClick={() => {
-                  setStatusMessage('')
-                }}
-                type="button"
-                className="p-2"
-              >
+              <button type="button" className="p-2">
                 Weddings Dashboard
               </button>
             </Link>
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold hidden lg:block">
             <Link href="/portal/createList">
-              <button
-                type="button"
-                className="p-2"
-                onClick={() => {
-                  setStatusMessage('')
-                }}
-              >
+              <button type="button" className="p-2">
                 Create New Wedding
               </button>
             </Link>
@@ -84,7 +71,7 @@ export default function LoggedHeader() {
             </span>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <div className="relative">
+                <div className="relative" data-testid="logged-menu-trigger">
                   <Menu className="text-amber-800" size={28} />
                   {pendingRequests > 0 && (
                     <span className="absolute -top-0 -right-0 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
@@ -104,9 +91,6 @@ export default function LoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <LayoutDashboard size={24} />
                       <span className="text-lg font-poppins">Dashboard</span>
@@ -118,9 +102,6 @@ export default function LoggedHeader() {
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <ListPlus size={24} />
                       <span className="text-lg font-poppins">
@@ -135,9 +116,6 @@ export default function LoggedHeader() {
                       <button
                         className="flex flex-row gap-2 items-center"
                         type="button"
-                        onClick={() => {
-                          setStatusMessage('')
-                        }}
                       >
                         <Hourglass size={24} />
                         <span className="text-lg font-poppins">
@@ -150,14 +128,11 @@ export default function LoggedHeader() {
                     </Link>
                   </div>
                 </DropdownMenuItem>
-                <Link href="/aboutPage">
+                <Link href="/portal/about-page">
                   <DropdownMenuItem>
                     <button
                       className="flex flex-row gap-2 items-center"
                       type="button"
-                      onClick={() => {
-                        setStatusMessage('')
-                      }}
                     >
                       <ShieldQuestionIcon size={24} />
                       <span className="text-lg font-poppins">About Us</span>
@@ -170,7 +145,6 @@ export default function LoggedHeader() {
                     type="button"
                     onClick={() => {
                       logOut()
-                      setStatusMessage('')
                     }}
                   >
                     <LogOut size={24} />

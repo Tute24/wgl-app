@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
-import { GeneralStoreProvider } from '@/stores/general/general.provider'
+import { ClientProviders } from '@/providers/ClientProviders'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${poppins.variable} antialiased`}>
-        <GeneralStoreProvider>{children}</GeneralStoreProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   )

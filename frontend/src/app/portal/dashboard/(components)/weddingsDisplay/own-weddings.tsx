@@ -36,7 +36,7 @@ export default function WeddingsOwn() {
   if (!hasHydrated || isRendering)
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
-        <ClipLoader color="#92400e" size={150} />
+        <ClipLoader color="#92400e" size={150} data-testid="clip-loader" />
       </div>
     )
 
@@ -45,7 +45,7 @@ export default function WeddingsOwn() {
       <>
         <ul className="flex flex-col text-center items-center gap-10">
           {ownWeddings.map((wedding) => (
-            <li key={wedding.id}>
+            <li key={wedding.id} data-testid={`wedding-${wedding.id}`}>
               <WeddingCard
                 id={wedding.id}
                 title={wedding.weddingTitle}

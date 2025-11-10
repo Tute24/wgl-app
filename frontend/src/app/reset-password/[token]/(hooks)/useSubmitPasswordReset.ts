@@ -8,9 +8,10 @@ import { useGeneralStore } from '@/stores/general/general.provider'
 import { useShallow } from 'zustand/shallow'
 
 export default function useSubmitPasswordReset() {
-  const { setStatusMessage } = useGeneralStore(
+  const { setStatusMessage, setIsLoading } = useGeneralStore(
     useShallow((store) => ({
       setStatusMessage: store.setStatusMessage,
+      setIsLoading: store.setIsLoading,
     })),
   )
   const { token } = useParams()
@@ -20,6 +21,7 @@ export default function useSubmitPasswordReset() {
       setStatusMessage('Passwords must be the same!')
     } else {
       try {
+        setIsLoading(true)
         const response = await axios.post(
           `${apiURL}/auth/reset-password`,
           data,
@@ -37,6 +39,8 @@ export default function useSubmitPasswordReset() {
         }
       } catch (error) {
         AxiosErrorHandler({ error })
+      } finally {
+        setIsLoading(false)
       }
     }
   }

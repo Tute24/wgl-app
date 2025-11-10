@@ -85,6 +85,7 @@ export default function DeleteModal({
               }}
               className="bg-red-600 hover:bg-red-500"
               disabled={isLoading}
+              data-testid="delete-button"
             >
               {isLoading ? <Spinner /> : ctaText}
             </Button>

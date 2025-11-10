@@ -31,7 +31,7 @@ export default function TableSet() {
   if (!hasHydrated || !listHeader) {
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
-        <ClipLoader color="#92400e" size={150} />
+        <ClipLoader color="#92400e" size={150} data-testid="clip-loader" />
       </div>
     )
   }
@@ -51,7 +51,11 @@ export default function TableSet() {
       <div className="container mx-auto px-2 sm:px-10 py-10">
         {isRendering ? (
           <div className="flex flex-col m-auto h-screen justify-center items-center">
-            <ClipLoader color="#92400e" size={150} />
+            <ClipLoader
+              color="#92400e"
+              size={150}
+              data-testid="clip-loader-table"
+            />
           </div>
         ) : (
           <DataTable columns={columns} data={giftedProducts} />

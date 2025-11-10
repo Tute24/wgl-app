@@ -1,4 +1,4 @@
-import { createStore } from 'zustand'
+import { createStore } from 'zustand/vanilla'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface weddingGiftsProps {
@@ -57,8 +57,8 @@ export type GiftsStore = GiftsStoreState & GiftsStoreActions
 export const createGiftsStore = (
   initState: GiftsStoreState = defaultInitState,
 ) => {
-  return createStore<GiftsStore>()(
-    persist(
+  return createStore(
+    persist<GiftsStore>(
       (set) => ({
         ...initState,
         setWeddingGifts: (weddingGifts) =>
