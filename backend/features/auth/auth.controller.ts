@@ -6,7 +6,6 @@ import {
 } from './auth.service'
 import { controllerErrorHandler } from '../../utils/controller-error-handler'
 import { ResetPasswordRequest } from '../../middleware/resetPasswordMiddleware'
-import { CustomRequest } from '../../middleware/authMiddleware'
 
 export async function signInController(
   req: Request,
@@ -25,7 +24,6 @@ export async function signInController(
 }
 
 export function signOutController(
-  req: CustomRequest,
   res: Response
 ) {
   try {
