@@ -27,7 +27,7 @@ export default function useSubmitRegister() {
         if (response.status === 200) {
           const userToken = response.data.token as string
           setToken(userToken)
-          router.push('/dashboard')
+          router.push('/portal/dashboard')
         }
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
