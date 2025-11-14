@@ -57,7 +57,7 @@ describe('useSubmitRegister', () => {
       mockData,
     )
     expect(mockSetToken).toHaveBeenCalledWith('fake-token')
-    expect(mockRouterPush).toHaveBeenCalledWith('/dashboard')
+    expect(mockRouterPush).toHaveBeenCalledWith('/portal/dashboard')
   })
 
   it('handles 409 error', async () => {
