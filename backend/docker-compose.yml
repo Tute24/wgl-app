@@ -6,9 +6,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: wglappdb
+      POSTGRES_USER: postgres #your postgres username
+      POSTGRES_PASSWORD: password #your password
+      POSTGRES_DB: wglappdb #your DB name
     volumes:
       - db_volume:/var/lib/postgresql/data
     restart: always

@@ -137,6 +137,7 @@ See frontend/vitest.config.ts and frontend/vitest.setup.ts for details.
 - Nodemailer for email delivery
 - Day.js for dates
 - Dev tooling: ts-node, nodemon, ESLint, Prettier
+- Docker
 
 (See backend/package.json)
 
@@ -150,11 +151,16 @@ See frontend/vitest.config.ts and frontend/vitest.setup.ts for details.
 - utils/ — controller error handler
 - transporter/ — nodemailer transporter
 - types/ — shared TypeScript types
+- Dockerfile - file with instructions to build the API's docker image in production
+- Dockerfile.dev - file with instructions to build the API's docker image locally
+- docker-compose - File that orchestrates the enviroment locally, using Dockerfile.dev to run the API's and postgres image to run the DB's container simultaneously in the host's PC
 
 Purpose:
 - routes: endpoint wiring and middleware
 - controllers: handle requests and responses
 - services: business logic and DB access (Prisma), throw AppError for predictable failures
+- Dockerfiles: defines how to create the API's reproducible and immutable image, to avoid problems while the app's in development/production mode
+- docker-compose.yml: orchestrates the local development environment by running both the API container (with hot reload) and the PostgreSQL database simultaneously, ensuring consistent setup on any machine 
 
 ### 🧩 Features
 - User registration and authentication (JWT)
