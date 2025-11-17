@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
-import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 import giftProps from '../../types/giftProps'
+import { prisma } from '../../lib/prisma'
 
 export async function updateGiftService(
   userID: string,

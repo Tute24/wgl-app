@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express'
-import { prisma } from '../app'
 import crypto from 'crypto'
+import { prisma } from '../lib/prisma'
 const jwt = require('jsonwebtoken')
 
 interface resetPasswordTokenBody {

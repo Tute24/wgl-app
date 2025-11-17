@@ -1,5 +1,5 @@
-import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
+import { prisma } from '../../lib/prisma'
 import giftProps from '../../types/giftProps'
 import { weddingResponse } from './weddings.controller'
 

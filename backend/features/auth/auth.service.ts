@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 import crypto from 'crypto'
 import { transporter } from '../../transporter/nodemailer-transporter'
+import { prisma } from '../../lib/prisma'
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 

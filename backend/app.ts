@@ -1,5 +1,4 @@
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
 import { usersRouter } from './features/users/users.routes'
 import { requestsRouter } from './features/requests/requests.routes'
 import { authRouter } from './features/auth/auth.routes'
@@ -11,7 +10,6 @@ const cors = require('cors')
 
 app.use(express.json())
 app.use(cors())
-export const prisma = new PrismaClient()
 app.use('/users', usersRouter)
 app.use('/requests', requestsRouter)
 app.use('/auth', authRouter)

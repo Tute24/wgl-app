@@ -1,7 +1,7 @@
 /* eslint-disable space-before-function-paren */
 import dayjs from 'dayjs'
-import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
+import { prisma } from '../../lib/prisma'
 
 type Wedding = {
   id: number

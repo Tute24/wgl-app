@@ -1,5 +1,5 @@
-import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
+import { prisma } from '../../lib/prisma'
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
