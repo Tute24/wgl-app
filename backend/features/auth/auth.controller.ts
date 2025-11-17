@@ -29,9 +29,11 @@ export function signOutController(
   res: Response
 ) {
   try {
-    res
-      .status(200)
-      .json({ message: 'User signed out successfully.' })
+    if (req.authUser) {
+      res
+        .status(200)
+        .json({ message: 'User signed out successfully.' })
+    }
   } catch (error) {
     controllerErrorHandler(error, res)
   }

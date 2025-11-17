@@ -3,6 +3,26 @@ import dayjs from 'dayjs'
 import { prisma } from '../../app'
 import { AppError } from '../../classes/app-error'
 
+type Wedding = {
+  id: number
+  createdAt: Date | null
+  weddingTitle: string
+  weddingDate: string
+  shippingAddress: string
+  createdBy: string
+}
+
+type Request = {
+  id: number
+  requestBy: string
+  relatedWedding: number
+  requestByName: string
+  weddingTitle: string
+  pending: boolean
+  accepted: boolean
+  madeOn: Date | null
+}
+
 export async function acceptRequestService(
   userID: string,
   reqID: number
@@ -34,7 +54,8 @@ export async function acceptRequestService(
   }
 
   const filterWedding = user.weddingsOwn.filter(
-    (wedding) => wedding.id === requestData.relatedWedding
+    (wedding: Wedding) =>
+      wedding.id === requestData.relatedWedding
   )
 
   if (filterWedding.length === 0) {
@@ -136,7 +157,8 @@ export async function denyRequestService(
   }
 
   const filterWedding = user.weddingsOwn.filter(
-    (wedding) => wedding.id === requestData.relatedWedding
+    (wedding: Wedding) =>
+      wedding.id === requestData.relatedWedding
   )
 
   if (filterWedding.length === 0) {
@@ -186,11 +208,11 @@ export async function getRequestsService(
   }
 
   const ownWeddingsIDArray = user.weddingsOwn.map(
-    (weddings) => weddings.id
+    (wedding: Wedding) => wedding.id
   )
 
   const requestsHistory = await Promise.all(
-    ownWeddingsIDArray.map(async (ids) => {
+    ownWeddingsIDArray.map(async (ids: number) => {
       return await prisma.requests.findMany({
         where: {
           relatedWedding: ids
@@ -200,7 +222,7 @@ export async function getRequestsService(
   )
 
   const requests = requestsHistory.flatMap((request) =>
-    request.map((req) => ({
+    request.map((req:Request) => ({
       ...req,
       madeOn: dayjs(req.madeOn).format('YYYY-MM-DD')
     }))
