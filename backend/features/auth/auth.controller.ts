@@ -61,7 +61,14 @@ export async function resetPasswordController(
 ) {
   const { id, resetToken } = req.authData!
   const { password } = req.body
+
   try {
+    if (!id || !resetToken) {
+      throw new AppError(
+        'Missing reset password credentials',
+        400
+      )
+    }
     const response = await resetPasswordService(
       id,
       resetToken,

@@ -102,11 +102,14 @@ export async function resetPasswordService(
   resetToken: string,
   password: string
 ) {
-  const newHashedPassword = await bcrypt.hash(password, 10)
-
+  if (!userID) {
+    throw new AppError('Missing User ID', 400)
+  }
   if (!resetToken) {
     throw new AppError('Reset Token not present.', 401)
   }
+
+  const newHashedPassword = await bcrypt.hash(password, 10)
 
   const encryptedToken = crypto
     .createHash('sha256')

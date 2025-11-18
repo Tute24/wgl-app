@@ -19,7 +19,7 @@ const mockPasswordResetTokenStorageUpdate = prisma
   .passwordResetTokenStorage.update as Mock
 
 describe('resetPasswordService', () => {
-  it('should reset the pssword correctly', async () => {
+  it('should reset the password correctly', async () => {
     mockUsersUpdate.mockResolvedValue({})
     mockPasswordResetTokenStorageUpdate.mockResolvedValue(
       {}
@@ -38,6 +38,19 @@ describe('resetPasswordService', () => {
     expect(result.message).toBe(
       'Password reset successfully.'
     )
+  })
+
+  it('should throw AppError with 400 if the userID is an empty string', async () => {
+    await expect(
+      resetPasswordService(
+        '',
+        'reset-token',
+        mockUser.password
+      )
+    ).rejects.toMatchObject({
+      message: 'Missing User ID',
+      status: 400
+    })
   })
 
   it('should throw AppError with 401 if the reset token is null', async () => {
