@@ -2,6 +2,7 @@ import { NextFunction, Response, Request } from 'express';
 import crypto from 'crypto';
 import { prisma } from '../lib/prisma';
 import * as jwt from 'jsonwebtoken';
+import { env } from '../env';
 
 interface resetPasswordTokenBody {
   id: string;
@@ -25,10 +26,7 @@ export default async function resetPasswordAuth(
   }
 
   try {
-    const decodedResetToken = jwt.verify(
-      resetToken,
-      process.env.SECRET_KEY,
-    ) as resetPasswordTokenBody;
+    const decodedResetToken = jwt.verify(resetToken, env.SECRET_KEY) as resetPasswordTokenBody;
     const encryptedToken = crypto
       .createHash('sha256')
       .update(decodedResetToken.resetToken)

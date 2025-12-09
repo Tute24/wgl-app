@@ -2,6 +2,7 @@ import { AppError } from '../../classes/app-error';
 import { prisma } from '../../lib/prisma';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { env } from '../../env';
 
 export async function createUserService(
   firstName: string,
@@ -28,7 +29,7 @@ export async function createUserService(
     },
   });
 
-  const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY, {
+  const token = jwt.sign({ id: newUser.id }, env.SECRET_KEY, {
     expiresIn: '3h',
   });
   const message = 'Success!';

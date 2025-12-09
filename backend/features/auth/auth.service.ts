@@ -5,6 +5,7 @@ import { transporter } from '../../transporter/nodemailer-transporter';
 import { prisma } from '../../lib/prisma';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { env } from '../../env';
 
 export async function signInService(email: string, password: string) {
   const logInUser = await prisma.users.findUnique({
@@ -20,7 +21,7 @@ export async function signInService(email: string, password: string) {
   if (!(await bcrypt.compare(password, logInUser.password))) {
     throw new AppError('Incorrect password.', 401);
   }
-  const token = jwt.sign({ id: logInUser.id }, process.env.SECRET_KEY, {
+  const token = jwt.sign({ id: logInUser.id }, env.SECRET_KEY, {
     expiresIn: '3h',
   });
   const username = logInUser.firstName;
@@ -57,12 +58,12 @@ export async function forgotPasswordService(email: string) {
     id: user.id,
     resetToken,
   };
-  const jwtResetToken = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
+  const jwtResetToken = jwt.sign(tokenPayload, env.SECRET_KEY, {
     expiresIn: '10m',
   });
   const resetLink = `http://localhost:3001/reset-password/${jwtResetToken}`;
   const mailOptions = {
-    from: process.env.SENDER_EMAIL,
+    from: env.SENDER_EMAIL,
     to: user.email,
     subject: 'Here is the next step to resetting your password:',
     html: `<h2>Click in the following link to retrieve your password:</h2>

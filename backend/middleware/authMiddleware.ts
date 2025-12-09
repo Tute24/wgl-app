@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { env } from '../env';
 
 interface tokenBody {
   id: string;
@@ -22,7 +23,7 @@ export default function isAuthenticated(
   }
 
   try {
-    const decodedToken = jwt.verify(token, process.env.SECRET_KEY) as tokenBody;
+    const decodedToken = jwt.verify(token, env.SECRET_KEY) as tokenBody;
 
     if (!decodedToken.id) {
       res.status(401).json({ message: 'User not authenticated.' });
