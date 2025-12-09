@@ -1,117 +1,98 @@
 /* eslint-disable space-before-function-paren */
-import dayjs from 'dayjs'
-import { AppError } from '../../classes/app-error'
-import { prisma } from '../../lib/prisma'
+import dayjs from 'dayjs';
+import { AppError } from '../../classes/app-error';
+import { prisma } from '../../lib/prisma';
 
 type Wedding = {
-  id: number
-  createdAt: Date | null
-  weddingTitle: string
-  weddingDate: string
-  shippingAddress: string
-  createdBy: string
-}
+  id: number;
+  createdAt: Date | null;
+  weddingTitle: string;
+  weddingDate: string;
+  shippingAddress: string;
+  createdBy: string;
+};
 
 type Request = {
-  id: number
-  requestBy: string
-  relatedWedding: number
-  requestByName: string
-  weddingTitle: string
-  pending: boolean
-  accepted: boolean
-  madeOn: Date | null
-}
+  id: number;
+  requestBy: string;
+  relatedWedding: number;
+  requestByName: string;
+  weddingTitle: string;
+  pending: boolean;
+  accepted: boolean;
+  madeOn: Date | null;
+};
 
-export async function acceptRequestService(
-  userID: string,
-  reqID: number
-) {
+export async function acceptRequestService(userID: string, reqID: number) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
+      id: userID,
     },
     include: {
-      weddingsOwn: true
-    }
-  })
+      weddingsOwn: true,
+    },
+  });
 
   if (!user) {
-    throw new AppError('User not found', 404)
+    throw new AppError('User not found', 404);
   }
 
   const requestData = await prisma.requests.findUnique({
     where: {
-      id: reqID
-    }
-  })
+      id: reqID,
+    },
+  });
 
   if (!requestData) {
-    throw new AppError(
-      "Couldn't find this request on the database.",
-      404
-    )
+    throw new AppError("Couldn't find this request on the database.", 404);
   }
 
   const filterWedding = user.weddingsOwn.filter(
-    (wedding: Wedding) =>
-      wedding.id === requestData.relatedWedding
-  )
+    (wedding: Wedding) => wedding.id === requestData.relatedWedding,
+  );
 
   if (filterWedding.length === 0) {
-    throw new AppError(
-      'This user is not the wedding creator.',
-      403
-    )
+    throw new AppError('This user is not the wedding creator.', 403);
   }
 
   if (requestData.pending === false) {
-    throw new AppError(
-      'This request has already been reviewed.',
-      409
-    )
+    throw new AppError('This request has already been reviewed.', 409);
   }
 
   const updatedRequest = await prisma.requests.update({
     where: {
-      id: reqID
+      id: reqID,
     },
     data: {
       accepted: true,
-      pending: false
-    }
-  })
+      pending: false,
+    },
+  });
   if (updatedRequest) {
-    const message = 'Request accepted successfully'
-    return { message }
+    const message = 'Request accepted successfully';
+    return { message };
   }
 }
 
-export async function makeRequestService(
-  userID: string,
-  weddingID: number
-) {
+export async function makeRequestService(userID: string, weddingID: number) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
-    }
-  })
+      id: userID,
+    },
+  });
 
   const checkWedding = await prisma.weddings.findUnique({
     where: {
-      id: weddingID
-    }
-  })
+      id: weddingID,
+    },
+  });
 
   if (!user) {
-    throw new AppError('User not found', 404)
+    throw new AppError('User not found', 404);
   }
 
   if (!checkWedding) {
-    throw new AppError(
-      "Couldn't find this wedding's list",
-      404
-    )
+    throw new AppError("Couldn't find this wedding's list", 404);
   }
 
   await prisma.requests.create({
@@ -119,125 +100,105 @@ export async function makeRequestService(
       requestBy: userID,
       relatedWedding: weddingID,
       weddingTitle: checkWedding.weddingTitle,
-      requestByName: `${user.firstName} ${user.lastName}`
-    }
-  })
-  const message = 'Request successfull.'
-  return { message }
+      requestByName: `${user.firstName} ${user.lastName}`,
+    },
+  });
+  const message = 'Request successfull.';
+  return { message };
 }
 
-export async function denyRequestService(
-  userID: string,
-  reqID: number
-) {
+export async function denyRequestService(userID: string, reqID: number) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
+      id: userID,
     },
     include: {
-      weddingsOwn: true
-    }
-  })
+      weddingsOwn: true,
+    },
+  });
 
   if (!user) {
-    throw new AppError('User not found', 404)
+    throw new AppError('User not found', 404);
   }
 
   const requestData = await prisma.requests.findUnique({
     where: {
-      id: reqID
-    }
-  })
+      id: reqID,
+    },
+  });
 
   if (!requestData) {
-    throw new AppError(
-      "Couldn't find this request on the database.",
-      404
-    )
+    throw new AppError("Couldn't find this request on the database.", 404);
   }
 
   const filterWedding = user.weddingsOwn.filter(
-    (wedding: Wedding) =>
-      wedding.id === requestData.relatedWedding
-  )
+    (wedding: Wedding) => wedding.id === requestData.relatedWedding,
+  );
 
   if (filterWedding.length === 0) {
-    throw new AppError(
-      'This user is not the wedding creator.',
-      403
-    )
+    throw new AppError('This user is not the wedding creator.', 403);
   }
 
   if (requestData.pending === false) {
-    throw new AppError(
-      'This request has already been reviewed.',
-      409
-    )
+    throw new AppError('This request has already been reviewed.', 409);
   }
 
   await prisma.requests.update({
     where: {
-      id: reqID
+      id: reqID,
     },
     data: {
-      pending: false
-    }
-  })
+      pending: false,
+    },
+  });
 
-  const message = 'Request denied successfully.'
+  const message = 'Request denied successfully.';
   return {
-    message
-  }
+    message,
+  };
 }
 
-export async function getRequestsService(
-  userID: string,
-  onlyPending: boolean = false
-) {
+export async function getRequestsService(userID: string, onlyPending: boolean = false) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
+      id: userID,
     },
     include: {
-      weddingsOwn: true
-    }
-  })
+      weddingsOwn: true,
+    },
+  });
 
   if (!user) {
-    throw new AppError('User not found.', 404)
+    throw new AppError('User not found.', 404);
   }
 
-  const ownWeddingsIDArray = user.weddingsOwn.map(
-    (wedding: Wedding) => wedding.id
-  )
+  const ownWeddingsIDArray = user.weddingsOwn.map((wedding: Wedding) => wedding.id);
 
   const requestsHistory = await Promise.all(
     ownWeddingsIDArray.map(async (ids: number) => {
       return await prisma.requests.findMany({
         where: {
-          relatedWedding: ids
-        }
-      })
-    })
-  )
+          relatedWedding: ids,
+        },
+      });
+    }),
+  );
 
   const requests = requestsHistory.flatMap((request) =>
-    request.map((req:Request) => ({
+    request.map((req: Request) => ({
       ...req,
-      madeOn: dayjs(req.madeOn).format('YYYY-MM-DD')
-    }))
-  )
+      madeOn: dayjs(req.madeOn).format('YYYY-MM-DD'),
+    })),
+  );
 
   if (onlyPending) {
-    const pendingRequests = requests.filter(
-      (request) => request.pending === true
-    ).length
+    const pendingRequests = requests.filter((request) => request.pending === true).length;
 
     return {
-      pendingRequests
-    }
+      pendingRequests,
+    };
   }
   return {
-    requests
-  }
+    requests,
+  };
 }

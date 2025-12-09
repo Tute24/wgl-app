@@ -1,53 +1,50 @@
-import { AppError } from '../../classes/app-error'
-import { prisma } from '../../lib/prisma'
-import giftProps from '../../types/giftProps'
-import { weddingResponse } from './weddings.controller'
+import { AppError } from '../../classes/app-error';
+import { prisma } from '../../lib/prisma';
+import giftProps from '../../types/giftProps';
+import { weddingResponse } from './weddings.controller';
 
 export type WeddingsProps = {
-  id: number
-  weddingTitle: string
-  weddingDate: string
-  shippingAddress?: string
-  createdBy: string
-}
+  id: number;
+  weddingTitle: string;
+  weddingDate: string;
+  shippingAddress?: string;
+  createdBy: string;
+};
 
 export async function createWeddingService(
   userID: string,
   listTitle: string,
   weddingDate: string,
   shippingAddress: string,
-  giftsArray: giftProps[]
+  giftsArray: giftProps[],
 ) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
-    }
-  })
+      id: userID,
+    },
+  });
 
   if (!user) {
-    throw new AppError(
-      "Couldn't find the user on the database.",
-      404
-    )
+    throw new AppError("Couldn't find the user on the database.", 404);
   }
   const newWedding = await prisma.weddings.create({
     data: {
       weddingTitle: listTitle,
       weddingDate,
       createdBy: userID,
-      shippingAddress
-    }
-  })
+      shippingAddress,
+    },
+  });
 
   const newlyCreatedWedding: WeddingsProps = {
     id: newWedding.id,
     weddingTitle: newWedding.weddingTitle,
     weddingDate: newWedding.weddingDate,
     shippingAddress: newWedding.shippingAddress,
-    createdBy: newWedding.createdBy
-  }
+    createdBy: newWedding.createdBy,
+  };
 
-  console.log('Wedding successfully created!')
+  console.log('Wedding successfully created!');
 
   giftsArray.map(async (giftInfo: giftProps) => {
     await prisma.gifts.create({
@@ -55,139 +52,124 @@ export async function createWeddingService(
         quantity: Number(giftInfo.quantity),
         productName: giftInfo.productName,
         productLink: giftInfo.productLink,
-        fromWedding: newWedding.id
-      }
-    })
-  })
+        fromWedding: newWedding.id,
+      },
+    });
+  });
 
-  const message =
-    'Information successfully submitted to the database'
+  const message = 'Information successfully submitted to the database';
   return {
     message,
-    newlyCreatedWedding
-  }
+    newlyCreatedWedding,
+  };
 }
 
 export async function getWeddingsService(userID: string) {
-  let ownWeddings: weddingResponse[] | [] = []
-  let guestWeddings: weddingResponse[] | [] = []
+  let ownWeddings: weddingResponse[] | [] = [];
+  let guestWeddings: weddingResponse[] | [] = [];
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
+      id: userID,
     },
     include: {
-      weddingsGuest: true
-    }
-  })
+      weddingsGuest: true,
+    },
+  });
 
   if (!user) {
-    throw new AppError(
-      "Couldn't find the user on the database.",
-      404
-    )
+    throw new AppError("Couldn't find the user on the database.", 404);
   }
   const userInfoObject = {
     userID: user.id,
-    userName: user.firstName
-  }
+    userName: user.firstName,
+  };
 
   const createdWeddings = await prisma.weddings.findMany({
     where: {
-      createdBy: userID
-    }
-  })
+      createdBy: userID,
+    },
+  });
 
   if (createdWeddings) {
-    ownWeddings = createdWeddings
+    ownWeddings = createdWeddings;
   }
 
   const mappedInvitedWeddings = await Promise.all(
     user.weddingsGuest.map(async (wedding) => {
       return await prisma.weddings.findUnique({
         where: {
-          id: wedding.referencedWedding
-        }
-      })
-    })
-  )
+          id: wedding.referencedWedding,
+        },
+      });
+    }),
+  );
 
   if (mappedInvitedWeddings) {
-    const filteredMappedInvitedWeddings =
-      mappedInvitedWeddings.filter(
-        (wedding): wedding is weddingResponse =>
-          wedding !== null
-      )
+    const filteredMappedInvitedWeddings = mappedInvitedWeddings.filter(
+      (wedding): wedding is weddingResponse => wedding !== null,
+    );
 
-    guestWeddings = filteredMappedInvitedWeddings
+    guestWeddings = filteredMappedInvitedWeddings;
   }
 
   return {
     message: 'Success.',
     ownWeddings,
     guestWeddings,
-    userInfo: userInfoObject
-  }
+    userInfo: userInfoObject,
+  };
 }
 
-export async function deleteWeddingService(
-  userID: string,
-  weddingID: number
-) {
+export async function deleteWeddingService(userID: string, weddingID: number) {
   const user = await prisma.users.findUnique({
     where: {
-      id: userID
-    }
-  })
+      id: userID,
+    },
+  });
 
   if (!user) {
-    throw new AppError(
-      "Couldn't find the user on the database.",
-      404
-    )
+    throw new AppError("Couldn't find the user on the database.", 404);
   }
 
   const checkWedding = await prisma.weddings.findUnique({
     where: {
-      id: weddingID
-    }
-  })
+      id: weddingID,
+    },
+  });
 
   if (!checkWedding) {
-    throw new AppError(
-      "Couldn't find the wedding on the database.",
-      404
-    )
+    throw new AppError("Couldn't find the wedding on the database.", 404);
   }
 
   await prisma.guests.deleteMany({
     where: {
-      referencedWedding: weddingID
-    }
-  })
+      referencedWedding: weddingID,
+    },
+  });
 
   await prisma.gifts.deleteMany({
     where: {
-      fromWedding: weddingID
-    }
-  })
+      fromWedding: weddingID,
+    },
+  });
 
   await prisma.requests.deleteMany({
     where: {
-      relatedWedding: weddingID
-    }
-  })
+      relatedWedding: weddingID,
+    },
+  });
 
   await prisma.giftedBy.deleteMany({
     where: {
-      relatedWedding: weddingID
-    }
-  })
+      relatedWedding: weddingID,
+    },
+  });
 
   await prisma.weddings.delete({
     where: {
-      id: weddingID
-    }
-  })
+      id: weddingID,
+    },
+  });
 
-  return { message: 'Wedding deleted successfully.' }
+  return { message: 'Wedding deleted successfully.' };
 }

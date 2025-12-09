@@ -4,5 +4,5 @@ export const mockUser = {
   firstName: 'John',
   lastName: '',
   password: '$2b$10$cmO2pzsI4aG5oQ13NtIlW.gvuu5M.0lDa/ofsSIoYD/hffzzTenpi', // hash for password 'password'
-  createdAt: '2025-01-01'
-}
+  createdAt: '2025-01-01',
+};
