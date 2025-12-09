@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:15
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres #your postgres username
       POSTGRES_PASSWORD: password #your password
@@ -12,13 +12,13 @@ services:
     volumes:
       - db_volume:/var/lib/postgresql/data
     restart: always
-      
+
   app:
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000" #host:container
+      - '3000:3000' #host:container
     env_file:
       - .env
     depends_on:
@@ -27,6 +27,6 @@ services:
       - .:/app #hot reload #must be the same on the Dockerfile
       - /app/node_modules #avoid crashes
     command: npm run start:dev
-  
+
 volumes:
   db_volume:
