@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { mockUser } from '../../__mocks__/mockUser';
+vi.mock('../../../lib/prisma');
 import { signOutController } from '../auth.controller';
 
 vi.mock('../auth.service');
-vi.mock('../../../lib/prisma');
 
 const res = {
   status: vi.fn().mockReturnThis(),

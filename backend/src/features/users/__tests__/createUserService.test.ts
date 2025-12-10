@@ -11,6 +11,12 @@ vi.mock('jsonwebtoken', () => ({
   sign: vi.fn(),
 }));
 
+vi.mock('../../../env', () => ({
+  env: {
+    SECRET_KEY: 'key',
+  },
+}));
+
 vi.mock('../../../lib/prisma', () => ({
   prisma: {
     users: { findUnique: vi.fn(), create: vi.fn() },

@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 import { useGeneralStore } from '@/stores/general/general.provider';
-import LoggedHeader from '../headers/logged-header';
 import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut';
 import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests';
 import userEvent from '@testing-library/user-event';
+import LoggedHeader from '@/app/(components)/headers/logged-header';
 
 vi.mock('@/stores/general/general.provider');
 vi.mock('@/app/(auxiliary-functions)/hooks/useSignOut');

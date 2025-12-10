@@ -15,6 +15,11 @@ vi.mock('../../../lib/prisma', () => ({
     },
   },
 }));
+vi.mock('../../../env', () => ({
+  env: {
+    SECRET_KEY: 'key',
+  },
+}));
 
 vi.mock('../../../transporter/nodemailer-transporter');
 
@@ -26,8 +31,6 @@ const mockSendMail = transporter.sendMail as Mock;
 
 describe('forgotPasswordService', () => {
   it('should send the e-mail to recover password correctly', async () => {
-    process.env.SECRET_KEY = 'key';
-
     mockFindUnique.mockResolvedValue(mockUser);
 
     const result = await forgotPasswordService(mockUser.email);

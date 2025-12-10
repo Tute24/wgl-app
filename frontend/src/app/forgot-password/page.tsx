@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest';
-import UnLoggedHeader from '../(components)/headers/unlogged-header';
+import UnLoggedHeader from '@/app/(components)/headers/unlogged-header';
 import { Spinner } from '../(components)/Common/spinner/spinner';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import { useShallow } from 'zustand/shallow';
