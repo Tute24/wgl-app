@@ -26,6 +26,8 @@ const mockSendMail = transporter.sendMail as Mock;
 
 describe('forgotPasswordService', () => {
   it('should send the e-mail to recover password correctly', async () => {
+    process.env.SECRET_KEY = 'key';
+
     mockFindUnique.mockResolvedValue(mockUser);
 
     const result = await forgotPasswordService(mockUser.email);

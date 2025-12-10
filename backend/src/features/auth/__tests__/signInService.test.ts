@@ -16,6 +16,8 @@ const mockFindUnique = prisma.users.findUnique as unknown as Mock;
 
 describe('signInService', () => {
   it('should successfully signIn an user', async () => {
+    process.env.SECRET_KEY = 'key';
+
     mockFindUnique.mockResolvedValue(mockUser);
 
     const result = await signInService(mockUser.email, 'password');

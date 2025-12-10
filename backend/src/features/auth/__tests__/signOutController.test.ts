@@ -3,6 +3,7 @@ import { mockUser } from '../../__mocks__/mockUser';
 import { signOutController } from '../auth.controller';
 
 vi.mock('../auth.service');
+vi.mock('../../../lib/prisma');
 
 const res = {
   status: vi.fn().mockReturnThis(),
