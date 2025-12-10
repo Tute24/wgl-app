@@ -44,7 +44,7 @@ describe('OwnGiftCard', () => {
     const updateGiftButton = screen.getByLabelText(/update-gift-button/i);
     expect(updateGiftButton).toBeInTheDocument();
     await userEvent.click(updateGiftButton);
-    expect(screen.getByText(`Update this gift's Infos:`)).toBeInTheDocument();
+    expect(screen.getAllByText(`Update this gift's Infos:`)[0]).toBeInTheDocument();
     const productNameInput = screen.getByLabelText(/productName-input/i);
     const productLinkInput = screen.getByLabelText(/productLink-input/i);
     const quantityInput = screen.getByLabelText(/quantity-input/i);
@@ -79,7 +79,7 @@ describe('OwnGiftCard', () => {
     const updateGiftButton = screen.getByLabelText(/update-gift-button/i);
     expect(updateGiftButton).toBeInTheDocument();
     await userEvent.click(updateGiftButton);
-    expect(screen.getByText(`Update this gift's Infos:`)).toBeInTheDocument();
+    expect(screen.getAllByText(`Update this gift's Infos:`)[0]).toBeInTheDocument();
     const productNameInput = screen.getByLabelText(/productName-input/i);
     const productLinkInput = screen.getByLabelText(/productLink-input/i);
     const quantityInput = screen.getByLabelText(/quantity-input/i);
