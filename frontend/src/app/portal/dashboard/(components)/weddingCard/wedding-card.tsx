@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Card, CardContent, CardFooter, CardHeader } from '@/app/(components)/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Trash2, Gem, CalendarHeart, Link2, ArrowRight } from 'lucide-react';
 import { generalModalProps } from '@/types-props/general-modal-props';
 

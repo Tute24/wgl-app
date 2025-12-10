@@ -13,13 +13,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/app/(components)/ui/card';
+} from '@/components/ui/card';
 
 import useSubmitList from '../../(hooks)/useSubmitList';
-import { Label } from '@/app/(components)/ui/label';
-import { Input } from '@/app/(components)/ui/input';
-import { Button } from '@/app/(components)/ui/button';
-import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/Common/spinner/spinner';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import { useShallow } from 'zustand/shallow';
 

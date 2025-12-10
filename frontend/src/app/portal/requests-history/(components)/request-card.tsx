@@ -1,8 +1,8 @@
-import { Button } from '@/app/(components)/ui/button';
-import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useAcceptRequest } from '../(hooks)/useAcceptRequest';
 import { useDenyRequest } from '../(hooks)/useDenyRequest';
-import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { Spinner } from '@/components/Common/spinner/spinner';
 
 export interface RequestCardProps {
   requestId: number;

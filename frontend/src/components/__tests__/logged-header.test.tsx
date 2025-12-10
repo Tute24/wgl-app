@@ -4,7 +4,7 @@ import { useGeneralStore } from '@/stores/general/general.provider';
 import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut';
 import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests';
 import userEvent from '@testing-library/user-event';
-import LoggedHeader from '@/app/(components)/headers/logged-header';
+import LoggedHeader from '../Headers/logged-header';
 
 vi.mock('@/stores/general/general.provider');
 vi.mock('@/app/(auxiliary-functions)/hooks/useSignOut');

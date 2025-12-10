@@ -14,7 +14,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/app/(components)/ui/select';
+} from '@/components/ui/select';
 import { useGeneralStore } from '@/stores/general/general.provider';
 
 export default function RequestsHistoryPage() {

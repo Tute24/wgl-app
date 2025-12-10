@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import UnLoggedHeader from '@/app/(components)/headers/unlogged-header';
+import UnLoggedHeader from '../Headers/unlogged-header';
 
 describe('UnLoggedHeader', () => {
   beforeEach(() => {

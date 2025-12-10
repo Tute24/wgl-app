@@ -6,9 +6,9 @@ import { useGiftsStore } from '@/stores/gifts/gifts.provider';
 import { useShallow } from 'zustand/shallow';
 import { ClipLoader } from 'react-spinners';
 import WeddingHeader from '../wedding-header/wedding-header';
-import { Button } from '@/app/(components)/ui/button';
+import { Button } from '@/components/ui/button';
 import { useGeneralStore } from '@/stores/general/general.provider';
-import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { Spinner } from '@/components/Common/spinner/spinner';
 
 export default function GuestRequest() {
   const { id } = useParams();

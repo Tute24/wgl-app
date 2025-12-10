@@ -1,6 +1,6 @@
 import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler';
 import { useRouter } from 'next/navigation';
-import { objValuesType } from '../(components)/giftsListDisplay/owner-list';
+import { objValuesType } from '@/components/giftsListDisplay/owner-list';
 import { AxiosApi } from '@/common/axios-api/axios-api';
 import { useGiftsStore } from '@/stores/gifts/gifts.provider';
 import { useShallow } from 'zustand/shallow';

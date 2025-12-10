@@ -2,7 +2,7 @@
 
 import WeddingCard from '../weddingCard/wedding-card';
 import useDeleteWedding from '../../(hooks)/useDeleteWedding';
-import DeleteModal from '@/app/(components)/modals/delete-modal';
+import DeleteModal from '@/components/modals/delete-modal';
 import { useWeddingsStore } from '@/stores/weddings/weddings.provider';
 import { useShallow } from 'zustand/shallow';
 import { ClipLoader } from 'react-spinners';

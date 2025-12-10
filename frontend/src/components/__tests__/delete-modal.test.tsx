@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import DeleteModal, { deleteModalProps } from '../modals/delete-modal';
 
-vi.mock('@/app/(components)/Common/spinner/spinner', () => ({
+vi.mock('@/components/Common/spinner/spinner', () => ({
   Spinner: () => <div data-testid="spinner" />,
 }));
 

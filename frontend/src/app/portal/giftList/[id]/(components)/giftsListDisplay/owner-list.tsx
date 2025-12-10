@@ -7,7 +7,7 @@ import useDeleteGift from '../../(hooks)/useDeleteGift';
 import { useGiftsStore } from '@/stores/gifts/gifts.provider';
 import { useShallow } from 'zustand/shallow';
 import { ClipLoader } from 'react-spinners';
-import DeleteModal from '@/app/(components)/modals/delete-modal';
+import DeleteModal from '@/components/modals/delete-modal';
 import { useGeneralStore } from '@/stores/general/general.provider';
 
 export type objValuesType = {

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import useSignIn from '@/app/(auxiliary-functions)/hooks/useSignIn';
-import SignInForm from '@/app/(components)/forms/sign-in-form';
+import SignInForm from '../Forms/sign-in-form';
 
 vi.mock('@/stores/general/general.provider');
 vi.mock('@/app/(auxiliary-functions)/hooks/useSignIn');

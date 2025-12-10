@@ -1,4 +1,4 @@
-import UnLoggedHeader from '../(components)/headers/unlogged-header';
+import UnLoggedHeader from '@/components/Headers/unlogged-header';
 
 export default function About() {
   return (

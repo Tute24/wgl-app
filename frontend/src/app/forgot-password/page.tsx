@@ -4,8 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest';
-import UnLoggedHeader from '@/app/(components)/headers/unlogged-header';
-import { Spinner } from '../(components)/Common/spinner/spinner';
+import UnLoggedHeader from '@/components/Headers/unlogged-header';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import { useShallow } from 'zustand/shallow';
 import {
@@ -15,10 +14,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../(components)/ui/card';
-import { Label } from '../(components)/ui/label';
-import { Input } from '../(components)/ui/input';
-import { Button } from '../(components)/ui/button';
+} from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/Common/spinner/spinner';
 
 export const emailSchema = z.object({
   email: z.string().email({ message: 'Enter a valid e-mail address' }),

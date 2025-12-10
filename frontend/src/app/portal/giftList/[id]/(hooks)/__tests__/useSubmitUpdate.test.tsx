@@ -5,7 +5,7 @@ import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler';
 import { useRouter } from 'next/navigation';
 import { useGiftsStore } from '@/stores/gifts/gifts.provider';
 import { giftListMocks } from '../../__mocks__/gift-list-mocks';
-import { objValuesType } from '../../(components)/giftsListDisplay/owner-list';
+import { objValuesType } from '../@/components/giftsListDisplay/owner-list';
 import useSubmitUpdate from '../useSubmitUpdate';
 
 vi.mock('@/common/axios-api/axios-api');

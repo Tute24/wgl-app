@@ -3,8 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset';
-import { Spinner } from '@/app/(components)/Common/spinner/spinner';
-import UnLoggedHeader from '@/app/(components)/headers/unlogged-header';
+import { Spinner } from '@/components/Common/spinner/spinner';
+import UnLoggedHeader from '@/components/Headers/unlogged-header';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import { useShallow } from 'zustand/shallow';
 import { passwordSchema } from '@/zodSchemas/usersDataSchema';
@@ -15,10 +15,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/app/(components)/ui/card';
-import { Label } from '@/app/(components)/ui/label';
-import { Input } from '@/app/(components)/ui/input';
-import { Button } from '@/app/(components)/ui/button';
+} from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const newPasswordSchema = z
   .object({

@@ -1,5 +1,5 @@
 import useGiftPresent from '../../(hooks)/useGiftPresent';
-import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Boxes, Gift, Link2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -7,10 +7,10 @@ import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { Button } from '@/app/(components)/ui/button';
-import { Label } from '@/app/(components)/ui/label';
-import { Input } from '@/app/(components)/ui/input';
-import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/Common/spinner/spinner';
 
 const giftPresentSchema = z.object({
   quantity: z.number().nonnegative(),
