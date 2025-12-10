@@ -1,5 +1,5 @@
-import UnLoggedHeader from '../(components)/headers/unlogged-header'
-import RegisterForm from './(components)/RegistrationForms/sign-up-form'
+import UnLoggedHeader from '../(components)/headers/unlogged-header';
+import RegisterForm from './(components)/RegistrationForms/sign-up-form';
 
 export default function Register() {
   return (
@@ -7,5 +7,5 @@ export default function Register() {
       <UnLoggedHeader />
       <RegisterForm />
     </>
-  )
+  );
 }

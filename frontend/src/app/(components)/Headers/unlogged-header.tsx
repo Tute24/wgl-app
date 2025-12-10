@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { Menu, ShieldQuestionIcon, LogIn, UserPlus } from 'lucide-react'
+import Link from 'next/link';
+import Image from 'next/image';
+import { Menu, ShieldQuestionIcon, LogIn, UserPlus } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
+} from '../ui/dropdown-menu';
 
 export default function UnLoggedHeader() {
   return (
@@ -35,20 +35,14 @@ export default function UnLoggedHeader() {
               <DropdownMenuTrigger data-testid="unlogged-menu-trigger">
                 <Menu className="text-amber-800" size={36} />
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="font-medium text-amber-800 px-3 bg-white"
-              >
+              <DropdownMenuContent align="end" className="font-medium text-amber-800 px-3 bg-white">
                 <DropdownMenuLabel className="text-xl font-bold font-poppins">
                   Options
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-amber-800 -mx-3" />
                 <Link href="/">
                   <DropdownMenuItem>
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <LogIn size={24} />
                       <span className="text-lg font-poppins">Sign In</span>
                     </button>
@@ -56,10 +50,7 @@ export default function UnLoggedHeader() {
                 </Link>
                 <Link href="/registerPage">
                   <DropdownMenuItem>
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <UserPlus size={24} />
                       <span className="text-lg font-poppins">Sign Up</span>
                     </button>
@@ -67,10 +58,7 @@ export default function UnLoggedHeader() {
                 </Link>
                 <Link href="/about-page">
                   <DropdownMenuItem>
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <ShieldQuestionIcon size={24} />
                       <span className="text-lg font-poppins">About Us</span>
                     </button>
@@ -83,5 +71,5 @@ export default function UnLoggedHeader() {
       </div>
       <hr className="mb-5 border-2 border-amber-800" />
     </>
-  )
+  );
 }

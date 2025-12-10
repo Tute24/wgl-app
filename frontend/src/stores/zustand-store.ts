@@ -1,10 +1,10 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-type UsernameStoreState = { username: string | null }
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+type UsernameStoreState = { username: string | null };
 type UsernameStoreAction = {
-  setUsername: (nextUsername: UsernameStoreState['username']) => void
-}
-type UsernameStore = UsernameStoreState & UsernameStoreAction
+  setUsername: (nextUsername: UsernameStoreState['username']) => void;
+};
+type UsernameStore = UsernameStoreState & UsernameStoreAction;
 export const useUsernameStore = create<UsernameStore>()(
   persist(
     (set) => ({
@@ -15,4 +15,4 @@ export const useUsernameStore = create<UsernameStore>()(
       name: 'username-storage',
     },
   ),
-)
+);

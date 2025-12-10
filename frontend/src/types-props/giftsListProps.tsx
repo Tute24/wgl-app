@@ -1,5 +1,5 @@
-import giftsProps from './giftsProps'
+import giftsProps from './giftsProps';
 
 export default interface giftsListProps {
-  giftsArray: giftsProps[]
+  giftsArray: giftsProps[];
 }

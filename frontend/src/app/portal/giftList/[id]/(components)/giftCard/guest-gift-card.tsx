@@ -1,29 +1,29 @@
-import useGiftPresent from '../../(hooks)/useGiftPresent'
-import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card'
-import { Boxes, Gift, Link2 } from 'lucide-react'
-import Link from 'next/link'
+import useGiftPresent from '../../(hooks)/useGiftPresent';
+import { Card, CardContent, CardFooter } from '@/app/(components)/ui/card';
+import { Boxes, Gift, Link2 } from 'lucide-react';
+import Link from 'next/link';
 
-import { z } from 'zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
-import { Button } from '@/app/(components)/ui/button'
-import { Label } from '@/app/(components)/ui/label'
-import { Input } from '@/app/(components)/ui/input'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
+import { Button } from '@/app/(components)/ui/button';
+import { Label } from '@/app/(components)/ui/label';
+import { Input } from '@/app/(components)/ui/input';
+import { Spinner } from '@/app/(components)/Common/spinner/spinner';
 
 const giftPresentSchema = z.object({
   quantity: z.number().nonnegative(),
-})
+});
 
 export interface GuestGiftCardProps {
-  id: number
-  productName: string
-  quantity: number
-  productLink: string
+  id: number;
+  productName: string;
+  quantity: number;
+  productLink: string;
 }
 
-type giftPresentType = z.infer<typeof giftPresentSchema>
+type giftPresentType = z.infer<typeof giftPresentSchema>;
 
 export default function GuestGiftCard({
   id,
@@ -31,7 +31,7 @@ export default function GuestGiftCard({
   productName,
   quantity,
 }: GuestGiftCardProps) {
-  const [selectedGiftID, setSelectedGiftID] = useState(0)
+  const [selectedGiftID, setSelectedGiftID] = useState(0);
   const {
     register,
     handleSubmit,
@@ -39,16 +39,16 @@ export default function GuestGiftCard({
     formState: { isSubmitting },
   } = useForm<giftPresentType>({
     resolver: zodResolver(giftPresentSchema),
-  })
-  const giftPresent = useGiftPresent()
+  });
+  const giftPresent = useGiftPresent();
   const onSubmit: SubmitHandler<giftPresentType> = (formData) => {
-    giftPresent(selectedGiftID, formData.quantity)
-  }
+    giftPresent(selectedGiftID, formData.quantity);
+  };
   useEffect(() => {
     if (id === selectedGiftID) {
-      reset()
+      reset();
     }
-  }, [selectedGiftID, id, reset])
+  }, [selectedGiftID, id, reset]);
   return (
     <>
       {id !== selectedGiftID && (
@@ -61,24 +61,19 @@ export default function GuestGiftCard({
             <div className="flex flex-row gap-4 items-center">
               <Boxes size={24} className="text-amber-800" />
               <span className="text-lg text-stone-700">
-                Quantity on list remaining:{' '}
-                <span className="text-amber-800">{quantity}</span>
+                Quantity on list remaining: <span className="text-amber-800">{quantity}</span>
               </span>
             </div>
           </CardContent>
           <CardFooter className="items-start flex flex-col w-full gap-4">
             <Link
-              href={
-                productLink.startsWith('http')
-                  ? productLink
-                  : `https://${productLink}`
-              }
+              href={productLink.startsWith('http') ? productLink : `https://${productLink}`}
               target="_blank"
             >
               <div className="flex flex-row gap-4 items-center">
                 <Link2 size={24} className="text-amber-800" />
                 <span className="text-stone-700 hover:underline hover:text-amber-800">
-                  Open this product's page on store
+                  {`Open this product's page on store`}
                 </span>
               </div>
             </Link>
@@ -102,24 +97,19 @@ export default function GuestGiftCard({
             <div className="flex flex-row gap-4 items-center">
               <Boxes size={24} className="text-amber-800" />
               <span className="text-lg text-stone-700">
-                Quantity on list remaining:{' '}
-                <span className="text-amber-800">{quantity}</span>
+                Quantity on list remaining: <span className="text-amber-800">{quantity}</span>
               </span>
             </div>
           </CardContent>
           <CardFooter className="items-start flex flex-col w-full gap-4">
             <Link
-              href={
-                productLink.startsWith('http')
-                  ? productLink
-                  : `https://${productLink}`
-              }
+              href={productLink.startsWith('http') ? productLink : `https://${productLink}`}
               target="_blank"
             >
               <div className="flex flex-row gap-4 items-center">
                 <Link2 size={24} className="text-amber-800" />
                 <span className="text-stone-700 hover:underline hover:text-amber-800">
-                  Open this product's page on store
+                  {`Open this product's page on store`}
                 </span>
               </div>
             </Link>
@@ -127,7 +117,7 @@ export default function GuestGiftCard({
               <form
                 className="w-full"
                 onSubmit={handleSubmit(onSubmit, (errors) => {
-                  console.log('Error on submitting:', errors)
+                  console.log('Error on submitting:', errors);
                 })}
               >
                 <div className="flex flex-col gap-3 mt-3 mb-3 w-full items-start">
@@ -154,7 +144,7 @@ export default function GuestGiftCard({
                     type="button"
                     className="w-full text-stone-100 text-md"
                     onClick={() => {
-                      setSelectedGiftID(0)
+                      setSelectedGiftID(0);
                     }}
                     disabled={isSubmitting}
                   >
@@ -167,5 +157,5 @@ export default function GuestGiftCard({
         </Card>
       )}
     </>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { Button } from '@/app/(components)/ui/button'
-import Link from 'next/link'
-import { BsEmojiFrown } from 'react-icons/bs'
+import { Button } from '@/app/(components)/ui/button';
+import Link from 'next/link';
+import { BsEmojiFrown } from 'react-icons/bs';
 
 export default function NotFoundPageWarning() {
   return (
@@ -9,13 +9,11 @@ export default function NotFoundPageWarning() {
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <BsEmojiFrown size={55} />
           <h1 className="font-bold text-center">
-            404 - Oops! The page you're looking for doesn't exist or has been
-            moved.
+            404 - Oops! The page you are looking for does not exist or has been moved.
           </h1>
         </div>
         <h2 className="pt-3 flex text-center">
-          You might have mystiped the address, or the page may no longer be
-          available.
+          You might have mystiped the address, or the page may no longer be available.
         </h2>
         <div className="pt-3">
           <Link href="/portal/dashboard">
@@ -24,5 +22,5 @@ export default function NotFoundPageWarning() {
         </div>
       </div>
     </div>
-  )
+  );
 }

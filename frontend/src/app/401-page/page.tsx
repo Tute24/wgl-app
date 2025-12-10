@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import { IoMdCloseCircleOutline } from 'react-icons/io'
-import UnLoggedHeader from '../(components)/headers/unlogged-header'
+import Link from 'next/link';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import UnLoggedHeader from '../(components)/headers/unlogged-header';
 
 export default function NotPermittedPageWarning() {
   return (
@@ -10,7 +10,7 @@ export default function NotPermittedPageWarning() {
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <IoMdCloseCircleOutline size={65} />
           <h1 className="font-bold text-center">
-            401 - You must be signed in to access this page's content.
+            401 - You must be signed in to access the content of this content.
           </h1>
         </div>
         <h2 className="pt-3 text-center">
@@ -25,5 +25,5 @@ export default function NotPermittedPageWarning() {
         </h2>
       </div>
     </div>
-  )
+  );
 }

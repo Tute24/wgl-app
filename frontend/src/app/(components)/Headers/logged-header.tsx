@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut'
-import Link from 'next/link'
+import useLogOut from '@/app/(auxiliary-functions)/hooks/useSignOut';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/app/(components)/ui/dropdown-menu'
+} from '@/app/(components)/ui/dropdown-menu';
 import {
   Menu,
   LogOut,
@@ -17,38 +17,33 @@ import {
   ListPlus,
   LayoutDashboard,
   ShieldQuestionIcon,
-} from 'lucide-react'
-import Image from 'next/image'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
-import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests'
-import { useEffect } from 'react'
+} from 'lucide-react';
+import Image from 'next/image';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
+import { useGetPendingRequests } from '@/app/(auxiliary-functions)/hooks/useGetPendingRequests';
+import { useEffect } from 'react';
 
 export default function LoggedHeader() {
-  const getPendingRequests = useGetPendingRequests()
+  const getPendingRequests = useGetPendingRequests();
   useEffect(() => {
-    getPendingRequests()
+    getPendingRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const logOut = useLogOut()
+  }, []);
+  const logOut = useLogOut();
   const { username, pendingRequests } = useGeneralStore(
     useShallow((store) => ({
       username: store.username,
       pendingRequests: store.pendingRequests,
     })),
-  )
+  );
   return (
     <>
       <div className="py-5 bg-stone-100 font-poppins">
         <nav className=" flex text-sm items-center justify-evenly flex-row w-full sm:text-xl">
           <div className="-mt-5 -mb-8 lg:-mt-10 lg:-mb-10">
             <Link href="/portal/dashboard" data-testid="logged-header-logo">
-              <Image
-                src="/reworked-logo.png"
-                alt="Logo"
-                width={100}
-                height={100}
-              />
+              <Image src="/reworked-logo.png" alt="Logo" width={100} height={100} />
             </Link>
           </div>
           <div className="text-amber-800 hover:text-amber-900 font-bold hidden lg:block">
@@ -78,20 +73,14 @@ export default function LoggedHeader() {
                   )}
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="font-medium text-amber-800 px-3 bg-white"
-              >
+              <DropdownMenuContent align="end" className="font-medium text-amber-800 px-3 bg-white">
                 <DropdownMenuLabel className="text-xl font-bold font-poppins">
                   Options
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-amber-800 -mx-3" />
                 <Link href="/portal/dashboard">
                   <DropdownMenuItem className="lg:hidden">
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <LayoutDashboard size={24} />
                       <span className="text-lg font-poppins">Dashboard</span>
                     </button>
@@ -99,28 +88,18 @@ export default function LoggedHeader() {
                 </Link>
                 <Link href="/portal/createList">
                   <DropdownMenuItem className="lg:hidden">
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <ListPlus size={24} />
-                      <span className="text-lg font-poppins">
-                        Create new wedding
-                      </span>
+                      <span className="text-lg font-poppins">Create new wedding</span>
                     </button>
                   </DropdownMenuItem>
                 </Link>
                 <DropdownMenuItem>
                   <div className="relative">
                     <Link href="/portal/requests-history">
-                      <button
-                        className="flex flex-row gap-2 items-center"
-                        type="button"
-                      >
+                      <button className="flex flex-row gap-2 items-center" type="button">
                         <Hourglass size={24} />
-                        <span className="text-lg font-poppins">
-                          Requests List
-                        </span>
+                        <span className="text-lg font-poppins">Requests List</span>
                         {pendingRequests > 0 && (
                           <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white "></span>
                         )}
@@ -130,10 +109,7 @@ export default function LoggedHeader() {
                 </DropdownMenuItem>
                 <Link href="/portal/about-page">
                   <DropdownMenuItem>
-                    <button
-                      className="flex flex-row gap-2 items-center"
-                      type="button"
-                    >
+                    <button className="flex flex-row gap-2 items-center" type="button">
                       <ShieldQuestionIcon size={24} />
                       <span className="text-lg font-poppins">About Us</span>
                     </button>
@@ -144,7 +120,7 @@ export default function LoggedHeader() {
                     className="flex flex-row gap-2 items-center"
                     type="button"
                     onClick={() => {
-                      logOut()
+                      logOut();
                     }}
                   >
                     <LogOut size={24} />
@@ -158,5 +134,5 @@ export default function LoggedHeader() {
       </div>
       <hr className="mb-5 border-2 border-amber-800" />
     </>
-  )
+  );
 }

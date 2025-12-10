@@ -1,47 +1,41 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import useSignIn from '@/app/(auxiliary-functions)/hooks/useSignIn'
-import { z } from 'zod'
-import signInSchema from '@/zodSchemas/signInSchema'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Spinner } from '../Common/spinner/spinner'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../ui/card'
-import { Button } from '../ui/button'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
+import Link from 'next/link';
+import useSignIn from '@/app/(auxiliary-functions)/hooks/useSignIn';
+import { z } from 'zod';
+import signInSchema from '@/zodSchemas/signInSchema';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Spinner } from '../Common/spinner/spinner';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Button } from '../ui/button';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
 
 export type usersSignType = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
-export type signInData = z.infer<typeof signInSchema>
+export type signInData = z.infer<typeof signInSchema>;
 
 export default function SignInForm() {
   const { statusMessage } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
     })),
-  )
+  );
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<signInData>({
     resolver: zodResolver(signInSchema),
-  })
+  });
 
-  const onSubmit: SubmitHandler<signInData> = useSignIn()
+  const onSubmit: SubmitHandler<signInData> = useSignIn();
 
   return (
     <div className="flex flex-col items-center justify-center m-auto h-screen">
@@ -55,9 +49,7 @@ export default function SignInForm() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col items-start gap-3 font-inter w-full">
               <div className="flex flex-col gap-2 items-start justify-start w-full">
-                <Label className="text-md text-stone-700">
-                  Enter your e-mail
-                </Label>
+                <Label className="text-md text-stone-700">Enter your e-mail</Label>
                 <Input
                   className="!text-md !text-amber-800 !placeholder-amber-800"
                   type="text"
@@ -65,16 +57,12 @@ export default function SignInForm() {
                   placeholder="Your e-mail here"
                 />
                 {errors.email && (
-                  <p className="font-inter text-red-600 text-sm">
-                    {errors.email.message}
-                  </p>
+                  <p className="font-inter text-red-600 text-sm">{errors.email.message}</p>
                 )}
               </div>
               <div className="flex flex-col gap-2 items-start justify-start w-full">
                 <div className="flex flex-row justify-between gap-10 items-baseline">
-                  <Label className="text-md text-stone-700">
-                    Enter your password
-                  </Label>
+                  <Label className="text-md text-stone-700">Enter your password</Label>
                   <Link href="/forgot-password">
                     <p className="text-xs text-stone-700 items-center hover:underline hover:text-amber-800">
                       Forgot your password?
@@ -88,9 +76,7 @@ export default function SignInForm() {
                   placeholder="Your password here"
                 />
                 {errors.password && (
-                  <p className="font-inter text-red-600 text-sm">
-                    {errors.password.message}
-                  </p>
+                  <p className="font-inter text-red-600 text-sm">{errors.password.message}</p>
                 )}
               </div>
               <div className="w-full items-center pt-3 flex flex-col">
@@ -100,24 +86,20 @@ export default function SignInForm() {
                 >
                   {isSubmitting ? <Spinner /> : 'Sign In'}
                 </Button>
-                <span className="font-inter text-red-600 text-sm pt-2">
-                  {statusMessage}
-                </span>
+                <span className="font-inter text-red-600 text-sm pt-2">{statusMessage}</span>
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-3 items-center font-inter">
           <p className="text-lg text-stone-700">
-            Don't have an account?{' '}
+            {`Don't have an account?`}{' '}
             <Link href="/registerPage">
-              <span className="text-amber-800 font-bold hover:underline">
-                Sign Up Now!
-              </span>
+              <span className="text-amber-800 font-bold hover:underline">Sign Up Now!</span>
             </Link>
           </p>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

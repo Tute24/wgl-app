@@ -1,33 +1,27 @@
-'use client'
+'use client';
 
-import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister'
-import usersDataSchema from '@/zodSchemas/usersDataSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/app/(components)/ui/card'
-import { Input } from '@/app/(components)/ui/input'
-import { Label } from '@/app/(components)/ui/label'
-import { Button } from '@/app/(components)/ui/button'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
+import useSubmitRegister from '@/app/registerPage/(hooks)/useSubmitRegister';
+import usersDataSchema from '@/zodSchemas/usersDataSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/(components)/ui/card';
+import { Input } from '@/app/(components)/ui/input';
+import { Label } from '@/app/(components)/ui/label';
+import { Button } from '@/app/(components)/ui/button';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
 
-type usersData = z.infer<typeof usersDataSchema>
+type usersData = z.infer<typeof usersDataSchema>;
 
 export default function RegisterForm() {
   const { statusMessage } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
     })),
-  )
+  );
   const {
     register,
     handleSubmit,
@@ -35,12 +29,12 @@ export default function RegisterForm() {
     formState: { errors, isSubmitting },
   } = useForm<usersData>({
     resolver: zodResolver(usersDataSchema),
-  })
-  const submitRegister = useSubmitRegister()
+  });
+  const submitRegister = useSubmitRegister();
   const onSubmit: SubmitHandler<usersData> = (data) => {
-    submitRegister(data)
-    reset()
-  }
+    submitRegister(data);
+    reset();
+  };
 
   return (
     <div className="flex flex-col items-center justify-center m-auto h-screen px-4">
@@ -63,9 +57,7 @@ export default function RegisterForm() {
                     placeholder="Your first name here"
                   />
                   {errors.firstName && (
-                    <p className="font-inter text-red-600 text-sm">
-                      {errors.firstName.message}
-                    </p>
+                    <p className="font-inter text-red-600 text-sm">{errors.firstName.message}</p>
                   )}
                 </div>
                 <div className="flex flex-col gap-2 items-start justify-start w-full">
@@ -77,9 +69,7 @@ export default function RegisterForm() {
                     placeholder="Your last name here"
                   />
                   {errors.lastName && (
-                    <p className="font-inter text-red-600 text-sm">
-                      {errors.lastName.message}
-                    </p>
+                    <p className="font-inter text-red-600 text-sm">{errors.lastName.message}</p>
                   )}
                 </div>
               </div>
@@ -92,9 +82,7 @@ export default function RegisterForm() {
                   placeholder="Enter a valid e-mail address"
                 />
                 {errors.email && (
-                  <p className="font-inter text-red-600 text-sm">
-                    {errors.email.message}
-                  </p>
+                  <p className="font-inter text-red-600 text-sm">{errors.email.message}</p>
                 )}
               </div>
               <div className="flex flex-col gap-2 items-start justify-start w-full">
@@ -112,9 +100,7 @@ export default function RegisterForm() {
                 )}
               </div>
               <div className="flex flex-col gap-2 items-start justify-start w-full">
-                <Label className="text-md text-stone-700">
-                  Confirm your password
-                </Label>
+                <Label className="text-md text-stone-700">Confirm your password</Label>
                 <Input
                   className="!text-md !text-amber-800 !placeholder-amber-800"
                   type="password"
@@ -134,9 +120,7 @@ export default function RegisterForm() {
                 >
                   {isSubmitting ? <Spinner /> : 'Sign Up'}
                 </Button>
-                <span className="font-inter text-red-600 text-sm pt-2">
-                  {statusMessage}
-                </span>
+                <span className="font-inter text-red-600 text-sm pt-2">{statusMessage}</span>
               </div>
             </div>
           </form>
@@ -145,13 +129,11 @@ export default function RegisterForm() {
           <p className="text-lg text-stone-700">
             Already have an account?{' '}
             <Link href="/">
-              <span className="text-amber-800 font-bold hover:underline">
-                Sign In Now!
-              </span>
+              <span className="text-amber-800 font-bold hover:underline">Sign In Now!</span>
             </Link>
           </p>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

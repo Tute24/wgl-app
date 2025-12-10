@@ -1,39 +1,39 @@
-'use client'
+'use client';
 
-import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest'
-import { useParams, useRouter } from 'next/navigation'
-import { useGiftsStore } from '@/stores/gifts/gifts.provider'
-import { useShallow } from 'zustand/shallow'
-import { ClipLoader } from 'react-spinners'
-import WeddingHeader from '../wedding-header/wedding-header'
-import { Button } from '@/app/(components)/ui/button'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
+import useMakeRequest from '@/app/portal/giftList/[id]/(hooks)/useMakeRequest';
+import { useParams, useRouter } from 'next/navigation';
+import { useGiftsStore } from '@/stores/gifts/gifts.provider';
+import { useShallow } from 'zustand/shallow';
+import { ClipLoader } from 'react-spinners';
+import WeddingHeader from '../wedding-header/wedding-header';
+import { Button } from '@/app/(components)/ui/button';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { Spinner } from '@/app/(components)/Common/spinner/spinner';
 
 export default function GuestRequest() {
-  const { id } = useParams()
-  const weddingID = Number(id)
-  const makeRequest = useMakeRequest(weddingID)
-  const route = useRouter()
+  const { id } = useParams();
+  const weddingID = Number(id);
+  const makeRequest = useMakeRequest(weddingID);
+  const route = useRouter();
   const { listHeader, hasHydrated } = useGiftsStore(
     useShallow((store) => ({
       listHeader: store.listHeader,
       hasHydrated: store.hasHydrated,
     })),
-  )
+  );
   const { isLoading, statusMessage } = useGeneralStore(
     useShallow((store) => ({
       isLoading: store.isLoading,
       statusMessage: store.statusMessage,
     })),
-  )
+  );
 
   if (!hasHydrated || !listHeader) {
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
       </div>
-    )
+    );
   }
 
   return (
@@ -46,13 +46,13 @@ export default function GuestRequest() {
           id={listHeader!.weddingId}
         />
         <h2 className="font-bold text-md sm:text-xl text-amber-800 font-inter">
-          Not currently a guest of this wedding. <br /> You can make a request
-          or go back to the initial page.
+          Not currently a guest of this wedding. <br /> You can make a request or go back to the
+          initial page.
         </h2>
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8 justify-center text-center w-full font-inter">
           <Button
             onClick={() => {
-              route.push('/dashboard')
+              route.push('/dashboard');
             }}
             variant="default"
             className="min-w-[225px] text-md font-bold"
@@ -68,11 +68,9 @@ export default function GuestRequest() {
           </Button>
         </div>
         <div className="flex flex-col justify-center items-center text-center font-inter">
-          <span className="font-bold text-sm pt-5 text-green-800">
-            {statusMessage}
-          </span>
+          <span className="font-bold text-sm pt-5 text-green-800">{statusMessage}</span>
         </div>
       </div>
     </>
-  )
+  );
 }

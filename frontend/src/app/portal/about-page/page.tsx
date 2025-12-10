@@ -3,5 +3,5 @@ export default function About() {
     <>
       <h1 className="text-center">About Us</h1>
     </>
-  )
+  );
 }

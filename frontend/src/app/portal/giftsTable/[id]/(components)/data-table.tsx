@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   ColumnDef,
@@ -9,7 +9,7 @@ import {
   getFilteredRowModel,
   SortingState,
   getSortedRowModel,
-} from '@tanstack/react-table'
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -17,24 +17,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/app/(components)/ui/table'
+} from '@/app/(components)/ui/table';
 
-import { Input } from '@/app/(components)/ui/input'
-import React from 'react'
+import { Input } from '@/app/(components)/ui/input';
+import React from 'react';
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  )
+export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
@@ -47,7 +42,7 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
     },
-  })
+  });
 
   return (
     <div className="flex flex-col gap-8 font-inter">
@@ -55,19 +50,13 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder="Filter Products"
           value={(table.getColumn('gift')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('gift')?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => table.getColumn('gift')?.setFilterValue(event.target.value)}
           className="max-w-[125px] text-sm sm:text-base sm:max-w-sm placeholder:text-amber-800"
         />
         <Input
           placeholder="Filter User"
-          value={
-            (table.getColumn('presenter')?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table.getColumn('presenter')?.setFilterValue(event.target.value)
-          }
+          value={(table.getColumn('presenter')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('presenter')?.setFilterValue(event.target.value)}
           className="max-w-[125px] text-sm sm:text-base sm:max-w-sm placeholder:text-amber-800"
         />
       </div>
@@ -84,12 +73,9 @@ export function DataTable<TData, TValue>({
                     >
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -97,19 +83,13 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       className="text-center text-stone-700 font-inter font-medium"
                       key={cell.id}
                     >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -128,5 +108,5 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
     </div>
-  )
+  );
 }

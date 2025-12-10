@@ -13,4 +13,4 @@ export const weddingsMock = {
     shippingAddres: 'Street2',
     createdBy: 'Owner2',
   },
-}
+};

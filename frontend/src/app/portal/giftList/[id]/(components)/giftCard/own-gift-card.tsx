@@ -1,38 +1,33 @@
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/app/(components)/ui/card'
-import useSubmitUpdate from '../../(hooks)/useSubmitUpdate'
-import { Trash2, Gift, Pencil, Boxes, Link2 } from 'lucide-react'
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader } from '@/app/(components)/ui/card';
+import useSubmitUpdate from '../../(hooks)/useSubmitUpdate';
+import { Trash2, Gift, Pencil, Boxes, Link2 } from 'lucide-react';
 
-import { Label } from '@/app/(components)/ui/label'
-import { Input } from '@/app/(components)/ui/input'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '@/app/(components)/ui/button'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
-import { generalModalProps } from '@/types-props/general-modal-props'
+import { Label } from '@/app/(components)/ui/label';
+import { Input } from '@/app/(components)/ui/input';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button } from '@/app/(components)/ui/button';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Spinner } from '@/app/(components)/Common/spinner/spinner';
+import { generalModalProps } from '@/types-props/general-modal-props';
 
 export interface OwnGiftCardProps {
-  id: number
-  productName: string
-  quantity: number
-  productLink: string
-  setModalObject: (modalObject: generalModalProps) => void
+  id: number;
+  productName: string;
+  quantity: number;
+  productLink: string;
+  setModalObject: (modalObject: generalModalProps) => void;
 }
 
 const updateSchema = z.object({
   productName: z.string(),
   productLink: z.string(),
   quantity: z.number().int().positive(),
-})
+});
 
-type updateData = z.infer<typeof updateSchema>
+type updateData = z.infer<typeof updateSchema>;
 
 export default function OwnGiftCard({
   id,
@@ -48,13 +43,13 @@ export default function OwnGiftCard({
     formState: { isSubmitting },
   } = useForm<updateData>({
     resolver: zodResolver(updateSchema),
-  })
-  const [selectedGiftID, setSelectedGiftID] = useState(0)
+  });
+  const [selectedGiftID, setSelectedGiftID] = useState(0);
   const [updateProps, setUpdateProps] = useState({
     productName: '',
     quantity: 0,
     productLink: '',
-  })
+  });
 
   useEffect(() => {
     if (id === selectedGiftID) {
@@ -62,16 +57,16 @@ export default function OwnGiftCard({
         productName: updateProps.productName,
         productLink: updateProps.productLink,
         quantity: updateProps.quantity,
-      })
+      });
     }
-  }, [selectedGiftID, id, updateProps, reset])
+  }, [selectedGiftID, id, updateProps, reset]);
 
-  const submitUpdate = useSubmitUpdate()
+  const submitUpdate = useSubmitUpdate();
 
   const onSubmit: SubmitHandler<updateData> = (formData) => {
-    console.log(formData)
-    submitUpdate(formData, selectedGiftID)
-  }
+    console.log(formData);
+    submitUpdate(formData, selectedGiftID);
+  };
 
   return (
     <>
@@ -86,14 +81,11 @@ export default function OwnGiftCard({
                   productName,
                   quantity,
                   productLink,
-                })
-                setSelectedGiftID(id)
+                });
+                setSelectedGiftID(id);
               }}
             >
-              <Pencil
-                size={18}
-                className="text-green-500 hover:text-green-700"
-              />
+              <Pencil size={18} className="text-green-500 hover:text-green-700" />
             </button>
             <button
               type="button"
@@ -117,24 +109,19 @@ export default function OwnGiftCard({
             <div className="flex flex-row gap-4 items-center">
               <Boxes size={24} className="text-amber-800" />
               <span className="text-lg text-stone-700">
-                Quantity remaining on list:{' '}
-                <span className="text-amber-800">{quantity}</span>
+                Quantity remaining on list: <span className="text-amber-800">{quantity}</span>
               </span>
             </div>
           </CardContent>
           <CardFooter className="items-center flex flex-row gap-4">
             <Link
-              href={
-                productLink.startsWith('http')
-                  ? productLink
-                  : `https://${productLink}`
-              }
+              href={productLink.startsWith('http') ? productLink : `https://${productLink}`}
               target="_blank"
             >
               <div className="flex flex-row gap-4 items-center">
                 <Link2 size={24} className="text-amber-800" />
                 <span className="text-stone-700 hover:underline hover:text-amber-800">
-                  Open this product's page on store
+                  {`Open this product's page on store`}
                 </span>
               </div>
             </Link>
@@ -144,19 +131,17 @@ export default function OwnGiftCard({
       {id === selectedGiftID && (
         <Card className="w-full max-w-sm border-amber-800 hover:shadow-md hover:shadow-amber-800 min-w-[350px] font-inter">
           <CardHeader className="flex items-center text-center">
-            <h2 className="text-amber-800 font-bold">
-              Update this gift's Infos:
-            </h2>
+            <h2 className="text-amber-800 font-bold">{`Update this gift's Infos:`}</h2>
           </CardHeader>
           <CardContent className="w-full gap-3">
             <form
               className="text-stone-700"
               onSubmit={handleSubmit(onSubmit, (errors) => {
-                console.log('Error on submitting:', errors)
+                console.log('Error on submitting:', errors);
               })}
             >
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label className="text-md">Update the gift's title:</Label>
+                <Label className="text-md">{`Update this gift's Infos:`}</Label>
                 <Input
                   aria-label="productName-input"
                   type="text"
@@ -165,7 +150,7 @@ export default function OwnGiftCard({
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label className="text-md">Update the gift's quantity:</Label>
+                <Label className="text-md">{`Update this gift's Infos:`}:</Label>
                 <Input
                   aria-label="quantity-input"
                   type="number"
@@ -174,9 +159,7 @@ export default function OwnGiftCard({
                 />
               </div>
               <div className="flex flex-col gap-3 mb-3 items-start">
-                <Label className="text-md">
-                  Update the gift's purchase link:
-                </Label>
+                <Label className="text-md">{`Update this gift's Infos:`}</Label>
                 <Input
                   aria-label="productLink-input"
                   type="text"
@@ -197,7 +180,7 @@ export default function OwnGiftCard({
                   type="button"
                   className="w-full text-stone-100 text-md"
                   onClick={() => {
-                    setSelectedGiftID(0)
+                    setSelectedGiftID(0);
                   }}
                   disabled={isSubmitting}
                 >
@@ -209,5 +192,5 @@ export default function OwnGiftCard({
         </Card>
       )}
     </>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 export interface generalModalProps {
-  id: number
-  name: string
-  isOpen: boolean
+  id: number;
+  name: string;
+  isOpen: boolean;
 }
