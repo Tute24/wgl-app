@@ -9,7 +9,10 @@ export interface AxiosApiProps {
   route: string;
 }
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const isSSR = typeof window === 'undefined';
+
+const apiURL = isSSR ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL;
+
 export const axiosInstance = axios.create({
   baseURL: apiURL,
   timeout: 2000,
