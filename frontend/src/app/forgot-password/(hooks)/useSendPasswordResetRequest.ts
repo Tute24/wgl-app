@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { emailSchema } from '../page';
 import axios from 'axios';
 import AxiosErrorHandler from '@/app/(auxiliary-functions)/axios-error-handler';
 import { useGeneralStore } from '@/stores/general/general.provider';
 import { useShallow } from 'zustand/shallow';
+import { emailSchema } from '@/zodSchemas/emailSchema';
 
 export default function useSendPasswordResetRequest() {
   type userEmail = z.infer<typeof emailSchema>;

@@ -19,10 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/Common/spinner/spinner';
-
-export const emailSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid e-mail address' }),
-});
+import { emailSchema } from '@/zodSchemas/emailSchema';
 
 type userEmail = z.infer<typeof emailSchema>;
 
