@@ -25,5 +25,19 @@ services:
     depends_on:
       - db
 
+  front:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        API_URL: ${API_URL} 
+    ports:
+     - '3001:3001'
+    restart: unless-stopped
+    depends_on:
+      - api
+
+
 volumes:
   db_volume:
