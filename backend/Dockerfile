@@ -7,6 +7,7 @@ RUN npm install
 
 COPY . .
 RUN npx prisma generate
+RUN npx prisma migrate deploy
 RUN npm run build
 
 # Stage 2 - Runner
@@ -21,4 +22,4 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/app.js"]
+CMD ["node", "dist/src/app.js"]
