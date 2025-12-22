@@ -33,10 +33,9 @@ export default [
 
     rules: {
       'prettier/prettier': 'error',
-      'no-console': 'off',
-      'no-process-exit': 'off',
       'import/prefer-default-export': 'off',
       'class-methods-use-this': 'off',
+      'no-undef': 'off',
 
       '@typescript-eslint/no-unused-vars': [
         'warn',
