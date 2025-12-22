@@ -1,5 +1,5 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { GiftedProductsProps } from '@/stores/gifts/gifts.store'
+import { ColumnDef } from '@tanstack/react-table';
+import { GiftedProductsProps } from '@/stores/gifts/gifts.store';
 
 export const columns: ColumnDef<GiftedProductsProps>[] = [
   {
@@ -18,4 +18,4 @@ export const columns: ColumnDef<GiftedProductsProps>[] = [
     accessorKey: 'giftedAt',
     header: 'Gifted At',
   },
-]
+];

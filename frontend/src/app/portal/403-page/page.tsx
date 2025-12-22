@@ -1,6 +1,6 @@
-import { Button } from '@/app/(components)/ui/button'
-import Link from 'next/link'
-import { BsSignStop } from 'react-icons/bs'
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { BsSignStop } from 'react-icons/bs';
 
 export default function NotPermittedPageWarning() {
   return (
@@ -9,11 +9,11 @@ export default function NotPermittedPageWarning() {
         <div className="flex flex-row items-center text-center gap-1 sm:gap-5">
           <BsSignStop size={55} />
           <h1 className="font-bold text-center">
-            403 - You're not allowed to access the content of this page.
+            403 - You are not allowed to access the content of this page.
           </h1>
         </div>
         <h2 className="pt-3 flex text-center">
-          You might have mystiped the address, or you don't have permission.
+          You might have mystiped the address, or you do not have permission.
         </h2>
         <div className="pt-3">
           <Link href="/portal/dashboard">
@@ -22,5 +22,5 @@ export default function NotPermittedPageWarning() {
         </div>
       </div>
     </div>
-  )
+  );
 }

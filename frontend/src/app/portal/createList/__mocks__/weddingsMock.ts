@@ -1,4 +1,4 @@
-import { WeddingsProps } from '@/stores/weddings/weddings.store'
+import { WeddingsProps } from '@/stores/weddings/weddings.store';
 
 export const mockWedding: WeddingsProps = {
   id: 1,
@@ -6,7 +6,7 @@ export const mockWedding: WeddingsProps = {
   weddingDate: '01-01-2025',
   shippingAddress: 'Street1',
   createdBy: 'User1',
-}
+};
 
 export const mockNewList = {
   listTitle: 'Wedding1',
@@ -19,4 +19,4 @@ export const mockNewList = {
       quantity: '1',
     },
   ],
-}
+};

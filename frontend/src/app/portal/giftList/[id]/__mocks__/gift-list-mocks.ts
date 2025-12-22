@@ -34,4 +34,4 @@ export const giftListMocks = {
       giftedAt: '02-02-2025',
     },
   ],
-}
+};

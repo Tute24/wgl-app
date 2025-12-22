@@ -1,9 +1,9 @@
-import { loadEnvConfig } from '@next/env'
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'node:path'
+import { loadEnvConfig } from '@next/env';
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'node:path';
 
-loadEnvConfig(process.cwd())
+loadEnvConfig(process.cwd());
 
 export default defineConfig({
   plugins: [react()],
@@ -24,8 +24,8 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@',
-        replacement: resolve(__dirname, './src'),
+        find: /^@\//,
+        replacement: `${resolve(__dirname, 'src')}/`,
       },
       {
         find: '@mocks',
@@ -33,4 +33,4 @@ export default defineConfig({
       },
     ],
   },
-})
+});
