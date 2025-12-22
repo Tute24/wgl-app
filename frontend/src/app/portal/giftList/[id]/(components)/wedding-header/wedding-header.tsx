@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { IoArrowRedoSharp } from 'react-icons/io5'
+import Link from 'next/link';
+import { IoArrowRedoSharp } from 'react-icons/io5';
 
 interface weddingHeaderProps {
-  owner: boolean
-  weddingTitle: string
-  weddingDate: string
-  id: number
+  owner: boolean;
+  weddingTitle: string;
+  weddingDate: string;
+  id: number;
 }
 export default function WeddingHeader({
   owner,
@@ -29,14 +29,12 @@ export default function WeddingHeader({
           </h2>
         </div>
       )}
-      <div
-        className={`flex flex-col text-center items-center ${owner ? 'mt-10' : ''}`}
-      >
+      <div className={`flex flex-col text-center items-center ${owner ? 'mt-10' : ''}`}>
         <h1 className="font-bold text-stone-700 text-2xl sm:text-[32px] font-poppins">
           {`${weddingTitle}: `}
           <span className="text-paleGold">{weddingDate}</span>
         </h1>
       </div>
     </div>
-  )
+  );
 }

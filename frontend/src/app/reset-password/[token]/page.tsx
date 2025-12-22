@@ -1,13 +1,13 @@
-'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
-import UnLoggedHeader from '@/app/(components)/headers/unlogged-header'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
-import { passwordSchema } from '@/zodSchemas/usersDataSchema'
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import useSubmitPasswordReset from './(hooks)/useSubmitPasswordReset';
+import { Spinner } from '@/components/Common/spinner/spinner';
+import UnLoggedHeader from '@/components/Headers/unlogged-header';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
+import { passwordSchema } from '@/zodSchemas/usersDataSchema';
 import {
   Card,
   CardContent,
@@ -15,10 +15,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/app/(components)/ui/card'
-import { Label } from '@/app/(components)/ui/label'
-import { Input } from '@/app/(components)/ui/input'
-import { Button } from '@/app/(components)/ui/button'
+} from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const newPasswordSchema = z
   .object({
@@ -28,9 +28,9 @@ const newPasswordSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must be equal!',
     path: ['confirmPassword'],
-  })
+  });
 
-export type newPassword = z.infer<typeof newPasswordSchema>
+export type newPassword = z.infer<typeof newPasswordSchema>;
 
 export default function ResetPassword() {
   const {
@@ -39,17 +39,17 @@ export default function ResetPassword() {
     formState: { errors, isSubmitting },
   } = useForm<newPassword>({
     resolver: zodResolver(newPasswordSchema),
-  })
+  });
   const { statusMessage, isLoading } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
       isLoading: store.isLoading,
     })),
-  )
-  const submitPasswordReset = useSubmitPasswordReset()
+  );
+  const submitPasswordReset = useSubmitPasswordReset();
   const onSubmit: SubmitHandler<newPassword> = (data) => {
-    submitPasswordReset(data)
-  }
+    submitPasswordReset(data);
+  };
   return (
     <>
       <UnLoggedHeader />
@@ -75,15 +75,11 @@ export default function ResetPassword() {
                     placeholder="Your new password here"
                   />
                   {errors.password && (
-                    <p className="font-inter text-red-600 text-sm">
-                      {errors.password.message}
-                    </p>
+                    <p className="font-inter text-red-600 text-sm">{errors.password.message}</p>
                   )}
                 </div>
                 <div className="flex flex-col gap-2 items-start justify-start w-full">
-                  <Label className="text-md text-stone-700">
-                    Confirm your new password
-                  </Label>
+                  <Label className="text-md text-stone-700">Confirm your new password</Label>
                   <Input
                     className="!text-md !text-amber-800 !placeholder-amber-800"
                     type="password"
@@ -113,5 +109,5 @@ export default function ResetPassword() {
         </Card>
       </div>
     </>
-  )
+  );
 }

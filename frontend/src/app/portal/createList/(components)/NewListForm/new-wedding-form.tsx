@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import newListSchema from '@/zodSchemas/newListSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { CircleX } from 'lucide-react'
+import newListSchema from '@/zodSchemas/newListSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { CircleX } from 'lucide-react';
 
 import {
   Card,
@@ -13,17 +13,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/app/(components)/ui/card'
+} from '@/components/ui/card';
 
-import useSubmitList from '../../(hooks)/useSubmitList'
-import { Label } from '@/app/(components)/ui/label'
-import { Input } from '@/app/(components)/ui/input'
-import { Button } from '@/app/(components)/ui/button'
-import { Spinner } from '@/app/(components)/Common/spinner/spinner'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
+import useSubmitList from '../../(hooks)/useSubmitList';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/Common/spinner/spinner';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
 
-export type listData = z.infer<typeof newListSchema>
+export type listData = z.infer<typeof newListSchema>;
 
 export default function GiftListForm() {
   const {
@@ -34,22 +34,22 @@ export default function GiftListForm() {
     formState: { errors, isSubmitting },
   } = useForm<listData>({
     resolver: zodResolver(newListSchema),
-  })
+  });
   const { fields, append, remove } = useFieldArray<listData>({
     control,
     name: 'gifts',
-  })
-  const submitForm = useSubmitList()
+  });
+  const submitForm = useSubmitList();
   const onSubmit: SubmitHandler<listData> = (data) => {
-    submitForm(data)
-    reset()
-    remove()
-  }
+    submitForm(data);
+    reset();
+    remove();
+  };
   const { statusMessage } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
     })),
-  )
+  );
   return (
     <div className="flex flex-col items-center justify-center m-auto pt-20 px-4 font-inter pb-10">
       <Card className="border-amber-800 hover:shadow-md hover:shadow-amber-800">
@@ -57,9 +57,7 @@ export default function GiftListForm() {
           <CardTitle className="text-center text-xl text-amber-800 font-bold">
             Create a wedding gift list
           </CardTitle>
-          <CardDescription>
-            Enter the wedding's infos and set up it's gifts list
-          </CardDescription>
+          <CardDescription>{`Enter the wedding's infos and set up it's gifts list`}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -95,9 +93,7 @@ export default function GiftListForm() {
                 )}
               </div>
               <div className="flex flex-col gap-3 w-full">
-                <Label className="text-md text-stone-700">
-                  Shipping address
-                </Label>
+                <Label className="text-md text-stone-700">Shipping address</Label>
                 <Input
                   className="!text-md !text-amber-800 !placeholder-amber-800"
                   type="text"
@@ -112,15 +108,10 @@ export default function GiftListForm() {
                 )}
               </div>
               {fields.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-start justify-start gap-5 w-full"
-                >
+                <div key={index} className="flex flex-col items-start justify-start gap-5 w-full">
                   <div className="flex flex-col gap-3 w-full">
                     <div className="flex justify-between items-center">
-                      <Label className="text-md text-stone-700">
-                        Product name
-                      </Label>
+                      <Label className="text-md text-stone-700">Product name</Label>
                       <button type="button" onClick={() => remove(index)}>
                         <CircleX size={18} />
                       </button>
@@ -138,9 +129,7 @@ export default function GiftListForm() {
                     )}
                   </div>
                   <div className="flex flex-col gap-3 w-full">
-                    <Label className="text-md text-stone-700">
-                      Product link
-                    </Label>
+                    <Label className="text-md text-stone-700">Product link</Label>
                     <Input
                       className="!text-md !text-amber-800 !placeholder-amber-800"
                       type="text"
@@ -173,8 +162,8 @@ export default function GiftListForm() {
                 type="button"
                 className="w-full text-md font-medium"
                 onClick={(e) => {
-                  e.preventDefault()
-                  append({ productLink: '', productName: '', quantity: '' })
+                  e.preventDefault();
+                  append({ productLink: '', productName: '', quantity: '' });
                 }}
               >
                 Add gift
@@ -199,5 +188,5 @@ export default function GiftListForm() {
         )}
       </Card>
     </div>
-  )
+  );
 }

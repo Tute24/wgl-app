@@ -11,6 +11,11 @@ vi.mock('../../../lib/prisma', () => ({
     },
   },
 }));
+vi.mock('../../../env', () => ({
+  env: {
+    SECRET_KEY: 'key',
+  },
+}));
 
 const mockFindUnique = prisma.users.findUnique as unknown as Mock;
 

@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import WeddingCard from '../weddingCard/wedding-card'
-import { useWeddingsStore } from '@/stores/weddings/weddings.provider'
-import { useShallow } from 'zustand/shallow'
-import { ClipLoader } from 'react-spinners'
-import { useGeneralStore } from '@/stores/general/general.provider'
+import WeddingCard from '../weddingCard/wedding-card';
+import { useWeddingsStore } from '@/stores/weddings/weddings.provider';
+import { useShallow } from 'zustand/shallow';
+import { ClipLoader } from 'react-spinners';
+import { useGeneralStore } from '@/stores/general/general.provider';
 
 export default function WeddingsGuest() {
   const { invitedWeddings, hasHydrated } = useWeddingsStore(
@@ -12,20 +12,20 @@ export default function WeddingsGuest() {
       invitedWeddings: store.invitedWeddings,
       hasHydrated: store.hasHydrated,
     })),
-  )
+  );
   const { isRendering, setModalObject } = useGeneralStore(
     useShallow((store) => ({
       isRendering: store.isRendering,
       setModalObject: store.setModalObject,
     })),
-  )
+  );
 
   if (!hasHydrated || isRendering)
     return (
       <div className="flex flex-col m-auto h-screen justify-center items-center">
         <ClipLoader color="#92400e" size={150} />
       </div>
-    )
+    );
 
   if (invitedWeddings.length > 0) {
     return (
@@ -44,7 +44,7 @@ export default function WeddingsGuest() {
           ))}
         </ul>
       </>
-    )
+    );
   } else {
     return (
       <div className="flex justify-center items-center w-full h-full m-auto">
@@ -52,6 +52,6 @@ export default function WeddingsGuest() {
           There are no weddings to exhibit at this section.
         </h2>
       </div>
-    )
+    );
   }
 }

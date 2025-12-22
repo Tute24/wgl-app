@@ -1,8 +1,8 @@
 {
-    "semi": false,
-    "singleQuote": true,
-    "tabWidth": 2,       
-    "trailingComma": "all",
-    "arrowParens": "always",
-    "prettier.printWidth": 60      
-  }
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "endOfLine": "lf"
+}

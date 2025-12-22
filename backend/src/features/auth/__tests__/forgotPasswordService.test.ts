@@ -15,6 +15,11 @@ vi.mock('../../../lib/prisma', () => ({
     },
   },
 }));
+vi.mock('../../../env', () => ({
+  env: {
+    SECRET_KEY: 'key',
+  },
+}));
 
 vi.mock('../../../transporter/nodemailer-transporter');
 

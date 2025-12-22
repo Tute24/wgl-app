@@ -1,13 +1,12 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest'
-import UnLoggedHeader from '../(components)/headers/unlogged-header'
-import { Spinner } from '../(components)/Common/spinner/spinner'
-import { useGeneralStore } from '@/stores/general/general.provider'
-import { useShallow } from 'zustand/shallow'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import useSendPasswordResetRequest from './(hooks)/useSendPasswordResetRequest';
+import UnLoggedHeader from '@/components/Headers/unlogged-header';
+import { useGeneralStore } from '@/stores/general/general.provider';
+import { useShallow } from 'zustand/shallow';
 import {
   Card,
   CardContent,
@@ -15,16 +14,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../(components)/ui/card'
-import { Label } from '../(components)/ui/label'
-import { Input } from '../(components)/ui/input'
-import { Button } from '../(components)/ui/button'
+} from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/Common/spinner/spinner';
+import { emailSchema } from '@/zodSchemas/emailSchema';
 
-export const emailSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid e-mail address' }),
-})
-
-type userEmail = z.infer<typeof emailSchema>
+type userEmail = z.infer<typeof emailSchema>;
 
 export default function SendMail() {
   const {
@@ -33,17 +30,17 @@ export default function SendMail() {
     formState: { errors, isSubmitting },
   } = useForm<userEmail>({
     resolver: zodResolver(emailSchema),
-  })
+  });
   const { statusMessage, isLoading } = useGeneralStore(
     useShallow((store) => ({
       statusMessage: store.statusMessage,
       isLoading: store.isLoading,
     })),
-  )
-  const sendPasswordResetRequest = useSendPasswordResetRequest()
+  );
+  const sendPasswordResetRequest = useSendPasswordResetRequest();
   const onSubmit: SubmitHandler<userEmail> = (data) => {
-    sendPasswordResetRequest(data)
-  }
+    sendPasswordResetRequest(data);
+  };
   return (
     <>
       <UnLoggedHeader />
@@ -54,17 +51,14 @@ export default function SendMail() {
               Forgot Your Password?{' '}
             </CardTitle>
             <CardDescription className="text-sm font-inter">
-              Enter your e-mail and we will send you the password resert
-              instructions
+              Enter your e-mail and we will send you the password resert instructions
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col items-start gap-3 font-inter w-full">
                 <div className="flex flex-col gap-2 items-start justify-start w-full">
-                  <Label className="text-md text-stone-700">
-                    Enter your e-mail
-                  </Label>
+                  <Label className="text-md text-stone-700">Enter your e-mail</Label>
                   <Input
                     className="!text-md !text-amber-800 !placeholder-amber-800"
                     type="text"
@@ -72,9 +66,7 @@ export default function SendMail() {
                     placeholder="Your e-mail here"
                   />
                   {errors.email && (
-                    <p className="font-inter text-red-600 text-sm">
-                      {errors.email.message}
-                    </p>
+                    <p className="font-inter text-red-600 text-sm">{errors.email.message}</p>
                   )}
                 </div>
                 <div className="w-full items-center pt-3 flex flex-col">
@@ -94,5 +86,5 @@ export default function SendMail() {
         </Card>
       </div>
     </>
-  )
+  );
 }

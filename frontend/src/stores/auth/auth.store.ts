@@ -1,25 +1,23 @@
-import { createStore } from 'zustand/vanilla'
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { createStore } from 'zustand/vanilla';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type AuthStoreState = {
-  token: string | null
-  hasHydrated: boolean
-}
+  token: string | null;
+  hasHydrated: boolean;
+};
 
 type AuthStoreAction = {
-  setToken: (token: string | null) => void
-}
+  setToken: (token: string | null) => void;
+};
 
-export type AuthStore = AuthStoreState & AuthStoreAction
+export type AuthStore = AuthStoreState & AuthStoreAction;
 
 const defaultInitState: AuthStoreState = {
   token: null,
   hasHydrated: false,
-}
+};
 
-export const createAuthStore = (
-  initState: AuthStoreState = defaultInitState,
-) => {
+export const createAuthStore = (initState: AuthStoreState = defaultInitState) => {
   return createStore(
     persist<AuthStore>(
       (set) => ({
@@ -31,10 +29,10 @@ export const createAuthStore = (
         storage: createJSONStorage(() => sessionStorage),
         onRehydrateStorage: () => (state) => {
           if (state) {
-            state.hasHydrated = true
+            state.hasHydrated = true;
           }
         },
       },
     ),
-  )
-}
+  );
+};

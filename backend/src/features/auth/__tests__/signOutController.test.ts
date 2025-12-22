@@ -1,8 +1,23 @@
 import { describe, expect, it, vi } from 'vitest';
 import { mockUser } from '../../__mocks__/mockUser';
-import { signOutController } from '../auth.controller';
 
-vi.mock('../auth.service');
+vi.mock('../../../lib/prisma', () => ({
+  prisma: {
+    user: {
+      findUnique: vi.fn(),
+      create: vi.fn(),
+      update: vi.fn(),
+    },
+  },
+}));
+
+vi.mock('../auth.service', () => ({
+  signInService: vi.fn(),
+  forgotPasswordService: vi.fn(),
+  resetPasswordService: vi.fn(),
+}));
+
+import { signOutController } from '../auth.controller';
 
 const res = {
   status: vi.fn().mockReturnThis(),
@@ -13,11 +28,10 @@ const res = {
 describe('signOutController', () => {
   it('should call the controller successfully', () => {
     const req = {
-      authUser: {
-        id: mockUser.id,
-      },
+      authUser: { id: mockUser.id },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
+
     signOutController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(200);
@@ -26,11 +40,12 @@ describe('signOutController', () => {
     });
   });
 
-  it('should simulate an error when calling the controller', async () => {
+  it('should return 401 if authUser is null', () => {
     const req = {
       authUser: null,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
+
     signOutController(req, res);
 
     expect(res.status).toHaveBeenCalledWith(401);

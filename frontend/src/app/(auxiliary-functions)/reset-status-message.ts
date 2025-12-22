@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { useGeneralStore } from '@/stores/general/general.provider'
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useGeneralStore } from '@/stores/general/general.provider';
 
 export default function ResetStatusMessage() {
-  const pathname = usePathname()
-  const setStatusMessage = useGeneralStore((state) => state.setStatusMessage)
+  const pathname = usePathname();
+  const setStatusMessage = useGeneralStore((state) => state.setStatusMessage);
 
   useEffect(() => {
-    setStatusMessage('')
+    setStatusMessage('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname]);
 
-  return null
+  return null;
 }

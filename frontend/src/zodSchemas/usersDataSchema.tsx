@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const passwordSchema = z
   .string()
@@ -14,7 +14,7 @@ export const passwordSchema = z
   })
   .regex(/[^A-Za-z0-9]/, {
     message: 'Password must include at least one special character.',
-  })
+  });
 const usersDataSchema = z
   .object({
     firstName: z.string({ message: 'Enter a valid name' }),
@@ -26,6 +26,6 @@ const usersDataSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
     message: 'Both passwords must be equal',
-  })
+  });
 
-export default usersDataSchema
+export default usersDataSchema;

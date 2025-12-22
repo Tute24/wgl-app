@@ -1,4 +1,4 @@
-import { requestsResponseProps } from '@/stores/requests/requests.store'
+import { requestsResponseProps } from '@/stores/requests/requests.store';
 
 export const requestsResponseMock: requestsResponseProps[] = [
   {
@@ -21,4 +21,4 @@ export const requestsResponseMock: requestsResponseProps[] = [
     pending: false,
     accepted: true,
   },
-]
+];

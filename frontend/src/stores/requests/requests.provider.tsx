@@ -1,35 +1,29 @@
-'use client'
+'use client';
 
-import { createContext, useContext } from 'react'
-import { createRequestsStore, RequestsStore } from './requests.store'
-import { useStore } from 'zustand'
+import { createContext, useContext } from 'react';
+import { createRequestsStore, RequestsStore } from './requests.store';
+import { useStore } from 'zustand';
 
-type RequestsApi = ReturnType<typeof createRequestsStore>
+type RequestsApi = ReturnType<typeof createRequestsStore>;
 
-const RequestsStoreContext = createContext<RequestsApi | undefined>(undefined)
+const RequestsStoreContext = createContext<RequestsApi | undefined>(undefined);
 
-const requestsStoreInstance = createRequestsStore()
+const requestsStoreInstance = createRequestsStore();
 
-export function RequestsStoreProvider({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export function RequestsStoreProvider({ children }: { children: React.ReactNode }) {
   return (
     <RequestsStoreContext.Provider value={requestsStoreInstance}>
       {children}
     </RequestsStoreContext.Provider>
-  )
+  );
 }
 
-export const useRequestsStore = <T,>(
-  selector: (store: RequestsStore) => T,
-): T => {
-  const requestsStoreContext = useContext(RequestsStoreContext)
+export const useRequestsStore = <T,>(selector: (store: RequestsStore) => T): T => {
+  const requestsStoreContext = useContext(RequestsStoreContext);
 
   if (!requestsStoreContext) {
-    throw new Error('useRequestsStore must be used within its context')
+    throw new Error('useRequestsStore must be used within its context');
   }
 
-  return useStore(requestsStoreContext, selector)
-}
+  return useStore(requestsStoreContext, selector);
+};

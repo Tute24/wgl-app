@@ -3,20 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run",
     "start:dev": "nodemon src/app.ts",
     "start": "node dist/src/app.js",
     "build": "npx tsc",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --ext .ts,.js --fix",
-    "format": "prettier . --write"
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --ext .ts,.js --fix",
+    "format": "prettier ./src --write"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@rocketseat/eslint-config": "^2.2.2",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.0",
