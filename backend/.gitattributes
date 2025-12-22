@@ -1,0 +1,20 @@
+# Força LF como padrão
+* text=auto eol=lf
+
+# Arquivos de config
+*.js   text eol=lf
+*.ts   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.md   text eol=lf
+*.env* text eol=lf
+*.sh   text eol=lf
+
+# Arquivos que NÃO devem sofrer conversão
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
