@@ -7,9 +7,9 @@
     "start:dev": "nodemon src/app.ts",
     "start": "node dist/src/app.js",
     "build": "npx tsc",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --ext .ts,.js --fix",
-    "format": "prettier . --write"
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --ext .ts,.js --fix",
+    "format": "prettier ./src --write"
   },
   "keywords": [],
   "author": "",
