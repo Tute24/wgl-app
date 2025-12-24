@@ -3,100 +3,101 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Users {
-  id String @id @default(uuid())
-  email String @unique
-  firstName String @map("first_name")
-  lastName String @map("last_name")
-  password String 
-  createdAt DateTime? @default(now())
-  weddingsOwn Weddings[]
+  id             String                      @id @default(uuid())
+  email          String                      @unique
+  firstName      String                      @map("first_name")
+  lastName       String                      @map("last_name")
+  password       String
+  createdAt      DateTime?                   @default(now())
+  weddingsOwn    Weddings[]
   productsGifted GiftedBy[]
-  weddingsGuest Guests[]
-  requests Requests[]
-  passwordReset passwordResetTokenStorage[]
+  weddingsGuest  Guests[]
+  requests       Requests[]
+  passwordReset  passwordResetTokenStorage[]
 
   @@map("users")
 }
 
 model Weddings {
-  id Int @id @default(autoincrement()) 
-  weddingTitle String @map("wedding_title")
-  weddingDate String @map("wedding_date")
-  shippingAddress String @map("shipping_address") @default("null")
-  user Users @relation(fields: [createdBy],references: [id])
-  createdBy String
-  createdAt DateTime? @default(now())
-  gifts Gifts[]
-  guests Guests[]
-  request Requests[]
-  gifters GiftedBy[]
+  id              Int        @id @default(autoincrement())
+  weddingTitle    String     @map("wedding_title")
+  weddingDate     String     @map("wedding_date")
+  shippingAddress String     @default("null") @map("shipping_address")
+  user            Users      @relation(fields: [createdBy], references: [id])
+  createdBy       String
+  createdAt       DateTime?  @default(now())
+  gifts           Gifts[]
+  guests          Guests[]
+  request         Requests[]
+  gifters         GiftedBy[]
 
   @@map("weddings")
 }
 
 model Gifts {
-  id Int @id @default(autoincrement())
-  quantity Int
-  productName String @map("product_name")
-  productLink String @map("product_link")
-  wedding Weddings @relation(fields: [fromWedding],references: [id])
-  fromWedding Int @map("from_wedding")
-  createdAt DateTime? @default(now())
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  productName String    @map("product_name")
+  productLink String    @map("product_link")
+  wedding     Weddings  @relation(fields: [fromWedding], references: [id])
+  fromWedding Int       @map("from_wedding")
+  createdAt   DateTime? @default(now())
 
   @@map("gifts")
 }
 
 model Guests {
-  id Int @id @default(autoincrement())
-  user Users @relation(fields: [guestId],references: [id])
-  guestId String @map("guest_id")
-  wedding Weddings @relation(fields: [referencedWedding],references: [id])
-  referencedWedding Int @map("referenced_wedding")
-  addedOn DateTime? @default(now())
+  id                Int       @id @default(autoincrement())
+  user              Users     @relation(fields: [guestId], references: [id])
+  guestId           String    @map("guest_id")
+  wedding           Weddings  @relation(fields: [referencedWedding], references: [id])
+  referencedWedding Int       @map("referenced_wedding")
+  addedOn           DateTime? @default(now())
 
   @@map("guests")
 }
 
 model Requests {
-  id Int @id @default(autoincrement())
-  user Users @relation(fields: [requestBy], references: [id])
-  requestBy String @map("request_by")
-  wedding Weddings @relation(fields: [relatedWedding],references: [id])
-  relatedWedding Int @map("related_wedding")
-  requestByName String @map("request_by_name")
-  weddingTitle String @map("wedding_title")
-  pending Boolean @default(true)
-  accepted Boolean @default(false)
-  madeOn DateTime? @default(now())
+  id             Int       @id @default(autoincrement())
+  user           Users     @relation(fields: [requestBy], references: [id])
+  requestBy      String    @map("request_by")
+  wedding        Weddings  @relation(fields: [relatedWedding], references: [id])
+  relatedWedding Int       @map("related_wedding")
+  requestByName  String    @map("request_by_name")
+  weddingTitle   String    @map("wedding_title")
+  pending        Boolean   @default(true)
+  accepted       Boolean   @default(false)
+  madeOn         DateTime? @default(now())
 
   @@map("requests")
 }
 
 model GiftedBy {
-  id Int @id @default(autoincrement())
-  presenter String
-  relatedWedding Int @map("related_wedding")
-  user Users @relation(fields: [presenter],references: [id])
-  wedding Weddings @relation(fields: [relatedWedding],references: [id])
-  quantity Int
-  giftName String @map("gift_name")
-  giftedAt DateTime? @default(now())  
+  id             Int       @id @default(autoincrement())
+  presenter      String
+  relatedWedding Int       @map("related_wedding")
+  user           Users     @relation(fields: [presenter], references: [id])
+  wedding        Weddings  @relation(fields: [relatedWedding], references: [id])
+  quantity       Int
+  giftName       String    @map("gift_name")
+  giftedAt       DateTime? @default(now())
 
   @@map("gifted_by")
 }
 
 model passwordResetTokenStorage {
-  id Int @id @default(autoincrement())
-  requestedBy String @map("requested_by")
-  expirationDate BigInt @map("expiration_date")
-  used Boolean
-  token String @unique
-  user Users @relation(fields: [requestedBy],references: [id])
+  id             Int     @id @default(autoincrement())
+  requestedBy    String  @map("requested_by")
+  expirationDate BigInt  @map("expiration_date")
+  used           Boolean
+  token          String  @unique
+  user           Users   @relation(fields: [requestedBy], references: [id])
 
   @@map("password_reset_token_storage")
 }
