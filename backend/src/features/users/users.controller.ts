@@ -14,6 +14,7 @@ export async function userCreateController(req: Request, res: Response) {
       token: response.token,
     });
   } catch (error) {
+    console.log(error);
     controllerErrorHandler(error, res);
   }
 }
