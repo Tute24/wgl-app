@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { transporter } from '../../transporter/nodemailer-transporter';
 import { prisma } from '../../lib/prisma';
 import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { env } from '../../env';
 
 export async function signInService(email: string, password: string) {
@@ -18,7 +18,7 @@ export async function signInService(email: string, password: string) {
     throw new AppError("This email doesn't belong to an existent user.", 404);
   }
 
-  if (!(await bcrypt.compare(password, logInUser.password))) {
+  if (!(await bcryptjs.compare(password, logInUser.password))) {
     throw new AppError('Incorrect password.', 401);
   }
   const token = jwt.sign({ id: logInUser.id }, env.SECRET_KEY, {
@@ -83,7 +83,7 @@ export async function resetPasswordService(userID: string, resetToken: string, p
     throw new AppError('Reset Token not present.', 401);
   }
 
-  const newHashedPassword = await bcrypt.hash(password, 10);
+  const newHashedPassword = await bcryptjs.hash(password, 10);
 
   const encryptedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 

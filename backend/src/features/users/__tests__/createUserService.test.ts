@@ -3,7 +3,7 @@ import { prisma } from '../../../lib/prisma';
 import { createUserService } from '../users.service';
 import { mockUser } from '../../__mocks__/mockUser';
 
-vi.mock('bcrypt', () => ({
+vi.mock('bcryptjs', () => ({
   hash: vi.fn(),
 }));
 
@@ -28,7 +28,7 @@ const mockUsersCreate = prisma.users.create as Mock;
 
 describe('createUserService', () => {
   it('should create user successfully', async () => {
-    const mockHash = (await import('bcrypt')).hash as Mock;
+    const mockHash = (await import('bcryptjs')).hash as Mock;
     const mockJwtSign = (await import('jsonwebtoken')).sign as Mock;
     mockHash.mockResolvedValue('hashedpassword123');
 

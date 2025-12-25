@@ -1,7 +1,7 @@
 import { AppError } from '../../classes/app-error';
 import { prisma } from '../../lib/prisma';
 import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { env } from '../../env';
 
 export async function createUserService(
@@ -10,7 +10,7 @@ export async function createUserService(
   email: string,
   password: string,
 ) {
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcryptjs.hash(password, 10);
 
   const emailCheck = await prisma.users.findUnique({
     where: { email },
