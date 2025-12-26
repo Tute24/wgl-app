@@ -8,66 +8,66 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Users {
+model User {
     id             String                      @id @default(uuid())
     email          String                      @unique
     firstName      String                      @map("first_name")
     lastName       String                      @map("last_name")
     password       String
     createdAt      DateTime?                   @default(now())
-    weddingsOwn    Weddings[]
+    weddingsOwn    Wedding[]
     productsGifted GiftedBy[]
-    weddingsGuest  Guests[]
-    requests       Requests[]
+    weddingsGuest  Guest[]
+    requests       Request[]
     passwordReset  passwordResetTokenStorage[]
 
     @@map("users")
 }
 
-model Weddings {
+model Wedding {
     id              Int        @id @default(autoincrement())
     weddingTitle    String     @map("wedding_title")
     weddingDate     String     @map("wedding_date")
     shippingAddress String     @default("null") @map("shipping_address")
-    user            Users      @relation(fields: [createdBy], references: [id])
+    user            User       @relation(fields: [createdBy], references: [id])
     createdBy       String
     createdAt       DateTime?  @default(now())
-    gifts           Gifts[]
-    guests          Guests[]
-    request         Requests[]
+    gifts           Gift[]
+    guests          Guest[]
+    request         Request[]
     gifters         GiftedBy[]
 
     @@map("weddings")
 }
 
-model Gifts {
+model Gift {
     id          Int       @id @default(autoincrement())
     quantity    Int
     productName String    @map("product_name")
     productLink String    @map("product_link")
-    wedding     Weddings  @relation(fields: [fromWedding], references: [id])
+    wedding     Wedding   @relation(fields: [fromWedding], references: [id])
     fromWedding Int       @map("from_wedding")
     createdAt   DateTime? @default(now())
 
     @@map("gifts")
 }
 
-model Guests {
+model Guest {
     id                Int       @id @default(autoincrement())
-    user              Users     @relation(fields: [guestId], references: [id])
+    user              User      @relation(fields: [guestId], references: [id])
     guestId           String    @map("guest_id")
-    wedding           Weddings  @relation(fields: [referencedWedding], references: [id])
+    wedding           Wedding   @relation(fields: [referencedWedding], references: [id])
     referencedWedding Int       @map("referenced_wedding")
     addedOn           DateTime? @default(now())
 
     @@map("guests")
 }
 
-model Requests {
+model Request {
     id             Int       @id @default(autoincrement())
-    user           Users     @relation(fields: [requestBy], references: [id])
+    user           User      @relation(fields: [requestBy], references: [id])
     requestBy      String    @map("request_by")
-    wedding        Weddings  @relation(fields: [relatedWedding], references: [id])
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id])
     relatedWedding Int       @map("related_wedding")
     requestByName  String    @map("request_by_name")
     weddingTitle   String    @map("wedding_title")
@@ -82,8 +82,8 @@ model GiftedBy {
     id             Int       @id @default(autoincrement())
     presenter      String
     relatedWedding Int       @map("related_wedding")
-    user           Users     @relation(fields: [presenter], references: [id])
-    wedding        Weddings  @relation(fields: [relatedWedding], references: [id])
+    user           User      @relation(fields: [presenter], references: [id])
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id])
     quantity       Int
     giftName       String    @map("gift_name")
     giftedAt       DateTime? @default(now())
@@ -97,7 +97,7 @@ model passwordResetTokenStorage {
     expirationDate BigInt  @map("expiration_date")
     used           Boolean
     token          String  @unique
-    user           Users   @relation(fields: [requestedBy], references: [id])
+    user           User    @relation(fields: [requestedBy], references: [id])
 
     @@map("password_reset_token_storage")
 }
