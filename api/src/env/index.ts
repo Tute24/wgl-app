@@ -8,6 +8,7 @@ const envSchema = z.object({
   DIRECT_URL: z.string(),
   PORT: z.number().default(3333),
   NODE_ENV: z.enum(['development', 'production']).default('production'),
+  SECRET_KEY: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);
