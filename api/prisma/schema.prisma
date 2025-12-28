@@ -16,10 +16,10 @@ model User {
     password       String
     createdAt      DateTime?                   @default(now())
     weddingsOwn    Wedding[]
-    productsGifted GiftedBy[]
+    productsGifted GiftContribution[]
     weddingsGuest  Guest[]
     requests       Request[]
-    passwordReset  passwordResetTokenStorage[]
+    passwordReset  PasswordResetToken[]
 
     @@map("users")
 }
@@ -35,7 +35,7 @@ model Wedding {
     gifts           Gift[]
     guests          Guest[]
     request         Request[]
-    gifters         GiftedBy[]
+    gifters         GiftContribution[]
 
     @@map("weddings")
 }
@@ -78,7 +78,7 @@ model Request {
     @@map("requests")
 }
 
-model GiftedBy {
+model GiftContribution {
     id             Int       @id @default(autoincrement())
     presenter      String
     relatedWedding Int       @map("related_wedding")
@@ -88,10 +88,10 @@ model GiftedBy {
     giftName       String    @map("gift_name")
     giftedAt       DateTime? @default(now())
 
-    @@map("gifted_by")
+    @@map("gift_contributions")
 }
 
-model passwordResetTokenStorage {
+model PasswordResetToken {
     id             Int     @id @default(autoincrement())
     requestedBy    String  @map("requested_by")
     expirationDate BigInt  @map("expiration_date")
@@ -99,5 +99,5 @@ model passwordResetTokenStorage {
     token          String  @unique
     user           User    @relation(fields: [requestedBy], references: [id])
 
-    @@map("password_reset_token_storage")
+    @@map("password_reset_tokens")
 }
