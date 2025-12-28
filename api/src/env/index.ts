@@ -9,6 +9,9 @@ const envSchema = z.object({
   PORT: z.number().default(3333),
   NODE_ENV: z.enum(['development', 'production']).default('production'),
   SECRET_KEY: z.string(),
+  NODEMAILER_EMAIL: z.email(),
+  NODEMAILER_APP_PASSWORD: z.string(),
+  FRONTEND_URL: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);
