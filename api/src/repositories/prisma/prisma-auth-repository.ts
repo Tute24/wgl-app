@@ -16,4 +16,10 @@ export class PrismaAuthRepository implements AuthRepository {
 
     return user;
   }
+
+  async createPasswordResetToken(data: Prisma.PasswordResetTokenCreateInput) {
+    await prisma.passwordResetToken.create({
+      data,
+    });
+  }
 }
