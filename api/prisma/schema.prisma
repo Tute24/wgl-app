@@ -95,7 +95,7 @@ model PasswordResetToken {
     id             Int     @id @default(autoincrement())
     requestedBy    String  @map("requested_by")
     expirationDate BigInt  @map("expiration_date")
-    used           Boolean
+    used           Boolean @default(false)
     token          String  @unique
     user           User    @relation(fields: [requestedBy], references: [id])
 
