@@ -17,7 +17,7 @@ export async function createUserController(req: Request, res: Response) {
       email,
       password,
     });
-    res.send(201).json({ token, user });
+    res.status(201).json({ token, user });
   } catch (error) {
     errorHandler(error, res);
   }
