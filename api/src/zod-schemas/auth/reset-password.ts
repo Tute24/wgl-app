@@ -5,7 +5,6 @@ export const resetPasswordSchema = z
   .object({
     password: passwordSchema,
     confirmPassword: z.string(),
-    passwordResetToken: z.string(),
   })
   .strict()
   .refine((data) => data.password === data.confirmPassword, {
