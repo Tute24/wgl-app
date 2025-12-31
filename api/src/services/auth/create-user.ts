@@ -1,15 +1,9 @@
+import type { CreateUserDto } from '@/dtos/auth/create-user.js';
 import type { AuthRepository } from '@/repositories/auth-repository.js';
 import type { SignInAndCreateResponse } from '@/types/auth/sign-in-and-create-response.js';
 import { AppError } from '@/utils/app-error.js';
 import { generateJwt } from '@/utils/jwt-generator.js';
 import { hash } from 'bcryptjs';
-
-export interface CreateUserRequestProps {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
 
 export class CreateUserService {
   constructor(private authRepository: AuthRepository) {}
@@ -19,7 +13,7 @@ export class CreateUserService {
     lastName,
     email,
     password,
-  }: CreateUserRequestProps): Promise<SignInAndCreateResponse> {
+  }: CreateUserDto): Promise<SignInAndCreateResponse> {
     const alreadyExistentUser = await this.authRepository.findByEmail(email);
 
     if (alreadyExistentUser)

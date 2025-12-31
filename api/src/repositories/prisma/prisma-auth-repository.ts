@@ -1,9 +1,10 @@
 import prisma from '@/lib/prisma.js';
-import type { Prisma } from '@prisma/client';
 import type { AuthRepository } from '../auth-repository.js';
+import type { CreateUserDto } from '@/dtos/auth/create-user.js';
+import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token.js';
 
 export class PrismaAuthRepository implements AuthRepository {
-  async createUser(data: Prisma.UserCreateInput) {
+  async createUser(data: CreateUserDto) {
     const user = await prisma.user.create({
       data,
     });
@@ -17,9 +18,15 @@ export class PrismaAuthRepository implements AuthRepository {
     return user;
   }
 
-  async createPasswordResetToken(data: Prisma.PasswordResetTokenCreateInput) {
+  async createPasswordResetToken(data: CreatePasswordResetTokenDto) {
     await prisma.passwordResetToken.create({
-      data,
+      data: {
+        user: {
+          connect: { id: data.userId },
+        },
+        token: data.token,
+        expirationDate: data.expirationDate,
+      },
     });
   }
 

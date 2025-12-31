@@ -1,17 +1,13 @@
+import type { ResetPasswordDto } from '@/dtos/auth/reset-password.js';
 import type { AuthRepository } from '@/repositories/auth-repository.js';
 import { AppError } from '@/utils/app-error.js';
 import { hash } from 'bcryptjs';
 import crypto from 'node:crypto';
 
-export interface ResetPasswordRequestProps {
-  passwordResetToken: string;
-  password: string;
-}
-
 export class ResetPasswordService {
   constructor(private authRepository: AuthRepository) {}
 
-  async execute({ passwordResetToken, password }: ResetPasswordRequestProps) {
+  async execute({ passwordResetToken, password }: ResetPasswordDto) {
     const encryptedToken = crypto.createHash('sha256').update(passwordResetToken).digest('hex');
     const passwordResetTokenRecord =
       await this.authRepository.findPasswordResetToken(encryptedToken);

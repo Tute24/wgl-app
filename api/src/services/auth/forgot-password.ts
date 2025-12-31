@@ -18,9 +18,9 @@ export class ForgotPasswordService {
 
     if (requestingUser) {
       await this.authRepository.createPasswordResetToken({
-        user: { connect: { id: requestingUser.id } },
+        userId: requestingUser.id,
         token: encryptedToken,
-        expirationDate: Date.now() + 10 * 60 * 1000, // 10min
+        expirationDate: BigInt(Date.now() + 10 * 60 * 1000),
       });
 
       const passwordResetTokenEmailLink = `${env.FRONTEND_URL}/reset-password?token=${resetToken}`;

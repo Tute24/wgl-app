@@ -7,7 +7,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   DIRECT_URL: z.string(),
   PORT: z.number().default(3333),
-  NODE_ENV: z.enum(['development', 'production']).default('production'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
   SECRET_KEY: z.string(),
   NODEMAILER_EMAIL: z.email(),
   NODEMAILER_APP_PASSWORD: z.string(),
