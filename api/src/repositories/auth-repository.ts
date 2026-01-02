@@ -9,4 +9,5 @@ export interface AuthRepository {
   findPasswordResetToken(passwordResetToken: string): Promise<PasswordResetToken | null>;
   resetPassword(userID: string, password: string): Promise<void>;
   markTokenAsUsed(passwordResetToken: string): Promise<void>;
+  findById(id: string): Promise<User | null>;
 }

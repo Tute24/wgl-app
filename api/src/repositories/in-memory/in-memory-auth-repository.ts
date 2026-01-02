@@ -57,4 +57,12 @@ export class InMemoryAuthRepository implements AuthRepository {
 
     return user;
   }
+
+  async findById(id: string) {
+    const user = this.userDb.find((record) => record.id === id);
+
+    if (!user) return null;
+
+    return user;
+  }
 }

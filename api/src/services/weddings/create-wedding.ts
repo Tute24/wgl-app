@@ -1,13 +1,13 @@
 import type { CreateWeddingServiceDto } from '@/dtos/weddings/create-wedding.js';
+import type { AuthRepository } from '@/repositories/auth-repository.js';
 import type { GiftsRepository } from '@/repositories/gifts-repository.js';
-import type { UsersRepository } from '@/repositories/users-repository.js';
 import type { WeddingsRepository } from '@/repositories/weddings-repository.js';
 import type { WeddingStruct } from '@/types/weddings/wedding.js';
 import { AppError } from '@/utils/app-error.js';
 
 export class CreateWeddingService {
   constructor(
-    private usersRepository: UsersRepository,
+    private authRepository: AuthRepository,
     private weddingsRepository: WeddingsRepository,
     private giftsRepository: GiftsRepository,
   ) {}
@@ -19,7 +19,7 @@ export class CreateWeddingService {
     shippingAddress,
     gifts,
   }: CreateWeddingServiceDto): Promise<{ wedding: WeddingStruct }> {
-    const user = await this.usersRepository.findById(userId);
+    const user = await this.authRepository.findById(userId);
 
     if (!user) throw new AppError('User not found.', 404);
 

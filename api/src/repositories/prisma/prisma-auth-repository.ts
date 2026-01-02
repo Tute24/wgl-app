@@ -18,6 +18,12 @@ export class PrismaAuthRepository implements AuthRepository {
     return user;
   }
 
+  async findById(id: string) {
+    const user = await prisma.user.findUnique({ where: { id } });
+
+    return user;
+  }
+
   async createPasswordResetToken(data: CreatePasswordResetTokenDto) {
     await prisma.passwordResetToken.create({
       data: {
