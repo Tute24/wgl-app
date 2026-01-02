@@ -1,16 +1,16 @@
-import { InMemoryRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
 import { ResetPasswordService } from '../reset-password.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { userMock } from '../__mocks__/user-mock.js';
 import { hash } from 'bcryptjs';
 import crypto from 'node:crypto';
 
-let authRepository: InMemoryRepository;
+let authRepository: InMemoryAuthRepository;
 let sut: ResetPasswordService;
 
 describe('ResetPasswordService', () => {
   beforeEach(() => {
-    authRepository = new InMemoryRepository();
+    authRepository = new InMemoryAuthRepository();
     sut = new ResetPasswordService(authRepository);
   });
   it('should succesfully reset the password', async () => {

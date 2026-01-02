@@ -1,14 +1,14 @@
-import { InMemoryRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
 import { describe, expect, beforeEach, it } from 'vitest';
 import { SignInService } from '../sign-in.js';
 import { userMock } from '@/services/auth/__mocks__/user-mock.js';
 import { hash } from 'bcryptjs';
 
-let authRepository: InMemoryRepository;
+let authRepository: InMemoryAuthRepository;
 let sut: SignInService;
 describe('SignInService', () => {
   beforeEach(() => {
-    authRepository = new InMemoryRepository();
+    authRepository = new InMemoryAuthRepository();
     sut = new SignInService(authRepository);
   });
 

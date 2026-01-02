@@ -3,7 +3,7 @@ import type { AuthRepository } from '../auth-repository.js';
 import type { CreateUserDto } from '@/dtos/auth/create-user.js';
 import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token.js';
 
-export class InMemoryRepository implements AuthRepository {
+export class InMemoryAuthRepository implements AuthRepository {
   public userDb: User[] = [];
   public passwordResetTokenDb: PasswordResetToken[] = [];
 
