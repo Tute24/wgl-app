@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 export class ResetPasswordService {
   constructor(private authRepository: AuthRepository) {}
 
-  async execute({ passwordResetToken, password }: ResetPasswordDto) {
+  async execute({ passwordResetToken, password }: ResetPasswordDto): Promise<{ message: string }> {
     const encryptedToken = crypto.createHash('sha256').update(passwordResetToken).digest('hex');
     const passwordResetTokenRecord =
       await this.authRepository.findPasswordResetToken(encryptedToken);
