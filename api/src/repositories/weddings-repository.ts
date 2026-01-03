@@ -3,4 +3,6 @@ import type { Wedding } from '@prisma/client';
 
 export interface WeddingsRepository {
   createWedding(data: CreateWeddingRepositoryDto): Promise<Wedding>;
+  getOwnWeddings(userId: string): Promise<Wedding[]>;
+  getInvitedWeddings(userId: string): Promise<Wedding[]>;
 }

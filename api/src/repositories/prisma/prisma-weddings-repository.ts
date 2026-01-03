@@ -7,4 +7,28 @@ export class PrismaWeddingsRepository implements WeddingsRepository {
     const wedding = await prisma.wedding.create({ data });
     return wedding;
   }
+
+  async getOwnWeddings(userId: string) {
+    const ownWeddings = await prisma.wedding.findMany({
+      where: {
+        createdBy: userId,
+      },
+    });
+
+    return ownWeddings;
+  }
+
+  async getInvitedWeddings(userId: string) {
+    const invitedWeddings = await prisma.wedding.findMany({
+      where: {
+        guests: {
+          some: {
+            guestId: userId,
+          },
+        },
+      },
+    });
+
+    return invitedWeddings;
+  }
 }

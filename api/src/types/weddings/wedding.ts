@@ -6,3 +6,8 @@ export type WeddingStruct = {
   createdAt: Date | null;
   createdBy: string;
 };
+
+export type GetWeddingsResponse = {
+  ownWeddings: WeddingStruct[];
+  invitedWeddings: WeddingStruct[];
+};
