@@ -7,16 +7,19 @@ import { InMemoryWeddingsRepository } from '@/repositories/in-memory/in-memory-w
 import { InMemoryGiftsRepository } from '@/repositories/in-memory/in-memory-gifts-repository.js';
 import { weddingMock } from '../__mocks__/wedding-mock.js';
 import { giftsMock } from '@/services/gifts/__mocks__/gifts-mock.js';
+import { InMemoryGuestsRepository } from '@/repositories/in-memory/in-memory-guests-repository.js';
 
 let authRepository: InMemoryAuthRepository;
 let weddingRepository: InMemoryWeddingsRepository;
 let giftsRepository: InMemoryGiftsRepository;
+let guestsRepository: InMemoryGuestsRepository;
 let sut: CreateWeddingService;
 
 describe('CreateWeddingService', () => {
   beforeEach(() => {
     authRepository = new InMemoryAuthRepository();
-    weddingRepository = new InMemoryWeddingsRepository();
+    guestsRepository = new InMemoryGuestsRepository();
+    weddingRepository = new InMemoryWeddingsRepository(guestsRepository);
     giftsRepository = new InMemoryGiftsRepository();
     sut = new CreateWeddingService(authRepository, weddingRepository, giftsRepository);
   });
