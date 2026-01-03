@@ -1,8 +1,10 @@
 import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding.js';
 import type { Wedding } from '@prisma/client';
 import type { WeddingsRepository } from '../weddings-repository.js';
+import type { GuestsRepository } from '../guests-repository.js';
 
 export class InMemoryWeddingsRepository implements WeddingsRepository {
+  constructor(private guestsRepository: GuestsRepository) {}
   public weddingDb: Wedding[] = [];
   async createWedding(data: CreateWeddingRepositoryDto) {
     const wedding = {
@@ -17,5 +19,25 @@ export class InMemoryWeddingsRepository implements WeddingsRepository {
     this.weddingDb.push(wedding);
 
     return wedding;
+  }
+
+  async getOwnWeddings(userId: string) {
+    const ownWeddings = this.weddingDb.filter((wedding) => wedding.createdBy === userId);
+
+    return ownWeddings;
+  }
+
+  async getInvitedWeddings(userId: string) {
+    const guestRecords = await this.guestsRepository.findWeddingsByGuestId(userId);
+    const invitedWeddings: Wedding[] = [];
+    for (let i = 0; i < guestRecords.length; i++) {
+      const referencedWeddingId = guestRecords[i]?.referencedWedding;
+      const invitedWeddingRecord = this.weddingDb.find(
+        (wedding) => wedding.id === referencedWeddingId,
+      );
+      if (invitedWeddingRecord) invitedWeddings.push(invitedWeddingRecord);
+    }
+
+    return invitedWeddings;
   }
 }
