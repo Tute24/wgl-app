@@ -16,6 +16,9 @@ export class DeleteWeddingService {
     const wedding = await this.weddingsRepository.findWeddingById(weddingId);
     if (!wedding) throw new AppError('Wedding not found.', 404);
 
+    if (user.id !== wedding.createdBy)
+      throw new AppError('User does not have permission to perform this action.', 403);
+
     await this.weddingsRepository.deleteWedding(weddingId);
 
     return { message: 'Wedding successfully deleted.' };
