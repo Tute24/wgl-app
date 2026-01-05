@@ -9,7 +9,7 @@ export class InMemoryAuthRepository implements AuthRepository {
 
   async createUser(data: CreateUserDto) {
     const user = {
-      id: 'user-1-id',
+      id: `user-${this.userDb.length + 1}-id`,
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
