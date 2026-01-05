@@ -40,4 +40,17 @@ export class InMemoryWeddingsRepository implements WeddingsRepository {
 
     return invitedWeddings;
   }
+
+  async findWeddingById(weddingId: number) {
+    const wedding = this.weddingDb.find((wedding) => wedding.id === weddingId);
+
+    if (!wedding) return null;
+
+    return wedding;
+  }
+
+  async deleteWedding(weddingId: number) {
+    const weddingIndex = this.weddingDb.findIndex((wedding) => wedding.id === weddingId);
+    this.weddingDb.splice(weddingIndex, 1);
+  }
 }

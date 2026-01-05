@@ -31,4 +31,22 @@ export class PrismaWeddingsRepository implements WeddingsRepository {
 
     return invitedWeddings;
   }
+
+  async findWeddingById(weddingId: number) {
+    const wedding = await prisma.wedding.findUnique({
+      where: {
+        id: weddingId,
+      },
+    });
+
+    return wedding;
+  }
+
+  async deleteWedding(weddingId: number) {
+    await prisma.wedding.delete({
+      where: {
+        id: weddingId,
+      },
+    });
+  }
 }
