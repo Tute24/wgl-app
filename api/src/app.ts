@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/weddings', weddingsRouter);
 
-const port = env.PORT || 3000;
+const port = env.PORT || 3333;
 
 app.listen(port, () => {
   console.log(`Application running on ${port}`);
