@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start:dev": "nodemon --exec node --loader ts-node/esm src/app.ts",
+    "start:dev": "tsx watch src/app.ts",
     "test": "vitest"
   },
   "keywords": [],
@@ -22,10 +22,10 @@
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "nodemon": "^3.1.11",
     "prettier": "^3.7.4",
     "prisma": "^6.3.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.0.3",
     "vitest": "^4.0.16"
