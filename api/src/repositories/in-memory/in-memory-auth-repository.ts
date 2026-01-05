@@ -1,7 +1,7 @@
 import type { PasswordResetToken, User } from '@prisma/client';
-import type { AuthRepository } from '../auth-repository.js';
-import type { CreateUserDto } from '@/dtos/auth/create-user.js';
-import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token.js';
+import type { AuthRepository } from '../auth-repository';
+import type { CreateUserDto } from '@/dtos/auth/create-user';
+import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token';
 
 export class InMemoryAuthRepository implements AuthRepository {
   public userDb: User[] = [];

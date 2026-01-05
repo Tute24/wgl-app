@@ -1,13 +1,13 @@
-import { CreateWeddingService } from '../create-wedding.js';
+import { CreateWeddingService } from '../create-wedding';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { userMock } from '@/services/auth/__mocks__/user-mock.js';
+import { userMock } from '@/services/auth/__mocks__/user-mock';
 import { hash } from 'bcryptjs';
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
-import { InMemoryWeddingsRepository } from '@/repositories/in-memory/in-memory-weddings-repository.js';
-import { InMemoryGiftsRepository } from '@/repositories/in-memory/in-memory-gifts-repository.js';
-import { weddingMock } from '../__mocks__/wedding-mock.js';
-import { giftsMock } from '@/services/gifts/__mocks__/gifts-mock.js';
-import { InMemoryGuestsRepository } from '@/repositories/in-memory/in-memory-guests-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
+import { InMemoryWeddingsRepository } from '@/repositories/in-memory/in-memory-weddings-repository';
+import { InMemoryGiftsRepository } from '@/repositories/in-memory/in-memory-gifts-repository';
+import { weddingMock } from '../__mocks__/wedding-mock';
+import { giftsMock } from '@/services/gifts/__mocks__/gifts-mock';
+import { InMemoryGuestsRepository } from '@/repositories/in-memory/in-memory-guests-repository';
 
 let authRepository: InMemoryAuthRepository;
 let weddingRepository: InMemoryWeddingsRepository;

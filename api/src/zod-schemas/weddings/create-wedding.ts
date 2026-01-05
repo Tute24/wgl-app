@@ -1,5 +1,5 @@
 import z from 'zod';
-import { createGiftsSchema } from '../gifts/create-gifts.js';
+import { createGiftsSchema } from '../gifts/create-gifts';
 
 export const createWeddingSchema = z
   .object({

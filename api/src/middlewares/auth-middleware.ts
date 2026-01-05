@@ -1,6 +1,6 @@
-import { env } from '@/env/index.js';
-import type { TokenPayload } from '@/types/auth/token-payload.js';
-import { AppError } from '@/utils/app-error.js';
+import { env } from '@/env/index';
+import type { TokenPayload } from '@/types/auth/token-payload';
+import { AppError } from '@/utils/app-error';
 import { type Response, type Request, type NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 

@@ -1,10 +1,10 @@
-import { PrismaGiftsRepository } from '@/repositories/prisma/prisma-gifts-repository.js';
-import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository.js';
-import { CreateWeddingService } from '@/services/weddings/create-wedding.js';
-import { errorHandler } from '@/utils/error-handler.js';
-import { createWeddingSchema } from '@/zod-schemas/weddings/create-wedding.js';
+import { PrismaGiftsRepository } from '@/repositories/prisma/prisma-gifts-repository';
+import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository';
+import { CreateWeddingService } from '@/services/weddings/create-wedding';
+import { errorHandler } from '@/utils/error-handler';
+import { createWeddingSchema } from '@/zod-schemas/weddings/create-wedding';
 import { type Request, type Response } from 'express';
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
 
 export async function createWeddingController(req: Request, res: Response) {
   try {

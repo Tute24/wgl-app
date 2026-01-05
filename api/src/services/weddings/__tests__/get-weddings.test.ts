@@ -1,11 +1,11 @@
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
-import { InMemoryGuestsRepository } from '@/repositories/in-memory/in-memory-guests-repository.js';
-import { InMemoryWeddingsRepository } from '@/repositories/in-memory/in-memory-weddings-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
+import { InMemoryGuestsRepository } from '@/repositories/in-memory/in-memory-guests-repository';
+import { InMemoryWeddingsRepository } from '@/repositories/in-memory/in-memory-weddings-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GetWeddingsService } from '../get-weddings.js';
-import { userMock } from '@/services/auth/__mocks__/user-mock.js';
+import { GetWeddingsService } from '../get-weddings';
+import { userMock } from '@/services/auth/__mocks__/user-mock';
 import { hash } from 'bcryptjs';
-import { weddingMock } from '../__mocks__/wedding-mock.js';
+import { weddingMock } from '../__mocks__/wedding-mock';
 
 let authRepository: InMemoryAuthRepository;
 let weddingsRepository: InMemoryWeddingsRepository;

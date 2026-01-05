@@ -1,7 +1,7 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { SignInService } from '@/services/auth/sign-in.js';
-import { errorHandler } from '@/utils/error-handler.js';
-import { signInBodySchema } from '@/zod-schemas/auth/sign-in.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { SignInService } from '@/services/auth/sign-in';
+import { errorHandler } from '@/utils/error-handler';
+import { signInBodySchema } from '@/zod-schemas/auth/sign-in';
 import { type Request, type Response } from 'express';
 
 export async function signInController(req: Request, res: Response) {

@@ -1,7 +1,7 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { ResetPasswordService } from '@/services/auth/reset-password.js';
-import { errorHandler } from '@/utils/error-handler.js';
-import { resetPasswordSchema } from '@/zod-schemas/auth/reset-password.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { ResetPasswordService } from '@/services/auth/reset-password';
+import { errorHandler } from '@/utils/error-handler';
+import { resetPasswordSchema } from '@/zod-schemas/auth/reset-password';
 import { type Request, type Response } from 'express';
 
 export async function resetPasswordController(req: Request, res: Response) {

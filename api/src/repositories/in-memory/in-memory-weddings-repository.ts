@@ -1,7 +1,7 @@
-import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding.js';
+import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding';
 import type { Wedding } from '@prisma/client';
-import type { WeddingsRepository } from '../weddings-repository.js';
-import type { GuestsRepository } from '../guests-repository.js';
+import type { WeddingsRepository } from '../weddings-repository';
+import type { GuestsRepository } from '../guests-repository';
 
 export class InMemoryWeddingsRepository implements WeddingsRepository {
   constructor(private guestsRepository: GuestsRepository) {}

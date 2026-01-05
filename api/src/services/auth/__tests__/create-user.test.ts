@@ -1,8 +1,8 @@
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { CreateUserService } from '../create-user.js';
+import { CreateUserService } from '../create-user';
 import { compare } from 'bcryptjs';
-import { userMock } from '@/services/auth/__mocks__/user-mock.js';
+import { userMock } from '@/services/auth/__mocks__/user-mock';
 
 let authRepository: InMemoryAuthRepository;
 let sut: CreateUserService; //sut comes from suite under test, which is the service being tested

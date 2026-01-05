@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma.js';
-import type { AuthRepository } from '../auth-repository.js';
-import type { CreateUserDto } from '@/dtos/auth/create-user.js';
-import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token.js';
+import prisma from '@/lib/prisma';
+import type { AuthRepository } from '../auth-repository';
+import type { CreateUserDto } from '@/dtos/auth/create-user';
+import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token';
 
 export class PrismaAuthRepository implements AuthRepository {
   async createUser(data: CreateUserDto) {

@@ -1,7 +1,7 @@
-import { createWeddingController } from '@/controllers/weddings/create-wedding.js';
-import { deleteWeddingController } from '@/controllers/weddings/delete-wedding.js';
-import { getWeddingsController } from '@/controllers/weddings/get-weddings.js';
-import authMiddleware from '@/middlewares/auth-middleware.js';
+import { createWeddingController } from '@/controllers/weddings/create-wedding';
+import { deleteWeddingController } from '@/controllers/weddings/delete-wedding';
+import { getWeddingsController } from '@/controllers/weddings/get-weddings';
+import authMiddleware from '@/middlewares/auth-middleware';
 import type { Router } from 'express';
 import express from 'express';
 

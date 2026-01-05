@@ -1,7 +1,7 @@
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
 import { describe, expect, beforeEach, it } from 'vitest';
-import { SignInService } from '../sign-in.js';
-import { userMock } from '@/services/auth/__mocks__/user-mock.js';
+import { SignInService } from '../sign-in';
+import { userMock } from '@/services/auth/__mocks__/user-mock';
 import { hash } from 'bcryptjs';
 
 let authRepository: InMemoryAuthRepository;

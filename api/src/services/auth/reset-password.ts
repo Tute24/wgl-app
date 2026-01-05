@@ -1,6 +1,6 @@
-import type { ResetPasswordDto } from '@/dtos/auth/reset-password.js';
-import type { AuthRepository } from '@/repositories/auth-repository.js';
-import { AppError } from '@/utils/app-error.js';
+import type { ResetPasswordDto } from '@/dtos/auth/reset-password';
+import type { AuthRepository } from '@/repositories/auth-repository';
+import { AppError } from '@/utils/app-error';
 import { hash } from 'bcryptjs';
 import crypto from 'node:crypto';
 

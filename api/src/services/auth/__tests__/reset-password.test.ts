@@ -1,7 +1,7 @@
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
-import { ResetPasswordService } from '../reset-password.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
+import { ResetPasswordService } from '../reset-password';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { userMock } from '../__mocks__/user-mock.js';
+import { userMock } from '../__mocks__/user-mock';
 import { hash } from 'bcryptjs';
 import crypto from 'node:crypto';
 

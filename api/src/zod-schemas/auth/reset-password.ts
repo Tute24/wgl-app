@@ -1,5 +1,5 @@
 import z from 'zod';
-import { passwordSchema } from './create-user.js';
+import { passwordSchema } from './create-user';
 
 export const resetPasswordSchema = z
   .object({

@@ -1,9 +1,9 @@
 import express from 'express';
 const app = express();
 import dotenv from 'dotenv';
-import { env } from './env/index.js';
-import { authRouter } from './routes/auth-routes.js';
-import { weddingsRouter } from './routes/weddings-router.js';
+import { env } from './env/index';
+import { authRouter } from './routes/auth-routes';
+import { weddingsRouter } from './routes/weddings-router';
 
 dotenv.config();
 app.use(express.json());

@@ -1,4 +1,4 @@
-import type { GiftStruct } from '@/types/gifts/gift.js';
+import type { GiftStruct } from '@/types/gifts/gift';
 
 export interface CreateWeddingServiceDto {
   weddingTitle: string;

@@ -1,7 +1,7 @@
-import type { DeleteWeddingDto } from '@/dtos/weddings/delete-wedding.js';
-import type { AuthRepository } from '@/repositories/auth-repository.js';
-import type { WeddingsRepository } from '@/repositories/weddings-repository.js';
-import { AppError } from '@/utils/app-error.js';
+import type { DeleteWeddingDto } from '@/dtos/weddings/delete-wedding';
+import type { AuthRepository } from '@/repositories/auth-repository';
+import type { WeddingsRepository } from '@/repositories/weddings-repository';
+import { AppError } from '@/utils/app-error';
 
 export class DeleteWeddingService {
   constructor(

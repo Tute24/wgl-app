@@ -1,7 +1,7 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository.js';
-import { GetWeddingsService } from '@/services/weddings/get-weddings.js';
-import { errorHandler } from '@/utils/error-handler.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository';
+import { GetWeddingsService } from '@/services/weddings/get-weddings';
+import { errorHandler } from '@/utils/error-handler';
 import { type Request, type Response } from 'express';
 export async function getWeddingsController(req: Request, res: Response) {
   try {

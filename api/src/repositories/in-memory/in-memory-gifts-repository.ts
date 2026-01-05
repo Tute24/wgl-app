@@ -1,5 +1,5 @@
-import type { CreateGiftsDto } from '@/dtos/gifts/create-gifts.js';
-import type { GiftsRepository } from '../gifts-repository.js';
+import type { CreateGiftsDto } from '@/dtos/gifts/create-gifts';
+import type { GiftsRepository } from '../gifts-repository';
 import type { Gift } from '@prisma/client';
 
 export class InMemoryGiftsRepository implements GiftsRepository {

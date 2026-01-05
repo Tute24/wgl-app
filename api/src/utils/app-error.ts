@@ -1,4 +1,4 @@
-import type { ErrorResponseDataType } from '@/types/error-response-data.js';
+import type { ErrorResponseDataType } from '@/types/error-response-data';
 
 export class AppError extends Error {
   public readonly status: number;

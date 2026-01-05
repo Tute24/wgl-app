@@ -1,4 +1,4 @@
-import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding.js';
+import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding';
 import type { Wedding } from '@prisma/client';
 
 export interface WeddingsRepository {

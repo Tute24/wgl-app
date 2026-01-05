@@ -1,7 +1,7 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository.js';
-import { DeleteWeddingService } from '@/services/weddings/delete-wedding.js';
-import { errorHandler } from '@/utils/error-handler.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-repository';
+import { DeleteWeddingService } from '@/services/weddings/delete-wedding';
+import { errorHandler } from '@/utils/error-handler';
 import { type Request, type Response } from 'express';
 import z from 'zod';
 

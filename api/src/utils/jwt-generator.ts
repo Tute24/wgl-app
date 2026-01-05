@@ -1,4 +1,4 @@
-import { env } from '@/env/index.js';
+import { env } from '@/env/index';
 import jwt from 'jsonwebtoken';
 
 export function generateJwt(id: string) {

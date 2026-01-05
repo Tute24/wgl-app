@@ -1,8 +1,8 @@
-import type { GetWeddingsDto } from '@/dtos/weddings/get-weddings.js';
-import type { AuthRepository } from '@/repositories/auth-repository.js';
-import type { WeddingsRepository } from '@/repositories/weddings-repository.js';
-import type { GetWeddingsResponse } from '@/types/weddings/wedding.js';
-import { AppError } from '@/utils/app-error.js';
+import type { GetWeddingsDto } from '@/dtos/weddings/get-weddings';
+import type { AuthRepository } from '@/repositories/auth-repository';
+import type { WeddingsRepository } from '@/repositories/weddings-repository';
+import type { GetWeddingsResponse } from '@/types/weddings/wedding';
+import { AppError } from '@/utils/app-error';
 
 export class GetWeddingsService {
   constructor(

@@ -1,5 +1,5 @@
 import type { Guest } from '@prisma/client';
-import type { GuestsRepository } from '../guests-repository.js';
+import type { GuestsRepository } from '../guests-repository';
 
 export class InMemoryGuestsRepository implements GuestsRepository {
   public guestsDb: Guest[] = [];

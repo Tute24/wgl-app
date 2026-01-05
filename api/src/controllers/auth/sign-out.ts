@@ -1,5 +1,5 @@
 import { type Response, type Request } from 'express';
-import { errorHandler } from '@/utils/error-handler.js';
+import { errorHandler } from '@/utils/error-handler';
 
 export function signOutController(_req: Request, res: Response) {
   try {

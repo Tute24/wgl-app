@@ -1,6 +1,6 @@
-import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding.js';
-import type { WeddingsRepository } from '../weddings-repository.js';
-import prisma from '@/lib/prisma.js';
+import type { CreateWeddingRepositoryDto } from '@/dtos/weddings/create-wedding';
+import type { WeddingsRepository } from '../weddings-repository';
+import prisma from '@/lib/prisma';
 
 export class PrismaWeddingsRepository implements WeddingsRepository {
   async createWedding(data: CreateWeddingRepositoryDto) {

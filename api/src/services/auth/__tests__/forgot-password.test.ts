@@ -1,14 +1,14 @@
-import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository.js';
-import { ForgotPasswordService } from '../forgot-password.js';
+import { InMemoryAuthRepository } from '@/repositories/in-memory/in-memory-auth-repository';
+import { ForgotPasswordService } from '../forgot-password';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { userMock } from '../__mocks__/user-mock.js';
+import { userMock } from '../__mocks__/user-mock';
 import { hash } from 'bcryptjs';
-import { transporter } from '@/utils/nodemailer-transporter.js';
+import { transporter } from '@/utils/nodemailer-transporter';
 
 let authRepository: InMemoryAuthRepository;
 let sut: ForgotPasswordService;
 
-vi.mock('@/utils/nodemailer-transporter.js', () => ({
+vi.mock('@/utils/nodemailer-transporter', () => ({
   transporter: {
     sendMail: vi.fn().mockResolvedValue(undefined),
   },
