@@ -9,3 +9,10 @@ export const createGiftsSchema = z.array(
     })
     .strict(),
 );
+
+export const createGiftsWithWeddingIdSchema = z
+  .object({
+    weddingId: z.number(),
+    gifts: createGiftsSchema,
+  })
+  .strict();
