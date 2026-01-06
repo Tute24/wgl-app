@@ -2,7 +2,7 @@ import express from 'express';
 const app = express();
 import dotenv from 'dotenv';
 import { env } from './env/index';
-import { authRouter } from './routes/auth-routes';
+import { authRouter } from './routes/auth-router';
 import { weddingsRouter } from './routes/weddings-router';
 import { giftsRouter } from './routes/gifts-router';
 
