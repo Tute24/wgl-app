@@ -4,4 +4,6 @@ import { Gift } from '@prisma/client';
 export interface GiftsRepository {
   createGifts(data: CreateGiftsDto[]): Promise<void>;
   getGiftsFromWedding(weddingId: number): Promise<Gift[]>;
+  findGiftById(giftId: number): Promise<Gift | null>;
+  deleteGift(giftId: number): Promise<void>;
 }
