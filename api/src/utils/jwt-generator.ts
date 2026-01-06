@@ -1,8 +1,8 @@
-import { env } from '@/env/index.js';
-import { sign } from 'jsonwebtoken';
+import { env } from '@/env/index';
+import jwt from 'jsonwebtoken';
 
 export function generateJwt(id: string) {
-  const token = sign({ payload: id }, env.SECRET_KEY, {
+  const token = jwt.sign({ id: id }, env.SECRET_KEY, {
     expiresIn: '1h',
   });
 

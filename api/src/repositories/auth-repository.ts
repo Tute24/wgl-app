@@ -1,5 +1,5 @@
-import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token.js';
-import type { CreateUserDto } from '@/dtos/auth/create-user.js';
+import type { CreatePasswordResetTokenDto } from '@/dtos/auth/create-password-reset-token';
+import type { CreateUserDto } from '@/dtos/auth/create-user';
 import type { PasswordResetToken, User } from '@prisma/client';
 
 export interface AuthRepository {
@@ -9,4 +9,5 @@ export interface AuthRepository {
   findPasswordResetToken(passwordResetToken: string): Promise<PasswordResetToken | null>;
   resetPassword(userID: string, password: string): Promise<void>;
   markTokenAsUsed(passwordResetToken: string): Promise<void>;
+  findById(id: string): Promise<User | null>;
 }

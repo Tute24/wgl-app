@@ -9,12 +9,12 @@ datasource db {
 }
 
 model User {
-    id             String                      @id @default(uuid())
-    email          String                      @unique
-    firstName      String                      @map("first_name")
-    lastName       String                      @map("last_name")
+    id             String               @id @default(uuid())
+    email          String               @unique
+    firstName      String               @map("first_name")
+    lastName       String               @map("last_name")
     password       String
-    createdAt      DateTime?                   @default(now())
+    createdAt      DateTime?            @default(now())
     weddingsOwn    Wedding[]
     productsGifted GiftContribution[]
     weddingsGuest  Guest[]
@@ -25,13 +25,13 @@ model User {
 }
 
 model Wedding {
-    id              Int        @id @default(autoincrement())
-    weddingTitle    String     @map("wedding_title")
-    weddingDate     String     @map("wedding_date")
-    shippingAddress String     @default("null") @map("shipping_address")
-    user            User       @relation(fields: [createdBy], references: [id])
+    id              Int                @id @default(autoincrement())
+    weddingTitle    String             @map("wedding_title")
+    weddingDate     String             @map("wedding_date")
+    shippingAddress String             @default("null") @map("shipping_address")
+    user            User               @relation(fields: [createdBy], references: [id])
     createdBy       String
-    createdAt       DateTime?  @default(now())
+    createdAt       DateTime?          @default(now())
     gifts           Gift[]
     guests          Guest[]
     request         Request[]
@@ -45,7 +45,7 @@ model Gift {
     quantity    Int
     productName String    @map("product_name")
     productLink String    @map("product_link")
-    wedding     Wedding   @relation(fields: [fromWedding], references: [id])
+    wedding     Wedding   @relation(fields: [fromWedding], references: [id], onDelete: Cascade)
     fromWedding Int       @map("from_wedding")
     createdAt   DateTime? @default(now())
 
@@ -56,7 +56,7 @@ model Guest {
     id                Int       @id @default(autoincrement())
     user              User      @relation(fields: [guestId], references: [id])
     guestId           String    @map("guest_id")
-    wedding           Wedding   @relation(fields: [referencedWedding], references: [id])
+    wedding           Wedding   @relation(fields: [referencedWedding], references: [id], onDelete: Cascade)
     referencedWedding Int       @map("referenced_wedding")
     addedOn           DateTime? @default(now())
 
@@ -67,7 +67,7 @@ model Request {
     id             Int       @id @default(autoincrement())
     user           User      @relation(fields: [requestBy], references: [id])
     requestBy      String    @map("request_by")
-    wedding        Wedding   @relation(fields: [relatedWedding], references: [id])
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
     relatedWedding Int       @map("related_wedding")
     requestByName  String    @map("request_by_name")
     weddingTitle   String    @map("wedding_title")
@@ -83,7 +83,7 @@ model GiftContribution {
     presenter      String
     relatedWedding Int       @map("related_wedding")
     user           User      @relation(fields: [presenter], references: [id])
-    wedding        Wedding   @relation(fields: [relatedWedding], references: [id])
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
     quantity       Int
     giftName       String    @map("gift_name")
     giftedAt       DateTime? @default(now())

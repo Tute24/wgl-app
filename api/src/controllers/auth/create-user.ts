@@ -1,7 +1,7 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { CreateUserService } from '@/services/auth/create-user.js';
-import { errorHandler } from '@/utils/error-handler.js';
-import createUserSchema from '@/zod-schemas/auth/create-user.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { CreateUserService } from '@/services/auth/create-user';
+import { errorHandler } from '@/utils/error-handler';
+import createUserSchema from '@/zod-schemas/auth/create-user';
 import { type Request, type Response } from 'express';
 
 export async function createUserController(req: Request, res: Response) {

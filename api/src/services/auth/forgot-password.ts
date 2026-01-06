@@ -1,6 +1,6 @@
-import { env } from '@/env/index.js';
-import type { AuthRepository } from '@/repositories/auth-repository.js';
-import { transporter } from '@/utils/nodemailer-transporter.js';
+import { env } from '@/env/index';
+import type { AuthRepository } from '@/repositories/auth-repository';
+import { transporter } from '@/utils/nodemailer-transporter';
 import crypto from 'node:crypto';
 
 export interface ForgotPasswordRequestProps {

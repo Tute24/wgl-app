@@ -1,8 +1,8 @@
-import type { CreateUserDto } from '@/dtos/auth/create-user.js';
-import type { AuthRepository } from '@/repositories/auth-repository.js';
-import type { SignInAndCreateResponse } from '@/types/auth/sign-in-and-create-response.js';
-import { AppError } from '@/utils/app-error.js';
-import { generateJwt } from '@/utils/jwt-generator.js';
+import type { CreateUserDto } from '@/dtos/auth/create-user';
+import type { AuthRepository } from '@/repositories/auth-repository';
+import type { SignInAndCreateResponse } from '@/types/auth/sign-in-and-create-response';
+import { AppError } from '@/utils/app-error';
+import { generateJwt } from '@/utils/jwt-generator';
 import { hash } from 'bcryptjs';
 
 export class CreateUserService {

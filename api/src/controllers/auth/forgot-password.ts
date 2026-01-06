@@ -1,6 +1,6 @@
-import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository.js';
-import { ForgotPasswordService } from '@/services/auth/forgot-password.js';
-import { errorHandler } from '@/utils/error-handler.js';
+import { PrismaAuthRepository } from '@/repositories/prisma/prisma-auth-repository';
+import { ForgotPasswordService } from '@/services/auth/forgot-password';
+import { errorHandler } from '@/utils/error-handler';
 import { type Request, type Response } from 'express';
 import z from 'zod';
 

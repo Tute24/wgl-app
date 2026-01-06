@@ -1,6 +1,6 @@
-import { AppError } from './app-error.js';
+import { AppError } from './app-error';
 import { type Response } from 'express';
-import type { ErrorResponseDataType } from '@/types/error-response-data.js';
+import type { ErrorResponseDataType } from '@/types/error-response-data';
 
 export function errorHandler(
   error: unknown,

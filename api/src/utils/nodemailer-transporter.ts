@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import { env } from '@/env/index.js';
+import { env } from '@/env/index';
 
 dotenv.config();
 
