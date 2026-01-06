@@ -8,7 +8,7 @@ import { AppError } from '@/utils/app-error';
 export class CreateGiftsService {
   constructor(
     private authRepository: AuthRepository,
-    private weddingRepository: WeddingsRepository,
+    private weddingsRepository: WeddingsRepository,
     private giftsRepository: GiftsRepository,
   ) {}
 
@@ -16,7 +16,7 @@ export class CreateGiftsService {
     const user = await this.authRepository.findById(userId);
     if (!user) throw new AppError('User not found.', 404);
 
-    const wedding = await this.weddingRepository.findWeddingById(weddingId);
+    const wedding = await this.weddingsRepository.findWeddingById(weddingId);
     if (!wedding) throw new AppError('Wedding not found.', 404);
 
     if (wedding.createdBy !== user.id)
