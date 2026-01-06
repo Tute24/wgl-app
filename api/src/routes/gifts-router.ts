@@ -1,7 +1,9 @@
 import { createGiftsController } from '@/controllers/gifts/create-gifts';
+import { getGiftsController } from '@/controllers/gifts/get-gifts';
 import authMiddleware from '@/middlewares/auth-middleware';
 import express, { Router } from 'express';
 
 export const giftsRouter: Router = express.Router();
 
 giftsRouter.post('/create', authMiddleware, createGiftsController);
+giftsRouter.get('/', authMiddleware, getGiftsController);
