@@ -6,4 +6,14 @@ export class PrismaGiftsRepository implements GiftsRepository {
   async createGifts(data: CreateGiftsDto[]) {
     await prisma.gift.createMany({ data });
   }
+
+  async getGiftsFromWedding(weddingId: number) {
+    const gifts = await prisma.gift.findMany({
+      where: {
+        fromWedding: weddingId,
+      },
+    });
+
+    return gifts;
+  }
 }
