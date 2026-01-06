@@ -18,4 +18,9 @@ export class InMemoryGiftsRepository implements GiftsRepository {
       this.giftDb.push(gift);
     }
   }
+
+  async getGiftsFromWedding(weddingId: number) {
+    const giftsList = this.giftDb.filter((gift) => gift.fromWedding === weddingId);
+    return giftsList;
+  }
 }
