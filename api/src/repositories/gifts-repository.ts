@@ -1,4 +1,5 @@
 import type { CreateGiftsDto } from '@/dtos/gifts/create-gifts';
+import { UpdateQuantityDto } from '@/dtos/gifts/update-quantity';
 import { Gift } from '@prisma/client';
 
 export interface GiftsRepository {
@@ -6,4 +7,5 @@ export interface GiftsRepository {
   getGiftsFromWedding(weddingId: number): Promise<Gift[]>;
   findGiftById(giftId: number): Promise<Gift | null>;
   deleteGift(giftId: number): Promise<void>;
+  updateGiftQuantity(data: UpdateQuantityDto): Promise<Gift>;
 }
