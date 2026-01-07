@@ -1,6 +1,7 @@
+import { WeddingRole } from '@/enums/weddings/wedding-role';
 import { Gift } from '@prisma/client';
 
 export type GetGiftsResponse = {
-  weddingRole: 'OWNER' | 'GUEST' | 'NONE';
+  weddingRole: WeddingRole;
   gifts: Gift[];
 };

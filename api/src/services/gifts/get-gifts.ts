@@ -1,4 +1,5 @@
 import { GetGiftsDto } from '@/dtos/gifts/get-gifts';
+import { WeddingAccessPolicies } from '@/policies/weddings/wedding-access-policy';
 import { AuthRepository } from '@/repositories/auth-repository';
 import { GiftsRepository } from '@/repositories/gifts-repository';
 import { GuestsRepository } from '@/repositories/guests-repository';
@@ -21,17 +22,17 @@ export class GetGiftsService {
     const wedding = await this.weddingsRepository.findWeddingById(weddingId);
     if (!wedding) throw new AppError('Wedding not found.', 404);
 
-    let weddingRole: GetGiftsResponse['weddingRole'] = 'NONE';
     const guestRecords = await this.guestsRepository.findWeddingsByGuestId(userId);
-    const weddingsThatUserIsGuestAt = guestRecords.map((record) => record.referencedWedding);
-    if (wedding.createdBy === user.id) {
-      weddingRole = 'OWNER';
-    } else if (weddingsThatUserIsGuestAt.includes(wedding.id)) {
-      weddingRole = 'GUEST';
-    }
+    const guestWeddingIds = guestRecords.map((record) => record.referencedWedding);
+    const weddingRole = WeddingAccessPolicies.getUserRoleOnWedding({
+      userId,
+      wedding,
+      guestWeddingIds,
+    });
 
-    const gifts =
-      weddingRole !== 'NONE' ? await this.giftsRepository.getGiftsFromWedding(weddingId) : [];
+    const gifts = WeddingAccessPolicies.isAccessToGiftsAllowed(weddingRole)
+      ? await this.giftsRepository.getGiftsFromWedding(weddingId)
+      : [];
 
     return {
       weddingRole,
