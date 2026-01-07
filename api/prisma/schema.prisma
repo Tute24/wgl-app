@@ -41,13 +41,14 @@ model Wedding {
 }
 
 model Gift {
-    id          Int       @id @default(autoincrement())
-    quantity    Int
-    productName String    @map("product_name")
-    productLink String    @map("product_link")
-    wedding     Wedding   @relation(fields: [fromWedding], references: [id], onDelete: Cascade)
-    fromWedding Int       @map("from_wedding")
-    createdAt   DateTime? @default(now())
+    id               Int                @id @default(autoincrement())
+    quantity         Int
+    productName      String             @map("product_name")
+    productLink      String             @map("product_link")
+    wedding          Wedding            @relation(fields: [fromWedding], references: [id], onDelete: Cascade)
+    fromWedding      Int                @map("from_wedding")
+    createdAt        DateTime?          @default(now())
+    GiftContribution GiftContribution[]
 
     @@map("gifts")
 }
@@ -85,7 +86,8 @@ model GiftContribution {
     user           User      @relation(fields: [presenter], references: [id])
     wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
     quantity       Int
-    giftName       String    @map("gift_name")
+    giftId         Int       @map("gift_id")
+    gift           Gift      @relation(fields: [giftId], references: [id], onDelete: Cascade)
     giftedAt       DateTime? @default(now())
 
     @@map("gift_contributions")
