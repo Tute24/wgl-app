@@ -21,6 +21,7 @@ export class PrismaGiftContributionsRepository implements GiftContributionsRepos
       },
       include: {
         user: true,
+        gift: true,
       },
     });
 

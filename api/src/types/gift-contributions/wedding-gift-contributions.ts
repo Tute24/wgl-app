@@ -1,3 +1,4 @@
+import { GiftStruct } from '../gifts/gift';
 import { UserStruct } from '../users/user';
 
 export type WeddingGiftContributions = {
@@ -8,4 +9,5 @@ export type WeddingGiftContributions = {
   relatedWedding: number;
   giftId: number;
   user: UserStruct;
+  gift: GiftStruct;
 };
