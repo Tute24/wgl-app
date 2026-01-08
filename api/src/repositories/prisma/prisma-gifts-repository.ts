@@ -2,6 +2,7 @@ import type { CreateGiftsDto } from '@/dtos/gifts/create-gifts';
 import type { GiftsRepository } from '../gifts-repository';
 import prisma from '@/lib/prisma';
 import { UpdateQuantityDto } from '@/dtos/gifts/update-quantity';
+import { UpdateGiftDataRepositoryDto } from '@/dtos/gifts/update-gift-data';
 
 export class PrismaGiftsRepository implements GiftsRepository {
   async createGifts(data: CreateGiftsDto[]) {
@@ -49,5 +50,14 @@ export class PrismaGiftsRepository implements GiftsRepository {
     });
 
     return gift;
+  }
+
+  async updateGiftData(data: UpdateGiftDataRepositoryDto) {
+    await prisma.gift.update({
+      where: {
+        id: data.giftId,
+      },
+      data: data.updateData,
+    });
   }
 }
