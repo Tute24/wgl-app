@@ -5,7 +5,10 @@ export const createGiftsSchema = z.array(
     .object({
       productName: z.string({ message: 'Enter a valid name.' }),
       productLink: z.string({ message: 'Enter a valid link.' }),
-      quantity: z.number({ message: 'Quantity must be a number.' }),
+      quantity: z
+        .number({ message: 'Quantity must be a number.' })
+        .int({ message: 'Quantity must be an integer' })
+        .min(1, { message: 'Quantity must be greater than 0.' }),
     })
     .strict(),
 );
