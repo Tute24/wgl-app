@@ -3,6 +3,7 @@ import { deleteGiftController } from '@/controllers/gifts/delete-gift';
 import { getGiftContributionsController } from '@/controllers/gifts/get-gift-contributions';
 import { getGiftsController } from '@/controllers/gifts/get-gifts';
 import { registerGiftContributionController } from '@/controllers/gifts/register-gift-contribution';
+import { updateGiftDataController } from '@/controllers/gifts/update-gift-data';
 import authMiddleware from '@/middlewares/auth-middleware';
 import express, { Router } from 'express';
 
@@ -13,3 +14,4 @@ giftsRouter.get('/', authMiddleware, getGiftsController);
 giftsRouter.delete('/', authMiddleware, deleteGiftController);
 giftsRouter.post('/contribute', authMiddleware, registerGiftContributionController);
 giftsRouter.get('/contributions', authMiddleware, getGiftContributionsController);
+giftsRouter.patch('/', authMiddleware, updateGiftDataController);
