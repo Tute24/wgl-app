@@ -1,4 +1,4 @@
-import { GiftStruct } from '@/types/gifts/gift';
+import { GiftDisplayStruct } from '@/types/gifts/gift';
 
 export interface CreateGiftsDto {
   quantity: number;
@@ -8,7 +8,7 @@ export interface CreateGiftsDto {
 }
 
 export interface CreateGiftsServiceDto {
-  gifts: GiftStruct[];
+  gifts: GiftDisplayStruct[];
   userId: string;
   weddingId: number;
 }
