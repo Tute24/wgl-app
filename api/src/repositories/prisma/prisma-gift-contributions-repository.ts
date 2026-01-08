@@ -13,4 +13,17 @@ export class PrismaGiftContributionsRepository implements GiftContributionsRepos
       },
     });
   }
+
+  async findGiftContributionsByWeddingId(weddingId: number) {
+    const weddingGiftContributions = await prisma.giftContribution.findMany({
+      where: {
+        relatedWedding: weddingId,
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return weddingGiftContributions;
+  }
 }
