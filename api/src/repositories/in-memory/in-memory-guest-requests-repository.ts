@@ -16,4 +16,15 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
 
     this.guestRequestsDb.push(guestRequest);
   }
+
+  async findPendingRequestsByUserAndWedding(userId: string, weddingId: number) {
+    const requests = this.guestRequestsDb.filter(
+      (request) =>
+        request.requestBy === userId &&
+        request.relatedWedding === weddingId &&
+        request.pending === true,
+    );
+
+    return requests;
+  }
 }
