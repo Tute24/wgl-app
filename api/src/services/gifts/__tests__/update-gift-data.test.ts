@@ -56,6 +56,35 @@ describe('UpdateGiftDataService', () => {
     expect(message).toEqual('Gift successfully updated.');
   });
 
+  it('should return error if updatedData object is empty', async () => {
+    const user = await authRepository.createUser({
+      email: userMock.email,
+      firstName: userMock.firstName,
+      lastName: userMock.lastName,
+      password: await hash(userMock.password, 6),
+    });
+
+    const wedding = await weddingsRepository.createWedding({
+      createdBy: user.id,
+      weddingTitle: weddingMock.weddingTitle,
+      weddingDate: weddingMock.weddingDate,
+      shippingAddress: weddingMock.shippingAddress,
+    });
+
+    const treatedGifts = giftsMock.gifts.map((gift) => ({ ...gift, fromWedding: wedding.id }));
+
+    await giftsRepository.createGifts(treatedGifts);
+    const giftsList = await giftsRepository.getGiftsFromWedding(wedding.id);
+
+    await expect(
+      sut.execute({
+        userId: user.id,
+        giftId: giftsList[0]!.id,
+        updateData: {},
+      }),
+    ).rejects.toThrow('At least one property to update is required');
+  });
+
   it('should not be able to delete gift when requesting user is not the owner of the wedding', async () => {
     const user1 = await authRepository.createUser({
       email: userMock.email,
