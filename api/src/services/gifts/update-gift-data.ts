@@ -27,6 +27,9 @@ export class UpdateGiftDataService {
     if (wedding && wedding.createdBy !== userId)
       throw new AppError('User does not have permission to perform this action.', 403);
 
+    if (Object.entries(updateData).length === 0)
+      throw new AppError('At least one property to update is required', 400);
+
     await this.giftsRepository.updateGiftData({ giftId, updateData });
 
     return {
