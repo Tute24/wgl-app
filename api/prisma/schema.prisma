@@ -18,7 +18,7 @@ model User {
     weddingsOwn    Wedding[]
     productsGifted GiftContribution[]
     weddingsGuest  Guest[]
-    requests       Request[]
+    requests       GuestRequest[]
     passwordReset  PasswordResetToken[]
 
     @@map("users")
@@ -34,7 +34,7 @@ model Wedding {
     createdAt       DateTime?          @default(now())
     gifts           Gift[]
     guests          Guest[]
-    request         Request[]
+    guestRequests   GuestRequest[]    
     gifters         GiftContribution[]
 
     @@map("weddings")
@@ -64,19 +64,17 @@ model Guest {
     @@map("guests")
 }
 
-model Request {
+model GuestRequest {
     id             Int       @id @default(autoincrement())
     user           User      @relation(fields: [requestBy], references: [id])
     requestBy      String    @map("request_by")
     wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
     relatedWedding Int       @map("related_wedding")
-    requestByName  String    @map("request_by_name")
-    weddingTitle   String    @map("wedding_title")
     pending        Boolean   @default(true)
     accepted       Boolean   @default(false)
     madeOn         DateTime? @default(now())
 
-    @@map("requests")
+    @@map("guest_requests")
 }
 
 model GiftContribution {
