@@ -1,11 +1,11 @@
-import type { GiftStruct } from '@/types/gifts/gift';
+import type { GiftDisplayStruct } from '@/types/gifts/gift';
 
 export interface CreateWeddingServiceDto {
   weddingTitle: string;
   weddingDate: string;
   userId: string;
   shippingAddress?: string;
-  gifts: GiftStruct[];
+  gifts: GiftDisplayStruct[];
 }
 
 export interface CreateWeddingRepositoryDto {
