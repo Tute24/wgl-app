@@ -1,4 +1,4 @@
-import { CreateGuestRequestDto } from '@/dtos/requests/create-request';
+import { CreateGuestRequestDto } from '@/dtos/guest-requests/create-guest-request';
 import { GuestRequestsRepository } from '../guest-requests-repository';
 import prisma from '@/lib/prisma';
 
