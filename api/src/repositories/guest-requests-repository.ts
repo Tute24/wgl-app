@@ -6,4 +6,6 @@ export interface GuestRequestsRepository {
   createRequest(data: CreateGuestRequestDto): Promise<void>;
   findPendingRequestsByUserAndWedding(userId: string, weddingId: number): Promise<GuestRequest[]>;
   getGuestRequestsHistory(userId: string): Promise<GetGuestRequestsHistoryResponse[]>;
+  findGuestRequestById(guestRequestId: number): Promise<GuestRequest | null>;
+  acceptGuestRequest(guestRequestId: number): Promise<void>;
 }

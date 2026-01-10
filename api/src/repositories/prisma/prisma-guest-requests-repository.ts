@@ -39,4 +39,26 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
 
     return requests;
   }
+
+  async findGuestRequestById(guestRequestId: number) {
+    const guestRequest = await prisma.guestRequest.findUnique({
+      where: {
+        id: guestRequestId,
+      },
+    });
+
+    return guestRequest;
+  }
+
+  async acceptGuestRequest(guestRequestId: number) {
+    await prisma.guestRequest.update({
+      where: {
+        id: guestRequestId,
+      },
+      data: {
+        accepted: true,
+        pending: false,
+      },
+    });
+  }
 }

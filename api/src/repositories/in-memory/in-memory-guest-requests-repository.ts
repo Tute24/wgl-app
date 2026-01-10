@@ -67,4 +67,18 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
 
     return requests.filter((request) => request !== null);
   }
+
+  async findGuestRequestById(guestRequestId: number) {
+    const guestRequest = this.guestRequestsDb.find((record) => record.id === guestRequestId);
+
+    if (!guestRequest) return null;
+
+    return guestRequest;
+  }
+
+  async acceptGuestRequest(guestRequestId: number) {
+    this.guestRequestsDb.map((record) =>
+      record.id === guestRequestId ? { ...record, pending: false, accepted: true } : record,
+    );
+  }
 }
