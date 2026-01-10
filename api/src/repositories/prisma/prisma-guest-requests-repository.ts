@@ -45,6 +45,9 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
       where: {
         id: guestRequestId,
       },
+      include: {
+        wedding: true,
+      },
     });
 
     return guestRequest;

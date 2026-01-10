@@ -73,7 +73,13 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
 
     if (!guestRequest) return null;
 
-    return guestRequest;
+    const wedding = await this.weddingsRepository.findWeddingById(guestRequest.relatedWedding);
+
+    if (!wedding) {
+      throw new Error('Invariant violation: wedding not found for guest request');
+    }
+
+    return { ...guestRequest, wedding };
   }
 
   async acceptGuestRequest(guestRequestId: number) {
