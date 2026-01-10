@@ -25,13 +25,14 @@ export class CreateGuestRequestService {
       weddingId,
     );
 
+    if (pendingRequests.length > 0)
+      throw new AppError('User currently has a pending guest request for this wedding', 409);
+
     await this.guestRequestsRepository.createRequest({
       userId,
       weddingId,
     });
 
-    if (pendingRequests.length > 0)
-      throw new AppError('User currently has a pending guest request for this wedding', 409);
     return {
       message: 'Request created successfully.',
     };
