@@ -1,7 +1,9 @@
 import { CreateGuestRequestDto } from '@/dtos/guest-requests/create-guest-request';
+import { GetGuestRequestsHistoryResponse } from '@/types/guest-requests/get-guest-requests-history-response';
 import { GuestRequest } from '@prisma/client';
 
 export interface GuestRequestsRepository {
   createRequest(data: CreateGuestRequestDto): Promise<void>;
   findPendingRequestsByUserAndWedding(userId: string, weddingId: number): Promise<GuestRequest[]>;
+  getGuestRequestsHistory(userId: string): Promise<GetGuestRequestsHistoryResponse[]>;
 }

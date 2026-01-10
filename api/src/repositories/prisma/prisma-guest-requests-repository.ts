@@ -23,4 +23,20 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
 
     return requests;
   }
+
+  async getGuestRequestsHistory(userId: string) {
+    const requests = await prisma.guestRequest.findMany({
+      where: {
+        wedding: {
+          createdBy: userId,
+        },
+      },
+      include: {
+        wedding: true,
+        user: true,
+      },
+    });
+
+    return requests;
+  }
 }

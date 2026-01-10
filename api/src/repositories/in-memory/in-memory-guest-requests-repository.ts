@@ -1,8 +1,15 @@
 import { CreateGuestRequestDto } from '@/dtos/guest-requests/create-guest-request';
 import { GuestRequestsRepository } from '../guest-requests-repository';
 import { GuestRequest } from '@prisma/client';
+import { GetGuestRequestsHistoryResponse } from '@/types/guest-requests/get-guest-requests-history-response';
+import { AuthRepository } from '../auth-repository';
+import { WeddingsRepository } from '../weddings-repository';
 
 export class InMemoryGuestRequestsRepository implements GuestRequestsRepository {
+  constructor(
+    private authRepository: AuthRepository,
+    private weddingsRepository: WeddingsRepository,
+  ) {}
   public guestRequestsDb: GuestRequest[] = [];
   async createRequest(data: CreateGuestRequestDto) {
     const guestRequest: GuestRequest = {
@@ -26,5 +33,38 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
     );
 
     return requests;
+  }
+
+  async getGuestRequestsHistory(userId: string) {
+    const ownWeddings = await this.weddingsRepository.getOwnWeddings(userId);
+    if (ownWeddings.length === 0) return [];
+
+    const weddingIds = ownWeddings.map((wedding) => wedding.id);
+
+    const requests = await Promise.all(
+      this.guestRequestsDb
+        .filter((request) => weddingIds.includes(request.relatedWedding))
+        .map(async (request) => {
+          const wedding = ownWeddings.find((wedding) => wedding.id === request.relatedWedding);
+          const user = await this.authRepository.findById(request.requestBy);
+
+          if (!wedding || !user) return null;
+
+          const response: GetGuestRequestsHistoryResponse = {
+            id: request.id,
+            requestBy: request.requestBy,
+            relatedWedding: request.relatedWedding,
+            pending: request.pending,
+            accepted: request.accepted,
+            madeOn: request.madeOn,
+            wedding,
+            user,
+          };
+
+          return response;
+        }),
+    );
+
+    return requests.filter((request) => request !== null);
   }
 }
