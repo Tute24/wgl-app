@@ -19,7 +19,10 @@ describe('CreateGuestRequestService', () => {
     authRepository = new InMemoryAuthRepository();
     guestsRepository = new InMemoryGuestsRepository();
     weddingsRepository = new InMemoryWeddingsRepository(guestsRepository);
-    guestRequestsRepository = new InMemoryGuestRequestsRepository();
+    guestRequestsRepository = new InMemoryGuestRequestsRepository(
+      authRepository,
+      weddingsRepository,
+    );
     sut = new CreateGuestRequestService(
       authRepository,
       weddingsRepository,
