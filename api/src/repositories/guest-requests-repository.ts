@@ -12,4 +12,5 @@ export interface GuestRequestsRepository {
     };
   }> | null>;
   acceptGuestRequest(guestRequestId: number): Promise<void>;
+  denyGuestRequest(guestRequestId: number): Promise<void>;
 }

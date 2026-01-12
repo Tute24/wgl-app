@@ -64,4 +64,16 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
       },
     });
   }
+
+  async denyGuestRequest(guestRequestId: number) {
+    await prisma.guestRequest.update({
+      where: {
+        id: guestRequestId,
+      },
+      data: {
+        accepted: false,
+        pending: false,
+      },
+    });
+  }
 }
