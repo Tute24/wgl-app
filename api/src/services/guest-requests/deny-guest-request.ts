@@ -21,7 +21,7 @@ export class DenyGuestRequestService {
 
     if (!guestRequest.pending) throw new AppError('This request has already been reviewed.', 409);
 
-    await this.guestRequestsRepository.acceptGuestRequest(guestRequestId);
+    await this.guestRequestsRepository.denyGuestRequest(guestRequestId);
 
     return {
       message: 'Request successfully denied.',
