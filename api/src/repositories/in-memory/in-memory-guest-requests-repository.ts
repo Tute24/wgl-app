@@ -97,4 +97,13 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
     request.pending = false;
     request.accepted = false;
   }
+
+  async getPendingGuestRequestsFromOwnWeddings(userId: string) {
+    const ownWeddings = await this.weddingsRepository.getOwnWeddings(userId);
+    const ownWeddingsIds = ownWeddings.map((wedding) => wedding.id);
+
+    return this.guestRequestsDb
+      .filter((record) => ownWeddingsIds.includes(record.relatedWedding))
+      .filter((record) => record.pending === true);
+  }
 }

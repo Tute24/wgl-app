@@ -76,4 +76,17 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
       },
     });
   }
+
+  async getPendingGuestRequestsFromOwnWeddings(userId: string) {
+    const pendingGuestRequests = await prisma.guestRequest.findMany({
+      where: {
+        wedding: {
+          createdBy: userId,
+        },
+        pending: true,
+      },
+    });
+
+    return pendingGuestRequests;
+  }
 }
