@@ -33,7 +33,7 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
       },
       include: {
         wedding: true,
-        user: true,
+        user: { select: { email: true, firstName: true, lastName: true } },
       },
     });
 

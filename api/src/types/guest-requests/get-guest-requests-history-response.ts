@@ -8,7 +8,7 @@ export type GetGuestRequestsHistoryResponse = {
   pending: boolean;
   accepted: boolean;
   madeOn: Date | null;
-  user: UserStruct;
+  user: Pick<UserStruct, 'email' | 'firstName' | 'lastName'>;
   wedding: WeddingStruct;
 };
 
