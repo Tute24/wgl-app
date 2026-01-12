@@ -83,8 +83,10 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
   }
 
   async acceptGuestRequest(guestRequestId: number) {
-    this.guestRequestsDb.map((record) =>
-      record.id === guestRequestId ? { ...record, pending: false, accepted: true } : record,
-    );
+    const request = this.guestRequestsDb.find((record) => record.id === guestRequestId);
+    if (!request) return;
+
+    request.pending = false;
+    request.accepted = true;
   }
 }
