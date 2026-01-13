@@ -11,5 +11,5 @@ export const authRouter: Router = express.Router();
 authRouter.post('/sign-in', signInController);
 authRouter.post('/create-user', createUserController);
 authRouter.post('/sign-out', authMiddleware, signOutController);
-authRouter.post('/forgot-password', forgotPasswordController);
-authRouter.post('/reset-password', resetPasswordController);
+authRouter.post('/password/forgot', forgotPasswordController);
+authRouter.post('/password/reset', resetPasswordController);

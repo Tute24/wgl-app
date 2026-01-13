@@ -2,8 +2,10 @@ import { GuestsRepository } from '../guests-repository';
 import prisma from '@/lib/prisma';
 
 export class PrismaGuestsRepository implements GuestsRepository {
-  async addGuest(_guestId: string, _referencedWedding: number) {
-    return;
+  async addGuest(guestId: string, referencedWedding: number) {
+    await prisma.guest.create({
+      data: { guestId, referencedWedding },
+    });
   }
 
   async findWeddingsByGuestId(guestId: string) {
