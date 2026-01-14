@@ -1,6 +1,8 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { authPaths } from './paths/auth.paths';
 import { authSchema } from './schemas/auth.schema';
+import { weddingsSchema } from './schemas/weddings.schemas';
+import { weddingsPaths } from './paths/weddings.paths';
 
 export const swaggerDefinition: OpenAPIV3.Document = {
   openapi: '3.0.0',
@@ -15,10 +17,11 @@ export const swaggerDefinition: OpenAPIV3.Document = {
       jwtAuth: [],
     },
   ],
-  paths: { ...authPaths },
+  paths: { ...authPaths, ...weddingsPaths },
   components: {
     schemas: {
       ...authSchema,
+      ...weddingsSchema,
     },
     securitySchemes: {
       jwtAuth: {
