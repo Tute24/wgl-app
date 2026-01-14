@@ -27,6 +27,9 @@ export class PrismaWeddingsRepository implements WeddingsRepository {
           },
         },
       },
+      omit: {
+        createdBy: true,
+      },
     });
 
     return invitedWeddings;
