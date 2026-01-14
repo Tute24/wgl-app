@@ -10,10 +10,22 @@ export const swaggerDefinition: OpenAPIV3.Document = {
       'The documentation for the WGL App API with the auth, weddings, gifts and guest requests domains.',
     version: '1.0.0',
   },
+  security: [
+    {
+      jwtAuth: [],
+    },
+  ],
   paths: { ...authPaths },
   components: {
     schemas: {
       ...authSchema,
+    },
+    securitySchemes: {
+      jwtAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
     },
   },
 };
