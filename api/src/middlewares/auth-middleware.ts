@@ -8,9 +8,11 @@ export default function authMiddleware(req: Request, _res: Response, next: NextF
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) throw new AppError('Invalid credentials.', 401);
 
-  const decodedToken = jwt.verify(token, env.SECRET_KEY) as TokenPayload;
-  if (!decodedToken) throw new AppError('Invalid credentials.', 401);
-
-  req.authUser = decodedToken;
-  next();
+  try {
+    const decodedToken = jwt.verify(token, env.SECRET_KEY) as TokenPayload;
+    req.authUser = decodedToken;
+    next();
+  } catch {
+    throw new AppError('Invalid credentials.', 401);
+  }
 }
