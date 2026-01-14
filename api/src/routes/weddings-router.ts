@@ -8,6 +8,6 @@ import express from 'express';
 
 export const weddingsRouter: Router = express.Router();
 
-weddingsRouter.post('/create', authMiddleware, asyncHandler(createWeddingController));
+weddingsRouter.post('/', authMiddleware, asyncHandler(createWeddingController));
 weddingsRouter.get('/', authMiddleware, asyncHandler(getWeddingsController));
 weddingsRouter.delete('/', authMiddleware, asyncHandler(deleteWeddingController));
