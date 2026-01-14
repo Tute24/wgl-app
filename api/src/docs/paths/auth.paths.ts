@@ -3,6 +3,7 @@ import { OpenAPIV3 } from 'openapi-types';
 export const authPaths: OpenAPIV3.PathsObject = {
   '/auth/sign-in': {
     post: {
+      security: [],
       description: 'Signs in a registered user.',
       tags: ['Auth'],
       requestBody: {
@@ -37,6 +38,7 @@ export const authPaths: OpenAPIV3.PathsObject = {
   },
   '/auth/create-user': {
     post: {
+      security: [],
       description: 'Creates a new user',
       tags: ['Auth'],
       requestBody: {
@@ -71,6 +73,7 @@ export const authPaths: OpenAPIV3.PathsObject = {
   },
   '/auth/password/forgot': {
     post: {
+      security: [],
       description: 'Requests an e-mail to be able to reset the password.',
       tags: ['Auth'],
       requestBody: {
@@ -102,6 +105,7 @@ export const authPaths: OpenAPIV3.PathsObject = {
   },
   '/auth/password/reset': {
     post: {
+      security: [],
       description: 'Resets the password using the token present in the e-mail link.',
       tags: ['Auth'],
       requestBody: {
