@@ -1,12 +1,12 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { authPaths } from './paths/auth.paths';
 import { authSchema } from './schemas/auth.schema';
-import { weddingsSchema } from './schemas/weddings.schemas';
+import { weddingsSchema } from './schemas/weddings.schema';
 import { weddingsPaths } from './paths/weddings.paths';
 import { giftsSchema } from './schemas/gifts.schema';
 import { giftsPaths } from './paths/gifts.paths';
 import { guestRequestsPaths } from './paths/guest-requests.paths';
-import { guestRequestsSchema } from './schemas/guest-requests.schemas';
+import { guestRequestsSchema } from './schemas/guest-requests.schema';
 
 export const swaggerDefinition: OpenAPIV3.Document = {
   openapi: '3.0.0',
