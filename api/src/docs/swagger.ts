@@ -5,6 +5,8 @@ import { weddingsSchema } from './schemas/weddings.schemas';
 import { weddingsPaths } from './paths/weddings.paths';
 import { giftsSchema } from './schemas/gifts.schema';
 import { giftsPaths } from './paths/gifts.paths';
+import { guestRequestsPaths } from './paths/guest-requests.paths';
+import { guestRequestsSchema } from './schemas/guest-requests.schemas';
 
 export const swaggerDefinition: OpenAPIV3.Document = {
   openapi: '3.0.0',
@@ -19,12 +21,13 @@ export const swaggerDefinition: OpenAPIV3.Document = {
       jwtAuth: [],
     },
   ],
-  paths: { ...authPaths, ...weddingsPaths, ...giftsPaths },
+  paths: { ...authPaths, ...weddingsPaths, ...giftsPaths, ...guestRequestsPaths },
   components: {
     schemas: {
       ...authSchema,
       ...weddingsSchema,
       ...giftsSchema,
+      ...guestRequestsSchema,
     },
     securitySchemes: {
       jwtAuth: {
