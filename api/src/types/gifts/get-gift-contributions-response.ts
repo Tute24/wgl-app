@@ -1,7 +1,6 @@
 export type TreatedGiftContribution = {
   id: number;
   presenterName: string;
-  presenterId: string;
   giftName: string;
   giftedQuantity: number;
   giftId: number;

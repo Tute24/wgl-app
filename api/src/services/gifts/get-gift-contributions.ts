@@ -37,7 +37,6 @@ export class GetGiftContributionsService {
       ? (giftContributions = weddingGiftContributions.map((record) => ({
           id: record.id,
           presenterName: `${record.user.firstName} ${record.user.lastName}`,
-          presenterId: record.user.id,
           giftName: record.gift.productName,
           giftedQuantity: record.quantity,
           giftId: record.giftId,
