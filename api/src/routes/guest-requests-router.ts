@@ -9,7 +9,7 @@ import express, { Router } from 'express';
 
 export const guestRequestsRouter: Router = express.Router();
 
-guestRequestsRouter.post('/create', authMiddleware, asyncHandler(createGuestRequestController));
+guestRequestsRouter.post('/', authMiddleware, asyncHandler(createGuestRequestController));
 guestRequestsRouter.get('/', authMiddleware, asyncHandler(getGuestRequestsHistoryController));
 guestRequestsRouter.patch('/accept', authMiddleware, asyncHandler(acceptGuestRequestController));
 guestRequestsRouter.patch('/deny', authMiddleware, asyncHandler(denyGuestRequestController));
