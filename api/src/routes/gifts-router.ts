@@ -10,9 +10,13 @@ import express, { Router } from 'express';
 
 export const giftsRouter: Router = express.Router();
 
-giftsRouter.post('/create', authMiddleware, asyncHandler(createGiftsController));
+giftsRouter.post('/', authMiddleware, asyncHandler(createGiftsController));
 giftsRouter.get('/', authMiddleware, asyncHandler(getGiftsController));
 giftsRouter.delete('/', authMiddleware, asyncHandler(deleteGiftController));
-giftsRouter.post('/contribute', authMiddleware, asyncHandler(registerGiftContributionController));
+giftsRouter.post(
+  '/contributions',
+  authMiddleware,
+  asyncHandler(registerGiftContributionController),
+);
 giftsRouter.get('/contributions', authMiddleware, asyncHandler(getGiftContributionsController));
 giftsRouter.patch('/', authMiddleware, asyncHandler(updateGiftDataController));
