@@ -31,6 +31,7 @@ export class PrismaGuestRequestsRepository implements GuestRequestsRepository {
           createdBy: userId,
         },
       },
+      omit: { requestBy: true },
       include: {
         wedding: true,
         user: { select: { email: true, firstName: true, lastName: true } },

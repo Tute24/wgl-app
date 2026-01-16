@@ -5,13 +5,18 @@ import { getGiftsController } from '@/controllers/gifts/get-gifts';
 import { registerGiftContributionController } from '@/controllers/gifts/register-gift-contribution';
 import { updateGiftDataController } from '@/controllers/gifts/update-gift-data';
 import authMiddleware from '@/middlewares/auth-middleware';
+import { asyncHandler } from '@/utils/async-handler';
 import express, { Router } from 'express';
 
 export const giftsRouter: Router = express.Router();
 
-giftsRouter.post('/create', authMiddleware, createGiftsController);
-giftsRouter.get('/', authMiddleware, getGiftsController);
-giftsRouter.delete('/', authMiddleware, deleteGiftController);
-giftsRouter.post('/contribute', authMiddleware, registerGiftContributionController);
-giftsRouter.get('/contributions', authMiddleware, getGiftContributionsController);
-giftsRouter.patch('/', authMiddleware, updateGiftDataController);
+giftsRouter.post('/', authMiddleware, asyncHandler(createGiftsController));
+giftsRouter.get('/', authMiddleware, asyncHandler(getGiftsController));
+giftsRouter.delete('/', authMiddleware, asyncHandler(deleteGiftController));
+giftsRouter.post(
+  '/contributions',
+  authMiddleware,
+  asyncHandler(registerGiftContributionController),
+);
+giftsRouter.get('/contributions', authMiddleware, asyncHandler(getGiftContributionsController));
+giftsRouter.patch('/', authMiddleware, asyncHandler(updateGiftDataController));

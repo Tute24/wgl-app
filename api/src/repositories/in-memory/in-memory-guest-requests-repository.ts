@@ -52,7 +52,6 @@ export class InMemoryGuestRequestsRepository implements GuestRequestsRepository 
 
           const response: GetGuestRequestsHistoryResponse = {
             id: request.id,
-            requestBy: request.requestBy,
             relatedWedding: request.relatedWedding,
             pending: request.pending,
             accepted: request.accepted,

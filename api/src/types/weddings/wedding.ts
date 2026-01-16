@@ -7,7 +7,11 @@ export type WeddingStruct = {
   createdBy: string;
 };
 
+export type InvitedWeddingType = Pick<
+  WeddingStruct,
+  'id' | 'weddingTitle' | 'weddingDate' | 'shippingAddress' | 'createdAt'
+>;
 export type GetWeddingsResponse = {
   ownWeddings: WeddingStruct[];
-  invitedWeddings: WeddingStruct[];
+  invitedWeddings: InvitedWeddingType[];
 };

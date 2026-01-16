@@ -3,7 +3,6 @@ import { WeddingStruct } from '../weddings/wedding';
 
 export type GetGuestRequestsHistoryResponse = {
   id: number;
-  requestBy: string;
   relatedWedding: number;
   pending: boolean;
   accepted: boolean;
