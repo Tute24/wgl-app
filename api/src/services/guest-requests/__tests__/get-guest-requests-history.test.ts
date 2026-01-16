@@ -53,7 +53,7 @@ describe('GetGuestRequestsHistoryService', () => {
     const { requests } = await sut.execute({ userId: user1.id });
 
     expect(requests).toHaveLength(1);
-    expect(requests[0]?.requestBy).toEqual(user2.id);
+    expect(requests[0]?.user.email).toEqual(user2.email);
   });
 
   it('should throw 404 when user does not exist', async () => {
