@@ -13,9 +13,6 @@ jobs:
         defaults:
             run:
                 working-directory: api
-        env:
-          NODE_ENV: test
-          SECRET_KEY: "test-secret-key"
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -38,6 +35,9 @@ jobs:
         defaults:
             run:
                 working-directory: api
+        env:
+          NODE_ENV: test
+          SECRET_KEY: "test-secret-key"
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
