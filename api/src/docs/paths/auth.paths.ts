@@ -141,4 +141,28 @@ export const authPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
+  '/auth/sign-out': {
+    post: {
+      description: 'User Sign Out',
+      tags: ['Auth'],
+      responses: {
+        '200': {
+          description: 'User signed out successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/SignOutResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
 };

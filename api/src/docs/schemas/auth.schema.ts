@@ -73,4 +73,8 @@ export const authSchema: OpenAPIV3.ComponentsObject['schemas'] = {
     type: 'object',
     properties: { message: { type: 'string' } },
   },
+  SignOutResponse: {
+    type: 'object',
+    properties: { message: { type: 'string' } },
+  },
 };
