@@ -15,7 +15,7 @@ const envSchema = z.object({
 });
 
 const testSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
   SECRET_KEY: z.string(),
 });
 
