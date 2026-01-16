@@ -12,9 +12,11 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "moduleResolution": "node",
+    "target": "es2020",
+    "esModuleInterop": true,
     // "types": ["node"],
     // and npm install -D @types/node
 
