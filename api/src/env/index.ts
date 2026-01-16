@@ -6,7 +6,7 @@ dotenv.config();
 const envSchema = z.object({
   DATABASE_URL: z.string(),
   DIRECT_URL: z.string(),
-  PORT: z.number().default(3333),
+  PORT: z.coerce.number().default(3333),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
   SECRET_KEY: z.string(),
   NODEMAILER_EMAIL: z.email(),
@@ -14,7 +14,15 @@ const envSchema = z.object({
   FRONTEND_URL: z.string(),
 });
 
-const _env = envSchema.safeParse(process.env);
+const testSchema = z.object({
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
+  SECRET_KEY: z.string(),
+});
+
+const _env =
+  process.env.NODE_ENV === 'test'
+    ? testSchema.safeParse(process.env)
+    : envSchema.safeParse(process.env);
 
 if (_env.success === false) {
   console.error('Invalid enviroment variables', _env.error.message);
