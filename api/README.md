@@ -126,7 +126,7 @@ src/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Tute24/wgl-app
    cd api
    ```
 
@@ -178,7 +178,7 @@ When running with **Docker Compose**:
 DATABASE_URL=postgresql://${postgres_user}:${postgres_password}@db:5432/${postgres_db}
 
 # For local development (direct PostgreSQL connection)
-DATABASE_URL=postgresql://postgres_user:${postgres_password}@localhost:5433/${postgres_db}
+DATABASE_URL=postgresql://${postgres_user}:${postgres_password}@localhost:5433/${postgres_db}
 ```
 
 ---
@@ -237,6 +237,8 @@ npm run start:dev
 ```
 
 The server will start on port `3333` and automatically reload on file changes.
+
+---
 
 ## 🧪 Testing
 
@@ -444,8 +446,6 @@ Tokens are obtained from the sign-in or create-user endpoint and remain valid fo
 ### Database Schema
 
 The application uses PostgreSQL with Prisma ORM. The db schema can be seen at prisma/schema.prisma file
-
----
 
 ### Database Relationships
 
