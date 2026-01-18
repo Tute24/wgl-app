@@ -2,9 +2,9 @@ name: CI - Unitary tests and lint
 
 on:
     push:
-        branches: ["main", "develop", "feature/new-api-ci-docker"]
+        branches: ["main", "develop", "new-api"]
     pull_request:
-        branches: ["main", "develop", "feature/new-api-ci-docker"]
+        branches: ["main", "develop", "new-api"]
 
 jobs:
     api-lint:
