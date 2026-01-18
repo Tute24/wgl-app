@@ -13,12 +13,12 @@ services:
 
   api:
     build:
-      context: ./backend
+      context: ./api
       dockerfile: Dockerfile
     ports:
-      - '3000:3000' #host:container
+      - '3333:3333' #host:container
     env_file:
-      - ./backend/.env
+      - ./api/.env
     environment:
       - NODE_ENV=production
     restart: unless-stopped
