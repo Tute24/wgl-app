@@ -3,23 +3,31 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const baseSchema = {
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  SECRET_KEY: z.string(),
+};
+
 const envSchema = z.object({
+  ...baseSchema,
   DATABASE_URL: z.string(),
   DIRECT_URL: z.string(),
-  PORT: z.number().default(3333),
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
-  SECRET_KEY: z.string(),
+  PORT: z.coerce.number().default(3333),
   NODEMAILER_EMAIL: z.email(),
   NODEMAILER_APP_PASSWORD: z.string(),
   FRONTEND_URL: z.string(),
 });
 
-const _env = envSchema.safeParse(process.env);
+const testSchema = z.object({
+  ...baseSchema,
+  DATABASE_URL: z.string().optional().default(''),
+  DIRECT_URL: z.string().optional().default(''),
+  PORT: z.coerce.number().default(3333),
+  NODEMAILER_EMAIL: z.string().optional().default(''),
+  NODEMAILER_APP_PASSWORD: z.string().optional().default(''),
+  FRONTEND_URL: z.string().optional().default(''),
+});
 
-if (_env.success === false) {
-  console.error('Invalid enviroment variables', _env.error.message);
+const isTest = process.env.NODE_ENV === 'test';
 
-  throw new Error('Invalid enviroment variables');
-}
-
-export const env = _env.data;
+export const env = isTest ? testSchema.parse(process.env) : envSchema.parse(process.env);
