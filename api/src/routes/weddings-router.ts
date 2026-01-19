@@ -2,6 +2,7 @@ import { createGiftsController } from '@/controllers/gifts/create-gifts';
 import { getGiftContributionsController } from '@/controllers/gifts/get-gift-contributions';
 import { getGiftsController } from '@/controllers/gifts/get-gifts';
 import { registerGiftContributionController } from '@/controllers/gifts/register-gift-contribution';
+import { createGuestRequestController } from '@/controllers/guest-requests/create-guest-request';
 import { createWeddingController } from '@/controllers/weddings/create-wedding';
 import { deleteWeddingController } from '@/controllers/weddings/delete-wedding';
 import { getWeddingsController } from '@/controllers/weddings/get-weddings';
@@ -26,4 +27,9 @@ weddingsRouter.post(
   '/:weddingId/gifts/:giftId/contributions',
   authMiddleware,
   asyncHandler(registerGiftContributionController),
+);
+weddingsRouter.post(
+  '/:weddingId/guest-request',
+  authMiddleware,
+  asyncHandler(createGuestRequestController),
 );

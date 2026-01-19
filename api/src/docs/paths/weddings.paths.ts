@@ -241,4 +241,36 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
+  '/weddings/{weddingId}/guest-request': {
+    post: {
+      description: 'Creates a guest request.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      responses: {
+        '200': {
+          description: 'Weddings fetched successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateGuestRequestResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '409': {
+          description:
+            'User is the wedding owner or currently has a pending guest request for this wedding.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
 };
