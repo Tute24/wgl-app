@@ -91,8 +91,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
   RegisterGiftContributionRequest: {
     type: 'object',
     properties: {
-      giftId: { type: 'integer' },
-      weddingId: { type: 'integer' },
       quantity: { type: 'integer' },
     },
   },

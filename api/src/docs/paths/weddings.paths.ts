@@ -170,4 +170,51 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
+  '/weddings/{weddingId}/gifts/{giftId}/contributions': {
+    post: {
+      description: 'Registers a gift contribution.',
+      tags: ['Weddings'],
+      parameters: [
+        { name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } },
+        { name: 'giftId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/RegisterGiftContributionRequest',
+            },
+          },
+        },
+      },
+      responses: {
+        '200': {
+          description: 'Gift contribution registered successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/RegisterGiftContributionResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '403': {
+          description: 'User does not have permission to perform this action.',
+        },
+        '404': {
+          description: 'User, wedding or gift not found.',
+        },
+        '409': {
+          description: 'Requested quantity exceeds available gift quantity.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
 };
