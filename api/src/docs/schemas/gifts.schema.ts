@@ -4,7 +4,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
   CreateGiftsRequest: {
     type: 'object',
     properties: {
-      weddingId: { type: 'integer' },
       gifts: {
         type: 'array',
         items: {

@@ -1,4 +1,3 @@
-import { createGiftsController } from '@/controllers/gifts/create-gifts';
 import { deleteGiftController } from '@/controllers/gifts/delete-gift';
 import { getGiftContributionsController } from '@/controllers/gifts/get-gift-contributions';
 import { getGiftsController } from '@/controllers/gifts/get-gifts';
@@ -10,7 +9,6 @@ import express, { Router } from 'express';
 
 export const giftsRouter: Router = express.Router();
 
-giftsRouter.post('/', authMiddleware, asyncHandler(createGiftsController));
 giftsRouter.get('/', authMiddleware, asyncHandler(getGiftsController));
 giftsRouter.delete('/', authMiddleware, asyncHandler(deleteGiftController));
 giftsRouter.post(

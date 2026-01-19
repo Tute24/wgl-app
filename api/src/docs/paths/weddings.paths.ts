@@ -102,4 +102,45 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
+  '/weddings/{weddingId}/gifts': {
+    post: {
+      description: 'Creates new gifts for an specific wedding.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/CreateGiftsRequest',
+            },
+          },
+        },
+      },
+      responses: {
+        '200': {
+          description: 'Gifts created successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateGiftsResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '403': {
+          description: 'User does not have permission to perform this action.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
 };
