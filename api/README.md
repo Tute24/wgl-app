@@ -412,21 +412,21 @@ http://localhost:3333/wgl-app-api-swagger
 #### Weddings (`/weddings`)
 - `GET /weddings` - List user's weddings (owned and invited to)
 - `POST /weddings` - Create new wedding
-- `DELETE /weddings` - Delete wedding
+- `DELETE /weddings/:weddingId` - Delete wedding
+- `GET /weddings/:weddingId/gifts` - List gifts for a wedding
+- `POST /weddings/:weddingId/gifts` - Create new gifts for a wedding
+- `POST /weddings/:weddingId/gifts/:giftId/contributions` - Register gift contribution
+- `GET /weddings/:weddingId/gifts/contributions` - Get gift contributions from a wedding
+- `POST /weddings/:weddingId/guest-request` - Create guest request for a wedding
 
 #### Gifts (`/gifts`)
-- `GET /gifts` - List gifts for a wedding
-- `POST /gifts` - Create new gifts for a wedding
-- `PATCH /gifts` - Update gift data
-- `DELETE /gifts` - Delete gift
-- `POST /gifts/contributions` - Register gift contribution
-- `GET /gifts/contributions` - Get gift contributions from a wedding
+- `PATCH /gifts:giftId` - Update gift data
+- `DELETE /gifts/:giftId` - Delete gift
 
 #### Guest Requests (`/guest-requests`)
 - `GET /guest-requests` - List guest requests history from the requesting user's owned weddings
-- `POST /guest-requests` - Create guest request
-- `PATCH /guest-requests/accept` - Accept guest request
-- `PATCH /guest-requests/deny` - Deny guest request
+- `PATCH /guest-requests/:guestRequestId/accept` - Accept guest request
+- `PATCH /guest-requests/:guestRequestId/deny` - Deny guest request
 - `GET /guest-requests/pending/count` - Count pending requests from the requesting user's owned weddings
 
 ### Authentication
@@ -457,6 +457,10 @@ User (1) ──────────────── (Many) Wedding
   └─ makes guest requests     └─ has many guest requests
 ```
 ---
+
+## Deploy
+
+The app's backend is already in production, with the database being deployed on Supabase and the API at Render. It's possible to checkout the in-production swagger documentation here: [API's Swagger](https://wgl-app.onrender.com/wgl-app-api-swagger/)
 
 ## 📄 License
 
