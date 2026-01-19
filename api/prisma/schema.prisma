@@ -1,0 +1,103 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+}
+
+model User {
+    id             String               @id @default(uuid())
+    email          String               @unique
+    firstName      String               @map("first_name")
+    lastName       String               @map("last_name")
+    password       String
+    createdAt      DateTime?            @default(now())
+    weddingsOwn    Wedding[]
+    productsGifted GiftContribution[]
+    weddingsGuest  Guest[]
+    requests       GuestRequest[]
+    passwordReset  PasswordResetToken[]
+
+    @@map("users")
+}
+
+model Wedding {
+    id              Int                @id @default(autoincrement())
+    weddingTitle    String             @map("wedding_title")
+    weddingDate     String             @map("wedding_date")
+    shippingAddress String             @default("null") @map("shipping_address")
+    user            User               @relation(fields: [createdBy], references: [id])
+    createdBy       String
+    createdAt       DateTime?          @default(now())
+    gifts           Gift[]
+    guests          Guest[]
+    guestRequests   GuestRequest[]    
+    gifters         GiftContribution[]
+
+    @@map("weddings")
+}
+
+model Gift {
+    id               Int                @id @default(autoincrement())
+    quantity         Int
+    productName      String             @map("product_name")
+    productLink      String             @map("product_link")
+    wedding          Wedding            @relation(fields: [fromWedding], references: [id], onDelete: Cascade)
+    fromWedding      Int                @map("from_wedding")
+    createdAt        DateTime?          @default(now())
+    GiftContribution GiftContribution[]
+
+    @@map("gifts")
+}
+
+model Guest {
+    id                Int       @id @default(autoincrement())
+    user              User      @relation(fields: [guestId], references: [id])
+    guestId           String    @map("guest_id")
+    wedding           Wedding   @relation(fields: [referencedWedding], references: [id], onDelete: Cascade)
+    referencedWedding Int       @map("referenced_wedding")
+    addedOn           DateTime? @default(now())
+
+    @@map("guests")
+}
+
+model GuestRequest {
+    id             Int       @id @default(autoincrement())
+    user           User      @relation(fields: [requestBy], references: [id])
+    requestBy      String    @map("request_by")
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
+    relatedWedding Int       @map("related_wedding")
+    pending        Boolean   @default(true)
+    accepted       Boolean   @default(false)
+    madeOn         DateTime? @default(now())
+
+    @@map("guest_requests")
+}
+
+model GiftContribution {
+    id             Int       @id @default(autoincrement())
+    presenter      String
+    relatedWedding Int       @map("related_wedding")
+    user           User      @relation(fields: [presenter], references: [id])
+    wedding        Wedding   @relation(fields: [relatedWedding], references: [id], onDelete: Cascade)
+    quantity       Int
+    giftId         Int       @map("gift_id")
+    gift           Gift      @relation(fields: [giftId], references: [id], onDelete: Cascade)
+    giftedAt       DateTime? @default(now())
+
+    @@map("gift_contributions")
+}
+
+model PasswordResetToken {
+    id             Int     @id @default(autoincrement())
+    requestedBy    String  @map("requested_by")
+    expirationDate BigInt  @map("expiration_date")
+    used           Boolean @default(false)
+    token          String  @unique
+    user           User    @relation(fields: [requestedBy], references: [id])
+
+    @@map("password_reset_tokens")
+}
