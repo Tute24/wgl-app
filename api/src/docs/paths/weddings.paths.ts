@@ -142,5 +142,32 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
         },
       },
     },
+    get: {
+      description:
+        'Fetches the gifts list from a specific wedding and also return the wedding role for the requesting user.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      responses: {
+        '200': {
+          description: 'Gifts fetched successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/GetGiftsResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
   },
 };

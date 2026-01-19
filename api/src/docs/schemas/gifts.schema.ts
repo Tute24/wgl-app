@@ -36,12 +36,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       },
     },
   },
-  GetGiftsRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
-    },
-  },
   GetGiftsResponse: {
     type: 'object',
     properties: {

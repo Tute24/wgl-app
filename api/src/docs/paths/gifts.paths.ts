@@ -2,42 +2,6 @@ import { OpenAPIV3 } from 'openapi-types';
 
 export const giftsPaths: OpenAPIV3.PathsObject = {
   '/gifts': {
-    get: {
-      description:
-        'Fetches the gifts list from a specific wedding and also return the wedding role for the requesting user.',
-      tags: ['Gifts'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/GetGiftsRequest',
-            },
-          },
-        },
-      },
-      responses: {
-        '200': {
-          description: 'Gifts fetched successfully.',
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/GetGiftsResponse',
-              },
-            },
-          },
-        },
-        '401': {
-          description: 'Invalid credentials.',
-        },
-        '404': {
-          description: 'User or wedding not found.',
-        },
-        '500': {
-          description: 'Internal server error.',
-        },
-      },
-    },
     delete: {
       description: 'Deletes a specific gift.',
       tags: ['Gifts'],
