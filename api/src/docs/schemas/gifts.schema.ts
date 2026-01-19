@@ -100,12 +100,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       message: { type: 'string' },
     },
   },
-  GetGiftContributionsRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
-    },
-  },
   GetGiftContributionsResponse: {
     type: 'object',
     properties: {
