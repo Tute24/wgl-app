@@ -6,5 +6,5 @@ import express, { Router } from 'express';
 
 export const giftsRouter: Router = express.Router();
 
-giftsRouter.delete('/', authMiddleware, asyncHandler(deleteGiftController));
-giftsRouter.patch('/', authMiddleware, asyncHandler(updateGiftDataController));
+giftsRouter.delete('/:giftId', authMiddleware, asyncHandler(deleteGiftController));
+giftsRouter.patch('/:giftId', authMiddleware, asyncHandler(updateGiftDataController));

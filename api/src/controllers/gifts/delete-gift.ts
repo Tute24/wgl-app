@@ -9,9 +9,9 @@ import z from 'zod';
 export async function deleteGiftController(req: Request, res: Response) {
   const { giftId } = z
     .object({
-      giftId: z.number(),
+      giftId: z.coerce.number(),
     })
-    .parse(req.body);
+    .parse(req.params);
   const authRepository = new PrismaAuthRepository();
   const weddingsRepository = new PrismaWeddingsRepository();
   const giftsRepository = new PrismaGiftsRepository();

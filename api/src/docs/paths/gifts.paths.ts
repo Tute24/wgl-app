@@ -1,20 +1,11 @@
 import { OpenAPIV3 } from 'openapi-types';
 
 export const giftsPaths: OpenAPIV3.PathsObject = {
-  '/gifts': {
+  '/gifts/{giftId}': {
     delete: {
       description: 'Deletes a specific gift.',
       tags: ['Gifts'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/DeleteGiftRequest',
-            },
-          },
-        },
-      },
+      parameters: [{ name: 'giftId', required: true, in: 'path', schema: { type: 'integer' } }],
       responses: {
         '200': {
           description: 'Gift deleted successfully.',
@@ -43,16 +34,7 @@ export const giftsPaths: OpenAPIV3.PathsObject = {
     patch: {
       description: `Updates a specific gift's data.`,
       tags: ['Gifts'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/UpdateGiftDataRequest',
-            },
-          },
-        },
-      },
+      parameters: [{ name: 'giftId', required: true, in: 'path', schema: { type: 'integer' } }],
       responses: {
         '200': {
           description: 'Gift updated successfully.',

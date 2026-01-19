@@ -56,12 +56,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       },
     },
   },
-  DeleteGiftRequest: {
-    type: 'object',
-    properties: {
-      giftId: { type: 'integer' },
-    },
-  },
   DeleteGiftResponse: {
     type: 'object',
     properties: {
@@ -80,12 +74,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
           quantity: { type: 'integer' },
         },
       },
-    },
-  },
-  UpdateGiftDataResponse: {
-    type: 'object',
-    properties: {
-      message: { type: 'string' },
     },
   },
   RegisterGiftContributionRequest: {
