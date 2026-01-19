@@ -8,9 +8,9 @@ import z from 'zod';
 export async function acceptGuestRequestController(req: Request, res: Response) {
   const { guestRequestId } = z
     .object({
-      guestRequestId: z.number(),
+      guestRequestId: z.coerce.number(),
     })
-    .parse(req.body);
+    .parse(req.params);
 
   const authRepository = new PrismaAuthRepository();
   const guestsRepository = new PrismaGuestsRepository();

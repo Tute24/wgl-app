@@ -63,19 +63,12 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
         },
       },
     },
+  },
+  '/weddings/{weddingId}': {
     delete: {
       description: 'Deletes a wedding.',
       tags: ['Weddings'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/DeleteWeddingRequest',
-            },
-          },
-        },
-      },
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
       responses: {
         '200': {
           description: 'Wedding deleted successfully.',
@@ -95,6 +88,184 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
         },
         '404': {
           description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
+  '/weddings/{weddingId}/gifts': {
+    post: {
+      description: 'Creates new gifts for an specific wedding.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/CreateGiftsRequest',
+            },
+          },
+        },
+      },
+      responses: {
+        '200': {
+          description: 'Gifts created successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateGiftsResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '403': {
+          description: 'User does not have permission to perform this action.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+    get: {
+      description:
+        'Fetches the gifts list from a specific wedding and also return the wedding role for the requesting user.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      responses: {
+        '200': {
+          description: 'Gifts fetched successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/GetGiftsResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
+  '/weddings/{weddingId}/gifts/contributions': {
+    get: {
+      description: 'Return the gift contributions from a specific wedding.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      responses: {
+        '200': {
+          description: 'Gift contribution registered successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/GetGiftContributionsResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '403': {
+          description: 'User does not have permission to perform this action.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
+  '/weddings/{weddingId}/gifts/{giftId}/contributions': {
+    post: {
+      description: 'Registers a gift contribution.',
+      tags: ['Weddings'],
+      parameters: [
+        { name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } },
+        { name: 'giftId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/RegisterGiftContributionRequest',
+            },
+          },
+        },
+      },
+      responses: {
+        '200': {
+          description: 'Gift contribution registered successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/RegisterGiftContributionResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '403': {
+          description: 'User does not have permission to perform this action.',
+        },
+        '404': {
+          description: 'User, wedding or gift not found.',
+        },
+        '409': {
+          description: 'Requested quantity exceeds available gift quantity.',
+        },
+        '500': {
+          description: 'Internal server error.',
+        },
+      },
+    },
+  },
+  '/weddings/{weddingId}/guest-request': {
+    post: {
+      description: 'Creates a guest request.',
+      tags: ['Weddings'],
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
+      responses: {
+        '200': {
+          description: 'Weddings fetched successfully.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateGuestRequestResponse',
+              },
+            },
+          },
+        },
+        '401': {
+          description: 'Invalid credentials.',
+        },
+        '404': {
+          description: 'User or wedding not found.',
+        },
+        '409': {
+          description:
+            'User is the wedding owner or currently has a pending guest request for this wedding.',
         },
         '500': {
           description: 'Internal server error.',

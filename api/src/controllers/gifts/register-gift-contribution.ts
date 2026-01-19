@@ -6,9 +6,16 @@ import { PrismaWeddingsRepository } from '@/repositories/prisma/prisma-weddings-
 import { RegisterGiftContributionService } from '@/services/gifts/register-gift-contribution';
 import { registerGiftContributionSchema } from '@/zod-schemas/gifts/register-gift-contribution';
 import { type Request, type Response } from 'express';
+import z from 'zod';
 
 export async function registerGiftContributionController(req: Request, res: Response) {
-  const { giftId, quantity, weddingId } = registerGiftContributionSchema.parse(req.body);
+  const { weddingId, giftId } = z
+    .object({
+      weddingId: z.coerce.number(),
+      giftId: z.coerce.number(),
+    })
+    .parse(req.params);
+  const { quantity } = registerGiftContributionSchema.parse(req.body);
   const authRepository = new PrismaAuthRepository();
   const weddingsRepository = new PrismaWeddingsRepository();
   const giftsRepository = new PrismaGiftsRepository();

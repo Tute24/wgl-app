@@ -4,7 +4,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
   CreateGiftsRequest: {
     type: 'object',
     properties: {
-      weddingId: { type: 'integer' },
       gifts: {
         type: 'array',
         items: {
@@ -37,12 +36,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       },
     },
   },
-  GetGiftsRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
-    },
-  },
   GetGiftsResponse: {
     type: 'object',
     properties: {
@@ -61,12 +54,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
           },
         },
       },
-    },
-  },
-  DeleteGiftRequest: {
-    type: 'object',
-    properties: {
-      giftId: { type: 'integer' },
     },
   },
   DeleteGiftResponse: {
@@ -89,17 +76,9 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       },
     },
   },
-  UpdateGiftDataResponse: {
-    type: 'object',
-    properties: {
-      message: { type: 'string' },
-    },
-  },
   RegisterGiftContributionRequest: {
     type: 'object',
     properties: {
-      giftId: { type: 'integer' },
-      weddingId: { type: 'integer' },
       quantity: { type: 'integer' },
     },
   },
@@ -107,12 +86,6 @@ export const giftsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
     type: 'object',
     properties: {
       message: { type: 'string' },
-    },
-  },
-  GetGiftContributionsRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
     },
   },
   GetGiftContributionsResponse: {

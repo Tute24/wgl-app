@@ -2,45 +2,6 @@ import { OpenAPIV3 } from 'openapi-types';
 
 export const guestRequestsPaths: OpenAPIV3.PathsObject = {
   '/guest-requests': {
-    post: {
-      description: 'Creates a guest request.',
-      tags: ['Guest Requests'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/CreateGuestRequestRequest',
-            },
-          },
-        },
-      },
-      responses: {
-        '200': {
-          description: 'Weddings fetched successfully.',
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/CreateGuestRequestResponse',
-              },
-            },
-          },
-        },
-        '401': {
-          description: 'Invalid credentials.',
-        },
-        '404': {
-          description: 'User or wedding not found.',
-        },
-        '409': {
-          description:
-            'User is the wedding owner or currently has a pending guest request for this wedding.',
-        },
-        '500': {
-          description: 'Internal server error.',
-        },
-      },
-    },
     get: {
       description:
         'Fetches the guest requests history from weddings created by the requesting user.',
@@ -68,20 +29,13 @@ export const guestRequestsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
-  '/guest-requests/accept': {
+  '/guest-requests/{guestRequestId}/accept': {
     patch: {
       description: 'Accepts a guest request.',
       tags: ['Guest Requests'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/AcceptGuestRequestRequest',
-            },
-          },
-        },
-      },
+      parameters: [
+        { name: 'guestRequestId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
       responses: {
         '200': {
           description: 'Request successfully accepted.',
@@ -111,20 +65,13 @@ export const guestRequestsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
-  '/guest-requests/deny': {
+  '/guest-requests/{guestRequestId}/deny': {
     patch: {
       description: 'Denies a guest request.',
       tags: ['Guest Requests'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/DenyGuestRequestRequest',
-            },
-          },
-        },
-      },
+      parameters: [
+        { name: 'guestRequestId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
       responses: {
         '200': {
           description: 'Request successfully denied.',

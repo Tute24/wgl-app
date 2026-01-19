@@ -1,12 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 
 export const guestRequestsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
-  CreateGuestRequestRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
-    },
-  },
   CreateGuestRequestResponse: {
     type: 'object',
     properties: {
@@ -58,22 +52,10 @@ export const guestRequestsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       },
     },
   },
-  AcceptGuestRequestRequest: {
-    type: 'object',
-    properties: {
-      guestRequestId: { type: 'integer' },
-    },
-  },
   AcceptGuestRequestResponse: {
     type: 'object',
     properties: {
       message: { type: 'string' },
-    },
-  },
-  DenyGuestRequestRequest: {
-    type: 'object',
-    properties: {
-      guestRequestId: { type: 'integer' },
     },
   },
   DenyGuestRequestResponse: {
