@@ -63,19 +63,12 @@ export const weddingsPaths: OpenAPIV3.PathsObject = {
         },
       },
     },
+  },
+  '/weddings/{weddingId}': {
     delete: {
       description: 'Deletes a wedding.',
       tags: ['Weddings'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/DeleteWeddingRequest',
-            },
-          },
-        },
-      },
+      parameters: [{ name: 'weddingId', required: true, in: 'path', schema: { type: 'integer' } }],
       responses: {
         '200': {
           description: 'Wedding deleted successfully.',

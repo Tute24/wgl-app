@@ -14,7 +14,7 @@ export const weddingsRouter: Router = express.Router();
 
 weddingsRouter.post('/', authMiddleware, asyncHandler(createWeddingController));
 weddingsRouter.get('/', authMiddleware, asyncHandler(getWeddingsController));
-weddingsRouter.delete('/', authMiddleware, asyncHandler(deleteWeddingController));
+weddingsRouter.delete('/:weddingId', authMiddleware, asyncHandler(deleteWeddingController));
 weddingsRouter.post('/:weddingId/gifts', authMiddleware, asyncHandler(createGiftsController));
 weddingsRouter.get('/:weddingId/gifts', authMiddleware, asyncHandler(getGiftsController));
 weddingsRouter.get(

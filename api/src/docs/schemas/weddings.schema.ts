@@ -63,12 +63,6 @@ export const weddingsSchema: OpenAPIV3.ComponentsObject['schemas'] = {
       createdAt: { type: 'string', format: 'date-time' },
     },
   },
-  DeleteWeddingRequest: {
-    type: 'object',
-    properties: {
-      weddingId: { type: 'integer' },
-    },
-  },
   DeleteWeddingResponse: {
     type: 'object',
     properties: {
