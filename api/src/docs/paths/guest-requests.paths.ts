@@ -29,20 +29,13 @@ export const guestRequestsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
-  '/guest-requests/accept': {
+  '/guest-requests/{guestRequestId}/accept': {
     patch: {
       description: 'Accepts a guest request.',
       tags: ['Guest Requests'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/AcceptGuestRequestRequest',
-            },
-          },
-        },
-      },
+      parameters: [
+        { name: 'guestRequestId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
       responses: {
         '200': {
           description: 'Request successfully accepted.',
@@ -72,20 +65,13 @@ export const guestRequestsPaths: OpenAPIV3.PathsObject = {
       },
     },
   },
-  '/guest-requests/deny': {
+  '/guest-requests/{guestRequestId}/deny': {
     patch: {
       description: 'Denies a guest request.',
       tags: ['Guest Requests'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/DenyGuestRequestRequest',
-            },
-          },
-        },
-      },
+      parameters: [
+        { name: 'guestRequestId', required: true, in: 'path', schema: { type: 'integer' } },
+      ],
       responses: {
         '200': {
           description: 'Request successfully denied.',

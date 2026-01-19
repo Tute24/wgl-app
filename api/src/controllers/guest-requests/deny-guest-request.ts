@@ -7,9 +7,9 @@ import z from 'zod';
 export async function denyGuestRequestController(req: Request, res: Response) {
   const { guestRequestId } = z
     .object({
-      guestRequestId: z.number(),
+      guestRequestId: z.coerce.number(),
     })
-    .parse(req.body);
+    .parse(req.params);
 
   const authRepository = new PrismaAuthRepository();
   const guestRequestsRepository = new PrismaGuestRequestsRepository();

@@ -9,8 +9,16 @@ import express, { Router } from 'express';
 export const guestRequestsRouter: Router = express.Router();
 
 guestRequestsRouter.get('/', authMiddleware, asyncHandler(getGuestRequestsHistoryController));
-guestRequestsRouter.patch('/accept', authMiddleware, asyncHandler(acceptGuestRequestController));
-guestRequestsRouter.patch('/deny', authMiddleware, asyncHandler(denyGuestRequestController));
+guestRequestsRouter.patch(
+  '/:guestRequestId/accept',
+  authMiddleware,
+  asyncHandler(acceptGuestRequestController),
+);
+guestRequestsRouter.patch(
+  '/:guestRequestId/deny',
+  authMiddleware,
+  asyncHandler(denyGuestRequestController),
+);
 guestRequestsRouter.get(
   '/pending/count',
   authMiddleware,
