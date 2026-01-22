@@ -3,6 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-softWhite: #F8F6F2;
+  --color-softBeige: #F1E9DD;
+  --color-warmBeige: #EADDC8;
+  --color-champagneGold: #F4E3C1;
+  --color-paleGold: #D9B68E;
+  --color-dustyRose: #C4A69D;
+  --color-mutedTaupe: #A8907C;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
