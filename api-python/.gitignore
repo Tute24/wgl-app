@@ -1,0 +1,57 @@
+# Ambiente virtual
+venv/
+.venv/
+env/
+.env/
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Bytecode / cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribuição / build
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Pytest / cobertura de testes
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# MyPy (checagem de tipos)
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff / linters
+.ruff_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Alembic (versões geradas automaticamente não precisam ser ignoradas)
+# alembic/versions/ → deve ser commitado
+
+# Arquivos temporários
+*.tmp
+*.swp
